@@ -27,12 +27,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Oct 30 01:28 PT",
+ "asof": "Oct 30 01:31 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 92,
- "seen": 847,
+ "scans": 98,
+ "seen": 926,
  "passed": 1,
  "trades": 1,
  "wins": 1,
@@ -66,15 +66,15 @@
  "by_dex": [
   [
    "pumpfun",
-   706
+   783
+  ],
+  [
+   "meteora",
+   54
   ],
   [
    "pumpswap",
    54
-  ],
-  [
-   "meteora",
-   52
   ],
   [
    "letsbonk",
@@ -96,7 +96,7 @@
  "kills": [
   [
    "volume_1h",
-   850
+   930
   ],
   [
    "liquidity",
@@ -125,7 +125,7 @@
    "v": 302.4
   },
   {
-   "t": "01:28",
+   "t": "01:31",
    "v": 302.4
   }
  ],
@@ -145,14 +145,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "847 pairs",
-   "text": "scan \u00b7 91 pairs, 5 new",
+   "stat": "926 pairs",
+   "text": "scan \u00b7 104 pairs, 31 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed TERMINAL \u00b7 1h vol < $40k",
+   "text": "killed perpetual \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -175,54 +175,12 @@
   },
   {
    "name": "Logger",
-   "stat": "866 why",
-   "text": "wrote 866 reasons",
+   "stat": "946 why",
+   "text": "wrote 946 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "01:20",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 76 pairs, 4 new",
-   "tone": ""
-  },
-  {
-   "t": "01:20",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 85 pairs, 11 new",
-   "tone": ""
-  },
-  {
-   "t": "01:21",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 93 pairs, 29 new",
-   "tone": ""
-  },
-  {
-   "t": "01:22",
-   "ag": "FILTER",
-   "text": "killed SAFU \u00b7 failed entry recheck",
-   "tone": "red"
-  },
-  {
-   "t": "01:22",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 87 pairs, 11 new",
-   "tone": ""
-  },
-  {
-   "t": "01:23",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 85 pairs, 19 new",
-   "tone": ""
-  },
-  {
-   "t": "01:23",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 86 pairs, 1 new",
-   "tone": ""
-  },
   {
    "t": "01:24",
    "ag": "SCOUT",
@@ -270,9 +228,51 @@
    "ag": "SCOUT",
    "text": "scan \u00b7 91 pairs, 5 new",
    "tone": ""
+  },
+  {
+   "t": "01:28",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 88 pairs, 8 new",
+   "tone": ""
+  },
+  {
+   "t": "01:28",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 92 pairs, 5 new",
+   "tone": ""
+  },
+  {
+   "t": "01:29",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 75 pairs, 3 new",
+   "tone": ""
+  },
+  {
+   "t": "01:29",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 92 pairs, 14 new",
+   "tone": ""
+  },
+  {
+   "t": "01:30",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 96 pairs, 19 new",
+   "tone": ""
+  },
+  {
+   "t": "01:30",
+   "ag": "LOGGER",
+   "text": "selftest",
+   "tone": ""
+  },
+  {
+   "t": "01:30",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 104 pairs, 31 new",
+   "tone": ""
   }
  ],
- "nkills": 866,
+ "nkills": 946,
  "mood": "happy",
  "kills_live": [
   {
@@ -324,7 +324,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 847,
+  "scanned": 926,
   "passed_filters": 1,
   "scored_ok": 1,
   "entry_wait": 2,
@@ -340,16 +340,16 @@
   },
   {
    "h": "01",
-   "scans": 54,
-   "kills": 606,
+   "scans": 60,
+   "kills": 686,
    "trades": 0,
    "pnl": 2.4
   }
  ],
  "agent_activity": {
-  "LOGGER": 5,
-  "SCOUT": 92,
-  "FILTER": 866,
+  "LOGGER": 6,
+  "SCOUT": 98,
+  "FILTER": 946,
   "ANALYST": 1,
   "EXECUTOR": 3,
   "RISK": 2
@@ -373,19 +373,19 @@
  },
  "latency": {
   "scan_s_avg": 0.3,
-  "scan_s_last": 0.3,
+  "scan_s_last": 0.4,
   "pos_check_s": 1,
-  "ws_last_event_s": 3
+  "ws_last_event_s": 8
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 55,
+   "ms": 60,
    "err": 0
   },
   "api.geckoterminal.com": {
    "ok_rate": 1.0,
-   "ms": 48,
+   "ms": 57,
    "err": 0
   }
  },
@@ -454,14 +454,14 @@
   "telegram_x": "not configured (needs Braydon's own bot token/chat; skipped)"
  },
  "paper": true,
- "updated_at": "2026-10-30T08:28:01+00:00",
+ "updated_at": "2026-10-30T08:31:03+00:00",
  "heartbeat": {
-  "at": "2026-10-30T08:28:01+00:00",
+  "at": "2026-10-30T08:31:03+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 3,
+  "runner_last_beat_s": 0,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 169,
+  "live_feed_events": 196,
   "publish_every_s": 180
  }
 }
