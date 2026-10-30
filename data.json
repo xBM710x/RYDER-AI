@@ -48,12 +48,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Oct 30 09:02 PT",
+ "asof": "Oct 30 09:03 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 1346,
- "seen": 5754,
+ "scans": 1352,
+ "seen": 5761,
  "passed": 1,
  "trades": 1,
  "wins": 1,
@@ -91,7 +91,7 @@
  "by_dex": [
   [
    "pumpfun",
-   4847
+   4854
   ],
   [
    "meteora",
@@ -121,7 +121,7 @@
  "kills": [
   [
    "volume_1h",
-   5850
+   5857
   ],
   [
    "liquidity",
@@ -182,7 +182,7 @@
    "v": 302.4
   },
   {
-   "t": "09:02",
+   "t": "09:03",
    "v": 302.4
   }
  ],
@@ -204,14 +204,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "5754 pairs",
+   "stat": "5761 pairs",
    "text": "scan \u00b7 1 pairs, 1 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed UTIN \u00b7 1h vol < $40k",
+   "text": "killed NORISK \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -234,48 +234,12 @@
   },
   {
    "name": "Logger",
-   "stat": "6107 why",
-   "text": "wrote 6107 reasons",
+   "stat": "6114 why",
+   "text": "wrote 6114 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "09:01",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "09:01",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 2 pairs, 2 new",
-   "tone": ""
-  },
-  {
-   "t": "09:01",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 2 pairs, 2 new",
-   "tone": ""
-  },
-  {
-   "t": "09:01",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "09:02",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 75 pairs, 8 new",
-   "tone": ""
-  },
-  {
-   "t": "09:02",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
   {
    "t": "09:02",
    "ag": "SCOUT",
@@ -329,9 +293,45 @@
    "ag": "SCOUT",
    "text": "scan \u00b7 1 pairs, 1 new",
    "tone": ""
+  },
+  {
+   "t": "09:03",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 2 pairs, 2 new",
+   "tone": ""
+  },
+  {
+   "t": "09:03",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 1 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "09:03",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 1 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "09:03",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 84 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "09:03",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 1 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "09:03",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 1 pairs, 1 new",
+   "tone": ""
   }
  ],
- "nkills": 6107,
+ "nkills": 6114,
  "mood": "sleepy",
  "kills_live": [
   {
@@ -509,7 +509,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 5754,
+  "scanned": 5761,
   "passed_filters": 1,
   "scored_ok": 1,
   "entry_wait": 2,
@@ -581,15 +581,15 @@
   },
   {
    "h": "09",
-   "scans": 22,
-   "kills": 171,
+   "scans": 28,
+   "kills": 178,
    "trades": 0,
    "pnl": 0.0
   }
  ],
  "agent_activity": {
-  "SCOUT": 638,
-  "FILTER": 2052,
+  "SCOUT": 640,
+  "FILTER": 2039,
   "LOGGER": 12
  },
  "rug_list": {
@@ -610,30 +610,30 @@
   "gauge": 10
  },
  "latency": {
-  "scan_s_avg": 0.2,
-  "scan_s_last": 0.4,
+  "scan_s_avg": 0.1,
+  "scan_s_last": 0.0,
   "pos_check_s": 1,
-  "ws_last_event_s": 6
+  "ws_last_event_s": 5
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 73,
+   "ms": 74,
    "err": 0
   },
   "api.geckoterminal.com": {
    "ok_rate": 1.0,
-   "ms": 91,
+   "ms": 83,
    "err": 0
   },
   "api.rugcheck.xyz": {
    "ok_rate": 1.0,
-   "ms": 898,
+   "ms": 1442,
    "err": 0
   },
   "api.mainnet-beta.solana.com": {
    "ok_rate": 1.0,
-   "ms": 872,
+   "ms": 800,
    "err": 0
   },
   "lite-api.jup.ag": {
@@ -708,9 +708,9 @@
  },
  "speed": {
   "decision_s": {
-   "avg": 0.13,
-   "p90": 0.19,
-   "n": 53
+   "avg": 0.12,
+   "p90": 0.18,
+   "n": 61
   },
   "deep_check_s": {
    "avg": 0.0,
@@ -798,14 +798,14 @@
   "39 Telegram/X alerts"
  ],
  "paper": true,
- "updated_at": "2026-10-30T16:02:53+00:00",
+ "updated_at": "2026-10-30T16:03:41+00:00",
  "heartbeat": {
-  "at": "2026-10-30T16:02:53+00:00",
+  "at": "2026-10-30T16:03:41+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 3,
+  "runner_last_beat_s": 1,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 10,
+  "live_feed_events": 18,
   "publish_every_s": 180
  },
  "ryder_events": []
