@@ -63,3 +63,10 @@ Acceleration score = 5m run-rate vs 1h avg, 5m buy share, 5m price (parabolic >+
 471-478 learning: near-misses re-priced at 30/60 min; per kill reason count of skipped coins that ran +30% / fell -30% (diagnostic only, no auto bar changes); nightly 14-day decay 03:45.
 479-482 exits (main + v3x): liquidity <70% of entry -> sell; 5m sells >=2.5x buys (15+) under +2% -> sell; held 8+ min, +3..+15%, 5m vol <25% of hour avg & m5 red -> sell; FOMO gave back a +6% peak to <+1% -> sell. All gated by the 412 exit-rule regret filter.
 487-490 reliability: brain10 jobs run off the positions thread, single-instance, 5 failures -> 5-min backoff; heartbeat block b10.
+
+## 2026-10-30 14:50 PT - upgrades 491-515 (common.py http layer + brain11.py, paper only). Backup: ../backup_pre491_20261030_144501
+No trading bars or safety checks changed.
+491-499 HTTP: per-host spacing (GeckoTerminal 2.2s, DexScreener 0.25s, RugCheck 0.5s); after a 429 the host cools down 10s doubling to 300s (DexScreener capped 20s so exits keep prices), reset on success;
+GET TTL cache (new_pools 45s, trending/top-volume 150s, token info 15 min, token price 20s, boosts/profiles 60s); while cooling, the last good response (<=15 min) is served; a thread never waits >20s in the queue.
+506-510 hang diagnostics: positions/scan loops stamp liveness; independent watchdog dumps all thread stacks to hang.log if positions is silent 60s or scan 150s (max once/10 min). Reason: unexplained stale-heartbeat restarts at 13:26 and 13:40 PT.
+511-515 health: heartbeat block b11 (per-host ok/err/latency, 429 count, cooldowns, cache hits, stale serves, loop ages, stall counts).
