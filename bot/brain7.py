@@ -262,7 +262,7 @@ def fast_reject(m, pair, sym):
     if pair:
         bh, sh = _tx(pair, "h1"); liq = _liq(pair); mc = _f(pair.get("marketCap") or pair.get("fdv"))
         if bh >= 40 and sh == 0: r = ("honeypot_shape", f"{bh} buys and 0 sells in 1h (can't sell?)")
-        elif liq and mc > 0 and mc / liq > 60 and pair.get("dexId") not in ("pumpfun", "pump-fun"): r = ("thin_pool", f"mcap/liq {mc/liq:.0f}x")
+        elif liq >= 2000 and mc > 0 and mc / liq > 60 and pair.get("dexId") not in ("pumpfun", "pump-fun", "meteora-dbc", "raydium-launchlab"): r = ("thin_pool", f"mcap/liq {mc/liq:.0f}x")  # 363 fix: dust/curve pools left to the liquidity check
         elif SCAM_RX.search(sym or ""): r = ("scam_name", sym)
         else: r = wash_shape(pair) or copycat_fuzzy(sym, m, liq)
     STATS["293_ms"] = round((time.time() - t0) * 1000, 1)
@@ -272,6 +272,7 @@ def wash_shape(pair):
     """295: wash-trading shape: buys ~= sells (within 4%) with lots of trades and near-identical average trade size across 5m/1h/6h."""
     bh, sh = _tx(pair, "h1"); b6, s6 = _tx(pair, "h6")
     if bh + sh < 150 or abs(bh - sh) / (bh + sh) > 0.04: return None
+    if b6 + s6 < 1.5 * (bh + sh) or bh + sh < 1.5 * sum(_tx(pair, "m5")): return None  # 362 fix: young coins have identical windows -> not evidence of wash
     sizes = [(_vol(pair, k) / max(1, sum(_tx(pair, k)))) for k in ("m5", "h1", "h6") if sum(_tx(pair, k)) >= 20]
     if len(sizes) >= 2 and max(sizes) / max(1e-9, min(sizes)) < 1.06: return ("wash_shape", f"balanced flow {bh}/{sh} and uniform trade size ${min(sizes):.0f}-{max(sizes):.0f}")
     return None
@@ -317,6 +318,7 @@ def week_lessons():
     out += "- Signals that predicted winners: " + (", ".join(f"{k} {w:.0%} ({n:.0f})" for k, w, n in top[:4]) or "not enough trades yet") + "\n"
     out += "- Rule changes: " + ("; ".join(f"{x['key']} {x['old']}->{x['new']} (regret {x['regret']})" for x in ch) or "none") + "\n"
     out += "- " + calib_line() + "\n- Near-miss win rates: " + (", ".join(f"{k} {v[0]}/{v[1]}" for k, v in S["nm"].items()) or "n/a") + "\n"
+    out += "- " + __import__("brain8").funnel_line() + "\n- Rejections by gate: " + str(__import__("brain8").funnel()["gates"]) + "\n"  # 391/392
     out += "- Best skipped coin: " + (S["best_skip"] or {}).get("text", "n/a") + "\n" + "- Mistakes: " + (", ".join(f"{k} x{v}" for k, v in S["mistakes"].items()) or "none") + "\n"
     return out
 def best_skipped():

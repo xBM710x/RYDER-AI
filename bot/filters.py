@@ -8,18 +8,22 @@ AMM_TYPES = {"AMM", "LOCKER"}  # RugCheck knownAccounts types excluded from hold
 def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50% of the volume bar (safety checks unchanged)
     res = {}  # name -> (status pass/fail/unknown, detail, provenance)
     vol = ((pair or {}).get("volume") or {}).get("h1")
+    import brain8
+    if vol is not None and CFG["VERSION"] not in ("v1", "v2"): vol = brain8.projected_vol(pair)  # 364/387/398
+    vb = lambda: brain8.vol_bar(__import__("brain4").vol_bar(pair)) if CFG["VERSION"] not in ("v1", "v2") else __import__("brain4").vol_bar(pair)  # 367/378
     res["volume_1h"] = ("unknown", "no DexScreener pair", "dexscreener") if vol is None else \
-        (("pass" if vol >= __import__("brain4").vol_bar(pair) * (0.5 if relax else 1) else "fail"), f"${vol:,.0f}", "dexscreener")
+        (("pass" if vol >= (max(__import__("fomo").MIN_VOL_FLOOR, __import__("brain4").vol_bar(pair) * relax) if isinstance(relax, float) else vb() * (0.5 if relax else 1)) else "fail"), f"${vol:,.0f}", "dexscreener")
     if CFG["VERSION"] not in ("v1", "v2"):
-        liq = ((pair or {}).get("liquidity") or {}).get("usd")
-        res["liquidity"] = ("unknown", "no liquidity data", "dexscreener") if liq is None else (("pass" if liq >= CFG["MIN_LIQ"] else "fail"), f"${liq:,.0f}", "dexscreener")
+        liq = ((pair or {}).get("liquidity") or {}).get("usd") or brain8.curve_liq(pair)  # 388
+        res["liquidity"] = ("unknown", "no liquidity data", "dexscreener") if liq is None else (("pass" if liq >= (max(__import__("fomo").MIN_LIQ_FLOOR, CFG["MIN_LIQ"] * relax) if isinstance(relax, float) else brain8.liq_bar(CFG["MIN_LIQ"])) else "fail"), f"${liq:,.0f}", "dexscreener")  # 367
     if CFG["VERSION"] not in ("v1", "v2") and pair:
         tx = pair.get("txns") or {}; m5, h1 = tx.get("m5") or {}, tx.get("h1") or {}
         b5, s5, bh, sh = m5.get("buys", 0), m5.get("sells", 0), h1.get("buys", 0), h1.get("sells", 0)
         res["pressure"] = ("fail" if s5 > b5 or sh > bh * 1.2 else "pass", f"5m {b5}b/{s5}s, 1h {bh}b/{sh}s", "dexscreener")
         info = pair.get("info") or {}; soc = {(s.get("type") or "").lower(): s.get("url", "") for s in info.get("socials") or []}
         links = [u for u in [soc.get("twitter") or soc.get("x"), soc.get("telegram")] + [w.get("url") for w in info.get("websites") or []] if u]
-        if not (soc.get("twitter") or soc.get("x") or soc.get("telegram")): res["socials"] = ("fail", "no X/Telegram listed", "dexscreener")
+        if not (soc.get("twitter") or soc.get("x") or soc.get("telegram")):
+            res["socials"] = ("pass", "no X/Telegram listed (soft: -0.05 score)", "soft-366") if brain8.soft_socials(pair, vol, liq) else ("fail", "no X/Telegram listed", "dexscreener")  # 366
         else:
             dupe = detect.dupe_links(pair["baseToken"]["address"], links)
             res["socials"] = ("fail", "links reused by other token " + dupe[:8], "dexscreener") if dupe else ("pass", f"{len(links)} links, unique", "dexscreener")

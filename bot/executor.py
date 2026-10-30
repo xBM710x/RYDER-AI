@@ -31,6 +31,7 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
         streak = next((i for i, p in enumerate(last) if p > 0), len(last))
         if streak >= 2: size *= 0.5 if streak >= 3 else 0.75  # v3: shrink after losing streak
         if ver == CFG["VERSION"]: RISK.update(day_pnl=round(today, 2), day_limit=-0.15 * CFG["START_BALANCE"], loss_streak=streak, size_mult=round(mult * (0.5 if streak >= 3 else 0.75 if streak >= 2 else 1), 2), ts=time.time())
+    if CFG["VERSION"] not in ("v1", "v2") and 1 <= size < 5 and cash >= 5: size = 5.0  # 382 no dust paper fills (min $5)
     if size < 1: log("skip", mint, symbol, reason="insufficient paper cash", cash=cash); c.close(); return
     stop = price * (1 - stop_pct) if stop_pct else risk.initial_stop(price)  # stop fixed before entry
     c.execute("INSERT INTO positions(mint,symbol,pair,entry,qty,cost,stop,peak,trailing,opened,status,version) VALUES(?,?,?,?,?,?,?,?,0,?,'open',?)",

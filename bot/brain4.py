@@ -15,7 +15,7 @@ def loosen():
         rate = s.get("missed_winners", 0) / s["n"]
         if rule == "volume_1h" and rate > 0.05 and th["min_vol_h1"] > 25_000: th["min_vol_h1"] = int(max(25_000, th["min_vol_h1"] * 0.9)); ch.append(f"vol bar -> ${th['min_vol_h1']:,}")
         if rule.startswith("score") and rate > 0.10 and th["min_consensus"] > 0.5: th["min_consensus"] = round(max(0.5, th["min_consensus"] - 0.01), 3); ch.append(f"council bar -> {th['min_consensus']}")
-    CFG["MIN_VOL_H1"] = th["min_vol_h1"]
+    th["min_vol_h1"] = min(th["min_vol_h1"], __import__("brain8").APPROVED["MIN_VOL_H1"]); CFG["MIN_VOL_H1"] = th["min_vol_h1"]  # 361 never above approved bar
     if ch: B["lessons"] = (["missed winners: " + ", ".join(ch)] + B["lessons"])[:10]; brain2.save(B); log("loosen", changes=ch)
     return ch
 # 182 fallback holder data from RPC when RugCheck is slow/down (other RugCheck-only checks stay fail-closed)
@@ -75,7 +75,7 @@ def steadiness(mint):
     r = [q[i] / q[i - 1] - 1 for i in range(1, len(q)) if q[i - 1]]
     return round(max(0, 1 - statistics.pstdev(r) * 40), 3)
 # 190/196 priority queue for waiting coins (keep best N, swap out weakest)
-def admit(pending, new_score, cap=5):
+def admit(pending, new_score, cap=8):  # 380: 5 -> 8
     if len(pending) < cap: return True, None
     worst = min(pending, key=lambda m: pending[m]["score"])
     if new_score > pending[worst]["score"] + 0.03: return True, worst
