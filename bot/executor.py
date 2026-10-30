@@ -37,7 +37,7 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
               (mint, symbol, pair["pairAddress"], price, size / price, size, stop, price, time.time(), ver))
     c.execute("UPDATE account SET v=v-? WHERE k=?", (size, CK)); c.commit(); c.close()
     log("paper_buy", mint, symbol, price=price, quote=quote, usd=round(size, 2), stop=stop, score=score, conf=conf, book=ver, liq=(pair.get("liquidity") or {}).get("usd"), url=pair.get("url"), **(extra or {}))
-    try: alerts.on_buy(symbol, size, price, score, stop, (pair.get("liquidity") or {}).get("usd"), pair.get("url"), ver, (((extra or {}).get("plan") or {}).get("text", "") + "\n" + str(((extra or {}).get("council") or {}).get("reason") or "")).strip())
+    try: alerts.on_buy(symbol, size, price, score, stop, (pair.get("liquidity") or {}).get("usd"), pair.get("url"), ver, (str((extra or {}).get("why1") or "") + "\n" + ((extra or {}).get("plan") or {}).get("text", "") + "\n" + str(((extra or {}).get("council") or {}).get("reason") or "")).strip())
     except Exception: pass
     return True
 def sell(pos, quote, reason):
@@ -46,11 +46,13 @@ def sell(pos, quote, reason):
     c.execute("UPDATE positions SET status='closed',closed=?,exit=?,pnl=?,reason=? WHERE id=?", (time.time(), price, pnl, reason, pos["id"]))
     c.execute("UPDATE account SET v=v+? WHERE k=?", (proceeds, "cash" if pos.get("version", "v1") == "v1" else "cash_" + pos["version"])); c.commit(); c.close()
     log("paper_exit", pos["mint"], pos["symbol"], entry=pos["entry"], exit=price, stop=pos["stop"], slip_pct=round((price / pos["stop"] - 1) * 100, 2), pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason=reason, book=pos.get("version"))
-    try: alerts.on_exit(pos["symbol"], (price / pos["entry"] - 1) * 100, pnl, reason, pos.get("version", ""))
+    try: alerts.on_exit(pos["symbol"], (price / pos["entry"] - 1) * 100, pnl, reason, pos.get("version", ""), __import__("brain7").exit_extra(dict(pos, peak=max(pos.get("peak") or 0, quote)), quote))  # 355
     except Exception: pass
     try:  # 210 decision grade (all paper books)
         import brain5; c3 = conn(); tp = c3.execute("SELECT COALESCE(SUM(pnl),0) FROM positions WHERE mint=? AND reason='partial_tp' AND version=?", (pos["mint"], pos.get("version"))).fetchone()[0]; c3.close()
         brain5.on_close(pos, pnl + tp)
+        import brain7; brain7.review(dict(pos, reason=reason), pnl + tp)  # 277/278/288/320-326/350-352
+        if reason in ("lp_pull", "dev_sell", "rug_recheck"): brain7.theme_cooldown(pos["symbol"], reason)  # 328
     except Exception as e: log("error", where="grade", trace=str(e)[:200])
     if pos.get("version") == CFG["VERSION"]:  # 150/160 agents learn from every closed paper trade
         try:

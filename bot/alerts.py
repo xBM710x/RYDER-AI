@@ -28,11 +28,11 @@ fmt = lambda v: f"{v:.3g}" if v < 1 else f"{v:,.2f}"
 def on_buy(sym, usd, price, score, stop, liq, url, book, why=None):
     if book.endswith("b") or book.endswith("x"): return
     send_async(f"🟢 RYDER BUY (paper)\n{sym} · ${usd:.2f} at ${fmt(price)}\nScore {score} · stop −{(1-stop/price)*100:.1f}% · liq ${liq or 0:,.0f}\n" + (f"🧠 {why[:600]}\n" if why else "") + f"{url or ''}")
-def on_exit(sym, pct, pnl, reason, book):
+def on_exit(sym, pct, pnl, reason, book, extra=""):
     if book.endswith("b") or book.endswith("x"): return
     icon = "🏆" if reason == "partial_tp" else ("✅" if pnl > 0 else "🔴")
     label = "PARTIAL TP" if reason == "partial_tp" else ("WIN" if pnl > 0 else "STOP/SELL")
-    send_async(f"{icon} RYDER {label} (paper)\n{sym} · {pct:+.1f}% · ${pnl:+.2f}\nreason: {reason.replace('_', ' ')}")
+    send_async(f"{icon} RYDER {label} (paper)\n{sym} · {pct:+.1f}% · ${pnl:+.2f}\nreason: {reason.replace('_', ' ')}" + (f" · {extra}" if extra else "") + "\n" + __import__("brain7").why_exit(reason))  # 298 / 355
 _hello = [False]; _recap = [""]
 def tick(recap_fn=None):
     """Called every ~60s by runner: find chat_id (sends the connect message once) and send the 7 AM PT recap."""

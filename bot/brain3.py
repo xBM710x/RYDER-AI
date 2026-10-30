@@ -94,6 +94,7 @@ def weekly(send=True):
             f"- Best: {best['symbol'] + ' $%+.2f' % best['pnl'] if best else 'n/a'}\n- Exit reasons: {dict(rs)}\n- Agent trust: {B['trust']}\n- Thresholds: {B['thresholds']}\n"
             f"- Lessons:\n" + "\n".join(f"  - {l}" for l in (B["lessons"][:6] or ["not enough trades yet"])) + "\n")
     body += __import__("brain6").smarter_section()  # 240
+    body += __import__("brain7").week_lessons()  # 299
     open(fn, "w").write(body)
     if send: alerts.send("📚 RYDER weekly — what I learned (paper)\n" + body.replace("# ", "")[:3500])
     return fn
@@ -152,7 +153,7 @@ def jobs(k):
     now = time.time(); lt = time.localtime()
     def every(name, s, fn):
         if now - _last[name] >= s: _last[name] = now; POOL.submit(_safe, name, fn)
-    every("holdings", 120, holdings_watch); every("pregrad", 60, pregrad)
+    every("holdings", 120, holdings_watch); every("fomo_wallet", 60, __import__("wallet_watch").tick); every("pregrad", 60, pregrad)
     CFG["SCAN_SEC"] = scan_sec() if k % 300 == 0 else CFG["SCAN_SEC"]
     d = time.strftime("%F")
     if lt.tm_hour == 21 and _day.get("x") != d: _day["x"] = d; POOL.submit(_safe, "x_recap", x_recap)

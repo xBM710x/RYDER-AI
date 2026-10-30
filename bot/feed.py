@@ -13,7 +13,7 @@ def _run():
                 except Exception: pass
                 try: m = json.loads(w.recv())
                 except websocket.WebSocketTimeoutException:
-                    if time.time() - (STATS.get('last') or time.time()) > 300: STATS['reconnects'] = STATS.get('reconnects', 0) + 1; STATS['last'] = time.time(); w.close(); break  # 184
+                    if time.time() - (STATS.get('last') or time.time()) > 120: STATS['reconnects'] = STATS.get('reconnects', 0) + 1; STATS['last'] = time.time(); w.close(); break  # 184 / 338 (300s -> 120s)
                     continue
                 if m.get("mint") and m.get("txType") == "migrate":
                     NEW.append(dict(mint=m["mint"], name="", source="pumpportal-migration", dex="pumpswap", creator=None, t=time.time())); STATS["migrations"] = STATS.get("migrations", 0) + 1
