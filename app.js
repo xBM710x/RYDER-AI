@@ -57,3 +57,8 @@ function ryderExtras(d){const D=document.getElementById('dashboard');if(!D)retur
  x.innerHTML=h.join('')}
 setInterval(()=>document.querySelectorAll('#rd-extra [data-left]').forEach(s=>{let v=Math.max(0,(+s.dataset.left||0)-1);s.dataset.left=v;s.textContent=v?v+'s':'rechecking'}),1000);
 {const _r2=render;render=function(){_r2.apply(this,arguments);try{ryderExtras(data)}catch(err){console.warn(err)}}}
+
+/* Desktop ring star: live mood copy of the header mascot, brighter + bigger (wide view only via CSS). */
+function ryderBigStar(){const s=document.querySelector('.brand .rd-mascot');if(!s)return;let b=document.getElementById('rd-bigstar');if(!b){b=document.createElement('div');b.id='rd-bigstar';b.setAttribute('aria-hidden','true');document.body.appendChild(b)}
+ if(b.dataset.mood===s.dataset.mood)return;b.dataset.mood=s.dataset.mood;b.innerHTML=s.outerHTML.replace('id="rdb"','id="rdbB"').replace(/url\(#rdb\)/g,'url(#rdbB)').replace('<stop offset="0" stop-color="#F25C5C"/><stop offset="1" stop-color="#E03A3E"/>','<stop offset="0" stop-color="#FFB3BE"/><stop offset=".45" stop-color="#FF6B7D"/><stop offset="1" stop-color="#F0384E"/>')}
+{const _r3=render;render=function(){_r3.apply(this,arguments);try{ryderBigStar()}catch{}}}
