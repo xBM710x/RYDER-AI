@@ -15,7 +15,7 @@ def _run():
                 elif m.get("mint"):
                     NEW.append(dict(mint=m["mint"], name=m.get("symbol") or m.get("name") or "", source="pumpportal-ws",
                                     dex="pumpfun", creator=m.get("traderPublicKey"), t=time.time()))
-                    STATS["events"] += 1; STATS["last"] = time.time()
+                    __import__('brain2').watch_launch(m['mint']); STATS["events"] += 1; STATS["last"] = time.time()
         except Exception as e:
             STATS["connected"] = False; STATS["err"] = str(e)[:120]; time.sleep(15)
 def start():

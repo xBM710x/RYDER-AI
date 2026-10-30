@@ -12,7 +12,7 @@ def update(pos, price, trail_pct=None, sell_spike=False):
     if CFG["VERSION"] not in ("v1", "v2"):
         import time
         lv = pos.get("tp_done") or 0  # 76 scaled exits: +30% half, +60% half of rest, +100% half of rest
-        for i, lvl in enumerate((1.30, 1.60, 2.00)):
+        for i, lvl in enumerate((1.20, 1.50, 2.00)):  # 130 tiers 20/50/100
             if lv == i and price >= pos["entry"] * lvl: out["partial"] = i + 1; out["trailing"] = 1
         if not trailing and time.time() - pos["opened"] > 20 * 60 and abs(price / pos["entry"] - 1) < 0.05: out["time_stop"] = True  # v3: flat 20 min
     return out

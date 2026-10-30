@@ -35,7 +35,7 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
               (mint, symbol, pair["pairAddress"], price, size / price, size, stop, price, time.time(), ver))
     c.execute("UPDATE account SET v=v-? WHERE k=?", (size, CK)); c.commit(); c.close()
     log("paper_buy", mint, symbol, price=price, quote=quote, usd=round(size, 2), stop=stop, score=score, conf=conf, book=ver, liq=(pair.get("liquidity") or {}).get("usd"), url=pair.get("url"), **(extra or {}))
-    try: alerts.on_buy(symbol, size, price, score, stop, (pair.get("liquidity") or {}).get("usd"), pair.get("url"), ver)
+    try: alerts.on_buy(symbol, size, price, score, stop, (pair.get("liquidity") or {}).get("usd"), pair.get("url"), ver, ((extra or {}).get("council") or {}).get("reason"))
     except Exception: pass
     return True
 def sell(pos, quote, reason):
@@ -46,6 +46,13 @@ def sell(pos, quote, reason):
     log("paper_exit", pos["mint"], pos["symbol"], entry=pos["entry"], exit=price, stop=pos["stop"], slip_pct=round((price / pos["stop"] - 1) * 100, 2), pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason=reason)
     try: alerts.on_exit(pos["symbol"], (price / pos["entry"] - 1) * 100, pnl, reason, pos.get("version", ""))
     except Exception: pass
+    if pos.get("version") == CFG["VERSION"]:  # 150/160 agents learn from every closed paper trade
+        try:
+            import json, brain2; c = conn(); r = c.execute("SELECT data FROM events WHERE kind='paper_buy' AND mint=? ORDER BY ts DESC LIMIT 1", (pos["mint"],)).fetchone(); c.close()
+            cn = (json.loads(r["data"]).get("council") or {}) if r else {}
+            tot = pnl + (c2 := conn()).execute("SELECT COALESCE(SUM(pnl),0) FROM positions WHERE mint=? AND reason='partial_tp' AND version=?", (pos["mint"], pos["version"])).fetchone()[0]; c2.close()
+            brain2.learn({a: tuple(x) for a, x in (cn.get("votes") or {}).items()}, tot, cn.get("pattern"), (time.time() - pos["opened"]) / 60)
+        except Exception as e: log("error", where="learn", trace=str(e)[:200])
 def partial(pos, quote, level=1):
     """v3: sell half at +30% as its own closed row (reason partial_tp); remaining half keeps trailing."""
     price = quote * (1 - CFG["SLIP"]) * (1 - CFG["FEE"]); hq, hc = pos["qty"] / 2, pos["cost"] / 2; pnl = hq * price - hc

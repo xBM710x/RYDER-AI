@@ -28,17 +28,31 @@ def _http_json(url, body=None, timeout=12, retries=1):
         except Exception:
             if i == retries: raise
             time.sleep(1.5)
+RPCS = [CFG["RPC"], "https://solana-rpc.publicnode.com"]  # 123 backup free RPC failover
 def rpc(method, params):
-    r = http_json(CFG["RPC"], {"jsonrpc": "2.0", "id": 1, "method": method, "params": params}, timeout=30)
-    if "error" in r: raise RuntimeError(r["error"])
-    return r["result"]
+    err = None
+    for u in list(RPCS):
+        try:
+            r = http_json(u, {"jsonrpc": "2.0", "id": 1, "method": method, "params": params}, timeout=20 if u == RPCS[0] else 15)
+            if "error" in r and (r["error"] or {}).get("code") in (429, -32005, -32429): err = RuntimeError(r["error"]); continue
+            if "error" in r: raise RuntimeError(r["error"])
+            if u != RPCS[0]: RPCS.remove(u); RPCS.insert(0, u)  # promote the healthy endpoint
+            return r["result"]
+        except RuntimeError: raise
+        except Exception as e: err = e
+    raise err
+_DC = {}
 def dex_market(mints):
     """DexScreener batch (<=30 mints) -> {mint: best-liquidity solana pair}"""
     out = {}
     for i in range(0, len(mints), 30):
         chunk = mints[i:i+30]
-        try: pairs = http_json("https://api.dexscreener.com/tokens/v1/solana/" + ",".join(chunk)) or []
-        except Exception: continue
+        key = ",".join(sorted(chunk)); hit = _DC.get(key)
+        if hit and time.time() - hit[0] < 0.8: pairs = hit[1]  # 140 de-dupe identical calls across threads
+        else:
+            try: pairs = http_json("https://api.dexscreener.com/tokens/v1/solana/" + ",".join(chunk)) or []; _DC[key] = (time.time(), pairs)
+            except Exception: continue
+            if len(_DC) > 500: _DC.clear()
         for p in pairs:
             m = p.get("baseToken", {}).get("address")
             if m not in chunk: continue

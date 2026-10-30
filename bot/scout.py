@@ -36,7 +36,10 @@ def scout():
         r = c.execute("SELECT * FROM seen WHERE mint=?", (m,)).fetchone()
         if r is None:
             c.execute("INSERT INTO seen VALUES(?,?,?,0,0)", (m, now, 0)); out.append(d)
+        elif d.get("source") == "pumpportal-migration" and r["checks"] <= CFG["MAX_CHECKS"] and __import__("brain2").graduated(m):  # 121 re-check graduates of watched launches
+            c.execute("UPDATE seen SET done=0 WHERE mint=?", (m,)); d["grad"] = True; out.append(d)
         elif not r["done"] and r["checks"] < CFG["MAX_CHECKS"] and now - r["last_ts"] > CFG["RECHECK_MIN"] * 60:
             out.append(d)
     c.commit(); c.close()
+    out.sort(key=lambda d: -__import__('brain2').source_score(d))  # 122 freshest/best source first
     return out, len(cands)

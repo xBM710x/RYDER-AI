@@ -72,6 +72,8 @@ def check(mint, pair):
         if fee > 0: res["honeypot"] = ("fail", f"transfer tax {fee}%", "rugcheck"); return res
         sym = ((pair or {}).get("baseToken") or {}).get("symbol"); dup = extras.copycat(sym, mint, ((pair or {}).get("liquidity") or {}).get("usd"))
         if dup: res["copycat"] = ("fail", f"${sym} already exists with more liquidity ({dup[:8]})", "names-db"); return res
+        import brain2; hs = brain2.holder_scores(rc); brain2.HS[mint] = hs; hv = brain2.holder_verdict(hs)  # 125/126/134
+        if hv: res[hv[0]] = ("fail", hv[1], "rugcheck-holders"); return res
         pk = more.precheck(mint, pair, rc)
         if pk: res[pk[0]] = ("fail", pk[1], "v3-precheck"); return res
         hn, hr = extras.holder_rate(rc, pair); res["_holders"] = ("pass", f"{hn}|{hr}", "meta")
