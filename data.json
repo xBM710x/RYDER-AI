@@ -14,19 +14,19 @@
    "trades": 0,
    "wins": 0,
    "pnl": 0,
-   "cash": 300.0,
+   "cash": 270.0,
    "slip": null
   }
  ],
  "pos_sec": 4,
- "asof": "Oct 30 00:11 PT",
+ "asof": "Oct 30 00:16 PT",
  "start": 300.0,
- "equity": 300.0,
- "cash": 300.0,
- "scans": 23,
- "seen": 396,
- "passed": 1,
- "trades": 0,
+ "equity": 297.65,
+ "cash": 270.0,
+ "scans": 28,
+ "seen": 479,
+ "passed": 3,
+ "trades": 1,
  "wins": 0,
  "losses": 0,
  "realized": 0,
@@ -40,18 +40,22 @@
  "by_dex": [
   [
    "pumpfun",
-   321
+   384
   ],
   [
    "meteora",
-   37
+   44
   ],
   [
    "pumpswap",
-   30
+   41
   ],
   [
    "other/unknown",
+   3
+  ],
+  [
+   "orca",
    3
   ],
   [
@@ -59,22 +63,18 @@
    2
   ],
   [
-   "orca",
-   2
-  ],
-  [
    "raydium",
-   1
+   2
   ]
  ],
  "kills": [
   [
    "volume_1h",
-   389
+   470
   ],
   [
    "lp_locked",
-   5
+   7
   ],
   [
    "top10",
@@ -82,6 +82,10 @@
   ],
   [
    "score<0.6",
+   2
+  ],
+  [
+   "bundled",
    1
   ]
  ],
@@ -91,36 +95,47 @@
    "v": 300.0
   },
   {
-   "t": "00:11",
-   "v": 300.0
+   "t": "00:16",
+   "v": 297.65
   }
  ],
- "opens": [],
+ "opens": [
+  {
+   "sym": "HEXN",
+   "entry": 0.0006879,
+   "now": 0.0006341,
+   "stop": 0.000632868,
+   "trail": false,
+   "usd": 30.0,
+   "pnl": -2.35,
+   "dex": "orca"
+  }
+ ],
  "closed": [],
  "agents": [
   {
    "name": "Scout",
-   "stat": "396 pairs",
-   "text": "scan \u00b7 72 pairs, 15 new",
+   "stat": "479 pairs",
+   "text": "scan \u00b7 75 pairs, 6 new",
    "tone": ""
   },
   {
    "name": "Filter",
-   "stat": "100% killed",
-   "text": "killed HMB \u00b7 1h vol < $40k",
+   "stat": "99% killed",
+   "text": "killed \u2588\u2588\u2588 \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
    "name": "Analyst",
-   "stat": "1 scored",
-   "text": "perpetual score 0.223 \u2717",
+   "stat": "3 scored",
+   "text": "ANONYMOUSE score 0.275 \u2717",
    "tone": "red"
   },
   {
    "name": "Executor",
    "stat": "size \u2264 10%",
-   "text": "none yet",
-   "tone": ""
+   "text": "bought HEXN \u00b7 $30.0",
+   "tone": "green"
   },
   {
    "name": "Risk",
@@ -130,84 +145,12 @@
   },
   {
    "name": "Logger",
-   "stat": "397 why",
-   "text": "wrote 397 reasons",
+   "stat": "482 why",
+   "text": "wrote 482 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "23:42",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 90 pairs, 12 new",
-   "tone": ""
-  },
-  {
-   "t": "23:43",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 88 pairs, 24 new",
-   "tone": ""
-  },
-  {
-   "t": "23:43",
-   "ag": "FILTER",
-   "text": "killed ZERO \u00b7 top10 > 25%",
-   "tone": "red"
-  },
-  {
-   "t": "23:44",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 88 pairs, 18 new",
-   "tone": ""
-  },
-  {
-   "t": "23:45",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 87 pairs, 36 new",
-   "tone": ""
-  },
-  {
-   "t": "23:45",
-   "ag": "FILTER",
-   "text": "killed STABLEPAD \u00b7 LP not locked",
-   "tone": "red"
-  },
-  {
-   "t": "23:46",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 89 pairs, 12 new",
-   "tone": ""
-  },
-  {
-   "t": "00:03",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 88 pairs, 39 new",
-   "tone": ""
-  },
-  {
-   "t": "00:04",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 88 pairs, 35 new",
-   "tone": ""
-  },
-  {
-   "t": "00:05",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 83 pairs, 16 new",
-   "tone": ""
-  },
-  {
-   "t": "00:06",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 86 pairs, 3 new",
-   "tone": ""
-  },
-  {
-   "t": "00:07",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 86 pairs, 0 new",
-   "tone": ""
-  },
   {
    "t": "00:10",
    "ag": "SCOUT",
@@ -225,9 +168,81 @@
    "ag": "FILTER",
    "text": "killed p/acc \u00b7 LP not locked",
    "tone": "red"
+  },
+  {
+   "t": "00:12",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 70 pairs, 14 new",
+   "tone": ""
+  },
+  {
+   "t": "00:12",
+   "ag": "ANALYST",
+   "text": "HEXN score 0.768 \u2713",
+   "tone": "green"
+  },
+  {
+   "t": "00:12",
+   "ag": "EXECUTOR",
+   "text": "bought HEXN \u00b7 $30.0",
+   "tone": "green"
+  },
+  {
+   "t": "00:13",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 71 pairs, 17 new",
+   "tone": ""
+  },
+  {
+   "t": "00:13",
+   "ag": "FILTER",
+   "text": "killed inucrypted \u00b7 LP not locked",
+   "tone": "red"
+  },
+  {
+   "t": "00:14",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 81 pairs, 27 new",
+   "tone": ""
+  },
+  {
+   "t": "00:14",
+   "ag": "FILTER",
+   "text": "killed HI \u00b7 LP not locked",
+   "tone": "red"
+  },
+  {
+   "t": "00:14",
+   "ag": "FILTER",
+   "text": "killed SI \u00b7 bundled launch",
+   "tone": "red"
+  },
+  {
+   "t": "00:14",
+   "ag": "ANALYST",
+   "text": "ANONYMOUSE score 0.275 \u2717",
+   "tone": "red"
+  },
+  {
+   "t": "00:14",
+   "ag": "FILTER",
+   "text": "killed ANONYMOUSE \u00b7 score 0.275 < 0.6",
+   "tone": "red"
+  },
+  {
+   "t": "00:15",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 81 pairs, 22 new",
+   "tone": ""
+  },
+  {
+   "t": "00:16",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 75 pairs, 6 new",
+   "tone": ""
   }
  ],
- "nkills": 397,
+ "nkills": 482,
  "paper": true,
- "updated_at": "2026-10-30T07:11:12+00:00"
+ "updated_at": "2026-10-30T07:16:24+00:00"
 }
