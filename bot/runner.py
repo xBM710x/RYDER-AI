@@ -2,7 +2,7 @@
 import time, sys, traceback, threading
 from common import CFG, dex_market
 from logger import conn, log
-import brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts
+import brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts
 REENTRY = {}  # 34: mint -> (exit price, ts, sym)
 ENTRYLIQ = {}  # 26: mint -> liquidity at entry
 LAT = collections.deque(maxlen=50); KILLS = collections.deque(maxlen=12)
@@ -126,13 +126,28 @@ def pending():
             d0 = time.mktime(time.localtime()[:3] + (0, 0, 0, 0, 0, -1)); dp = c0.execute("SELECT COALESCE(SUM(pnl),0) FROM positions WHERE status='closed' AND version=? AND closed>=?", (CFG["VERSION"], d0)).fetchone()[0]; c0.close()
             ctx = dict(open=opn, day_pnl=dp, regime=reg.get("mood"), creator=p.get("creator"), impact=p.get("impact"), lesson_score=brain2.lesson_score(), holder_rate=p.get("rate", 0), rel_strength=rs_, liq_add=fl.get("liq_add"), steady=brain4.steadiness(m), smart=extras.smart_hits(p.get("owners"), m))
             cdd = p.get("cd") or {}; v = brain2.votes(cdd, pair, p.get("res", {}), p["score"], wp, conf, brain2.HS.get(m), ctx)
+            v["filter"] = (round(v["filter"][0] * brain5.rule_weight(), 3), v["filter"][1])  # 212
+            v, deb = brain5.debate(v)  # 205
             go, cons, smul, rsn = brain2.decide(v)
+            if deb: rsn += " · " + deb
             if go and brain2.second_opinion(cons):  # 151 borderline -> fresh look at 5s flow before committing
                 sp = brain2.spike(m, 10)
                 if sp["sells"] > sp["buys"] + 3: go, rsn = False, f"second opinion: sells {sp['sells']} > buys {sp['buys']} in 10s"
             line = brain2.one_line(p["sym"], v, cons, rsn)
             council = dict(consensus=cons, size=smul, votes={a: list(x) for a, x in v.items()}, reason=line, pattern=brain2.pattern_key(cdd, pair))
-            if not go: log("kill", m, p["sym"], reason="council", detail=line, final=True, council=council); brain2.reject(m, "council"); continue
+            stp = brain3.strength_stop(extras.vol_stop(pair), cons); plan_ = None
+            if go:  # 201-209 / 213-217: calibrated confidence, EV gate, Kelly size, plan
+                go, kmul, plan_, ev_why = brain5.decide(p["sym"], m, pair, v, cons, f, ex.get("narrative"), stp, p.get("impact"), reg)
+                rsn += " · " + ev_why; line = brain2.one_line(p["sym"], v, cons, rsn); council.update(reason=line)
+                if go: smul = round(smul * kmul, 3)
+            council["plan"] = plan_
+            if not go:
+                log("kill", m, p["sym"], reason="council", detail=line, final=True, council=council); brain2.reject(m, "council")
+                if p["score"] >= 0.6 and not str(line).count("veto") and not str(line).count("rug memory"):  # 211 experimental desk takes soft rejects at half size
+                    executor.buy(m, p["sym"], pair, p["score"], ver=brain5.EXP, mult=0.5, stop_pct=stp, conf=conf, extra=dict(ex, council=council, plan=plan_, experimental=True))
+                continue
+            ex["plan"] = plan_
+            if plan_: ex["why"] = plan_["text"] + "\n" + ex["why"]
             mult = round(mult * smul, 3); ex["why"] = line + " | " + str(ex.get("why", ""))[:200]
         ex["council"] = council
         ok = executor.buy(m, p["sym"], pair, p["score"], mult=mult, stop_pct=brain3.strength_stop(extras.vol_stop(pair), (council or {}).get("consensus")), conf=conf, extra=ex)
@@ -210,7 +225,7 @@ def recap():
     eq = cash + opn[1]; w = sum(p["pnl"] > 0 for p in cl)
     return (f"☀️ RYDER morning recap (paper)\nEquity ${eq:.2f} (start ${CFG['START_BALANCE']:.0f}, {eq/CFG['START_BALANCE']-1:+.1%})\n"
             f"Last 24h: {len(cl)} trades, {w}W/{len(cl)-w}L, P&L ${sum(p['pnl'] for p in cl):+.2f}\n{seen} coins scanned · {opn[0]} open\n"
-            "Lessons: " + "; ".join(brain.lessons()[:2]) + "\n" + brain4.missed_line() + "\nAgent trust: " + ", ".join(f"{a} {t:.2f}" for a, t in brain2.BRAIN["trust"].items()))
+            "Lessons: " + "; ".join(brain.lessons()[:2]) + "\n" + brain4.missed_line() + "\n" + brain5.goals_line() + "\nToday: " + brain5.day_mode(extras.STATE.get("regime")) + " · mentor agent: " + str(brain2.BRAIN.get("mentor")) + "\nAgent trust: " + ", ".join(f"{a} {t:.2f}" for a, t in brain2.BRAIN["trust"].items()))
 SHEAL = {}
 def jobs(k):
     if k % 60 == 7: SHEAL.update(brain2.selfheal({}, lambda n: None)); brain2.set_regime(extras.STATE.get("regime"))  # 139 / 152

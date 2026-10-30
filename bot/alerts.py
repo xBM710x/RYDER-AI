@@ -26,10 +26,10 @@ def send(text):
 def send_async(text): threading.Thread(target=send, args=(text,), daemon=True).start()
 fmt = lambda v: f"{v:.3g}" if v < 1 else f"{v:,.2f}"
 def on_buy(sym, usd, price, score, stop, liq, url, book, why=None):
-    if book.endswith("b"): return
-    send_async(f"🟢 RYDER BUY (paper)\n{sym} · ${usd:.2f} at ${fmt(price)}\nScore {score} · stop −{(1-stop/price)*100:.1f}% · liq ${liq or 0:,.0f}\n" + (f"🧠 {why[:220]}\n" if why else "") + f"{url or ''}")
+    if book.endswith("b") or book.endswith("x"): return
+    send_async(f"🟢 RYDER BUY (paper)\n{sym} · ${usd:.2f} at ${fmt(price)}\nScore {score} · stop −{(1-stop/price)*100:.1f}% · liq ${liq or 0:,.0f}\n" + (f"🧠 {why[:600]}\n" if why else "") + f"{url or ''}")
 def on_exit(sym, pct, pnl, reason, book):
-    if book.endswith("b"): return
+    if book.endswith("b") or book.endswith("x"): return
     icon = "🏆" if reason == "partial_tp" else ("✅" if pnl > 0 else "🔴")
     label = "PARTIAL TP" if reason == "partial_tp" else ("WIN" if pnl > 0 else "STOP/SELL")
     send_async(f"{icon} RYDER {label} (paper)\n{sym} · {pct:+.1f}% · ${pnl:+.2f}\nreason: {reason.replace('_', ' ')}")
