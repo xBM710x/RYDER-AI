@@ -33,3 +33,14 @@ $('#snapshot').onclick=async()=>{try{const d=await fetchData('data.json');genera
 $('#import').onchange=async e=>{try{const f=e.target.files[0];if(!f)return;if(f.size>2000000)throw Error('Please use a file smaller than 2 MB.');const d=validate(JSON.parse(await f.text()));generation++;mode='file';endpoint='';data=d;try{localStorage.removeItem('ryder-endpoint')}catch{}render();$('#config').close()}catch(e){$('#configError').textContent=e.message}e.target.value=''};
 document.querySelectorAll('nav a').forEach(a=>a.onclick=()=>{document.querySelectorAll('nav a').forEach(n=>n.classList.remove('active'));a.classList.add('active')});
 setInterval(()=>{if(mode==='feed'&&!document.hidden)refresh()},45000);document.addEventListener('visibilitychange',()=>{if(!document.hidden&&mode==='feed')refresh()});refresh();if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+/* RYDER mood mascot: swaps the header star's face by data.mood (happy|sad|sleepy|alert). Same size/position. */
+function ryderFace(m){const E=(ry,dy)=>`<ellipse cx="43" cy="${54+dy}" rx="3.8" ry="${ry}" fill="#fff" transform="rotate(-15 43 ${54+dy})"/><ellipse cx="57" cy="${54+dy}" rx="3.8" ry="${ry}" fill="#fff" transform="rotate(-15 57 ${54+dy})"/>`;
+ return {happy:E(6,-1)+'<path class="rd-mouth" d="M44.5 63.5 Q50 68 55.5 63.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>',
+  sad:E(6.4,1.5)+'<path class="rd-mouth" d="M45 67 Q50 63.2 55 67" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>',
+  sleepy:'<path d="M39.5 55 Q43 57.2 46.5 55 M53.5 55 Q57 57.2 60.5 55" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/>',
+  alert:E(8,-1)+'<circle class="rd-mouth" cx="50" cy="65" r="1.8" fill="#fff"/>'}[m]||E(7.2,0)}
+function ryderMascot(mood){const b=document.querySelector('.brand');if(!b)return;const m=['happy','sad','sleepy','alert'].includes(mood)?mood:'';let el=b.querySelector('.rd-mascot');
+ if(el&&el.dataset.mood===m)return;const html=`<svg class="rd-mascot rd-${m||'neutral'}" data-mood="${m}" viewBox="0 0 100 100" width="48" height="48" role="img" aria-label="RYDER red star${m?' · '+m:''}" style="overflow:visible"><defs><linearGradient id="rdb" x1="0.2" y1="0" x2="0.8" y2="1"><stop offset="0" stop-color="#F25C5C"/><stop offset="1" stop-color="#E03A3E"/></linearGradient></defs><g class="rd-body"><path fill="url(#rdb)" stroke="url(#rdb)" stroke-width="11" stroke-linejoin="round" d="M50.0 16.0 L60.0 40.2 L86.1 42.3 L66.2 59.3 L72.3 84.7 L50.0 71.0 L27.7 84.7 L33.8 59.3 L13.9 42.3 L40.0 40.2 Z"/><g class="rd-face">${ryderFace(m)}</g></g></svg>`;
+ const old=el||b.querySelector('img');if(old)old.outerHTML=html;else b.insertAdjacentHTML('afterbegin',html)}
+{const _r=render;render=function(){_r.apply(this,arguments);try{ryderMascot(data&&data.mood)}catch{}}}
