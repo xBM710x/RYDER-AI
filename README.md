@@ -1,1 +1,1 @@
-# RYDER-AI
+RYDER AI: live paper-trading stats for my RYDER Solana memecoin bot. Paper only, no wallets or real trades.
