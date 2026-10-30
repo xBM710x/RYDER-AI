@@ -27,12 +27,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Oct 30 01:31 PT",
+ "asof": "Oct 30 01:34 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 98,
- "seen": 926,
+ "scans": 104,
+ "seen": 980,
  "passed": 1,
  "trades": 1,
  "wins": 1,
@@ -66,19 +66,19 @@
  "by_dex": [
   [
    "pumpfun",
-   783
-  ],
-  [
-   "meteora",
-   54
+   830
   ],
   [
    "pumpswap",
-   54
+   58
+  ],
+  [
+   "meteora",
+   56
   ],
   [
    "letsbonk",
-   19
+   20
   ],
   [
    "raydium",
@@ -96,11 +96,11 @@
  "kills": [
   [
    "volume_1h",
-   930
+   984
   ],
   [
    "liquidity",
-   13
+   14
   ],
   [
    "lp_locked",
@@ -125,7 +125,7 @@
    "v": 302.4
   },
   {
-   "t": "01:31",
+   "t": "01:34",
    "v": 302.4
   }
  ],
@@ -145,14 +145,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "926 pairs",
-   "text": "scan \u00b7 104 pairs, 31 new",
+   "stat": "980 pairs",
+   "text": "scan \u00b7 90 pairs, 11 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed perpetual \u00b7 1h vol < $40k",
+   "text": "killed MEMELIQUID \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -175,54 +175,12 @@
   },
   {
    "name": "Logger",
-   "stat": "946 why",
-   "text": "wrote 946 reasons",
+   "stat": "1001 why",
+   "text": "wrote 1001 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "01:24",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 93 pairs, 23 new",
-   "tone": ""
-  },
-  {
-   "t": "01:24",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 88 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "01:25",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 88 pairs, 21 new",
-   "tone": ""
-  },
-  {
-   "t": "01:25",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 98 pairs, 11 new",
-   "tone": ""
-  },
-  {
-   "t": "01:26",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 88 pairs, 10 new",
-   "tone": ""
-  },
-  {
-   "t": "01:26",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 100 pairs, 14 new",
-   "tone": ""
-  },
-  {
-   "t": "01:27",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 90 pairs, 6 new",
-   "tone": ""
-  },
   {
    "t": "01:27",
    "ag": "SCOUT",
@@ -270,9 +228,51 @@
    "ag": "SCOUT",
    "text": "scan \u00b7 104 pairs, 31 new",
    "tone": ""
+  },
+  {
+   "t": "01:31",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 79 pairs, 4 new",
+   "tone": ""
+  },
+  {
+   "t": "01:31",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 93 pairs, 16 new",
+   "tone": ""
+  },
+  {
+   "t": "01:32",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 84 pairs, 6 new",
+   "tone": ""
+  },
+  {
+   "t": "01:32",
+   "ag": "FILTER",
+   "text": "killed Kenneth \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "01:32",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 94 pairs, 14 new",
+   "tone": ""
+  },
+  {
+   "t": "01:33",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 92 pairs, 4 new",
+   "tone": ""
+  },
+  {
+   "t": "01:33",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 90 pairs, 11 new",
+   "tone": ""
   }
  ],
- "nkills": 946,
+ "nkills": 1001,
  "mood": "happy",
  "kills_live": [
   {
@@ -324,7 +324,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 926,
+  "scanned": 980,
   "passed_filters": 1,
   "scored_ok": 1,
   "entry_wait": 2,
@@ -340,16 +340,16 @@
   },
   {
    "h": "01",
-   "scans": 60,
-   "kills": 686,
+   "scans": 66,
+   "kills": 741,
    "trades": 0,
    "pnl": 2.4
   }
  ],
  "agent_activity": {
   "LOGGER": 6,
-  "SCOUT": 98,
-  "FILTER": 946,
+  "SCOUT": 104,
+  "FILTER": 1001,
   "ANALYST": 1,
   "EXECUTOR": 3,
   "RISK": 2
@@ -366,8 +366,8 @@
  },
  "market_mood": {
   "mood": "neutral",
-  "sol_h1": -0.6,
-  "sol_h24": -2.81,
+  "sol_h1": -0.87,
+  "sol_h24": -2.76,
   "size_mult": 1.0,
   "gauge": 36
  },
@@ -375,17 +375,17 @@
   "scan_s_avg": 0.3,
   "scan_s_last": 0.4,
   "pos_check_s": 1,
-  "ws_last_event_s": 8
+  "ws_last_event_s": 27
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 60,
+   "ms": 58,
    "err": 0
   },
   "api.geckoterminal.com": {
    "ok_rate": 1.0,
-   "ms": 57,
+   "ms": 59,
    "err": 0
   }
  },
@@ -454,14 +454,14 @@
   "telegram_x": "not configured (needs Braydon's own bot token/chat; skipped)"
  },
  "paper": true,
- "updated_at": "2026-10-30T08:31:03+00:00",
+ "updated_at": "2026-10-30T08:34:06+00:00",
  "heartbeat": {
-  "at": "2026-10-30T08:31:03+00:00",
+  "at": "2026-10-30T08:34:06+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 0,
+  "runner_last_beat_s": 2,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 196,
+  "live_feed_events": 209,
   "publish_every_s": 180
  }
 }
