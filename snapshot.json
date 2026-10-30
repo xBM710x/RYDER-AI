@@ -1,0 +1,280 @@
+{
+  "asof": "Oct 29 23:16 PT",
+  "start": 300.0,
+  "equity": 288.89,
+  "cash": 288.89,
+  "scans": 10,
+  "seen": 260,
+  "passed": 10,
+  "trades": 3,
+  "wins": 0,
+  "losses": 3,
+  "realized": -11.1,
+  "best": {
+    "sym": "Foxii",
+    "entry": 0.0007769,
+    "exit": 0.0007079,
+    "pnl": -2.66,
+    "pct": -8.9,
+    "reason": "stop_loss",
+    "t": "23:08",
+    "dex": "pumpswap"
+  },
+  "worst": {
+    "sym": "STABLEPAD",
+    "entry": 2.257e-05,
+    "exit": 1.935e-05,
+    "pnl": -4.28,
+    "pct": -14.3,
+    "reason": "stop_loss",
+    "t": "23:09",
+    "dex": "pumpfun"
+  },
+  "stop_slippage": {
+    "n": 3,
+    "avg": -4.4,
+    "worst": -6.3
+  },
+  "by_dex": [
+    [
+      "pumpfun",
+      193
+    ],
+    [
+      "pumpswap",
+      33
+    ],
+    [
+      "meteora",
+      27
+    ],
+    [
+      "other/unknown",
+      2
+    ],
+    [
+      "raydium",
+      2
+    ],
+    [
+      "letsbonk",
+      2
+    ],
+    [
+      "orca",
+      1
+    ]
+  ],
+  "kills": [
+    [
+      "volume_1h",
+      236
+    ],
+    [
+      "lp_locked",
+      8
+    ],
+    [
+      "score<0.6",
+      7
+    ],
+    [
+      "bundled",
+      3
+    ],
+    [
+      "top10",
+      2
+    ],
+    [
+      "dev_rugs",
+      1
+    ]
+  ],
+  "curve": [
+    {
+      "t": "23:06",
+      "v": 300.0
+    },
+    {
+      "t": "23:08",
+      "v": 297.34
+    },
+    {
+      "t": "23:09",
+      "v": 293.06
+    },
+    {
+      "t": "23:10",
+      "v": 288.89
+    },
+    {
+      "t": "23:16",
+      "v": 288.89
+    }
+  ],
+  "opens": [],
+  "closed": [
+    {
+      "sym": "Foxii",
+      "entry": 0.0007769,
+      "exit": 0.0007079,
+      "pnl": -2.66,
+      "pct": -8.9,
+      "reason": "stop_loss",
+      "t": "23:08",
+      "dex": "pumpswap"
+    },
+    {
+      "sym": "STABLEPAD",
+      "entry": 2.257e-05,
+      "exit": 1.935e-05,
+      "pnl": -4.28,
+      "pct": -14.3,
+      "reason": "stop_loss",
+      "t": "23:09",
+      "dex": "pumpfun"
+    },
+    {
+      "sym": "HYPERCHAN",
+      "entry": 0.0016,
+      "exit": 0.001378,
+      "pnl": -4.16,
+      "pct": -13.9,
+      "reason": "stop_loss",
+      "t": "23:10",
+      "dex": "pumpswap"
+    }
+  ],
+  "agents": [
+    {
+      "name": "Scout",
+      "stat": "260 pairs",
+      "text": "scan \u00b7 90 pairs, 26 new",
+      "tone": ""
+    },
+    {
+      "name": "Filter",
+      "stat": "96% killed",
+      "text": "killed 1 \u00b7 1h vol < $40k",
+      "tone": "red"
+    },
+    {
+      "name": "Analyst",
+      "stat": "10 scored",
+      "text": "BITCAT score 0.442 \u2713",
+      "tone": "green"
+    },
+    {
+      "name": "Executor",
+      "stat": "size \u2264 10%",
+      "text": "bought HYPERCHAN \u00b7 $30.0",
+      "tone": "green"
+    },
+    {
+      "name": "Risk",
+      "stat": "-8% \u00b7 +15%",
+      "text": "sold HYPERCHAN \u00b7 -13.87% (stop_loss)",
+      "tone": "red"
+    },
+    {
+      "name": "Logger",
+      "stat": "257 why",
+      "text": "wrote 257 reasons",
+      "tone": ""
+    }
+  ],
+  "tail": [
+    {
+      "t": "23:08",
+      "ag": "RISK",
+      "text": "sold Foxii \u00b7 -8.88% (stop_loss)",
+      "tone": "red"
+    },
+    {
+      "t": "23:09",
+      "ag": "SCOUT",
+      "text": "scan \u00b7 87 pairs, 37 new",
+      "tone": ""
+    },
+    {
+      "t": "23:09",
+      "ag": "RISK",
+      "text": "sold STABLEPAD \u00b7 -14.27% (stop_loss)",
+      "tone": "red"
+    },
+    {
+      "t": "23:10",
+      "ag": "SCOUT",
+      "text": "scan \u00b7 89 pairs, 15 new",
+      "tone": ""
+    },
+    {
+      "t": "23:10",
+      "ag": "RISK",
+      "text": "sold HYPERCHAN \u00b7 -13.87% (stop_loss)",
+      "tone": "red"
+    },
+    {
+      "t": "23:11",
+      "ag": "SCOUT",
+      "text": "scan \u00b7 89 pairs, 19 new",
+      "tone": ""
+    },
+    {
+      "t": "23:12",
+      "ag": "SCOUT",
+      "text": "scan \u00b7 90 pairs, 23 new",
+      "tone": ""
+    },
+    {
+      "t": "23:13",
+      "ag": "SCOUT",
+      "text": "scan \u00b7 86 pairs, 17 new",
+      "tone": ""
+    },
+    {
+      "t": "23:14",
+      "ag": "SCOUT",
+      "text": "scan \u00b7 69 pairs, 3 new",
+      "tone": ""
+    },
+    {
+      "t": "23:15",
+      "ag": "SCOUT",
+      "text": "scan \u00b7 79 pairs, 29 new",
+      "tone": ""
+    },
+    {
+      "t": "23:15",
+      "ag": "FILTER",
+      "text": "killed Tony \u00b7 LP not locked",
+      "tone": "red"
+    },
+    {
+      "t": "23:16",
+      "ag": "SCOUT",
+      "text": "scan \u00b7 90 pairs, 26 new",
+      "tone": ""
+    },
+    {
+      "t": "23:16",
+      "ag": "FILTER",
+      "text": "killed Mars \u00b7 LP not locked",
+      "tone": "red"
+    },
+    {
+      "t": "23:16",
+      "ag": "FILTER",
+      "text": "killed Mars \u00b7 LP not locked",
+      "tone": "red"
+    },
+    {
+      "t": "23:16",
+      "ag": "FILTER",
+      "text": "killed Mars \u00b7 LP not locked",
+      "tone": "red"
+    }
+  ],
+  "nkills": 257
+}
