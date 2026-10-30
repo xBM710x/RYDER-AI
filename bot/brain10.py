@@ -9,13 +9,16 @@ def _load():
     try: return json.load(open(SF))
     except Exception: return {}
 S = _load(); [S.setdefault(k, v) for k, v in dict(nm_out={}, accel_out=[0, 0], src_accel={}).items()]
+OUTCOME0 = S.pop("_outcome", {}); WATCH0 = S.pop("_watch", {})
 STATS = collections.Counter(); LOCK = threading.Lock()
 WATCH = {}      # 441 mint -> dict(sym, reason, t, px0, vol0, liq0, hist=[(t, vol_h1, m5vol, px, liq)], n_requeue, src)
 QUEUE = []      # 444 coins due for a full re-evaluation
 BOOST = {}      # 461 mint -> dict(amt, n, first, last)
 TREND = collections.defaultdict(list)  # 466 mint -> poll timestamps seen on gecko trending/volume
-OUTCOME = {}    # 471 near-miss -> price checkpoints for learning
+OUTCOME = dict(OUTCOME0)    # 471 near-miss -> price checkpoints for learning (518 restored)
+WATCH.update({k: v for k, v in WATCH0.items() if time.time() - v.get("t", 0) < 2700})
 def save():
+    S["_outcome"] = OUTCOME; S["_watch"] = {k: dict(v, hist=v["hist"][-3:]) for k, v in list(WATCH.items())}  # 518 survive restarts
     try: json.dump(S, open(SF + ".tmp", "w"), default=str); os.replace(SF + ".tmp", SF)
     except Exception: pass
 def _f(x):
@@ -35,7 +38,7 @@ def note_kill(m, sym, reason, pair, src=None):
         if m in WATCH: return
         if len(WATCH) >= 120: WATCH.pop(min(WATCH, key=lambda k: WATCH[k]["t"]), None)  # 449 bounded
         WATCH[m] = dict(sym=sym, reason=reason, t=time.time(), px0=px, vol0=v, liq0=lq, hist=[], n=0, src=src)
-        OUTCOME.setdefault(m, dict(t=time.time(), px0=px, reason=reason, sym=sym))
+        OUTCOME.setdefault(m, dict(t=time.time(), px0=px, reason=reason, sym=sym, vr=round(v / _bar_vol(), 3), lr=round(lq / _bar_liq(), 3)))  # 516 margins vs bar
     STATS["watch_add"] += 1
 def unwatch(m):
     with LOCK: WATCH.pop(m, None)
@@ -130,6 +133,9 @@ def outcome_job():
         if now - o["t"] > 3600 or not px:
             g = (px / o["px0"] - 1) if px else -1.0; r = S["nm_out"].setdefault(o["reason"], [0, 0, 0])
             r[0] += 1; r[1] += g >= 0.30; r[2] += g <= -0.30; OUTCOME.pop(m, None)
+            gp = max(g, (o.get("p30", 0) / o["px0"] - 1) if o.get("p30") else -1)  # 517 best of the 30/60-min checkpoints
+            S.setdefault("nm_recs", []).append(dict(t=round(o["t"]), reason=o["reason"], vr=o.get("vr"), lr=o.get("lr"), g60=round(g, 3), gmax=round(gp, 3)))
+            S["nm_recs"] = S["nm_recs"][-3000:]
             if g >= 0.30: STATS["missed_winner"] += 1; log("nearmiss_outcome", m, o["sym"], reason=o["reason"], gain=round(g, 2))
         else: o["p30"] = px
     if len(OUTCOME) > 2000: [OUTCOME.pop(k) for k in list(OUTCOME)[:400]]
@@ -181,6 +187,7 @@ def _bg(name, fn):
 def jobs(k):
     if k % 30 == 10: _bg("poll_watch", poll_watch)            # 444 every ~30s
     if k % 300 == 200: _bg("outcome", outcome_job)            # 471 every ~5 min
+    if k % 120 == 77: _bg("save", save)                       # 518
     lt = time.localtime()
     if lt.tm_hour == 3 and lt.tm_min == 45 and k % 60 == 0: _bg("decay", decay)
 def status():

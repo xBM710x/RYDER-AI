@@ -70,3 +70,9 @@ No trading bars or safety checks changed.
 GET TTL cache (new_pools 45s, trending/top-volume 150s, token info 15 min, token price 20s, boosts/profiles 60s); while cooling, the last good response (<=15 min) is served; a thread never waits >20s in the queue.
 506-510 hang diagnostics: positions/scan loops stamp liveness; independent watchdog dumps all thread stacks to hang.log if positions is silent 60s or scan 150s (max once/10 min). Reason: unexplained stale-heartbeat restarts at 13:26 and 13:40 PT.
 511-515 health: heartbeat block b11 (per-host ok/err/latency, 429 count, cooldowns, cache hits, stale serves, loop ages, stall counts).
+
+## 2026-10-30 14:55 PT - upgrades 516-531 (brain12.py + brain10/brain7 fixes, paper only). Backup: ../backup_pre516_20261030_144711
+No bars changed. 516-518: near-miss records now keep how close the coin was to each bar (vol/liq as % of bar) and the best of the 30/60-min re-prices; watchlist + pending outcomes saved to brain10.json every ~2 min and restored on restart (were lost on every restart).
+519-530 bar advisor (SUGGEST ONLY, never applies): per bar, bands 90-100/75-90/60-75/30-60% of bar; a band "costs winners" if 15+ coins, >=25% ran +30% within 60 min, and winners > dumps. Hourly 'bar_advice' log event, "Bar check" line in the morning recap, full tables in heartbeat b12.
+Caveat: near-misses stopped at the first failing gate, so their later safety checks never ran; win counts are an upper bound.
+531 fix: "best skipped coin" ignored readings above +5000% (recap showed an impossible +122,013,411,206% for 'Pum Coin').

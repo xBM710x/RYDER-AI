@@ -2,7 +2,7 @@
 import time, sys, traceback, threading
 from common import CFG, dex_market
 from logger import conn, log
-import brain11, brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
+import brain12, brain11, brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
 REENTRY = {}  # 34: mint -> (exit price, ts, sym)
 ENTRYLIQ = {}  # 26: mint -> liquidity at entry
 brain10.ENTRYLIQ = ENTRYLIQ  # 480 shared entry liquidity
@@ -379,7 +379,7 @@ def recap():
     eq = cash + opn[1]; w = sum(p["pnl"] > 0 for p in cl)
     return (f"☀️ RYDER morning recap (paper)\nEquity ${eq:.2f} (start ${CFG['START_BALANCE']:.0f}, {eq/CFG['START_BALANCE']-1:+.1%})\n"
             f"Last 24h: {len(cl)} trades, {w}W/{len(cl)-w}L, P&L ${sum(p['pnl'] for p in cl):+.2f}\n{seen} coins scanned · {opn[0]} open\n"
-            "Lessons: " + "; ".join(brain.lessons()[:2]) + "\n" + brain4.missed_line() + "\n" + brain5.goals_line() + "\n" + brain5.exp_tally() + "\n" + brain6.best_worst_line() + "\nToday: " + brain5.day_mode(extras.STATE.get("regime")) + " · mentor agent: " + str(brain2.BRAIN.get("mentor")) + "\n" + brain7.recap_lines() + "\n" + brain8.funnel_line() + "\nAgent trust: " + ", ".join(f"{a} {t:.2f}" for a, t in brain2.BRAIN["trust"].items()))
+            "Lessons: " + "; ".join(brain.lessons()[:2]) + "\n" + brain4.missed_line() + "\n" + brain5.goals_line() + "\n" + brain5.exp_tally() + "\n" + brain6.best_worst_line() + "\n" + brain12.line() + "\nToday: " + brain5.day_mode(extras.STATE.get("regime")) + " · mentor agent: " + str(brain2.BRAIN.get("mentor")) + "\n" + brain7.recap_lines() + "\n" + brain8.funnel_line() + "\nAgent trust: " + ", ".join(f"{a} {t:.2f}" for a, t in brain2.BRAIN["trust"].items()))
 SHEAL = {}
 def jobs(k):
     if k % 60 == 7: SHEAL.update(brain2.selfheal({}, lambda n: None)); brain2.set_regime(extras.STATE.get("regime"))  # 139 / 152
@@ -405,7 +405,7 @@ def state():
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
         decision_s=dict(avg=round(sum(DEC) / len(DEC), 2) if DEC else None, p90=sorted(DEC)[int(len(DEC) * 0.9)] if DEC else None, n=len(DEC)),
         deep_check_s=dict(avg=round(sum(DEEP) / len(DEEP), 1) if DEEP else None, max=max(DEEP) if DEEP else None, n=len(DEEP)), inflight=len(INFLIGHT),
-        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), b10=brain10.status(), b11=brain11.status(), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
+        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), b10=brain10.status(), b11=brain11.status(), b12=brain12.status(), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
         latency=dict(scan_s_avg=round(sum(LAT) / len(LAT), 1) if LAT else None, scan_s_last=LAT[-1] if LAT else None, pos_check_s=CFG["POS_SEC"],
                      ws_last_event_s=round(now - feed.STATS["last"]) if feed.STATS.get("last") else None),
         sources={h: dict(v, ok_rate=round(v["ok"] / max(1, v["ok"] + v["err"]), 2)) for h, v in HEALTH.items()})
@@ -432,7 +432,7 @@ def main(cycles=None):
                 if k % 3 == 0: pending()  # 422: 5s -> 3s
                 if k % 600 == 0: detect.sweep_dead(); analyst.retune()
                 if k % 30 == 0: reentry()
-                jobs(k); brain3.jobs(k); brain7.jobs(k); brain9.jobs(k); brain10.jobs(k)
+                jobs(k); brain3.jobs(k); brain7.jobs(k); brain9.jobs(k); brain10.jobs(k); brain12.jobs(k)
                 if k % 60 == 30: brain8.patience()  # 367
                 if k % 3600 == 3599: brain8.hourly()  # 370/389
                 if k % 300 == 150: brain3.POOL.submit(brain3._safe, "requeue_volume", brain4.requeue_volume)  # 188

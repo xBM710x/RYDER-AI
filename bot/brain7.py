@@ -322,8 +322,8 @@ def week_lessons():
     out += "- Best skipped coin: " + (S["best_skip"] or {}).get("text", "n/a") + "\n" + "- Mistakes: " + (", ".join(f"{k} x{v}" for k, v in S["mistakes"].items()) or "none") + "\n"
     return out
 def best_skipped():
-    """300: Logger 'best skipped coin of the day'."""
-    c = conn(); r = c.execute("SELECT c.mint, c.rule, c.pct, (SELECT symbol FROM events e WHERE e.mint=c.mint AND e.kind='kill' LIMIT 1) FROM counterfactual c WHERE c.ts>? ORDER BY c.pct DESC LIMIT 1", (time.time() - 86400,)).fetchone(); c.close()
+    """300: Logger best skipped coin of the day. 531: ignore impossible >5000% readings (bad price data, e.g. a different pool)."""
+    c = conn(); r = c.execute("SELECT c.mint, c.rule, c.pct, (SELECT symbol FROM events e WHERE e.mint=c.mint AND e.kind='kill' LIMIT 1) FROM counterfactual c WHERE c.ts>? AND c.pct <= 5000 ORDER BY c.pct DESC LIMIT 1", (time.time() - 86400,)).fetchone(); c.close()
     if not r: return None
     S["best_skip"] = dict(mint=r[0], rule=r[1], pct=r[2], sym=r[3], text=f"{r[3] or r[0][:6]} {r[2]:+.0f}% after I skipped it for {r[1]}", t=time.time()); save()
     log("best_skipped", r[0], r[3], rule=r[1], pct=r[2]); return S["best_skip"]
