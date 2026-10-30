@@ -27,12 +27,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Oct 30 01:08 PT",
+ "asof": "Oct 30 01:11 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 56,
- "seen": 427,
+ "scans": 62,
+ "seen": 497,
  "passed": 1,
  "trades": 1,
  "wins": 1,
@@ -66,37 +66,41 @@
  "by_dex": [
   [
    "pumpfun",
-   342
+   403
   ],
   [
    "pumpswap",
-   35
+   37
   ],
   [
    "meteora",
-   29
+   31
   ],
   [
    "letsbonk",
-   12
+   15
   ],
   [
    "raydium",
-   5
+   6
   ],
   [
    "other/unknown",
    4
+  ],
+  [
+   "orca",
+   1
   ]
  ],
  "kills": [
   [
    "volume_1h",
-   422
+   493
   ],
   [
    "liquidity",
-   9
+   10
   ],
   [
    "lp_locked",
@@ -117,7 +121,7 @@
    "v": 302.4
   },
   {
-   "t": "01:08",
+   "t": "01:11",
    "v": 302.4
   }
  ],
@@ -137,14 +141,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "427 pairs",
-   "text": "scan \u00b7 93 pairs, 19 new",
+   "stat": "497 pairs",
+   "text": "scan \u00b7 96 pairs, 16 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed BILL \u00b7 1h vol < $40k",
+   "text": "killed AGI \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -167,54 +171,12 @@
   },
   {
    "name": "Logger",
-   "stat": "433 why",
-   "text": "wrote 433 reasons",
+   "stat": "505 why",
+   "text": "wrote 505 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "01:04",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 79 pairs, 9 new",
-   "tone": ""
-  },
-  {
-   "t": "01:04",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 89 pairs, 13 new",
-   "tone": ""
-  },
-  {
-   "t": "01:04",
-   "ag": "FILTER",
-   "text": "killed p/acc \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "01:05",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 92 pairs, 15 new",
-   "tone": ""
-  },
-  {
-   "t": "01:05",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 91 pairs, 8 new",
-   "tone": ""
-  },
-  {
-   "t": "01:05",
-   "ag": "FILTER",
-   "text": "killed Sleet \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "01:06",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 77 pairs, 5 new",
-   "tone": ""
-  },
   {
    "t": "01:06",
    "ag": "SCOUT",
@@ -262,9 +224,51 @@
    "ag": "SCOUT",
    "text": "scan \u00b7 93 pairs, 19 new",
    "tone": ""
+  },
+  {
+   "t": "01:09",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 81 pairs, 8 new",
+   "tone": ""
+  },
+  {
+   "t": "01:09",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 90 pairs, 14 new",
+   "tone": ""
+  },
+  {
+   "t": "01:09",
+   "ag": "FILTER",
+   "text": "killed Chameleon  \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "01:10",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 91 pairs, 5 new",
+   "tone": ""
+  },
+  {
+   "t": "01:10",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 100 pairs, 26 new",
+   "tone": ""
+  },
+  {
+   "t": "01:11",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 91 pairs, 3 new",
+   "tone": ""
+  },
+  {
+   "t": "01:11",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 96 pairs, 16 new",
+   "tone": ""
   }
  ],
- "nkills": 433,
+ "nkills": 505,
  "mood": "happy",
  "kills_live": [
   {
@@ -276,6 +280,11 @@
    "t": "01:07:46",
    "sym": "Stonka",
    "reason": "socials"
+  },
+  {
+   "t": "01:09:46",
+   "sym": "Chameleon ",
+   "reason": "liquidity"
   }
  ],
  "watchlist": [],
@@ -283,7 +292,7 @@
   {
    "sym": "SAFU",
    "exit": 0.0001493,
-   "mins_left": 52
+   "mins_left": 49
   }
  ],
  "risk_state": {
@@ -297,7 +306,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 427,
+  "scanned": 497,
   "passed_filters": 1,
   "scored_ok": 1,
   "entry_wait": 1,
@@ -313,16 +322,16 @@
   },
   {
    "h": "01",
-   "scans": 18,
-   "kills": 173,
+   "scans": 24,
+   "kills": 245,
    "trades": 0,
    "pnl": 2.4
   }
  ],
  "agent_activity": {
   "LOGGER": 5,
-  "SCOUT": 56,
-  "FILTER": 433,
+  "SCOUT": 62,
+  "FILTER": 505,
   "ANALYST": 1,
   "EXECUTOR": 2,
   "RISK": 2
@@ -339,26 +348,26 @@
  },
  "market_mood": {
   "mood": "neutral",
-  "sol_h1": -0.96,
-  "sol_h24": -2.48,
+  "sol_h1": -1.05,
+  "sol_h24": -3.02,
   "size_mult": 1.0,
-  "gauge": 38
+  "gauge": 35
  },
  "latency": {
   "scan_s_avg": 0.3,
-  "scan_s_last": 0.3,
+  "scan_s_last": 0.4,
   "pos_check_s": 1,
-  "ws_last_event_s": 17
+  "ws_last_event_s": 2
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 69,
+   "ms": 75,
    "err": 0
   },
   "api.geckoterminal.com": {
    "ok_rate": 1.0,
-   "ms": 53,
+   "ms": 61,
    "err": 0
   }
  },
@@ -427,14 +436,14 @@
   "telegram_x": "not configured (needs Braydon's own bot token/chat; skipped)"
  },
  "paper": true,
- "updated_at": "2026-10-30T08:08:46+00:00",
+ "updated_at": "2026-10-30T08:11:48+00:00",
  "heartbeat": {
-  "at": "2026-10-30T08:08:46+00:00",
+  "at": "2026-10-30T08:11:48+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 1,
+  "runner_last_beat_s": 3,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 32,
+  "live_feed_events": 54,
   "publish_every_s": 180
  }
 }
