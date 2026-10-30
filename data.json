@@ -27,12 +27,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Oct 30 01:24 PT",
+ "asof": "Oct 30 01:28 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 86,
- "seen": 783,
+ "scans": 92,
+ "seen": 847,
  "passed": 1,
  "trades": 1,
  "wins": 1,
@@ -66,15 +66,15 @@
  "by_dex": [
   [
    "pumpfun",
-   650
+   706
   ],
   [
    "pumpswap",
-   51
+   54
   ],
   [
    "meteora",
-   47
+   52
   ],
   [
    "letsbonk",
@@ -96,7 +96,7 @@
  "kills": [
   [
    "volume_1h",
-   783
+   850
   ],
   [
    "liquidity",
@@ -125,7 +125,7 @@
    "v": 302.4
   },
   {
-   "t": "01:24",
+   "t": "01:28",
    "v": 302.4
   }
  ],
@@ -145,14 +145,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "783 pairs",
-   "text": "scan \u00b7 88 pairs, 1 new",
+   "stat": "847 pairs",
+   "text": "scan \u00b7 91 pairs, 5 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed TIPTOE \u00b7 1h vol < $40k",
+   "text": "killed TERMINAL \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -175,48 +175,12 @@
   },
   {
    "name": "Logger",
-   "stat": "799 why",
-   "text": "wrote 799 reasons",
+   "stat": "866 why",
+   "text": "wrote 866 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "01:18",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 102 pairs, 16 new",
-   "tone": ""
-  },
-  {
-   "t": "01:18",
-   "ag": "FILTER",
-   "text": "killed MONEKO \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "01:18",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 99 pairs, 22 new",
-   "tone": ""
-  },
-  {
-   "t": "01:19",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 84 pairs, 3 new",
-   "tone": ""
-  },
-  {
-   "t": "01:19",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 93 pairs, 20 new",
-   "tone": ""
-  },
-  {
-   "t": "01:19",
-   "ag": "EXECUTOR",
-   "text": "SAFU waiting 90s to recheck",
-   "tone": ""
-  },
   {
    "t": "01:20",
    "ag": "SCOUT",
@@ -270,9 +234,45 @@
    "ag": "SCOUT",
    "text": "scan \u00b7 88 pairs, 1 new",
    "tone": ""
+  },
+  {
+   "t": "01:25",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 88 pairs, 21 new",
+   "tone": ""
+  },
+  {
+   "t": "01:25",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 98 pairs, 11 new",
+   "tone": ""
+  },
+  {
+   "t": "01:26",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 88 pairs, 10 new",
+   "tone": ""
+  },
+  {
+   "t": "01:26",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 100 pairs, 14 new",
+   "tone": ""
+  },
+  {
+   "t": "01:27",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 90 pairs, 6 new",
+   "tone": ""
+  },
+  {
+   "t": "01:27",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 91 pairs, 5 new",
+   "tone": ""
   }
  ],
- "nkills": 799,
+ "nkills": 866,
  "mood": "happy",
  "kills_live": [
   {
@@ -304,6 +304,11 @@
    "t": "01:18:16",
    "sym": "MONEKO",
    "reason": "liquidity"
+  },
+  {
+   "t": "01:27:27",
+   "sym": "POKERFACE",
+   "reason": "volume_1h"
   }
  ],
  "watchlist": [],
@@ -319,7 +324,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 783,
+  "scanned": 847,
   "passed_filters": 1,
   "scored_ok": 1,
   "entry_wait": 2,
@@ -335,16 +340,16 @@
   },
   {
    "h": "01",
-   "scans": 48,
-   "kills": 539,
+   "scans": 54,
+   "kills": 606,
    "trades": 0,
    "pnl": 2.4
   }
  ],
  "agent_activity": {
   "LOGGER": 5,
-  "SCOUT": 86,
-  "FILTER": 799,
+  "SCOUT": 92,
+  "FILTER": 866,
   "ANALYST": 1,
   "EXECUTOR": 3,
   "RISK": 2
@@ -368,19 +373,19 @@
  },
  "latency": {
   "scan_s_avg": 0.3,
-  "scan_s_last": 0.2,
+  "scan_s_last": 0.3,
   "pos_check_s": 1,
-  "ws_last_event_s": 31
+  "ws_last_event_s": 3
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 51,
+   "ms": 55,
    "err": 0
   },
   "api.geckoterminal.com": {
    "ok_rate": 1.0,
-   "ms": 51,
+   "ms": 48,
    "err": 0
   }
  },
@@ -449,14 +454,14 @@
   "telegram_x": "not configured (needs Braydon's own bot token/chat; skipped)"
  },
  "paper": true,
- "updated_at": "2026-10-30T08:24:59+00:00",
+ "updated_at": "2026-10-30T08:28:01+00:00",
  "heartbeat": {
-  "at": "2026-10-30T08:24:59+00:00",
+  "at": "2026-10-30T08:28:01+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 1,
+  "runner_last_beat_s": 3,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 132,
+  "live_feed_events": 169,
   "publish_every_s": 180
  }
 }
