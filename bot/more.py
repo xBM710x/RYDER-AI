@@ -50,7 +50,8 @@ def guards(narr):
     c = conn(); V = CFG["VERSION"]
     op = [dict(r) for r in c.execute("SELECT mint FROM positions WHERE status='open' AND version=?", (V,))]
     buys = {r["mint"]: json.loads(r["data"]) for r in c.execute("SELECT mint,data FROM events WHERE kind='paper_buy' AND version=?", (V,))}; c.close()
-    if len(op) >= 3: return "max 3 concurrent holdings", 1
+    mo = __import__('brain3').max_open(__import__('extras').STATE.get('regime'))  # 178
+    if len(op) >= mo: return f"max {mo} concurrent holdings (market mood)", 1
     if narr != "other" and any((buys.get(p["mint"]) or {}).get("narrative") == narr for p in op): return f"already holding a '{narr}' coin (correlation guard)", 1
     cl = sorted(_closed(), key=lambda p: p["closed"])
     last3 = cl[-3:]

@@ -74,8 +74,13 @@ def dev_score(creator):
     except Exception: bad = 0
     try: n = c.execute("SELECT COUNT(*) FROM creators WHERE creator=?", (creator,)).fetchone()[0]
     except Exception: n = 0
+    try:  # 162 funding-source grade: funder on rug list or funding many devs
+        fr = c.execute("SELECT funder FROM dev_funders WHERE creator=?", (creator,)).fetchone()
+        fb = c.execute("SELECT COUNT(*) FROM rug_wallets WHERE wallet=?", (fr[0],)).fetchone()[0] if fr else 0
+        sib = c.execute("SELECT COUNT(*) FROM dev_funders WHERE funder=?", (fr[0],)).fetchone()[0] - 1 if fr else 0
+    except Exception: fb = sib = 0
     c.close()
-    return round(max(0, 0.7 - 0.5 * bad - 0.05 * max(0, n - 1)), 2)
+    return round(max(0, 0.7 - 0.5 * bad - 0.05 * max(0, n - 1) - 0.4 * fb - 0.1 * max(0, sib)), 2)
 # ---------- 133 time-of-day / 135 age vs volume hype / 136 wash ----------
 def tod_score():
     h = time.localtime().tm_hour; c = conn()
@@ -138,12 +143,14 @@ def narrative(sym):  # 156
 def votes(cd, pair, res, score, wp, conf, rc_scores, ctx):
     """142: each agent returns a confidence 0..1 plus a one-line reason."""
     v = {}; pk = pattern_key(cd, pair); ps = BRAIN["patterns"].get(pk, [0, 0])
-    v["scout"] = (round(0.5 * source_score(cd) + 0.5 * ((ps[1] + 1) / (ps[0] + 2)), 3), f"{cd.get('source')} pattern {pk} {ps[1]}/{ps[0]} wins")
+    import brain3; lm = brain3.launch_momentum(pair, ctx.get("holder_rate", 0))  # 175
+    v["scout"] = (round(0.4 * source_score(cd) + 0.35 * ((ps[1] + 1) / (ps[0] + 2)) + 0.25 * lm, 3), f"{cd.get('source')} pattern {pk} {ps[1]}/{ps[0]} wins, momentum {lm}")
     unver = sum(1 for x in res.values() if isinstance(x, tuple) and x[2] in ("unverified", "rugcheck-approx-fallback"))
     fc = 0.9 - 0.1 * unver; hs = rc_scores or {}
     if hs: fc = 0.5 * fc + 0.5 * hs.get("conc_score", 0.5)
     v["filter"] = (round(max(0, fc), 3), f"{unver} unverified checks, top10 {hs.get('top10','?')}%")
-    v["analyst"] = (round(0.5 * score + 0.5 * wp, 3), f"score {score}, win prob {wp}")
+    sm = ctx.get("smart", 0)  # 163 smart-trader wallets among holders
+    v["analyst"] = (round(min(1, 0.5 * score + 0.5 * wp + 0.05 * min(sm, 3)), 3), f"score {score}, win prob {wp}, smart wallets {sm}")
     liq = (pair.get("liquidity") or {}).get("usd") or 0; imp = ctx.get("impact")
     ec = min(1, liq / 100_000) * (1 - min(1, (imp or 0) / 3)) * (0.6 + 0.4 * pressure(pair))
     v["executor"] = (round(ec, 3), f"liq ${liq:,.0f}, impact {imp if imp is not None else '?'}%, pressure {pressure(pair)}")
@@ -207,8 +214,10 @@ def nightly_review():
     cs = [(buys.get(p["mint"], {}).get("council", {}).get("consensus"), p["pnl"]) for p in cl]; cs = [x for x in cs if x[0] is not None]
     if len(cs) >= 6:
         lo = [p for c_, p in cs if c_ < th["min_consensus"] + 0.08]
-        if lo and sum(lo) < 0: th["min_consensus"] = round(min(0.75, th["min_consensus"] + 0.02), 3); les.append("low-consensus trades lost: raised bar")
-        elif sum(p for _, p in cs) > 0: th["min_consensus"] = round(max(0.5, th["min_consensus"] - 0.01), 3); les.append("council profitable: bar eased slightly")
+        new = round(min(0.75, th["min_consensus"] + 0.02), 3) if lo and sum(lo) < 0 else round(max(0.5, th["min_consensus"] - 0.01), 3) if sum(p for _, p in cs) > 0 else th["min_consensus"]
+        import brain3; ok, why = brain3.shadow_ok(cs, th["min_consensus"], new)  # 174 shadow-test before going live
+        if new != th["min_consensus"]: les.append(f"proposed bar {th['min_consensus']}->{new}: {'adopted' if ok else 'rejected'} ({why})")
+        if ok: th["min_consensus"] = new
     lq = [(buys.get(p["mint"], {}).get("liq") or 0, p["pnl"]) for p in cl]
     thin = [p for l, p in lq if l and l < th["min_liq"] * 1.5]
     if len(thin) >= 4 and sum(thin) < 0: th["min_liq"] = int(min(60_000, th["min_liq"] * 1.15)); les.append(f"thin-liq entries lost: min liq -> ${th['min_liq']:,}")
