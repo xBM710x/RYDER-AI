@@ -27,12 +27,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Oct 30 00:41 PT",
+ "asof": "Oct 30 00:44 PT",
  "start": 300.0,
  "equity": 300.0,
  "cash": 300.0,
- "scans": 0,
- "seen": 0,
+ "scans": 7,
+ "seen": 48,
  "passed": 0,
  "trades": 0,
  "wins": 0,
@@ -45,15 +45,41 @@
   "avg": 0,
   "worst": 0
  },
- "by_dex": [],
- "kills": [],
+ "by_dex": [
+  [
+   "pumpfun",
+   41
+  ],
+  [
+   "meteora",
+   4
+  ],
+  [
+   "other/unknown",
+   1
+  ],
+  [
+   "raydium",
+   1
+  ],
+  [
+   "pumpswap",
+   1
+  ]
+ ],
+ "kills": [
+  [
+   "volume_1h",
+   48
+  ]
+ ],
  "curve": [
   {
    "t": "00:41",
    "v": 300.0
   },
   {
-   "t": "00:41",
+   "t": "00:44",
    "v": 300.0
   }
  ],
@@ -62,15 +88,15 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "0 pairs",
-   "text": "none yet",
+   "stat": "48 pairs",
+   "text": "scan \u00b7 87 pairs, 1 new",
    "tone": ""
   },
   {
    "name": "Filter",
-   "stat": "0% killed",
-   "text": "none yet",
-   "tone": ""
+   "stat": "100% killed",
+   "text": "killed ZRO \u00b7 1h vol < $40k",
+   "tone": "red"
   },
   {
    "name": "Analyst",
@@ -92,8 +118,8 @@
   },
   {
    "name": "Logger",
-   "stat": "0 why",
-   "text": "wrote 0 reasons",
+   "stat": "48 why",
+   "text": "wrote 48 reasons",
    "tone": ""
   }
  ],
@@ -103,18 +129,66 @@
    "ag": "LOGGER",
    "text": "start",
    "tone": ""
+  },
+  {
+   "t": "00:41",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 92 pairs, 18 new",
+   "tone": ""
+  },
+  {
+   "t": "00:41",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 92 pairs, 0 new",
+   "tone": ""
+  },
+  {
+   "t": "00:42",
+   "ag": "LOGGER",
+   "text": "start",
+   "tone": ""
+  },
+  {
+   "t": "00:42",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 85 pairs, 6 new",
+   "tone": ""
+  },
+  {
+   "t": "00:42",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 93 pairs, 7 new",
+   "tone": ""
+  },
+  {
+   "t": "00:43",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 94 pairs, 3 new",
+   "tone": ""
+  },
+  {
+   "t": "00:43",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 91 pairs, 13 new",
+   "tone": ""
+  },
+  {
+   "t": "00:44",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 87 pairs, 1 new",
+   "tone": ""
   }
  ],
- "nkills": 0,
+ "nkills": 48,
  "paper": true,
- "updated_at": "2026-10-30T07:41:25+00:00",
+ "updated_at": "2026-10-30T07:44:27+00:00",
  "heartbeat": {
-  "at": "2026-10-30T07:41:25+00:00",
-  "runner_alive": false,
-  "runner_last_beat_s": null,
-  "pending_entries": null,
-  "live_feed": false,
-  "live_feed_events": null,
+  "at": "2026-10-30T07:44:27+00:00",
+  "runner_alive": true,
+  "runner_last_beat_s": 3,
+  "pending_entries": 0,
+  "live_feed": true,
+  "live_feed_events": 6,
   "publish_every_s": 180
  }
 }
