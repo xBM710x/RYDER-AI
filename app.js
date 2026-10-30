@@ -60,5 +60,5 @@ setInterval(()=>document.querySelectorAll('#rd-extra [data-left]').forEach(s=>{l
 
 /* Desktop ring star: live mood copy of the header mascot, brighter + bigger (wide view only via CSS). */
 function ryderBigStar(){const s=document.querySelector('.brand .rd-mascot');if(!s)return;let b=document.getElementById('rd-bigstar');if(!b){b=document.createElement('div');b.id='rd-bigstar';b.setAttribute('aria-hidden','true');document.body.appendChild(b)}
- if(b.dataset.mood===s.dataset.mood)return;b.dataset.mood=s.dataset.mood;b.innerHTML=s.outerHTML.replace('id="rdb"','id="rdbB"').replace(/url\(#rdb\)/g,'url(#rdbB)').replace('<stop offset="0" stop-color="#F25C5C"/><stop offset="1" stop-color="#E03A3E"/>','<stop offset="0" stop-color="#FFB3BE"/><stop offset=".45" stop-color="#FF6B7D"/><stop offset="1" stop-color="#F0384E"/>')}
+ if(b.dataset.mood===s.dataset.mood)return;b.dataset.mood=s.dataset.mood;b.innerHTML=s.outerHTML.replace('id="rdb"','id="rdbB"').replace(/url\(#rdb\)/g,'url(#rdbB)').replace('<stop offset="0" stop-color="#F25C5C"/><stop offset="1" stop-color="#E03A3E"/>','<stop offset="0" stop-color="#FF8A9A"/><stop offset="1" stop-color="#FF3B4F"/>')}
 {const _r3=render;render=function(){_r3.apply(this,arguments);try{ryderBigStar()}catch{}}}
