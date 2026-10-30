@@ -43,12 +43,16 @@ def funder(w):
     return None
 def holder_cluster(owners, budget=25):
     """Top holders (ex-AMM) funded by the same wallet -> fail. Budget-limited; returns (status, detail)."""
-    t0, f, checked = time.time(), {}, 0
+    t0, f, checked, fresh = time.time(), {}, 0, 0
     for w in owners[:6]:
         if time.time() - t0 > budget: break
-        try: src = funder(w); checked += 1
+        try:
+            sg = onchain.r("getSignaturesForAddress", [w, {"limit": 1000}]) or []; checked += 1
+            if len(sg) < 20: fresh += 1  # v3 #23: brand-new wallet
+            src = funder(w) if 0 < len(sg) < 1000 else None
         except Exception: continue
         if src: f.setdefault(src, []).append(w)
+    if fresh >= 4: return "fail", f"{fresh}/{checked} top holders are fresh wallets (<20 txs)"
     if checked == 0: return "unknown", "no holder funding readable on free RPC"
     top = max(f.items(), key=lambda kv: len(kv[1]), default=(None, []))
     d = f"checked {checked}/{min(len(owners),6)} top holders, max {len(top[1])} share funder {str(top[0])[:8]}"

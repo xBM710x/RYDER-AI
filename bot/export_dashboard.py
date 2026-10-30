@@ -94,6 +94,64 @@ out = dict(version=V, versions=versions, pos_sec=CFG["POS_SEC"], asof=time.strft
   best=max(closed, key=lambda x: x["pnl"]) if closed else None, worst=min(closed, key=lambda x: x["pnl"]) if closed else None,
   stop_slippage=dict(n=len(slip), avg=round(sum(slip)/len(slip), 1) if slip else 0, worst=min(slip) if slip else 0),
   by_dex=by_dex.most_common(), kills=kills.most_common(), curve=curve, opens=opens, closed=closed[-15:], agents=agents2, tail=tail2, nkills=sum(kills.values()))
+try: _hb = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "heartbeat.json")))
+except Exception: _hb = {}
+_lc = cl[-1] if cl else None; _recent = _lc and time.time() - _lc["closed"] < 3600
+_last_act = max([e["ts"] for e in ev if e["kind"] in ("paper_buy", "paper_exit", "entry_wait")] or [0])
+if (_hb.get("pending") or 0) > 0 and time.time() - _hb.get("ts", 0) < 120: out["mood"] = "alert"
+elif _recent and _lc["pnl"] > 0: out["mood"] = "happy"
+elif _recent and _lc["pnl"] <= 0: out["mood"] = "sad"
+elif op or time.time() - _last_act < 1800: out["mood"] = "happy" if now_eq >= CFG["START_BALANCE"] and (op or cl) else ("sad" if now_eq < CFG["START_BALANCE"] else "alert")
+else: out["mood"] = "sleepy"
+# ---- v3 compact data fields (41-60) ----
+import backtest
+out["kills_live"] = _hb.get("kills_live") or [dict(t=time.strftime("%H:%M:%S", time.localtime(e["ts"])), sym=(e["symbol"] or "")[:14], reason=e["d"].get("reason")) for e in ev if e["kind"] == "kill" and e["d"].get("final", True)][-12:]
+out["watchlist"] = _hb.get("watch") or []
+out["reentry_watch"] = _hb.get("reentry") or []
+_rk = dict(_hb.get("risk") or {}); _d0 = time.mktime(time.localtime()[:3] + (0, 0, 0, 0, 0, -1))
+_today = round(sum(p["pnl"] for p in cl if p["closed"] >= _d0), 2); _lim = -0.15 * CFG["START_BALANCE"]
+_st = 0
+for p in reversed([p for p in cl if p["reason"] != "partial_tp"]):
+    if p["pnl"] > 0: break
+    _st += 1
+out["risk_state"] = dict(day_pnl=_today, day_limit=_lim, day_used_pct=round(min(100, max(0, _today / _lim * 100)), 1), loss_streak=_st, paused=_today <= _lim,
+    size_mult=_rk.get("size_mult", 1.0), trades_last_hour=sum(1 for p in cl + op if p["opened"] > time.time() - 3600), max_per_hour=CFG["MAX_PER_HOUR"])
+out["funnel"] = dict(scanned=seen, passed_filters=sum(e["kind"] == "score" for e in ev), scored_ok=sum(e["kind"] == "score" and e["d"].get("score", 0) >= CFG["MIN_SCORE"] for e in ev),
+    entry_wait=sum(e["kind"] == "entry_wait" for e in ev), traded=len({p["mint"] for p in cl + op}))
+_hr = collections.defaultdict(lambda: dict(scans=0, kills=0, trades=0, pnl=0.0))
+for e in ev:
+    h = time.strftime("%H", time.localtime(e["ts"])); k = e["kind"]
+    if k == "scan": _hr[h]["scans"] += 1
+    elif k == "kill": _hr[h]["kills"] += 1
+    elif k == "paper_buy": _hr[h]["trades"] += 1
+for p in cl: _hr[time.strftime("%H", time.localtime(p["closed"]))]["pnl"] += p["pnl"]
+out["hourly"] = [dict(h=h, **{k: (round(v, 2) if isinstance(v, float) else v) for k, v in d.items()}) for h, d in sorted(_hr.items())][-24:]
+_act = collections.Counter(AG.get(e["kind"], "LOGGER") for e in ev if e["ts"] > time.time() - 3600)
+out["agent_activity"] = dict(_act)
+try:
+    _rl = [dict(r) for r in c.execute("SELECT wallet, reason, ts FROM rug_wallets ORDER BY ts DESC")]
+    out["rug_list"] = dict(count=len(_rl), recent=[dict(w=r["wallet"][:6] + "…" + r["wallet"][-4:], why=r["reason"][:60]) for r in _rl[:5]])
+except Exception: out["rug_list"] = dict(count=0, recent=[])
+_nb = {e["mint"]: e["d"].get("narrative") or "other" for e in ev if e["kind"] == "paper_buy"}
+_ns = collections.defaultdict(lambda: dict(trades=0, pnl=0.0))
+for p in cl: n = _nb.get(p["mint"], "other"); _ns[n]["trades"] += 1; _ns[n]["pnl"] = round(_ns[n]["pnl"] + p["pnl"], 2)
+out["narratives"] = dict(_ns)
+_reg = _hb.get("regime") or {}
+_mm = _reg.get("mood") or "unknown"; out["market_mood"] = dict(mood=_mm, sol_h1=_reg.get("sol_h1"), sol_h24=_reg.get("sol_h24"), size_mult=_reg.get("size_mult", 1.0),
+    gauge=max(0, min(100, round(50 + (_reg.get("sol_h24") or 0) * 5))))
+out["latency"] = _hb.get("latency") or {}
+out["sources"] = {h: dict(ok_rate=v.get("ok_rate"), ms=v.get("ms"), err=v.get("err")) for h, v in (_hb.get("sources") or {}).items()}
+_bc = {e["mint"]: e["d"] for e in ev if e["kind"] == "paper_buy"}
+for o, p in zip(opens, op):
+    b = _bc.get(p["mint"], {}); o["conf"] = b.get("conf"); o["narrative"] = b.get("narrative")
+    o["stop_dist_pct"] = round((o["now"] / o["stop"] - 1) * 100, 1) if o["stop"] else None; o["gain_pct"] = round((o["now"] / p["entry"] - 1) * 100, 1)
+    o["trail_at"] = round(p["entry"] * (1 + CFG["TRAIL_ACTIVATE"]), 12); o["peak"] = p["peak"]
+try: out["backtest"] = backtest.run(V)
+except Exception: out["backtest"] = None
+try: out["weights"] = __import__("analyst").weights()
+except Exception: pass
+out["postmortems"] = [dict(sym=e["symbol"], **{k: e["d"].get(k) for k in ("exit_pct", "peak_pct", "held_min", "reason", "lesson")}) for e in ev if e["kind"] == "postmortem"][-5:]
+out["alerts"] = dict(telegram_x="not configured (needs Braydon's own bot token/chat; skipped)")
 line = "const DATA: any = " + json.dumps(out) + ";"
 open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "page_data_line.txt"), "w").write(line)
 print(line)

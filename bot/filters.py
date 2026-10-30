@@ -3,7 +3,7 @@ VERIFIED (on-chain via Solana RPC): mint authority, freeze authority.
 SOURCED (RugCheck/DexScreener data, not independently verified): LP locked/burned, top-10 %, 1h volume.
 APPROXIMATED (heuristics on RugCheck data): dev past rugs, bundled launch."""
 from common import http_json, rpc, CFG
-import onchain, detect
+import onchain, detect, extras
 AMM_TYPES = {"AMM", "LOCKER"}  # RugCheck knownAccounts types excluded from holder concentration
 def check(mint, pair):
     res = {}  # name -> (status pass/fail/unknown, detail, provenance)
@@ -65,6 +65,15 @@ def check(mint, pair):
     bund = [r for r in risks if "bundle" in r.lower() or "insider" in r.lower()]
     if held > 10 or bund: res["bundled"] = ("fail", f"insiders hold {held:.1f}%; {bund}", "rugcheck-approx")
     else: res["bundled"] = ("pass", f"insiders hold {held:.1f}%, {rc.get('graphInsidersDetected') or 0} insider wallets", "rugcheck-approx")
+    if CFG["VERSION"] not in ("v1", "v2"):
+        mut = [r for r in risks if "mutable" in r.lower()]
+        if mut or (rc.get("tokenMeta") or {}).get("mutable"): res["mutable_meta"] = ("fail", "metadata is mutable", "rugcheck"); return res
+        fee = ((rc.get("transferFee") or {}).get("pct")) or 0
+        if fee > 0: res["honeypot"] = ("fail", f"transfer tax {fee}%", "rugcheck"); return res
+        sym = ((pair or {}).get("baseToken") or {}).get("symbol"); dup = extras.copycat(sym, mint, ((pair or {}).get("liquidity") or {}).get("usd"))
+        if dup: res["copycat"] = ("fail", f"${sym} already exists with more liquidity ({dup[:8]})", "names-db"); return res
+        hn, hr = extras.holder_rate(rc, pair); res["_holders"] = ("pass", f"{hn}|{hr}", "meta")
+        extras.save_holders(mint, [h.get("owner") for h in th])
     cr = rc.get("creator"); res["_creator"] = ("pass", cr or "", "meta"); detect.remember_creator(mint, cr, pair)
     if CFG["VERSION"] not in ("v1", "v2"):
         bad_w, why = detect.is_rugger(cr)
@@ -88,6 +97,10 @@ def check(mint, pair):
         try: st, dt = detect.holder_cluster(owners)
         except Exception as e: st, dt = "unknown", f"rpc error {e}"
         res["holder_cluster"] = (st, dt, "rpc-onchain") if st != "unknown" else ("pass", dt + " (skipped, not counted)", "unverified")
+        if res["holder_cluster"][0] == "pass":
+            try: st, dt = extras.sell_sim(mint)
+            except Exception as e: st, dt = "unknown", f"jupiter quote error {str(e)[:60]}"
+            res["honeypot"] = (st, dt, "jupiter-quote") if st != "unknown" else ("fail", dt + " (no sell route = possible honeypot)", "jupiter-quote")
     if CFG["VERSION"] not in ("v1", "v2") and all(v[0] == "pass" for v in res.values()) and pair:
         try: st, dt = onchain.wash_check(pair["pairAddress"])
         except Exception as e: st, dt = "unknown", f"rpc error {e}"
