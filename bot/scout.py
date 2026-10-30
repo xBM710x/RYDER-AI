@@ -29,6 +29,7 @@ def scout():
         try:
             for t in http_json(url) or []:
                 if t.get("chainId") == "solana":
+                    __import__("brain10").note_boost(t, url)  # 461
                     if "boosts" in url: BOOSTED[t["tokenAddress"]] = time.time()  # boosted/trending -> small score bump later (safety checks unchanged)
                     cands.setdefault(t["tokenAddress"], dict(mint=t["tokenAddress"], name="", source="dexscreener-boost" if "boosts" in url else "dexscreener", dex=tag("", t["tokenAddress"])))
         except Exception as e: print("scout dexs err", e)
@@ -38,9 +39,10 @@ def scout():
         cands.setdefault(t["mint"], t)  # v3 live websocket launches
         if t.get("source") == "pumpportal-migration": __import__("brain8").migration_recheck(t["mint"])  # 377
     if poll:
-        for t in __import__("brain8").discover(): cands.setdefault(t["mint"], t)  # 374/375
+        for t in __import__("brain8").discover(): cands.setdefault(t["mint"], t); __import__("brain10").note_trend(t["mint"], t["source"])  # 374/375/466
     for m in __import__("brain8").due_migrations(): cands.setdefault(m, dict(mint=m, name="", source="pumpportal-migration-recheck", dex="pumpswap", grad=True, recheck=True))
     for m, v in __import__("brain8").due_second(): cands.setdefault(m, dict(mint=m, name="", source="second-chance", dex="unknown", recheck=True, v0=v))
+    for t in __import__("brain10").due(): cands[t["mint"]] = t  # 444 accel-watch re-checks
     # handoff: only tokens never finalized and due for (re)check
     c = conn(); now = time.time(); out = []
     for m, d in cands.items():

@@ -2,9 +2,10 @@
 import time, sys, traceback, threading
 from common import CFG, dex_market
 from logger import conn, log
-import brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
+import brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
 REENTRY = {}  # 34: mint -> (exit price, ts, sym)
 ENTRYLIQ = {}  # 26: mint -> liquidity at entry
+brain10.ENTRYLIQ = ENTRYLIQ  # 480 shared entry liquidity
 LAT = collections.deque(maxlen=50); KILLS = collections.deque(maxlen=12)
 PENDING = {}  # mint -> entry candidate waiting ENTRY_DELAY
 HB = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'heartbeat.json')
@@ -29,6 +30,8 @@ def kill(m, sym, reason, detail, final=True, pair=None, **kw):
     brain8.count("gate:" + str(reason))  # 369 every evaluate gate
     if final: brain2.reject(m, reason); brain2.rule_hit(reason)
     if final: KILLS.append(dict(t=time.strftime("%H:%M:%S"), sym=(sym or "")[:14], reason=reason))
+    if pair and reason in ("volume_1h", "liquidity"): brain10.note_kill(m, sym, reason, pair)  # 441
+    elif final: brain10.unwatch(m)  # 442 any other final kill (safety) removes it from the watch
     log("kill", m, sym, reason=reason, detail=detail, final=final, px=float((pair or {}).get("priceUsd") or 0) or None, **kw)
 def evaluate(cd, pair, relax=False):
     t0 = time.time(); m = cd["mint"]; sym = (pair or {}).get("baseToken", {}).get("symbol") or cd["name"]
@@ -104,6 +107,7 @@ def evaluate(cd, pair, relax=False):
         a7 = round(max(-0.15, min(0.12, sum(parts7.values()))), 3); adj = round(adj + a7, 3); b7 = dict(parts=parts7, adj=a7, tags=tg, t10=t10, liq_g=lgr, curve=brain7.curve_progress(pair)[1])
     if CFG["VERSION"] not in ("v1", "v2") and pair:
         tx9 = (pair.get("txns") or {}); adj = round(adj + pa9 + brain9.pressure_verdict((tx9.get("m5") or {}).get("buys") or 0, (tx9.get("m5") or {}).get("sells") or 0, (tx9.get("h1") or {}).get("buys") or 0, (tx9.get("h1") or {}).get("sells") or 0)[1], 3)  # 403/416
+        adj = round(adj + round(brain10.accel_adj(m, pair) * brain10.accel_conf(), 3) + brain10.feed_adj(m, pair), 3)  # 453/474/463-468
         adj = round(adj + brain8.staying_power(checks, pair) - (0.05 if res.get("socials", ("", "", ""))[2] == "soft-366" else 0), 3)  # 379 / 366
     sc2 = round(sc + adj, 3); brain8.count("scored")
     dp = brain.dump_pattern(f)
@@ -297,6 +301,8 @@ def positions():
             if x9 and x9[1] == "partial": executor.partial(p, price, (p.get("tp_done") or 0) + 1); p = dict(p, qty=p["qty"] / 2, cost=p["cost"] / 2, tp_done=(p.get("tp_done") or 0) + 1, trailing=1)
             elif x9 and x9[1] == "sell" and brain9.exit_rule_ok(x9[0]): executor.sell(p, price, x9[0]); extras.postmortem(p, price, x9[0]); continue
             elif x9 and x9[1] == "stop": p = dict(p, stop=x9[2])
+            x10 = brain10.exit_check(p, price, pr) if p.get("version") in (CFG["VERSION"], "v3x") else None  # 479-482
+            if x10 and brain9.exit_rule_ok(x10): executor.sell(p, price, x10); extras.postmortem(p, price, x10); continue
             if brain9.entry_liq_drain(p, (pr.get("liquidity") or {}).get("usd"), ENTRYLIQ.get(p["mint"])): p = dict(p, stop=p["entry"] * 0.97)  # 407
             bf7 = brain7.buy_fade(p, price) if brain9.exit_rule_ok("buy_fade") else None  # 273 / 412
             if bf7: executor.sell(p, price, "buy_fade"); extras.postmortem(p, price, "buy_fade"); continue
@@ -399,7 +405,7 @@ def state():
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
         decision_s=dict(avg=round(sum(DEC) / len(DEC), 2) if DEC else None, p90=sorted(DEC)[int(len(DEC) * 0.9)] if DEC else None, n=len(DEC)),
         deep_check_s=dict(avg=round(sum(DEEP) / len(DEEP), 1) if DEEP else None, max=max(DEEP) if DEEP else None, n=len(DEEP)), inflight=len(INFLIGHT),
-        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
+        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), b10=brain10.status(), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
         latency=dict(scan_s_avg=round(sum(LAT) / len(LAT), 1) if LAT else None, scan_s_last=LAT[-1] if LAT else None, pos_check_s=CFG["POS_SEC"],
                      ws_last_event_s=round(now - feed.STATS["last"]) if feed.STATS.get("last") else None),
         sources={h: dict(v, ok_rate=round(v["ok"] / max(1, v["ok"] + v["err"]), 2)) for h, v in HEALTH.items()})
@@ -426,7 +432,7 @@ def main(cycles=None):
                 if k % 3 == 0: pending()  # 422: 5s -> 3s
                 if k % 600 == 0: detect.sweep_dead(); analyst.retune()
                 if k % 30 == 0: reentry()
-                jobs(k); brain3.jobs(k); brain7.jobs(k); brain9.jobs(k)
+                jobs(k); brain3.jobs(k); brain7.jobs(k); brain9.jobs(k); brain10.jobs(k)
                 if k % 60 == 30: brain8.patience()  # 367
                 if k % 3600 == 3599: brain8.hourly()  # 370/389
                 if k % 300 == 150: brain3.POOL.submit(brain3._safe, "requeue_volume", brain4.requeue_volume)  # 188
@@ -447,7 +453,7 @@ def main(cycles=None):
         t0 = time.time()
         try: scan(); n += 1
         except Exception: log("error", where="scan", trace=traceback.format_exc()[-800:])
-        ss = brain4.scan_sec(feed.STATS, len(INFLIGHT) + len(PENDING), CFG["SCAN_SEC"])  # 198
+        ss = brain10.scan_hint(brain4.scan_sec(feed.STATS, len(INFLIGHT) + len(PENDING), CFG["SCAN_SEC"]))  # 198 / 451
         while time.time() - t0 < ss and not feed.NEW: time.sleep(1)  # wake immediately on live launches
         time.sleep(0.5)
 if __name__ == "__main__": main(int(sys.argv[1]) if len(sys.argv) > 1 else None)
