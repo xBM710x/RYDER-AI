@@ -93,6 +93,7 @@ def weekly(send=True):
     body = (f"# RYDER weekly report (paper) — week ending {time.strftime('%Y-%m-%d')}\n\n- Trades: {len(cl)} ({w}W/{len(cl)-w}L, win rate {w/max(1,len(cl)):.0%})\n- P&L: ${pnl:+.2f}\n"
             f"- Best: {best['symbol'] + ' $%+.2f' % best['pnl'] if best else 'n/a'}\n- Exit reasons: {dict(rs)}\n- Agent trust: {B['trust']}\n- Thresholds: {B['thresholds']}\n"
             f"- Lessons:\n" + "\n".join(f"  - {l}" for l in (B["lessons"][:6] or ["not enough trades yet"])) + "\n")
+    body += __import__("brain6").smarter_section()  # 240
     open(fn, "w").write(body)
     if send: alerts.send("📚 RYDER weekly — what I learned (paper)\n" + body.replace("# ", "")[:3500])
     return fn

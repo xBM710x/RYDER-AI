@@ -5,15 +5,19 @@ def _run():
     import websocket
     while True:
         try:
-            w = websocket.create_connection("wss://pumpportal.fun/api/data", timeout=60)
+            w = websocket.create_connection("wss://pumpportal.fun/api/data", timeout=60); w.settimeout(5)
+            import brain6; brain6.SUBS.clear()  # 222 re-subscribe position/waiting coin trade streams on every (re)connect
             w.send(json.dumps({"method": "subscribeNewToken"})); w.send(json.dumps({"method": "subscribeMigration"})); STATS["connected"] = True  # 101: graduations too
             while True:
+                try: brain6.sync(w)
+                except Exception: pass
                 try: m = json.loads(w.recv())
                 except websocket.WebSocketTimeoutException:
                     if time.time() - (STATS.get('last') or time.time()) > 300: STATS['reconnects'] = STATS.get('reconnects', 0) + 1; STATS['last'] = time.time(); w.close(); break  # 184
                     continue
                 if m.get("mint") and m.get("txType") == "migrate":
                     NEW.append(dict(mint=m["mint"], name="", source="pumpportal-migration", dex="pumpswap", creator=None, t=time.time())); STATS["migrations"] = STATS.get("migrations", 0) + 1
+                elif m.get("mint") and m.get("txType") in ("buy", "sell"): brain6.on_trade(m)  # 222 trade stream
                 elif m.get("mint"):
                     NEW.append(dict(mint=m["mint"], name=m.get("symbol") or m.get("name") or "", source="pumpportal-ws",
                                     dex="pumpfun", creator=m.get("traderPublicKey"), t=time.time()))

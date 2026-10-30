@@ -19,7 +19,7 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
     if ver == CFG["VERSION"] and c.execute("SELECT COUNT(*) FROM positions WHERE version=? AND opened>?", (ver, time.time() - 3600)).fetchone()[0] >= CFG["MAX_PER_HOUR"]:
         log("skip", mint, symbol, reason=f"max {CFG['MAX_PER_HOUR']} trades/hour"); c.close(); return
     size = min(cash, equity(c, ver) * CFG["MAX_PCT_PER_TRADE"] * mult); quote = float(pair["priceUsd"])
-    sl = __import__('brain4').slip(size, pair) if CFG['VERSION'] not in ('v1', 'v2') else CFG['SLIP']  # 186 depth-based slippage
+    sl = __import__('brain6').split_slip(size, pair) if CFG['VERSION'] not in ('v1', 'v2') else CFG['SLIP']  # 186 depth-based slippage
     if sl > 0.03: log('skip', mint, symbol, reason=f'est. slippage {sl*100:.1f}% too high for pool depth'); c.close(); return
     price = quote * (1 + sl) / (1 - CFG["FEE"])  # v3: paper fill incl. slippage + fee
     if CFG["VERSION"] not in ("v1", "v2"):
@@ -59,6 +59,14 @@ def sell(pos, quote, reason):
             tot = pnl + (c2 := conn()).execute("SELECT COALESCE(SUM(pnl),0) FROM positions WHERE mint=? AND reason='partial_tp' AND version=?", (pos["mint"], pos["version"])).fetchone()[0]; c2.close()
             brain2.learn({a: tuple(x) for a, x in (cn.get("votes") or {}).items()}, tot, cn.get("pattern"), (time.time() - pos["opened"]) / 60)
         except Exception as e: log("error", where="learn", trace=str(e)[:200])
+def add(pos, quote, usd, pair):
+    """254: paper add-on to a starter position after confirmation (same stop; averaged entry)."""
+    sl = __import__('brain6').split_slip(usd, pair); price = quote * (1 + sl) / (1 - CFG["FEE"]); ck = "cash" if pos["version"] == "v1" else "cash_" + pos["version"]
+    c = conn(); cash = balance(c, ck); usd = min(usd, cash)
+    if usd < 1: c.close(); return False
+    q = usd / price; nq = pos["qty"] + q; ne = (pos["cost"] + usd) / nq
+    c.execute("UPDATE positions SET qty=?, cost=?, entry=? WHERE id=?", (nq, pos["cost"] + usd, ne, pos["id"])); c.execute("UPDATE account SET v=v-? WHERE k=?", (usd, ck)); c.commit(); c.close()
+    log("paper_add", pos["mint"], pos["symbol"], usd=round(usd, 2), price=price, new_entry=ne, book=pos["version"]); return True
 def partial(pos, quote, level=1):
     """v3: sell half at +30% as its own closed row (reason partial_tp); remaining half keeps trailing."""
     price = quote * (1 - CFG["SLIP"]) * (1 - CFG["FEE"]); hq, hc = pos["qty"] / 2, pos["cost"] / 2; pnl = hq * price - hc
