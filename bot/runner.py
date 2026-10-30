@@ -29,18 +29,24 @@ def kill(m, sym, reason, detail, final=True, pair=None, **kw):
     if final: brain2.reject(m, reason); brain2.rule_hit(reason)
     if final: KILLS.append(dict(t=time.strftime("%H:%M:%S"), sym=(sym or "")[:14], reason=reason))
     log("kill", m, sym, reason=reason, detail=detail, final=final, px=float((pair or {}).get("priceUsd") or 0) or None, **kw)
-def evaluate(cd, pair):
+def evaluate(cd, pair, relax=False):
     t0 = time.time(); m = cd["mint"]; sym = (pair or {}).get("baseToken", {}).get("symbol") or cd["name"]
     if pair and cd["dex"].startswith("unknown"): cd["dex"] = scout.tag(pair.get("dexId", ""), m)
-    res = filters.check(m, pair); ok, why = filters.verdict(res)
-    c = conn(); r = c.execute("SELECT checks, first_ts FROM seen WHERE mint=?", (m,)).fetchone()
-    checks = (r["checks"] if r else 0) + 1; first = (r["first_ts"] if r else t0) or t0
-    final = not ((why.startswith("volume_1h") or why.startswith("liquidity")) and checks < CFG["MAX_CHECKS"]) or ok
-    c.execute("UPDATE seen SET checks=?, last_ts=?, done=? WHERE mint=?", (checks, time.time(), int(final), m)); c.commit(); c.close()
+    res = filters.check(m, pair, relax); ok, why = filters.verdict(res)
+    if relax: checks, first, final = 2, t0, True
+    else:
+        c = conn(); r = c.execute("SELECT checks, first_ts FROM seen WHERE mint=?", (m,)).fetchone()
+        checks = (r["checks"] if r else 0) + 1; first = (r["first_ts"] if r else t0) or t0
+        final = not ((why.startswith("volume_1h") or why.startswith("liquidity")) and checks < CFG["MAX_CHECKS"]) or ok
+        c.execute("UPDATE seen SET checks=?, last_ts=?, done=? WHERE mint=?", (checks, time.time(), int(final), m)); c.commit(); c.close()
     if len(res) > 2: DEEP.append(round(time.time() - t0, 2))
     if not ok:
         kill(m, sym, why.split(":")[0], why, final, pair, dex=cd["dex"], source=cd["source"], checks={k: v[0] + "/" + v[2] for k, v in res.items()})
         if checks == 1: DEC.append(round(time.time() - first, 2))
+        vol = ((pair or {}).get("volume") or {}).get("h1") or 0
+        if not relax and CFG["VERSION"] not in ("v1", "v2") and why.startswith("volume_1h") and vol >= 0.5 * brain4.vol_bar(pair) and m not in PENDING \
+                and sum(1 for q in PENDING.values() if q.get("exp")) < 5:
+            return evaluate(cd, pair, relax=True)  # v3x: soft volume reject -> full safety checks at a relaxed volume bar, experimental desk only
         return
     if CFG["VERSION"] not in ("v1", "v2"):
         st, rs, d = brain.structure(pair)
@@ -65,13 +71,13 @@ def evaluate(cd, pair):
     log("score", m, sym, score=sc2, base_score=sc, adj=adj, parts=parts, dex=cd["dex"], filters={k: v for k, v in res.items()})
     DEC.append(round(time.time() - first, 2))
     if dp: return kill(m, sym, "dump_pattern", dp, True, pair)
-    if sc2 < CFG["MIN_SCORE"]: return kill(m, sym, "score<0.6", f"score {sc2}", True, pair, dex=cd["dex"])
+    if sc2 < (0.5 if relax else CFG["MIN_SCORE"]): return kill(m, sym, "score<0.6", f"score {sc2}", True, pair, dex=cd["dex"])
     cr = res.get("_creator", ("", ""))[1]
     hn, hr = (res.get("_holders", ("", "0|0"))[1].split("|") + ["0"])[:2]
-    ok_q, drop = brain4.admit(PENDING, sc2)  # 190/196
+    ok_q, drop = (True, None) if relax else brain4.admit(PENDING, sc2)  # 190/196 (v3x has its own cap of 5 waiting)
     if not ok_q: return kill(m, sym, "queue_full", f"score {sc2} below every waiting coin", False, pair)
     if drop: dp_ = PENDING.pop(drop, None); dp_ and log("kill", drop, dp_["sym"], reason="swapped", detail=f"swapped for better coin {sym} ({sc2})", final=False)
-    PENDING[m] = dict(t=time.time(), sym=sym, price=float(pair["priceUsd"]), score=sc2, creator=cr, res=res, rate=float(hr or 0), holders=int(hn or 0),
+    PENDING[m] = dict(exp=relax, t=time.time(), sym=sym, price=float(pair["priceUsd"]), score=sc2, creator=cr, res=res, rate=float(hr or 0), holders=int(hn or 0),
                       owners=[], dex=cd["dex"], cd=dict(source=cd.get("source"), t=cd.get("t")), feats=f, bucket=bk, why_adj=why_adj, struct=locals().get("d", ""), dev=locals().get("dd", ""), impact=locals().get("imp"),
                       devbal=detect.dev_balance(cr, m) if cr else None, tx5=(pair.get("txns") or {}).get("m5"), liq0=(pair.get("liquidity") or {}).get("usd"))
     log("entry_wait", m, sym, price=float(pair["priceUsd"]), delay=CFG["ENTRY_DELAY"], score=sc2)
@@ -99,9 +105,9 @@ def pending():
             if detect.dev_sold(p["devbal"], now):
                 log("kill", m, p["sym"], reason="dev_sell", detail=f"dev sold {p['devbal']:.0f}->{now:.0f} during wait", final=True)
                 detect.add_rugger(p["creator"], "sold early on " + m[:8]); continue
-        pz = brain.paused() or brain2.two_loss_cooldown() or brain2.market_dump(extras.STATE.get("regime"))  # 132 / 155
+        pz = brain.paused() if p.get("exp") else brain.paused() or brain2.two_loss_cooldown() or brain2.market_dump(extras.STATE.get("regime"))  # 132 / 155
         if pz: log("skip", m, p["sym"], reason=pz); continue
-        g, pmult = more.guards(extras.narrative(p["sym"]))
+        g, pmult = (None, 1) if p.get("exp") else more.guards(extras.narrative(p["sym"]))
         if g: log("skip", m, p["sym"], reason=g); continue
         fl = more.flow(p, pair)
         if fl["imbalance"] == "sell": log("kill", m, p["sym"], reason="orderflow", detail=f"sells outran buys during wait ({fl})", final=True); continue
@@ -141,10 +147,14 @@ def pending():
                 rsn += " · " + ev_why; line = brain2.one_line(p["sym"], v, cons, rsn); council.update(reason=line)
                 if go: smul = round(smul * kmul, 3)
             council["plan"] = plan_
-            if not go:
-                log("kill", m, p["sym"], reason="council", detail=line, final=True, council=council); brain2.reject(m, "council")
-                if p["score"] >= 0.6 and not str(line).count("veto") and not str(line).count("rug memory"):  # 211 experimental desk takes soft rejects at half size
-                    executor.buy(m, p["sym"], pair, p["score"], ver=brain5.EXP, mult=0.5, stop_pct=stp, conf=conf, extra=dict(ex, council=council, plan=plan_, experimental=True))
+            if p.get("exp") or not go:
+                if not p.get("exp"): log("kill", m, p["sym"], reason="council", detail=line, final=True, council=council); brain2.reject(m, "council")
+                # 211 v3x experimental desk: soft rejects only (never vetoes / rug look-alikes / hard safety fails), vote >= 0.45, EV > 0, max 5 open, small size
+                c1 = conn(); xo = c1.execute("SELECT COUNT(*) FROM positions WHERE status='open' AND version=?", (brain5.EXP,)).fetchone()[0]; c1.close()
+                if "veto" not in str(line).lower() and cons >= 0.45 and xo < 5:
+                    g2, k2, pl2, w2 = brain5.decide(p["sym"], m, pair, v, cons, f, ex.get("narrative"), stp, p.get("impact"), reg, exp=True)
+                    if g2: executor.buy(m, p["sym"], pair, p["score"], ver=brain5.EXP, mult=0.3, stop_pct=stp, conf=conf, extra=dict(ex, council=council, plan=pl2, experimental=True, relaxed_volume=bool(p.get("exp"))))
+                    else: log("skip", m, p["sym"], reason="v3x: " + w2, book=brain5.EXP)
                 continue
             ex["plan"] = plan_
             if plan_: ex["why"] = plan_["text"] + "\n" + ex["why"]
@@ -225,7 +235,7 @@ def recap():
     eq = cash + opn[1]; w = sum(p["pnl"] > 0 for p in cl)
     return (f"☀️ RYDER morning recap (paper)\nEquity ${eq:.2f} (start ${CFG['START_BALANCE']:.0f}, {eq/CFG['START_BALANCE']-1:+.1%})\n"
             f"Last 24h: {len(cl)} trades, {w}W/{len(cl)-w}L, P&L ${sum(p['pnl'] for p in cl):+.2f}\n{seen} coins scanned · {opn[0]} open\n"
-            "Lessons: " + "; ".join(brain.lessons()[:2]) + "\n" + brain4.missed_line() + "\n" + brain5.goals_line() + "\nToday: " + brain5.day_mode(extras.STATE.get("regime")) + " · mentor agent: " + str(brain2.BRAIN.get("mentor")) + "\nAgent trust: " + ", ".join(f"{a} {t:.2f}" for a, t in brain2.BRAIN["trust"].items()))
+            "Lessons: " + "; ".join(brain.lessons()[:2]) + "\n" + brain4.missed_line() + "\n" + brain5.goals_line() + "\n" + brain5.exp_tally() + "\nToday: " + brain5.day_mode(extras.STATE.get("regime")) + " · mentor agent: " + str(brain2.BRAIN.get("mentor")) + "\nAgent trust: " + ", ".join(f"{a} {t:.2f}" for a, t in brain2.BRAIN["trust"].items()))
 SHEAL = {}
 def jobs(k):
     if k % 60 == 7: SHEAL.update(brain2.selfheal({}, lambda n: None)); brain2.set_regime(extras.STATE.get("regime"))  # 139 / 152

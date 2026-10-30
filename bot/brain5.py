@@ -4,10 +4,20 @@ from common import CFG
 from logger import conn, log
 import brain2
 B = brain2.BRAIN; AG = brain2.AGENTS; EXP = CFG["VERSION"] + "x"  # 211 experimental paper desk
+XW = 0.5  # v3x trades teach the main book at half weight
+def _all(days=30):
+    a = _trades(days=days); x = _trades(EXP, days)
+    for p in a: p["w"] = 1.0
+    for p in x: p["w"] = XW
+    return a + x
+def exp_tally():
+    x = _trades(EXP, 1); w = sum(p["tot"] > 0 for p in x); c = conn()
+    eq = (c.execute("SELECT v FROM account WHERE k=?", ("cash_" + EXP,)).fetchone() or [CFG["START_BALANCE"]])[0] + c.execute("SELECT COALESCE(SUM(cost),0) FROM positions WHERE status='open' AND version=?", (EXP,)).fetchone()[0]; c.close()
+    return f"v3x experimental (24h): {len(x)} trades, {w}W/{len(x)-w}L, ${sum(p['tot'] for p in x):+.2f} · equity ${eq:.2f}"
 def _trades(ver=None, days=30):
     ver = ver or CFG["VERSION"]; c = conn()
     cl = [dict(x) for x in c.execute("SELECT * FROM positions WHERE status='closed' AND version=? AND reason!='partial_tp' AND closed>?", (ver, time.time() - days * 86400))]
-    buys = {r["mint"]: json.loads(r["data"]) for r in c.execute("SELECT mint,data FROM events WHERE kind='paper_buy' AND version=?", (ver,))}
+    buys = {r["mint"]: json.loads(r["data"]) for r in c.execute("SELECT mint,data FROM events WHERE kind='paper_buy' AND COALESCE(json_extract(data,'$.book'),version)=? ORDER BY ts", (ver,))}
     part = collections.defaultdict(float)
     for r in c.execute("SELECT mint,pnl FROM positions WHERE reason='partial_tp' AND version=?", (ver,)): part[r["mint"]] += r["pnl"]
     c.close()
@@ -16,13 +26,13 @@ def _trades(ver=None, days=30):
 # 201 calibration: binned predicted vs realised win rate (isotonic-style monotone smoothing)
 BINS = [0, .4, .5, .6, .7, 1.01]
 def calib_table():
-    rows = [(p["buy"].get("plan", {}).get("p_raw") or (p["buy"].get("council") or {}).get("consensus"), p["tot"] > 0) for p in _trades()]
+    rows = [((p["buy"].get("plan") or {}).get("p_raw") or (p["buy"].get("council") or {}).get("consensus"), p["tot"] > 0, p["w"]) for p in _all()]
     rows = [r for r in rows if r[0] is not None]; out = []
     for lo, hi in zip(BINS, BINS[1:]):
-        s = [w for c, w in rows if lo <= c < hi]; prior = (lo + hi) / 2 * 0.8
-        out.append(round((sum(s) + 2 * prior) / (len(s) + 2), 3))  # shrink to prior when few trades
+        s = [(win, wt) for c, win, wt in rows if lo <= c < hi]; prior = (lo + hi) / 2 * 0.8
+        out.append(round((sum(win * wt for win, wt in s) + 2 * prior) / (sum(wt for _, wt in s) + 2), 3))  # shrink to prior when few trades
     for i in range(1, len(out)): out[i] = max(out[i], out[i - 1])  # monotone (isotonic pass)
-    return out, len(rows)
+    return out, round(sum(r[2] for r in rows), 1)
 def calibrate(p):
     t, n = calib_table(); i = max(i for i, lo in enumerate(BINS[:-1]) if p >= lo)
     return round(0.5 * p + 0.5 * t[i], 3) if n >= 10 else t[i], n  # few trades -> conservative prior table
@@ -33,13 +43,13 @@ def _x(buy):
     v = (buy.get("council") or {}).get("votes") or {}; f = buy.get("feats") or {}
     return [v.get(a, [0.5])[0] for a in AG] + [float(f.get(k, 0) or 0) for k in FK]
 def train():
-    tr = [p for p in _trades(days=60) if p["buy"].get("council")]; MODEL["t"] = time.time()
+    tr = [p for p in _all(days=60) if p["buy"].get("council")]; MODEL["t"] = time.time()
     y = [int(p["tot"] > 0) for p in tr]
     if len(tr) < 20 or len(set(y)) < 2: return False
     from sklearn.linear_model import LogisticRegression
     from sklearn.preprocessing import StandardScaler
     from sklearn.pipeline import make_pipeline
-    MODEL["m"] = make_pipeline(StandardScaler(), LogisticRegression(max_iter=500, C=0.5)).fit([_x(p["buy"]) for p in tr], y); MODEL["n"] = len(tr)
+    MODEL["m"] = make_pipeline(StandardScaler(), LogisticRegression(max_iter=500, C=0.5)).fit([_x(p["buy"]) for p in tr], y, logisticregression__sample_weight=[p["w"] for p in tr]); MODEL["n"] = len(tr)
     log("model5_trained", n=len(tr)); return True
 def model_p(votes, feats, cons):
     if time.time() - MODEL["t"] > 3600:
@@ -52,11 +62,11 @@ def model_p(votes, feats, cons):
 # 207 similarity to past winners / 215 rug pattern memory (nearest neighbours on features)
 SK = ["vol", "liq", "buysell", "momentum", "liq_mcap"]
 def similarity(feats):
-    tr = [p for p in _trades(days=60) if p["buy"].get("feats")]; c = conn()
+    tr = [p for p in _all(days=60) if p["buy"].get("feats")]; c = conn()
     rug = [json.loads(r["data"]).get("feats") for r in c.execute("SELECT data FROM events WHERE kind='paper_buy' AND mint IN (SELECT mint FROM positions WHERE reason IN ('dev_sell','lp_pull','holder_concentration','sell_spike_5s'))")]; c.close()
     d = lambda g: math.dist([float(feats.get(k, 0) or 0) for k in SK], [float(g.get(k, 0) or 0) for k in SK])
     near = sorted(tr, key=lambda p: d(p["buy"]["feats"]))[:5]
-    win_sim = round(sum(p["tot"] > 0 for p in near) / len(near), 2) if len(near) >= 3 else None
+    win_sim = round(sum((p["tot"] > 0) * p["w"] for p in near) / sum(p["w"] for p in near), 2) if len(near) >= 3 else None
     rug_sim = sum(1 for g in rug if g and d(g) < 0.1)
     return win_sim, rug_sim
 # 208 per-coin-type exit learning: target from realised peaks of winners of the same type
@@ -65,10 +75,10 @@ def coin_type(pair, narr):
 def learned_target(ct):
     t = (B.get("exit_types") or {}).get(ct)
     return max(0.15, min(1.0, t["peak"])) if t and t["n"] >= 3 else 0.20  # conservative default until learned
-def learn_exit(ct, peak_gain, win):
+def learn_exit(ct, peak_gain, win, w=1.0):
     if not ct: return
-    e = B.setdefault("exit_types", {}).setdefault(ct, dict(n=0, peak=0.3))
-    if win: e["n"] += 1; e["peak"] = round(e["peak"] * 0.7 + 0.3 * peak_gain * 0.8, 3)  # aim for ~80% of the typical winner's peak
+    e = B.setdefault("exit_types", {}).setdefault(ct, dict(n=0, peak=0.2))
+    if win: e["n"] += w; a = 0.3 * w; e["peak"] = round(e["peak"] * (1 - a) + a * peak_gain * 0.8, 3)  # aim for ~80% of the typical winner's peak
 # 216 own-impact pricing + 202 positive EV gate after fees & slippage
 def ev(p, target, stop, slip, impact_pct=0):
     cost = 2 * CFG["FEE"] + 2 * slip + (impact_pct or 0) / 100
@@ -130,9 +140,9 @@ def grade(buy, tot):
     pl = buy.get("plan") or {}; good = (pl.get("ev") or 0) > 0
     return ("good call ✅" if tot > 0 else "unlucky (good decision, bad outcome)") if good else ("lucky (weak decision, good outcome)" if tot > 0 else "bad call ❌")
 def on_close(pos, tot):
-    c = conn(); r = c.execute("SELECT data FROM events WHERE kind='paper_buy' AND mint=? AND version=? ORDER BY ts DESC LIMIT 1", (pos["mint"], pos["version"])).fetchone(); c.close()
+    c = conn(); r = c.execute("SELECT data FROM events WHERE kind='paper_buy' AND mint=? AND COALESCE(json_extract(data,'$.book'),version)=? ORDER BY ts DESC LIMIT 1", (pos["mint"], pos["version"])).fetchone(); c.close()
     buy = json.loads(r["data"]) if r else {}; g = grade(buy, tot)
-    learn_exit((buy.get("plan") or {}).get("type"), pos["peak"] / pos["entry"] - 1 if pos.get("peak") else 0, tot > 0)
+    learn_exit((buy.get("plan") or {}).get("type"), pos["peak"] / pos["entry"] - 1 if pos.get("peak") else 0, tot > 0, XW if pos["version"] == EXP else 1.0)
     if pos["version"] == CFG["VERSION"]: peer_learn()
     gs = B.setdefault("decision_grades", {}); gs[g] = gs.get(g, 0) + 1; brain2.save(B); log("decision_grade", pos["mint"], pos["symbol"], grade=g, pnl=round(tot, 2), book=pos["version"])
     if pos["version"] == CFG["VERSION"]: __import__("alerts").send_async(f"📋 RYDER self-grade · {pos['symbol']}: {g} (${tot:+.2f}, paper)")
@@ -144,7 +154,7 @@ def goals_line():
     return (f"Paper goals: trades {n}/{GOALS['trades']} {ok(n >= GOALS['trades'])} · win rate {w/max(1,n):.0%}/{GOALS['win_rate']:.0%} {ok(n >= 10 and w/max(1,n) >= GOALS['win_rate'])} · "
             f"profit ${pf:+.2f}/${GOALS['profit']:.0f} {ok(pf >= GOALS['profit'])} (informational; paper only)")
 # the full decision: returns (go, size_mult, plan, why)
-def decide(sym, m, pair, votes, cons, feats, narr, stop_pct, impact, reg):
+def decide(sym, m, pair, votes, cons, feats, narr, stop_pct, impact, reg, exp=False):
     p_m, src = model_p({a: list(x) for a, x in votes.items()}, feats, cons)
     p_raw = round(0.5 * cons + 0.5 * p_m, 3) if src == "model" else cons
     ws, rs = similarity(feats)
@@ -157,6 +167,7 @@ def decide(sym, m, pair, votes, cons, feats, narr, stop_pct, impact, reg):
     from brain4 import slip; evv, cost = ev(p, target, stop_pct, slip(30, pair), impact)
     kel = kelly(p, target, stop_pct); mult = round(kel * streak_mult() * (0.7 if dm == "defense day" else 1.1 if dm == "offense day" else 1.0), 3)
     pl = plan(sym, p, src, target, stop_pct, hold, evv, cost, kel); pl.update(p_raw=p_raw, type=ct, day=dm, calibrated_on=ncal)
+    if exp: return (evv > 0), 1.0, pl, f"v3x EV {evv*100:+.1f}%"  # experimental desk: any positive EV, fixed small size
     if evv <= 0.01: return False, 0, pl, f"EV {evv*100:+.1f}% below +1% after costs (p {p}, target +{target*100:.0f}%, stop −{stop_pct*100:.0f}%)"
     if mult < 0.15: return False, 0, pl, f"Kelly size too small ({mult})"
     return True, min(1.0, mult), pl, f"EV {evv*100:+.1f}% · {dm}"

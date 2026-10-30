@@ -5,11 +5,11 @@ APPROXIMATED (heuristics on RugCheck data): dev past rugs, bundled launch."""
 from common import http_json, rpc, CFG
 import onchain, detect, extras, more
 AMM_TYPES = {"AMM", "LOCKER"}  # RugCheck knownAccounts types excluded from holder concentration
-def check(mint, pair):
+def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50% of the volume bar (safety checks unchanged)
     res = {}  # name -> (status pass/fail/unknown, detail, provenance)
     vol = ((pair or {}).get("volume") or {}).get("h1")
     res["volume_1h"] = ("unknown", "no DexScreener pair", "dexscreener") if vol is None else \
-        (("pass" if vol >= __import__("brain4").vol_bar(pair) else "fail"), f"${vol:,.0f}", "dexscreener")
+        (("pass" if vol >= __import__("brain4").vol_bar(pair) * (0.5 if relax else 1) else "fail"), f"${vol:,.0f}", "dexscreener")
     if CFG["VERSION"] not in ("v1", "v2"):
         liq = ((pair or {}).get("liquidity") or {}).get("usd")
         res["liquidity"] = ("unknown", "no liquidity data", "dexscreener") if liq is None else (("pass" if liq >= CFG["MIN_LIQ"] else "fail"), f"${liq:,.0f}", "dexscreener")
