@@ -2,7 +2,7 @@
 import time
 from common import CFG
 from logger import conn, log
-import risk
+import risk, alerts
 CK = 'cash' if CFG['VERSION'] == 'v1' else 'cash_' + CFG['VERSION']
 RISK = {}  # last computed risk state (exported)
 def balance(c, ck=None):
@@ -35,6 +35,8 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
               (mint, symbol, pair["pairAddress"], price, size / price, size, stop, price, time.time(), ver))
     c.execute("UPDATE account SET v=v-? WHERE k=?", (size, CK)); c.commit(); c.close()
     log("paper_buy", mint, symbol, price=price, quote=quote, usd=round(size, 2), stop=stop, score=score, conf=conf, book=ver, liq=(pair.get("liquidity") or {}).get("usd"), url=pair.get("url"), **(extra or {}))
+    try: alerts.on_buy(symbol, size, price, score, stop, (pair.get("liquidity") or {}).get("usd"), pair.get("url"), ver)
+    except Exception: pass
     return True
 def sell(pos, quote, reason):
     price = quote * (1 - CFG["SLIP"]) * (1 - CFG["FEE"])  # v3: paper fill incl. slippage + fee
@@ -42,6 +44,8 @@ def sell(pos, quote, reason):
     c.execute("UPDATE positions SET status='closed',closed=?,exit=?,pnl=?,reason=? WHERE id=?", (time.time(), price, pnl, reason, pos["id"]))
     c.execute("UPDATE account SET v=v+? WHERE k=?", (proceeds, "cash" if pos.get("version", "v1") == "v1" else "cash_" + pos["version"])); c.commit(); c.close()
     log("paper_exit", pos["mint"], pos["symbol"], entry=pos["entry"], exit=price, stop=pos["stop"], slip_pct=round((price / pos["stop"] - 1) * 100, 2), pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason=reason)
+    try: alerts.on_exit(pos["symbol"], (price / pos["entry"] - 1) * 100, pnl, reason, pos.get("version", ""))
+    except Exception: pass
 def partial(pos, quote, level=1):
     """v3: sell half at +30% as its own closed row (reason partial_tp); remaining half keeps trailing."""
     price = quote * (1 - CFG["SLIP"]) * (1 - CFG["FEE"]); hq, hc = pos["qty"] / 2, pos["cost"] / 2; pnl = hq * price - hc
@@ -51,3 +55,5 @@ def partial(pos, quote, level=1):
     c.execute("UPDATE positions SET qty=?, cost=?, tp_done=?, trailing=1 WHERE id=?", (hq, hc, level, pos["id"]))
     c.execute("UPDATE account SET v=v+? WHERE k=?", (hq * price, "cash" if pos["version"] == "v1" else "cash_" + pos["version"])); c.commit(); c.close()
     log("paper_exit", pos["mint"], pos["symbol"], entry=pos["entry"], exit=price, pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason="partial_tp", level=level)
+    try: alerts.on_exit(pos["symbol"], (price / pos["entry"] - 1) * 100, pnl, "partial_tp", pos.get("version", ""))
+    except Exception: pass

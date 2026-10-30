@@ -13,3 +13,4 @@ Do not change anything else. If the edit doesn't match, ReadCanvas again and ret
 - No crontab/systemd on this box, so after a reboot nothing starts until the next refresh_page.sh run.
 - publish.py pushes data.json every 180s (stats or heartbeat commit), adding `heartbeat` {at, runner_alive, runner_last_beat_s, pending_entries, live_feed, live_feed_events, publish_every_s}.
 - v2 code backup: backup_v2/.
+- Telegram alerts: alerts.py; token only in env RYDER_TELEGRAM_TOKEN (inherited by supervisor); chat id in .tg_chat (local, not uploaded).

@@ -2,7 +2,7 @@
 import time, sys, traceback, threading
 from common import CFG, dex_market
 from logger import conn, log
-import scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more
+import scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts
 REENTRY = {}  # 34: mint -> (exit price, ts, sym)
 ENTRYLIQ = {}  # 26: mint -> liquidity at entry
 LAT = collections.deque(maxlen=50); KILLS = collections.deque(maxlen=12)
@@ -155,6 +155,16 @@ def reentry():  # 34: re-enter winners on a 12-25% pullback within 60 min (goes 
             REENTRY.pop(m); PENDING[m] = dict(t=time.time(), sym=sym, price=q, score=0.6, creator="", res={}, rate=0, holders=0, owners=[], dex="", devbal=None)
             log("entry_wait", m, sym, price=q, delay=CFG["ENTRY_DELAY"], reentry=True)
 MODELN = lambda: brain.MODEL["n"]
+def recap():
+    c = conn(); V = CFG["VERSION"]; d0 = time.time() - 86400
+    cl = [dict(x) for x in c.execute("SELECT * FROM positions WHERE status='closed' AND version=? AND closed>?", (V, d0))]
+    cash = (c.execute("SELECT v FROM account WHERE k=?", ("cash_" + V,)).fetchone() or [CFG["START_BALANCE"]])[0]
+    opn = c.execute("SELECT COUNT(*), COALESCE(SUM(cost),0) FROM positions WHERE status='open' AND version=?", (V,)).fetchone()
+    seen = c.execute("SELECT COUNT(*) FROM seen WHERE first_ts>?", (d0,)).fetchone()[0]; c.close()
+    eq = cash + opn[1]; w = sum(p["pnl"] > 0 for p in cl)
+    return (f"☀️ RYDER morning recap (paper)\nEquity ${eq:.2f} (start ${CFG['START_BALANCE']:.0f}, {eq/CFG['START_BALANCE']-1:+.1%})\n"
+            f"Last 24h: {len(cl)} trades, {w}W/{len(cl)-w}L, P&L ${sum(p['pnl'] for p in cl):+.2f}\n{seen} coins scanned · {opn[0]} open\n"
+            "Lessons: " + "; ".join(brain.lessons()[:2]))
 def jobs(k):
     if k % 900 == 0: brain.audit(); brain.check_promotion(); brain.drift(); brain.train()
     lt = time.localtime()
@@ -189,6 +199,7 @@ def main(cycles=None):
                 if k % 600 == 0: detect.sweep_dead(); analyst.retune()
                 if k % 30 == 0: reentry()
                 jobs(k)
+                if k % 60 == 3: threading.Thread(target=alerts.tick, args=(recap,), daemon=True).start()
                 if k % 600 == 1: extras.regime()
                 if k % 5 == 0: json.dump(state(), open(HB + ".tmp", "w"), default=str); os.replace(HB + ".tmp", HB)
             except Exception: log("error", where="positions", trace=traceback.format_exc()[-800:])
