@@ -48,12 +48,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Oct 30 12:48 PT",
+ "asof": "Oct 30 12:51 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 3241,
- "seen": 12906,
+ "scans": 3280,
+ "seen": 13033,
  "passed": 1,
  "trades": 1,
  "wins": 1,
@@ -91,15 +91,15 @@
  "by_dex": [
   [
    "pumpfun",
-   11197
+   11315
   ],
   [
    "meteora",
-   842
+   847
   ],
   [
    "pumpswap",
-   595
+   599
   ],
   [
    "other/unknown",
@@ -121,15 +121,15 @@
  "kills": [
   [
    "volume_1h",
-   16488
+   16669
   ],
   [
    "liquidity",
-   870
+   880
   ],
   [
    "socials",
-   188
+   192
   ],
   [
    "copycat",
@@ -137,15 +137,15 @@
   ],
   [
    "thin_pool",
-   45
+   46
+  ],
+  [
+   "lp_locked",
+   18
   ],
   [
    "pressure",
    18
-  ],
-  [
-   "lp_locked",
-   17
   ],
   [
    "top10",
@@ -214,7 +214,7 @@
    "v": 302.4
   },
   {
-   "t": "12:48",
+   "t": "12:51",
    "v": 302.4
   }
  ],
@@ -236,14 +236,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "12906 pairs",
-   "text": "scan \u00b7 1 pairs, 1 new",
+   "stat": "13033 pairs",
+   "text": "scan \u00b7 62 pairs, 3 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed Larp \u00b7 1h vol < $40k",
+   "text": "killed Ghost dog \u00b7 LP not locked",
    "tone": "red"
   },
   {
@@ -266,168 +266,218 @@
   },
   {
    "name": "Logger",
-   "stat": "17840 why",
-   "text": "wrote 17840 reasons",
+   "stat": "18037 why",
+   "text": "wrote 18037 reasons",
    "tone": ""
   }
  ],
  "tail": [
   {
-   "t": "12:47",
+   "t": "12:51",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 4 pairs, 4 new",
+   "tone": ""
+  },
+  {
+   "t": "12:51",
    "ag": "FILTER",
-   "text": "killed JOHN \u00b7 liq < $25k",
+   "text": "killed Blacklon \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "12:47",
+   "t": "12:51",
    "ag": "FILTER",
-   "text": "killed JOHN \u00b7 liq < $25k",
+   "text": "killed Blacklon \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "12:47",
-   "ag": "FILTER",
-   "text": "killed Halloween \u00b7 copycat",
-   "tone": "red"
-  },
-  {
-   "t": "12:47",
+   "t": "12:51",
    "ag": "SCOUT",
    "text": "scan \u00b7 1 pairs, 1 new",
    "tone": ""
   },
   {
-   "t": "12:47",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "12:47",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "12:48",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "12:48",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "12:48",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 83 pairs, 6 new",
-   "tone": ""
-  },
-  {
-   "t": "12:48",
-   "ag": "FILTER",
-   "text": "killed Seed \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "12:48",
+   "t": "12:51",
    "ag": "SCOUT",
    "text": "scan \u00b7 2 pairs, 2 new",
    "tone": ""
   },
   {
-   "t": "12:48",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 3 pairs, 3 new",
-   "tone": ""
-  },
-  {
-   "t": "12:48",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 2 pairs, 2 new",
-   "tone": ""
-  },
-  {
-   "t": "12:48",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 2 pairs, 2 new",
-   "tone": ""
-  },
-  {
-   "t": "12:48",
+   "t": "12:51",
    "ag": "SCOUT",
    "text": "scan \u00b7 1 pairs, 1 new",
    "tone": ""
+  },
+  {
+   "t": "12:51",
+   "ag": "FILTER",
+   "text": "killed JUP \u00b7 thin_pool",
+   "tone": "red"
+  },
+  {
+   "t": "12:51",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 2 pairs, 2 new",
+   "tone": ""
+  },
+  {
+   "t": "12:51",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 1 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "12:51",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 1 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "12:51",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 1 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "12:51",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 2 pairs, 2 new",
+   "tone": ""
+  },
+  {
+   "t": "12:51",
+   "ag": "LOGGER",
+   "text": "watch_requeue",
+   "tone": ""
+  },
+  {
+   "t": "12:51",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 62 pairs, 3 new",
+   "tone": ""
+  },
+  {
+   "t": "12:51",
+   "ag": "FILTER",
+   "text": "killed Ghost dog \u00b7 LP not locked",
+   "tone": "red"
   }
  ],
- "nkills": 17840,
+ "nkills": 18037,
  "mood": "sleepy",
  "kills_live": [
   {
-   "t": "12:47:47",
-   "sym": "JOTCHUA",
+   "t": "12:50:33",
+   "sym": "USMS",
    "reason": "volume_1h"
   },
   {
-   "t": "12:47:47",
-   "sym": "Pumprocket",
+   "t": "12:50:33",
+   "sym": "ERIEBORGN",
    "reason": "volume_1h"
   },
   {
-   "t": "12:48:18",
-   "sym": "PINE",
+   "t": "12:50:33",
+   "sym": "MOONSHOT",
    "reason": "volume_1h"
   },
   {
-   "t": "12:48:18",
-   "sym": "Seed",
+   "t": "12:50:33",
+   "sym": "CTO",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "12:50:33",
+   "sym": "MMON",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "12:50:33",
+   "sym": "RITUAL",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "12:50:33",
+   "sym": "PUSD",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "12:51:08",
+   "sym": "Blacklon",
    "reason": "liquidity"
   },
   {
-   "t": "12:48:18",
-   "sym": "PINE",
-   "reason": "volume_1h"
+   "t": "12:51:09",
+   "sym": "Blacklon",
+   "reason": "liquidity"
   },
   {
-   "t": "12:48:18",
-   "sym": "TYGRE",
-   "reason": "volume_1h"
+   "t": "12:51:11",
+   "sym": "Blacklon",
+   "reason": "liquidity"
   },
   {
-   "t": "12:48:18",
-   "sym": "TYGRE",
-   "reason": "volume_1h"
+   "t": "12:51:16",
+   "sym": "JUP",
+   "reason": "thin_pool"
   },
   {
-   "t": "12:48:19",
-   "sym": "TYGRE",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "12:48:23",
-   "sym": "TYGRE",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "12:48:23",
-   "sym": "TYGRE",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "12:48:25",
-   "sym": "TYGRE",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "12:48:25",
-   "sym": "TYGRE",
-   "reason": "volume_1h"
+   "t": "12:51:35",
+   "sym": "Ghost dog",
+   "reason": "lp_locked"
   }
  ],
  "watchlist": [
+  {
+   "why": "LP not locked",
+   "sym": "Ghost dog",
+   "price": 3.123e-05,
+   "mcap": null,
+   "dex": "pumpswap",
+   "t": "12:51",
+   "ts": 1793389896,
+   "near_miss": true
+  },
+  {
+   "why": "no or reused socials",
+   "sym": "CREATORS",
+   "price": 1.218e-05,
+   "mcap": null,
+   "dex": "meteora",
+   "t": "12:49",
+   "ts": 1793389794,
+   "near_miss": true
+  },
+  {
+   "why": "no or reused socials",
+   "sym": "INUFLUENC",
+   "price": 9.598e-06,
+   "mcap": null,
+   "dex": "meteora",
+   "t": "12:49",
+   "ts": 1793389794,
+   "near_miss": true
+  },
+  {
+   "why": "no or reused socials",
+   "sym": "Candy",
+   "price": 2.915e-05,
+   "mcap": null,
+   "dex": "pumpswap",
+   "t": "12:48",
+   "ts": 1793389737,
+   "near_miss": true
+  },
+  {
+   "why": "no or reused socials",
+   "sym": "BARRON",
+   "price": 5.809e-05,
+   "mcap": null,
+   "dex": "pumpswap",
+   "t": "12:48",
+   "ts": 1793389737,
+   "near_miss": true
+  },
   {
    "why": "liquidity too low / unknown",
    "sym": "Seed",
@@ -477,56 +527,6 @@
    "t": "12:43",
    "ts": 1793389436,
    "near_miss": true
-  },
-  {
-   "why": "sniper wallets",
-   "sym": "GME",
-   "price": 3.109e-05,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "12:43",
-   "ts": 1793389434,
-   "near_miss": true
-  },
-  {
-   "why": "liquidity too low / unknown",
-   "sym": "hunch",
-   "price": 9.713e-06,
-   "mcap": null,
-   "dex": "pumpfun",
-   "t": "12:42",
-   "ts": 1793389368,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "free",
-   "price": 2.142e-05,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "12:37",
-   "ts": 1793389072,
-   "near_miss": true
-  },
-  {
-   "why": "copycat name",
-   "sym": "MINECAT",
-   "price": 0.0001397,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "12:37",
-   "ts": 1793389067,
-   "near_miss": true
-  },
-  {
-   "why": "liquidity too low / unknown",
-   "sym": "HYPER",
-   "price": 1.587e-05,
-   "mcap": null,
-   "dex": "pumpfun",
-   "t": "12:37",
-   "ts": 1793389066,
-   "near_miss": true
   }
  ],
  "reentry_watch": [],
@@ -541,7 +541,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 12906,
+  "scanned": 13033,
   "passed_filters": 1,
   "scored_ok": 1,
   "entry_wait": 2,
@@ -634,16 +634,16 @@
   },
   {
    "h": "12",
-   "scans": 407,
-   "kills": 2362,
+   "scans": 446,
+   "kills": 2559,
    "trades": 0,
    "pnl": 0.0
   }
  ],
  "agent_activity": {
-  "SCOUT": 467,
-  "FILTER": 2772,
-  "LOGGER": 12
+  "SCOUT": 487,
+  "FILTER": 2846,
+  "LOGGER": 13
  },
  "rug_list": {
   "count": 9,
@@ -678,36 +678,36 @@
  },
  "market_mood": {
   "mood": "risk-off",
-  "sol_h1": 0.3,
-  "sol_h24": -5.88,
+  "sol_h1": 0.92,
+  "sol_h24": -5.49,
   "size_mult": 0.5,
-  "gauge": 21
+  "gauge": 23
  },
  "latency": {
-  "scan_s_avg": 2.7,
-  "scan_s_last": 0.4,
+  "scan_s_avg": 1.9,
+  "scan_s_last": 8.5,
   "pos_check_s": 1,
-  "ws_last_event_s": 7
+  "ws_last_event_s": 6
  },
  "sources": {
   "api.dexscreener.com": {
-   "ok_rate": 1.0,
-   "ms": 787,
-   "err": 2
+   "ok_rate": 0.99,
+   "ms": 520,
+   "err": 4
   },
   "api.geckoterminal.com": {
    "ok_rate": 0.37,
-   "ms": 2261,
-   "err": 57
+   "ms": 1537,
+   "err": 67
   },
   "api.rugcheck.xyz": {
    "ok_rate": 1.0,
-   "ms": 880,
+   "ms": 764,
    "err": 0
   },
   "api.mainnet-beta.solana.com": {
    "ok_rate": 0.99,
-   "ms": 204,
+   "ms": 403,
    "err": 1
   },
   "lite-api.jup.ag": {
@@ -787,13 +787,13 @@
  },
  "speed": {
   "decision_s": {
-   "avg": 1.12,
+   "avg": 1.33,
    "p90": 4.0,
    "n": 200
   },
   "deep_check_s": {
    "avg": 0.0,
-   "max": 0.03,
+   "max": 0.48,
    "n": 100
   },
   "inflight": 0,
@@ -884,14 +884,14 @@
  "rug_timing": {
   "n": 0
  },
- "migrations_seen": 9,
+ "migrations_seen": 10,
  "skipped_features": [
   "103/104 X shill + mention velocity: needs X API access inside the bot loop",
   "105 curated KOL list: none supplied; uses learned smart wallets (#21)",
   "39 Telegram/X alerts"
  ],
  "fomo_wallet": {
-  "total_usd": 49.01,
+  "total_usd": 48.38,
   "top": [
    {
     "sym": "GNS",
@@ -899,54 +899,40 @@
    },
    {
     "sym": "NIO",
-    "usd": 11.77
+    "usd": 11.19
    },
    {
     "sym": "DARK",
     "usd": 5.94
    }
   ],
-  "at": "12:47"
+  "at": "12:50"
  },
  "paper": true,
- "updated_at": "2026-10-30T19:48:35+00:00",
+ "updated_at": "2026-10-30T19:51:37+00:00",
  "heartbeat": {
-  "at": "2026-10-30T19:48:35+00:00",
+  "at": "2026-10-30T19:51:37+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 4,
+  "runner_last_beat_s": 0,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 353,
+  "live_feed_events": 428,
   "publish_every_s": 180
  },
  "ryder_events": [
-  {
-   "id": 22247,
-   "t": 1793389367,
-   "kind": "rug_dodged",
-   "sym": "minecat",
-   "reason": "copycat"
-  },
-  {
-   "id": 22338,
-   "t": 1793389434,
-   "kind": "rug_dodged",
-   "sym": "GME",
-   "reason": "sniper_wallets"
-  },
-  {
-   "id": 22357,
-   "t": 1793389475,
-   "kind": "rug_dodged",
-   "sym": "MINECAT",
-   "reason": "copycat"
-  },
   {
    "id": 22618,
    "t": 1793389668,
    "kind": "rug_dodged",
    "sym": "Halloween",
    "reason": "copycat"
+  },
+  {
+   "id": 22902,
+   "t": 1793389896,
+   "kind": "rug_dodged",
+   "sym": "Ghost dog",
+   "reason": "lp_locked"
   }
  ]
 }
