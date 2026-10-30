@@ -19,27 +19,45 @@
   },
   {
    "v": "v3",
-   "trades": 0,
-   "wins": 0,
-   "pnl": 0,
-   "cash": 270.0,
+   "trades": 1,
+   "wins": 1,
+   "pnl": 2.4,
+   "cash": 302.4,
    "slip": null
   }
  ],
  "pos_sec": 1,
- "asof": "Oct 30 00:59 PT",
+ "asof": "Oct 30 01:02 PT",
  "start": 300.0,
- "equity": 304.01,
- "cash": 270.0,
- "scans": 37,
- "seen": 257,
+ "equity": 302.4,
+ "cash": 302.4,
+ "scans": 43,
+ "seen": 298,
  "passed": 1,
  "trades": 1,
- "wins": 0,
+ "wins": 1,
  "losses": 0,
- "realized": 0,
- "best": null,
- "worst": null,
+ "realized": 2.4,
+ "best": {
+  "sym": "SAFU",
+  "entry": 0.000136456369107322,
+  "exit": 0.00014736357899999998,
+  "pnl": 2.4,
+  "pct": 8.0,
+  "reason": "trailing_stop",
+  "t": "01:01",
+  "dex": "pumpswap"
+ },
+ "worst": {
+  "sym": "SAFU",
+  "entry": 0.000136456369107322,
+  "exit": 0.00014736357899999998,
+  "pnl": 2.4,
+  "pct": 8.0,
+  "reason": "trailing_stop",
+  "t": "01:01",
+  "dex": "pumpswap"
+ },
  "stop_slippage": {
   "n": 0,
   "avg": 0,
@@ -48,15 +66,19 @@
  "by_dex": [
   [
    "pumpfun",
-   218
+   247
   ],
   [
    "pumpswap",
-   19
+   24
   ],
   [
    "meteora",
-   12
+   17
+  ],
+  [
+   "letsbonk",
+   4
   ],
   [
    "other/unknown",
@@ -65,20 +87,16 @@
   [
    "raydium",
    3
-  ],
-  [
-   "letsbonk",
-   2
   ]
  ],
  "kills": [
   [
    "volume_1h",
-   255
+   297
   ],
   [
    "liquidity",
-   3
+   4
   ],
   [
    "lp_locked",
@@ -91,40 +109,38 @@
    "v": 300.0
   },
   {
-   "t": "00:59",
-   "v": 304.01
+   "t": "01:01",
+   "v": 302.4
+  },
+  {
+   "t": "01:02",
+   "v": 302.4
   }
  ],
- "opens": [
+ "opens": [],
+ "closed": [
   {
    "sym": "SAFU",
    "entry": 0.000136456369107322,
-   "now": 0.0001547,
-   "stop": 0.00012553985957873624,
-   "trail": false,
-   "usd": 30.0,
-   "pnl": 4.01,
-   "dex": "pumpswap",
-   "conf": null,
-   "narrative": null,
-   "stop_dist_pct": 23.2,
-   "gain_pct": 13.4,
-   "trail_at": 0.000156924824,
-   "peak": 0.0001418
+   "exit": 0.00014736357899999998,
+   "pnl": 2.4,
+   "pct": 8.0,
+   "reason": "trailing_stop",
+   "t": "01:01",
+   "dex": "pumpswap"
   }
  ],
- "closed": [],
  "agents": [
   {
    "name": "Scout",
-   "stat": "257 pairs",
-   "text": "scan \u00b7 93 pairs, 3 new",
+   "stat": "298 pairs",
+   "text": "scan \u00b7 87 pairs, 8 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed Near \u00b7 1h vol < $40k",
+   "text": "killed LAZARUS \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -142,83 +158,17 @@
   {
    "name": "Risk",
    "stat": "-8% \u00b7 +15%",
-   "text": "none yet",
-   "tone": ""
+   "text": "sold SAFU \u00b7 7.99% (trailing_stop)",
+   "tone": "green"
   },
   {
    "name": "Logger",
-   "stat": "259 why",
-   "text": "wrote 259 reasons",
+   "stat": "302 why",
+   "text": "wrote 302 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "00:53",
-   "ag": "FILTER",
-   "text": "killed Chameleon \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "00:54",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 80 pairs, 0 new",
-   "tone": ""
-  },
-  {
-   "t": "00:54",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 88 pairs, 7 new",
-   "tone": ""
-  },
-  {
-   "t": "00:55",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 83 pairs, 0 new",
-   "tone": ""
-  },
-  {
-   "t": "00:55",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 93 pairs, 13 new",
-   "tone": ""
-  },
-  {
-   "t": "00:56",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 78 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "00:56",
-   "ag": "ANALYST",
-   "text": "SAFU score 0.709 \u2713",
-   "tone": "green"
-  },
-  {
-   "t": "00:56",
-   "ag": "EXECUTOR",
-   "text": "SAFU waiting 90s to recheck",
-   "tone": ""
-  },
-  {
-   "t": "00:56",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 90 pairs, 10 new",
-   "tone": ""
-  },
-  {
-   "t": "00:57",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 90 pairs, 5 new",
-   "tone": ""
-  },
-  {
-   "t": "00:57",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 91 pairs, 5 new",
-   "tone": ""
-  },
   {
    "t": "00:58",
    "ag": "EXECUTOR",
@@ -242,9 +192,75 @@
    "ag": "SCOUT",
    "text": "scan \u00b7 93 pairs, 3 new",
    "tone": ""
+  },
+  {
+   "t": "00:59",
+   "ag": "LOGGER",
+   "text": "start",
+   "tone": ""
+  },
+  {
+   "t": "00:59",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 90 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "01:00",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 92 pairs, 2 new",
+   "tone": ""
+  },
+  {
+   "t": "01:00",
+   "ag": "RISK",
+   "text": "trail_on",
+   "tone": ""
+  },
+  {
+   "t": "01:00",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 92 pairs, 15 new",
+   "tone": ""
+  },
+  {
+   "t": "01:01",
+   "ag": "RISK",
+   "text": "sold SAFU \u00b7 7.99% (trailing_stop)",
+   "tone": "green"
+  },
+  {
+   "t": "01:01",
+   "ag": "LOGGER",
+   "text": "postmortem",
+   "tone": ""
+  },
+  {
+   "t": "01:01",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 88 pairs, 2 new",
+   "tone": ""
+  },
+  {
+   "t": "01:01",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 92 pairs, 15 new",
+   "tone": ""
+  },
+  {
+   "t": "01:01",
+   "ag": "FILTER",
+   "text": "killed \u5927A \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "01:02",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 87 pairs, 8 new",
+   "tone": ""
   }
  ],
- "nkills": 259,
+ "nkills": 302,
  "mood": "happy",
  "kills_live": [
   {
@@ -279,9 +295,15 @@
   }
  ],
  "watchlist": [],
- "reentry_watch": [],
+ "reentry_watch": [
+  {
+   "sym": "SAFU",
+   "exit": 0.0001493,
+   "mins_left": 58
+  }
+ ],
  "risk_state": {
-  "day_pnl": 0,
+  "day_pnl": 2.4,
   "day_limit": -45.0,
   "day_used_pct": 0,
   "loss_streak": 0,
@@ -291,7 +313,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 257,
+  "scanned": 298,
   "passed_filters": 1,
   "scored_ok": 1,
   "entry_wait": 1,
@@ -300,61 +322,90 @@
  "hourly": [
   {
    "h": "00",
-   "scans": 37,
-   "kills": 259,
+   "scans": 38,
+   "kills": 260,
    "trades": 1,
    "pnl": 0.0
+  },
+  {
+   "h": "01",
+   "scans": 5,
+   "kills": 42,
+   "trades": 0,
+   "pnl": 2.4
   }
  ],
  "agent_activity": {
-  "LOGGER": 3,
-  "SCOUT": 37,
-  "FILTER": 259,
+  "LOGGER": 5,
+  "SCOUT": 43,
+  "FILTER": 302,
   "ANALYST": 1,
-  "EXECUTOR": 2
+  "EXECUTOR": 2,
+  "RISK": 2
  },
  "rug_list": {
   "count": 0,
   "recent": []
  },
- "narratives": {},
- "market_mood": {
-  "mood": "unknown",
-  "sol_h1": null,
-  "sol_h24": null,
-  "size_mult": 1.0,
-  "gauge": 50
+ "narratives": {
+  "other": {
+   "trades": 1,
+   "pnl": 2.4
+  }
  },
- "latency": {},
- "sources": {},
+ "market_mood": {
+  "mood": "neutral",
+  "sol_h1": -0.96,
+  "sol_h24": -2.48,
+  "size_mult": 1.0,
+  "gauge": 38
+ },
+ "latency": {
+  "scan_s_avg": 0.3,
+  "scan_s_last": 0.3,
+  "pos_check_s": 1,
+  "ws_last_event_s": 2
+ },
+ "sources": {
+  "api.dexscreener.com": {
+   "ok_rate": 1.0,
+   "ms": 51,
+   "err": 0
+  },
+  "api.geckoterminal.com": {
+   "ok_rate": 1.0,
+   "ms": 52,
+   "err": 0
+  }
+ },
  "backtest": {
   "ver": "v3",
   "scored": 1,
-  "traded": 0,
+  "traded": 1,
   "by_threshold": [
    {
     "th": 0.55,
-    "trades": 0,
-    "pnl": 0,
-    "win": null
+    "trades": 1,
+    "pnl": 2.4,
+    "win": 1.0
    },
    {
     "th": 0.6,
-    "trades": 0,
-    "pnl": 0,
-    "win": null
+    "trades": 1,
+    "pnl": 2.4,
+    "win": 1.0
    },
    {
     "th": 0.65,
-    "trades": 0,
-    "pnl": 0,
-    "win": null
+    "trades": 1,
+    "pnl": 2.4,
+    "win": 1.0
    },
    {
     "th": 0.7,
-    "trades": 0,
-    "pnl": 0,
-    "win": null
+    "trades": 1,
+    "pnl": 2.4,
+    "win": 1.0
    },
    {
     "th": 0.75,
@@ -378,19 +429,28 @@
   "spread": 0.15,
   "momentum": 0.1
  },
- "postmortems": [],
+ "postmortems": [
+  {
+   "sym": "SAFU",
+   "exit_pct": 9.4,
+   "peak_pct": 26.9,
+   "held_min": 2.8,
+   "reason": "trailing_stop",
+   "lesson": "clean"
+  }
+ ],
  "alerts": {
   "telegram_x": "not configured (needs Braydon's own bot token/chat; skipped)"
  },
  "paper": true,
- "updated_at": "2026-10-30T07:59:39+00:00",
+ "updated_at": "2026-10-30T08:02:41+00:00",
  "heartbeat": {
-  "at": "2026-10-30T07:59:39+00:00",
+  "at": "2026-10-30T08:02:41+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 20,
+  "runner_last_beat_s": 3,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 31,
+  "live_feed_events": 11,
   "publish_every_s": 180
  }
 }
