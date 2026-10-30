@@ -9,7 +9,7 @@ def check(mint, pair):
     res = {}  # name -> (status pass/fail/unknown, detail, provenance)
     vol = ((pair or {}).get("volume") or {}).get("h1")
     res["volume_1h"] = ("unknown", "no DexScreener pair", "dexscreener") if vol is None else \
-        (("pass" if vol >= CFG["MIN_VOL_H1"] else "fail"), f"${vol:,.0f}", "dexscreener")
+        (("pass" if vol >= __import__("brain4").vol_bar(pair) else "fail"), f"${vol:,.0f}", "dexscreener")
     if CFG["VERSION"] not in ("v1", "v2"):
         liq = ((pair or {}).get("liquidity") or {}).get("usd")
         res["liquidity"] = ("unknown", "no liquidity data", "dexscreener") if liq is None else (("pass" if liq >= CFG["MIN_LIQ"] else "fail"), f"${liq:,.0f}", "dexscreener")
@@ -31,10 +31,14 @@ def check(mint, pair):
     except Exception as e:
         res["mint_authority"] = res["freeze_authority"] = ("unknown", f"rpc error {e}", "rpc")
     if "fail" in [res[k][0] for k in ("mint_authority", "freeze_authority")]: return res
-    try: rc = http_json(f"https://api.rugcheck.xyz/v1/tokens/{mint}/report", timeout=25)
+    try: rc = http_json(f"https://api.rugcheck.xyz/v1/tokens/{mint}/report", timeout=12, retries=0)  # 182: fail fast
     except Exception as e: rc = None; err = str(e)
     if not rc:
         for k in ("lp_locked", "top10", "dev_rugs", "bundled"): res[k] = ("unknown", "rugcheck unavailable", "rugcheck")
+        try:  # 182 RPC fallback for holder concentration (LP/dev/bundle stay unknown -> still fail closed)
+            t10 = __import__("brain4").rpc_top10(mint)
+            if t10 is not None: res["top10"] = ("pass" if t10 <= CFG["MAX_TOP10"] else "fail", f"{t10:.1f}% (RPC fallback)", "rpc-fallback")
+        except Exception: pass
         return res
     # LP
     mk = rc.get("markets") or []
@@ -76,6 +80,8 @@ def check(mint, pair):
         if hv: res[hv[0]] = ("fail", hv[1], "rugcheck-holders"); return res
         pk = more.precheck(mint, pair, rc)
         if pk: res[pk[0]] = ("fail", pk[1], "v3-precheck"); return res
+        hk = __import__('brain4').holder_risk([h.get('owner') for h in th])  # 192/193
+        if hk: res[hk[0]] = ('fail', hk[1], 'holders-db'); return res
         hn, hr = extras.holder_rate(rc, pair); res["_holders"] = ("pass", f"{hn}|{hr}", "meta")
         extras.save_holders(mint, [h.get("owner") for h in th])
     cr = rc.get("creator"); res["_creator"] = ("pass", cr or "", "meta"); detect.remember_creator(mint, cr, pair)

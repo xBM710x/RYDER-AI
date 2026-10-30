@@ -11,8 +11,9 @@ def _h(url, ok, ms):
     h = HEALTH.setdefault(urlparse(url).netloc, dict(ok=0, err=0, ms=0.0, last_ok=0))
     if ok: h["ok"] += 1; h["ms"] = round(h["ms"] * 0.9 + ms * 0.1 if h["ms"] else ms); h["last_ok"] = round(time.time())
     else: h["err"] += 1
+import socket; socket.setdefaulttimeout(20)  # 183 hard cap on every socket
 def http_json(url, body=None, timeout=12, retries=1):
-    t0 = time.time()
+    timeout = min(timeout, 15); t0 = time.time()
     try: r = _http_json(url, body, timeout, retries); _h(url, True, (time.time() - t0) * 1000); return r
     except Exception: _h(url, False, 0); raise
 def _http_json(url, body=None, timeout=12, retries=1):

@@ -153,18 +153,20 @@ def votes(cd, pair, res, score, wp, conf, rc_scores, ctx):
     v["analyst"] = (round(min(1, 0.5 * score + 0.5 * wp + 0.05 * min(sm, 3)), 3), f"score {score}, win prob {wp}, smart wallets {sm}")
     liq = (pair.get("liquidity") or {}).get("usd") or 0; imp = ctx.get("impact")
     ec = min(1, liq / 100_000) * (1 - min(1, (imp or 0) / 3)) * (0.6 + 0.4 * pressure(pair))
+    ec = ec * (0.8 + 0.2 * ctx.get("steady", 0.5) * 2) + (0.1 if ctx.get("liq_add") else 0)  # 194/195
+    ec = min(1, ec)
     v["executor"] = (round(ec, 3), f"liq ${liq:,.0f}, impact {imp if imp is not None else '?'}%, pressure {pressure(pair)}")
     rk = 1.0; why = []
     if ctx.get("open", 0) >= 2: rk -= 0.25; why.append(f"{ctx['open']} open")
     if ctx.get("day_pnl", 0) < -0.05 * CFG["START_BALANCE"]: rk -= 0.4; why.append("day down >5%")
-    if ctx.get("regime") == "risk-off": rk -= 0.3; why.append("risk-off market")
+    if ctx.get("regime") == "risk-off": rk -= 0.15 if ctx.get("rel_strength", 0) > 20 else 0.3; why.append(f"risk-off market (RS {ctx.get('rel_strength', 0)})")  # 189
     rk -= 0.3 * (1 - dev_score(ctx.get("creator")))
     v["risk"] = (round(max(0, rk), 3), ", ".join(why) or "portfolio ok")
     v["logger"] = (round(0.5 * tod_score() + 0.5 * ctx.get("lesson_score", 0.5), 3), f"hour win rate {tod_score()}, lessons {ctx.get('lesson_score', 0.5)}")
     return v
 def decide(v):
     """143/150: trust-weighted vote; Risk (and any agent below veto line) can veto. Returns (go, consensus, size_mult, reason)."""
-    tr = BRAIN["trust"]; th = BRAIN["thresholds"]
+    import brain4; tr = {a: BRAIN["trust"][a] * brain4.tod_trust(a) for a in BRAIN["trust"]}; th = BRAIN["thresholds"]  # 197
     if BRAIN["regime_mode"] == "defensive": th = dict(th, min_consensus=th["min_consensus"] + 0.05)  # 152
     cons = sum(tr[a] * v[a][0] for a in v) / sum(tr[a] for a in v)
     sd = statistics.pstdev([x[0] for x in v.values()])
@@ -185,6 +187,7 @@ def learn(trade_votes, pnl, cdpk=None, hold_min=None):
     for a, (c, _) in (trade_votes or {}).items():
         right = (c >= 0.5) == win; g = BRAIN["grades"].setdefault(a, [0, 0]); g[0] += 1; g[1] += right
         BRAIN["trust"][a] = round(max(0.5, min(1.5, 0.5 + (g[1] + 1) / (g[0] + 2))), 3)
+    __import__("brain4").tod_learn(trade_votes, win)  # 197
     if cdpk: p = BRAIN["patterns"].setdefault(cdpk, [0, 0]); p[0] += 1; p[1] += win
     if hold_min is not None and win:  # 154 learned exit timing (EMA of winning hold time)
         e = BRAIN["exit_hold_min"]; BRAIN["exit_hold_min"] = round(hold_min if e is None else e * 0.8 + hold_min * 0.2, 1)
@@ -198,6 +201,7 @@ def shadow(kills):
     mk = dex_market([k[0] for k in kills]); n = 0
     for m, rule, px in kills:
         q = float((mk.get(m) or {}).get("priceUsd") or 0)
+        if px and q > px * 1.5: __import__("brain4").note_missed(m, rule, px, q)  # 199
         if px and q > px * 1.5:
             s = BRAIN["rule_stats"].setdefault(rule, dict(n=0, missed_winners=0, active=True)); s["missed_winners"] += 1; n += 1
     save(BRAIN); return n

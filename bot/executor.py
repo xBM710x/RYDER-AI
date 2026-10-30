@@ -19,7 +19,9 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
     if ver == CFG["VERSION"] and c.execute("SELECT COUNT(*) FROM positions WHERE version=? AND opened>?", (ver, time.time() - 3600)).fetchone()[0] >= CFG["MAX_PER_HOUR"]:
         log("skip", mint, symbol, reason=f"max {CFG['MAX_PER_HOUR']} trades/hour"); c.close(); return
     size = min(cash, equity(c, ver) * CFG["MAX_PCT_PER_TRADE"] * mult); quote = float(pair["priceUsd"])
-    price = quote * (1 + CFG["SLIP"]) / (1 - CFG["FEE"])  # v3: paper fill incl. slippage + fee
+    sl = __import__('brain4').slip(size, pair) if CFG['VERSION'] not in ('v1', 'v2') else CFG['SLIP']  # 186 depth-based slippage
+    if sl > 0.03: log('skip', mint, symbol, reason=f'est. slippage {sl*100:.1f}% too high for pool depth'); c.close(); return
+    price = quote * (1 + sl) / (1 - CFG["FEE"])  # v3: paper fill incl. slippage + fee
     if CFG["VERSION"] not in ("v1", "v2"):
         day0 = time.mktime(time.localtime()[:3] + (0, 0, 0, 0, 0, -1))
         today = sum(r["pnl"] for r in c.execute("SELECT pnl FROM positions WHERE status='closed' AND version=? AND closed>=?", (ver, day0)))
