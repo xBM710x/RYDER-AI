@@ -76,3 +76,8 @@ No bars changed. 516-518: near-miss records now keep how close the coin was to e
 519-530 bar advisor (SUGGEST ONLY, never applies): per bar, bands 90-100/75-90/60-75/30-60% of bar; a band "costs winners" if 15+ coins, >=25% ran +30% within 60 min, and winners > dumps. Hourly 'bar_advice' log event, "Bar check" line in the morning recap, full tables in heartbeat b12.
 Caveat: near-misses stopped at the first failing gate, so their later safety checks never ran; win counts are an upper bound.
 531 fix: "best skipped coin" ignored readings above +5000% (recap showed an impossible +122,013,411,206% for 'Pum Coin').
+
+## 2026-10-30 14:55 PT - FOMO floors lowered (v3x practice desk ONLY, Braydon approved). Backup: ../backup_pre_fomo4k_20261030_145313
+fomo.py: volume floor $12k -> $4k, liquidity floor $10k -> $6k; step-down every 10 min after 20 idle min now 0.85 / 0.70 / 0.55 / 0.40 / 0.25 / 0.15 of the base bar (was 0.85 down to 0.55 in 0.10 steps).
+Sizing: half size (0.15) unchanged; coins with 1h volume under $12k trade at quarter size (0.075). Stop -5%, TP +8%, 10-min flat exit, 0.25 learning weight, score floor 0.45 all unchanged.
+Main desk bars and every rug/safety check unchanged.

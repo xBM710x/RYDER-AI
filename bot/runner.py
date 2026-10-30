@@ -244,8 +244,8 @@ def pending():
                     arm_ = brain6.arm(); stp = round(stp * (1.25 if arm_ == "B" else 1.0), 3)  # 238 A/B: normal vs 25% wider stop
                     g2, k2, pl2, w2 = brain5.decide(p["sym"], m, pair, v, cons, f, ex.get("narrative"), stp, p.get("impact"), reg, exp=True)
                     if g2 and p.get("fomo"):
-                        if executor.buy(m, p["sym"], pair, p["score"], ver=brain5.EXP, mult=fomo.SIZE_MULT * bmul, stop_pct=fomo.STOP_PCT, conf=conf, extra=dict(ex, council=council, plan=pl2, experimental=True, fomo=True, fomo_factor=p.get("fomo_f"))):
-                            fomo.mark(m); brain8.count("fomo_buy"); alerts.send_async(f"⚡ FOMO paper buy (v3x practice desk): {p['sym']} · half size · stop -5% · out flat after 10 min")
+                        if executor.buy(m, p["sym"], pair, p["score"], ver=brain5.EXP, mult=fomo.size_mult(pair) * bmul, stop_pct=fomo.STOP_PCT, conf=conf, extra=dict(ex, council=council, plan=pl2, experimental=True, fomo=True, fomo_factor=p.get("fomo_f"))):
+                            fomo.mark(m); brain8.count("fomo_buy"); alerts.send_async(f"⚡ FOMO paper buy (v3x practice desk): {p['sym']} · {"quarter" if fomo.size_mult(pair) < fomo.SIZE_MULT else "half"} size · stop -5% · out flat after 10 min")
                     elif g2: executor.buy(m, p["sym"], pair, p["score"], ver=brain5.EXP, mult=0.3 * bmul, stop_pct=stp, conf=conf, extra=dict(ex, council=council, plan=pl2, experimental=True, relaxed_volume=bool(p.get("exp")), ab_arm=arm_))
                     else: log("skip", m, p["sym"], reason="v3x: " + w2, book=brain5.EXP)
                 continue
