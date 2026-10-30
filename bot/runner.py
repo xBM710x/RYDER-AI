@@ -439,7 +439,7 @@ def main(cycles=None):
                 if k % 3600 == 1800: brain3.POOL.submit(brain3._safe, "loosen", brain4.loosen)  # 181
                 if k % 1800 == 900: brain3.POOL.submit(brain3._safe, "rollback", brain4.check_rollback)  # 200
                 if k % 60 == 3: threading.Thread(target=alerts.tick, args=(recap,), daemon=True).start()
-                if k % 600 == 1: extras.regime()
+                if k % 60 == 1: brain3.POOL.submit(extras.regime)  # mood fix: checked every minute (refresh 5 min / retry 60s), off the positions thread
                 if k % 5 == 0: json.dump(state(), open(HB + ".tmp", "w"), default=str); os.replace(HB + ".tmp", HB)
             except Exception: log("error", where="positions", trace=traceback.format_exc()[-800:])
             time.sleep(CFG["POS_SEC"])

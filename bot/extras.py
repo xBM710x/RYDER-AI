@@ -30,13 +30,25 @@ def sell_sim(mint, sol_in=200_000_000):
     return ("fail" if loss > 0.15 else "pass"), f"round-trip 0.2 SOL quote loses {loss*100:.1f}% (tax/impact)"
 # 30 market regime
 def regime():
-    if time.time() - STATE["last_regime"] > 600:
+    """Market mood from SOL 1h/24h change. Fix 2026-10-30: one DexScreener 429 left mood 'unknown' for 10+ min (no retry, no fallback).
+    Now: refresh every 5 min, retry after 60s on failure, CoinGecko fallback (24h only; 1h kept from last good read), last good value kept up to 1h."""
+    now = time.time()
+    if now - STATE["last_regime"] > 300 and now - STATE.get("last_try", 0) > 60:
+        STATE["last_try"] = now; h1 = h24 = None
         try:
             p = max(http_json("https://api.dexscreener.com/tokens/v1/solana/" + SOL) or [], key=lambda p: (p.get("liquidity") or {}).get("usd", 0))
-            ch = p.get("priceChange") or {}; h1, h24 = ch.get("h1") or 0, ch.get("h24") or 0
-            mood = "risk-off" if h24 < -5 or h1 < -2 else "hot" if h24 > 5 else "neutral"
-            STATE["regime"] = dict(sol_h1=h1, sol_h24=h24, mood=mood, size_mult=0.5 if mood == "risk-off" else 1.0); STATE["last_regime"] = time.time()
+            ch = p.get("priceChange") or {}; h1, h24 = ch.get("h1"), ch.get("h24"); src = "dexscreener"
         except Exception: pass
+        if h24 is None:
+            try:
+                g = http_json("https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd&include_24hr_change=true", timeout=8)
+                h24 = round(float(g["solana"]["usd_24h_change"]), 2); h1 = (STATE["regime"] or {}).get("sol_h1"); src = "coingecko"
+            except Exception: pass
+        if h24 is not None:
+            h1f = h1 or 0
+            mood = "risk-off" if h24 < -5 or h1f < -2 else "hot" if h24 > 5 else "neutral"
+            STATE["regime"] = dict(sol_h1=h1, sol_h24=h24, mood=mood, size_mult=0.5 if mood == "risk-off" else 1.0, src=src, at=round(now)); STATE["last_regime"] = now
+    if STATE["regime"] and now - STATE["last_regime"] > 3600: STATE["regime"] = {}
     return STATE["regime"] or dict(mood="unknown", size_mult=1.0)
 # 29 time-of-day learning
 def tod_mult():

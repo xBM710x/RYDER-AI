@@ -81,3 +81,6 @@ Caveat: near-misses stopped at the first failing gate, so their later safety che
 fomo.py: volume floor $12k -> $4k, liquidity floor $10k -> $6k; step-down every 10 min after 20 idle min now 0.85 / 0.70 / 0.55 / 0.40 / 0.25 / 0.15 of the base bar (was 0.85 down to 0.55 in 0.10 steps).
 Sizing: half size (0.15) unchanged; coins with 1h volume under $12k trade at quarter size (0.075). Stop -5%, TP +8%, 10-min flat exit, 0.25 learning weight, score floor 0.45 all unchanged.
 Main desk bars and every rug/safety check unchanged.
+## 2026-10-30 14:58 PT - Market mood fix (data side only, app untouched)
+Cause: extras.regime() fetched SOL change from DexScreener once per ~10 min; any failure (DexScreener now intermittently 429s) left mood 'unknown' and SOL 1h/24h empty until the next try, with no fallback.
+Fix: checked every minute off the positions thread; refresh every 5 min, retry 60s after a failure; CoinGecko fallback (24h; 1h keeps last good value); last good value kept up to 1h. Mood rules unchanged.
