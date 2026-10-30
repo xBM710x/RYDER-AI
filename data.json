@@ -27,12 +27,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Oct 30 01:05 PT",
+ "asof": "Oct 30 01:08 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 49,
- "seen": 358,
+ "scans": 56,
+ "seen": 427,
  "passed": 1,
  "trades": 1,
  "wins": 1,
@@ -66,40 +66,44 @@
  "by_dex": [
   [
    "pumpfun",
-   294
+   342
   ],
   [
    "pumpswap",
-   29
+   35
   ],
   [
    "meteora",
-   20
+   29
   ],
   [
    "letsbonk",
-   8
+   12
   ],
   [
    "raydium",
-   4
+   5
   ],
   [
    "other/unknown",
-   3
+   4
   ]
  ],
  "kills": [
   [
    "volume_1h",
-   357
+   422
   ],
   [
    "liquidity",
-   6
+   9
   ],
   [
    "lp_locked",
+   1
+  ],
+  [
+   "socials",
    1
   ]
  ],
@@ -113,7 +117,7 @@
    "v": 302.4
   },
   {
-   "t": "01:05",
+   "t": "01:08",
    "v": 302.4
   }
  ],
@@ -133,14 +137,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "358 pairs",
-   "text": "scan \u00b7 92 pairs, 15 new",
+   "stat": "427 pairs",
+   "text": "scan \u00b7 93 pairs, 19 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed DEVLOG \u00b7 1h vol < $40k",
+   "text": "killed BILL \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -163,78 +167,12 @@
   },
   {
    "name": "Logger",
-   "stat": "364 why",
-   "text": "wrote 364 reasons",
+   "stat": "433 why",
+   "text": "wrote 433 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "01:00",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 92 pairs, 15 new",
-   "tone": ""
-  },
-  {
-   "t": "01:01",
-   "ag": "RISK",
-   "text": "sold SAFU \u00b7 7.99% (trailing_stop)",
-   "tone": "green"
-  },
-  {
-   "t": "01:01",
-   "ag": "LOGGER",
-   "text": "postmortem",
-   "tone": ""
-  },
-  {
-   "t": "01:01",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 88 pairs, 2 new",
-   "tone": ""
-  },
-  {
-   "t": "01:01",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 92 pairs, 15 new",
-   "tone": ""
-  },
-  {
-   "t": "01:01",
-   "ag": "FILTER",
-   "text": "killed \u5927A \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "01:02",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 87 pairs, 8 new",
-   "tone": ""
-  },
-  {
-   "t": "01:02",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 94 pairs, 7 new",
-   "tone": ""
-  },
-  {
-   "t": "01:03",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 75 pairs, 3 new",
-   "tone": ""
-  },
-  {
-   "t": "01:03",
-   "ag": "FILTER",
-   "text": "killed Stonka \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "01:03",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 89 pairs, 15 new",
-   "tone": ""
-  },
   {
    "t": "01:04",
    "ag": "SCOUT",
@@ -258,15 +196,86 @@
    "ag": "SCOUT",
    "text": "scan \u00b7 92 pairs, 15 new",
    "tone": ""
+  },
+  {
+   "t": "01:05",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 91 pairs, 8 new",
+   "tone": ""
+  },
+  {
+   "t": "01:05",
+   "ag": "FILTER",
+   "text": "killed Sleet \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "01:06",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 77 pairs, 5 new",
+   "tone": ""
+  },
+  {
+   "t": "01:06",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 86 pairs, 14 new",
+   "tone": ""
+  },
+  {
+   "t": "01:07",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 76 pairs, 0 new",
+   "tone": ""
+  },
+  {
+   "t": "01:07",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 88 pairs, 16 new",
+   "tone": ""
+  },
+  {
+   "t": "01:07",
+   "ag": "FILTER",
+   "text": "killed Sleet \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "01:07",
+   "ag": "FILTER",
+   "text": "killed Stonka \u00b7 no/dupe socials",
+   "tone": "red"
+  },
+  {
+   "t": "01:08",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 77 pairs, 7 new",
+   "tone": ""
+  },
+  {
+   "t": "01:08",
+   "ag": "FILTER",
+   "text": "killed MONEKO \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "01:08",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 93 pairs, 19 new",
+   "tone": ""
   }
  ],
- "nkills": 364,
+ "nkills": 433,
  "mood": "happy",
  "kills_live": [
   {
    "t": "01:03:16",
    "sym": "Stonka",
    "reason": "liquidity"
+  },
+  {
+   "t": "01:07:46",
+   "sym": "Stonka",
+   "reason": "socials"
   }
  ],
  "watchlist": [],
@@ -274,7 +283,7 @@
   {
    "sym": "SAFU",
    "exit": 0.0001493,
-   "mins_left": 55
+   "mins_left": 52
   }
  ],
  "risk_state": {
@@ -288,7 +297,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 358,
+  "scanned": 427,
   "passed_filters": 1,
   "scored_ok": 1,
   "entry_wait": 1,
@@ -304,16 +313,16 @@
   },
   {
    "h": "01",
-   "scans": 11,
-   "kills": 104,
+   "scans": 18,
+   "kills": 173,
    "trades": 0,
    "pnl": 2.4
   }
  ],
  "agent_activity": {
   "LOGGER": 5,
-  "SCOUT": 49,
-  "FILTER": 364,
+  "SCOUT": 56,
+  "FILTER": 433,
   "ANALYST": 1,
   "EXECUTOR": 2,
   "RISK": 2
@@ -337,19 +346,19 @@
  },
  "latency": {
   "scan_s_avg": 0.3,
-  "scan_s_last": 0.4,
+  "scan_s_last": 0.3,
   "pos_check_s": 1,
-  "ws_last_event_s": 29
+  "ws_last_event_s": 17
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 59,
+   "ms": 69,
    "err": 0
   },
   "api.geckoterminal.com": {
    "ok_rate": 1.0,
-   "ms": 54,
+   "ms": 53,
    "err": 0
   }
  },
@@ -418,14 +427,14 @@
   "telegram_x": "not configured (needs Braydon's own bot token/chat; skipped)"
  },
  "paper": true,
- "updated_at": "2026-10-30T08:05:44+00:00",
+ "updated_at": "2026-10-30T08:08:46+00:00",
  "heartbeat": {
-  "at": "2026-10-30T08:05:44+00:00",
+  "at": "2026-10-30T08:08:46+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 4,
+  "runner_last_beat_s": 1,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 19,
+  "live_feed_events": 32,
   "publish_every_s": 180
  }
 }
