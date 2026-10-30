@@ -27,12 +27,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Oct 30 01:34 PT",
+ "asof": "Oct 30 01:37 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 104,
- "seen": 980,
+ "scans": 111,
+ "seen": 1010,
  "passed": 1,
  "trades": 1,
  "wins": 1,
@@ -46,7 +46,9 @@
   "pct": 8.0,
   "reason": "trailing_stop",
   "t": "01:01",
-  "dex": "pumpswap"
+  "dex": "pumpswap",
+  "win_prob": null,
+  "why": null
  },
  "worst": {
   "sym": "SAFU",
@@ -56,7 +58,9 @@
   "pct": 8.0,
   "reason": "trailing_stop",
   "t": "01:01",
-  "dex": "pumpswap"
+  "dex": "pumpswap",
+  "win_prob": null,
+  "why": null
  },
  "stop_slippage": {
   "n": 0,
@@ -66,15 +70,15 @@
  "by_dex": [
   [
    "pumpfun",
-   830
-  ],
-  [
-   "pumpswap",
-   58
+   854
   ],
   [
    "meteora",
-   56
+   60
+  ],
+  [
+   "pumpswap",
+   60
   ],
   [
    "letsbonk",
@@ -96,18 +100,18 @@
  "kills": [
   [
    "volume_1h",
-   984
+   1016
   ],
   [
    "liquidity",
    14
   ],
   [
-   "lp_locked",
-   1
+   "socials",
+   2
   ],
   [
-   "socials",
+   "lp_locked",
    1
   ],
   [
@@ -125,7 +129,7 @@
    "v": 302.4
   },
   {
-   "t": "01:34",
+   "t": "01:37",
    "v": 302.4
   }
  ],
@@ -139,20 +143,22 @@
    "pct": 8.0,
    "reason": "trailing_stop",
    "t": "01:01",
-   "dex": "pumpswap"
+   "dex": "pumpswap",
+   "win_prob": null,
+   "why": null
   }
  ],
  "agents": [
   {
    "name": "Scout",
-   "stat": "980 pairs",
-   "text": "scan \u00b7 90 pairs, 11 new",
+   "stat": "1010 pairs",
+   "text": "scan \u00b7 86 pairs, 1 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed MEMELIQUID \u00b7 1h vol < $40k",
+   "text": "killed ZEC \u00b7 no/dupe socials",
    "tone": "red"
   },
   {
@@ -175,72 +181,12 @@
   },
   {
    "name": "Logger",
-   "stat": "1001 why",
-   "text": "wrote 1001 reasons",
+   "stat": "1034 why",
+   "text": "wrote 1034 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "01:27",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 91 pairs, 5 new",
-   "tone": ""
-  },
-  {
-   "t": "01:28",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 88 pairs, 8 new",
-   "tone": ""
-  },
-  {
-   "t": "01:28",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 92 pairs, 5 new",
-   "tone": ""
-  },
-  {
-   "t": "01:29",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 75 pairs, 3 new",
-   "tone": ""
-  },
-  {
-   "t": "01:29",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 92 pairs, 14 new",
-   "tone": ""
-  },
-  {
-   "t": "01:30",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 96 pairs, 19 new",
-   "tone": ""
-  },
-  {
-   "t": "01:30",
-   "ag": "LOGGER",
-   "text": "selftest",
-   "tone": ""
-  },
-  {
-   "t": "01:30",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 104 pairs, 31 new",
-   "tone": ""
-  },
-  {
-   "t": "01:31",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 79 pairs, 4 new",
-   "tone": ""
-  },
-  {
-   "t": "01:31",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 93 pairs, 16 new",
-   "tone": ""
-  },
   {
    "t": "01:32",
    "ag": "SCOUT",
@@ -270,9 +216,69 @@
    "ag": "SCOUT",
    "text": "scan \u00b7 90 pairs, 11 new",
    "tone": ""
+  },
+  {
+   "t": "01:34",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 90 pairs, 3 new",
+   "tone": ""
+  },
+  {
+   "t": "01:34",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 92 pairs, 3 new",
+   "tone": ""
+  },
+  {
+   "t": "01:35",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 79 pairs, 8 new",
+   "tone": ""
+  },
+  {
+   "t": "01:35",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 86 pairs, 13 new",
+   "tone": ""
+  },
+  {
+   "t": "01:36",
+   "ag": "LOGGER",
+   "text": "start",
+   "tone": ""
+  },
+  {
+   "t": "01:36",
+   "ag": "LOGGER",
+   "text": "selftest",
+   "tone": ""
+  },
+  {
+   "t": "01:36",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 85 pairs, 4 new",
+   "tone": ""
+  },
+  {
+   "t": "01:36",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 1 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "01:37",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 86 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "01:37",
+   "ag": "FILTER",
+   "text": "killed ZEC \u00b7 no/dupe socials",
+   "tone": "red"
   }
  ],
- "nkills": 1001,
+ "nkills": 1034,
  "mood": "happy",
  "kills_live": [
   {
@@ -306,9 +312,34 @@
    "reason": "liquidity"
   },
   {
+   "t": "01:22:33",
+   "sym": "SAFU",
+   "reason": "recheck"
+  },
+  {
    "t": "01:27:27",
    "sym": "POKERFACE",
    "reason": "volume_1h"
+  },
+  {
+   "t": "01:35:27",
+   "sym": "(o)(o)",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "01:35:27",
+   "sym": "TIPTOE",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "01:35:57",
+   "sym": "HALO",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "01:37:06",
+   "sym": "ZEC",
+   "reason": "socials"
   }
  ],
  "watchlist": [],
@@ -324,7 +355,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 980,
+  "scanned": 1010,
   "passed_filters": 1,
   "scored_ok": 1,
   "entry_wait": 2,
@@ -340,16 +371,16 @@
   },
   {
    "h": "01",
-   "scans": 66,
-   "kills": 741,
+   "scans": 73,
+   "kills": 774,
    "trades": 0,
    "pnl": 2.4
   }
  ],
  "agent_activity": {
-  "LOGGER": 6,
-  "SCOUT": 104,
-  "FILTER": 1001,
+  "LOGGER": 8,
+  "SCOUT": 111,
+  "FILTER": 1034,
   "ANALYST": 1,
   "EXECUTOR": 3,
   "RISK": 2
@@ -366,26 +397,41 @@
  },
  "market_mood": {
   "mood": "neutral",
-  "sol_h1": -0.87,
-  "sol_h24": -2.76,
+  "sol_h1": -0.64,
+  "sol_h24": -2.92,
   "size_mult": 1.0,
-  "gauge": 36
+  "gauge": 35
  },
  "latency": {
-  "scan_s_avg": 0.3,
-  "scan_s_last": 0.4,
+  "scan_s_avg": 0.1,
+  "scan_s_last": 0.0,
   "pos_check_s": 1,
-  "ws_last_event_s": 27
+  "ws_last_event_s": 13
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 58,
+   "ms": 46,
    "err": 0
   },
   "api.geckoterminal.com": {
    "ok_rate": 1.0,
-   "ms": 59,
+   "ms": 37,
+   "err": 0
+  },
+  "api.rugcheck.xyz": {
+   "ok_rate": 1.0,
+   "ms": 676,
+   "err": 0
+  },
+  "api.mainnet-beta.solana.com": {
+   "ok_rate": 1.0,
+   "ms": 540,
+   "err": 0
+  },
+  "lite-api.jup.ag": {
+   "ok_rate": 1.0,
+   "ms": 517,
    "err": 0
   }
  },
@@ -453,15 +499,60 @@
  "alerts": {
   "telegram_x": "not configured (needs Braydon's own bot token/chat; skipped)"
  },
+ "speed": {
+  "decision_s": {
+   "avg": 0.09,
+   "p90": 0.1,
+   "n": 5
+  },
+  "deep_check_s": {
+   "avg": 0.0,
+   "max": 0.01,
+   "n": 4
+  },
+  "inflight": 0,
+  "workers": 6,
+  "ws_wake": true
+ },
+ "brain": {
+  "model": {
+   "trained": 0,
+   "src": "rules"
+  },
+  "paused": null,
+  "drift": {
+   "alarm": false,
+   "note": "needs 20 trades (1)"
+  },
+  "calibration": {},
+  "memory_top": {},
+  "audit": {},
+  "champion": {
+   "promoted": {},
+   "challenger": null
+  }
+ },
+ "lessons": [
+  "not enough trades yet to learn lessons"
+ ],
+ "rug_timing": {
+  "n": 0
+ },
+ "migrations_seen": 0,
+ "skipped_features": [
+  "103/104 X shill + mention velocity: needs X API access inside the bot loop",
+  "105 curated KOL list: none supplied; uses learned smart wallets (#21)",
+  "39 Telegram/X alerts"
+ ],
  "paper": true,
- "updated_at": "2026-10-30T08:34:06+00:00",
+ "updated_at": "2026-10-30T08:37:08+00:00",
  "heartbeat": {
-  "at": "2026-10-30T08:34:06+00:00",
+  "at": "2026-10-30T08:37:08+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 2,
+  "runner_last_beat_s": 4,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 209,
+  "live_feed_events": 1,
   "publish_every_s": 180
  }
 }
