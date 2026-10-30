@@ -27,12 +27,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Oct 30 00:47 PT",
+ "asof": "Oct 30 00:50 PT",
  "start": 300.0,
  "equity": 300.0,
  "cash": 300.0,
- "scans": 13,
- "seen": 97,
+ "scans": 19,
+ "seen": 155,
  "passed": 0,
  "trades": 0,
  "wins": 0,
@@ -48,32 +48,40 @@
  "by_dex": [
   [
    "pumpfun",
-   79
+   131
   ],
   [
    "pumpswap",
-   8
+   10
   ],
   [
    "meteora",
-   6
+   8
+  ],
+  [
+   "raydium",
+   3
   ],
   [
    "other/unknown",
    2
   ],
   [
-   "raydium",
-   2
+   "letsbonk",
+   1
   ]
  ],
  "kills": [
   [
    "volume_1h",
-   96
+   152
   ],
   [
    "liquidity",
+   2
+  ],
+  [
+   "lp_locked",
    1
   ]
  ],
@@ -83,7 +91,7 @@
    "v": 300.0
   },
   {
-   "t": "00:47",
+   "t": "00:50",
    "v": 300.0
   }
  ],
@@ -92,14 +100,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "97 pairs",
-   "text": "scan \u00b7 89 pairs, 17 new",
+   "stat": "155 pairs",
+   "text": "scan \u00b7 89 pairs, 15 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed OPSEC \u00b7 1h vol < $40k",
+   "text": "killed AI \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -122,66 +130,12 @@
   },
   {
    "name": "Logger",
-   "stat": "97 why",
-   "text": "wrote 97 reasons",
+   "stat": "155 why",
+   "text": "wrote 155 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "00:41",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 92 pairs, 18 new",
-   "tone": ""
-  },
-  {
-   "t": "00:41",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 92 pairs, 0 new",
-   "tone": ""
-  },
-  {
-   "t": "00:42",
-   "ag": "LOGGER",
-   "text": "start",
-   "tone": ""
-  },
-  {
-   "t": "00:42",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 85 pairs, 6 new",
-   "tone": ""
-  },
-  {
-   "t": "00:42",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 93 pairs, 7 new",
-   "tone": ""
-  },
-  {
-   "t": "00:43",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 94 pairs, 3 new",
-   "tone": ""
-  },
-  {
-   "t": "00:43",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 91 pairs, 13 new",
-   "tone": ""
-  },
-  {
-   "t": "00:44",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 87 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "00:44",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 93 pairs, 12 new",
-   "tone": ""
-  },
   {
    "t": "00:44",
    "ag": "FILTER",
@@ -217,18 +171,72 @@
    "ag": "SCOUT",
    "text": "scan \u00b7 89 pairs, 17 new",
    "tone": ""
+  },
+  {
+   "t": "00:47",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 93 pairs, 21 new",
+   "tone": ""
+  },
+  {
+   "t": "00:47",
+   "ag": "FILTER",
+   "text": "killed ZERODAY \u00b7 LP not locked",
+   "tone": "red"
+  },
+  {
+   "t": "00:47",
+   "ag": "FILTER",
+   "text": "killed Spoon \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "00:48",
+   "ag": "LOGGER",
+   "text": "start",
+   "tone": ""
+  },
+  {
+   "t": "00:48",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 83 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "00:48",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 92 pairs, 9 new",
+   "tone": ""
+  },
+  {
+   "t": "00:49",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 90 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "00:49",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 91 pairs, 11 new",
+   "tone": ""
+  },
+  {
+   "t": "00:50",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 89 pairs, 15 new",
+   "tone": ""
   }
  ],
- "nkills": 97,
+ "nkills": 155,
  "paper": true,
- "updated_at": "2026-10-30T07:47:29+00:00",
+ "updated_at": "2026-10-30T07:50:32+00:00",
  "heartbeat": {
-  "at": "2026-10-30T07:47:29+00:00",
+  "at": "2026-10-30T07:50:32+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 6,
+  "runner_last_beat_s": 8,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 16,
+  "live_feed_events": 10,
   "publish_every_s": 180
  }
 }
