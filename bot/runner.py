@@ -2,7 +2,7 @@
 import time, sys, traceback, threading
 from common import CFG, dex_market
 from logger import conn, log
-import runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
+import brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
 REENTRY = {}  # 34: mint -> (exit price, ts, sym)
 ENTRYLIQ = {}  # 26: mint -> liquidity at entry
 LAT = collections.deque(maxlen=50); KILLS = collections.deque(maxlen=12)
@@ -82,7 +82,10 @@ def evaluate(cd, pair, relax=False):
         c4 = conn(); ow = [r[0] for r in c4.execute("SELECT wallet FROM holders WHERE mint=?", (m,))]; c4.close()
         fh = brain6.fresh_holders(ow)  # 244
         if fh: DEC.append(round(time.time() - first, 2)); return kill(m, sym, "fresh_holders", fh, True, pair)
+    pe9, pa9 = brain9.pre_entry(pair, extras.STATE.get("regime")) if CFG["VERSION"] not in ("v1", "v2") and not relax else (None, 0)  # 416/418-421
+    if pe9: DEC.append(round(time.time() - first, 2)); return kill(m, sym, pe9[0], pe9[1], True, pair, dex=cd["dex"])
     sc, parts = analyst.score(pair, res)
+    pr9 = res.get("pressure", ("", ""))[1]
     f = brain.features(pair, parts, sc); narr = extras.narrative(sym); bk = brain.bucket(f, cd["dex"], narr)
     adj, why_adj = brain.bucket_adj(bk, brain.memory()); adj = round(adj + scout.boost_bump(m), 3)
     b7 = {}
@@ -100,6 +103,7 @@ def evaluate(cd, pair, relax=False):
                       holders=wpen, rugsim=brain7.rug_similar(f), learned=brain7.learned_adj(tg), tight=-brain7.S["tight"].get("entry", 0))
         a7 = round(max(-0.15, min(0.12, sum(parts7.values()))), 3); adj = round(adj + a7, 3); b7 = dict(parts=parts7, adj=a7, tags=tg, t10=t10, liq_g=lgr, curve=brain7.curve_progress(pair)[1])
     if CFG["VERSION"] not in ("v1", "v2") and pair:
+        tx9 = (pair.get("txns") or {}); adj = round(adj + pa9 + brain9.pressure_verdict((tx9.get("m5") or {}).get("buys") or 0, (tx9.get("m5") or {}).get("sells") or 0, (tx9.get("h1") or {}).get("buys") or 0, (tx9.get("h1") or {}).get("sells") or 0)[1], 3)  # 403/416
         adj = round(adj + brain8.staying_power(checks, pair) - (0.05 if res.get("socials", ("", "", ""))[2] == "soft-366" else 0), 3)  # 379 / 366
     sc2 = round(sc + adj, 3); brain8.count("scored")
     dp = brain.dump_pattern(f)
@@ -138,7 +142,7 @@ def pending():
     due = [m for m, p in PENDING.items() if time.time() - p["t"] >= CFG["ENTRY_DELAY"]]
     if not due: return
     mkt = dex_market(due)
-    for m in sorted(due, key=lambda x: -PENDING[x]["score"]):  # 190 best first
+    for m in brain9.tie_break({x: PENDING[x] for x in due}):  # 190 / 437 best first
         p = PENDING.pop(m); pair = mkt.get(m)
         if not pair or not pair.get("priceUsd"): log("kill", m, p["sym"], reason="recheck", detail="no price on recheck", final=True); continue
         ch = float(pair["priceUsd"]) / p["price"] - 1
@@ -163,6 +167,9 @@ def pending():
         if sw: log("kill", m, p["sym"], reason="wallet_pump", detail=sw, final=True); brain2.reject(m, "wallet_pump"); continue
         pz = brain.paused() or brain7.market_pause(extras.STATE.get("regime")) if p.get("exp") else brain.paused() or brain7.market_pause(extras.STATE.get("regime")) or brain6.day_goal_hit() or brain2.two_loss_cooldown()  # 297  # 234 or brain2.market_dump(extras.STATE.get("regime"))  # 132 / 155
         if pz: log("skip", m, p["sym"], reason=pz); continue
+        if not p.get("exp"):
+            cb9 = brain9.coin_blocked(m); oc9, n9 = brain9.open_cap_ok(extras.STATE.get("regime"), CFG["VERSION"])  # 434/435 / 417
+            if cb9 or not oc9: log("skip", m, p["sym"], reason=cb9 or f"max open positions for this market ({n9})"); continue
         g, pmult = (None, 1) if p.get("exp") else more.guards(extras.narrative(p["sym"]))
         if g: log("skip", m, p["sym"], reason=g); continue
         fl = more.flow(p, pair)
@@ -286,7 +293,12 @@ def positions():
             if p.get("version") == CFG["VERSION"] and p["mint"] not in ADDED and time.time() - p["opened"] < 300 and price >= p["entry"] * 1.04 and brain2.pressure(pr) > 0.6:  # 254 / 383 (+5% -> +4%) add on confirmation
                 ADDED.add(p["mint"]); executor.add(p, price, p["cost"] * (1 - brain6.STARTER) / brain6.STARTER, pr); continue
             brain7.mae_track(p, price)  # 324
-            bf7 = brain7.buy_fade(p, price)  # 273
+            x9 = brain9.exit_check(p, price, pr, extras.STATE.get("regime"))  # 404/406/409/410/427/428/436
+            if x9 and x9[1] == "partial": executor.partial(p, price, (p.get("tp_done") or 0) + 1); p = dict(p, qty=p["qty"] / 2, cost=p["cost"] / 2, tp_done=(p.get("tp_done") or 0) + 1, trailing=1)
+            elif x9 and x9[1] == "sell" and brain9.exit_rule_ok(x9[0]): executor.sell(p, price, x9[0]); extras.postmortem(p, price, x9[0]); continue
+            elif x9 and x9[1] == "stop": p = dict(p, stop=x9[2])
+            if brain9.entry_liq_drain(p, (pr.get("liquidity") or {}).get("usd"), ENTRYLIQ.get(p["mint"])): p = dict(p, stop=p["entry"] * 0.97)  # 407
+            bf7 = brain7.buy_fade(p, price) if brain9.exit_rule_ok("buy_fade") else None  # 273 / 412
             if bf7: executor.sell(p, price, "buy_fade"); extras.postmortem(p, price, "buy_fade"); continue
             if time.time() - p["opened"] > brain7.flat_minutes(extras.STATE.get("regime")) * 60 and not p["trailing"] and abs(price / p["entry"] - 1) < 0.04:  # 274/276
                 executor.sell(p, price, "flat_time"); extras.postmortem(p, price, "flat_time"); continue
@@ -387,7 +399,7 @@ def state():
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
         decision_s=dict(avg=round(sum(DEC) / len(DEC), 2) if DEC else None, p90=sorted(DEC)[int(len(DEC) * 0.9)] if DEC else None, n=len(DEC)),
         deep_check_s=dict(avg=round(sum(DEEP) / len(DEEP), 1) if DEEP else None, max=max(DEEP) if DEEP else None, n=len(DEEP)), inflight=len(INFLIGHT),
-        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
+        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
         latency=dict(scan_s_avg=round(sum(LAT) / len(LAT), 1) if LAT else None, scan_s_last=LAT[-1] if LAT else None, pos_check_s=CFG["POS_SEC"],
                      ws_last_event_s=round(now - feed.STATS["last"]) if feed.STATS.get("last") else None),
         sources={h: dict(v, ok_rate=round(v["ok"] / max(1, v["ok"] + v["err"]), 2)) for h, v in HEALTH.items()})
@@ -411,10 +423,10 @@ def main(cycles=None):
             k += 1
             try:
                 positions()
-                if k % 5 == 0: pending()
+                if k % 3 == 0: pending()  # 422: 5s -> 3s
                 if k % 600 == 0: detect.sweep_dead(); analyst.retune()
                 if k % 30 == 0: reentry()
-                jobs(k); brain3.jobs(k); brain7.jobs(k)
+                jobs(k); brain3.jobs(k); brain7.jobs(k); brain9.jobs(k)
                 if k % 60 == 30: brain8.patience()  # 367
                 if k % 3600 == 3599: brain8.hourly()  # 370/389
                 if k % 300 == 150: brain3.POOL.submit(brain3._safe, "requeue_volume", brain4.requeue_volume)  # 188

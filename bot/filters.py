@@ -19,7 +19,8 @@ def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50%
     if CFG["VERSION"] not in ("v1", "v2") and pair:
         tx = pair.get("txns") or {}; m5, h1 = tx.get("m5") or {}, tx.get("h1") or {}
         b5, s5, bh, sh = m5.get("buys", 0), m5.get("sells", 0), h1.get("buys", 0), h1.get("sells", 0)
-        res["pressure"] = ("fail" if s5 > b5 or sh > bh * 1.2 else "pass", f"5m {b5}b/{s5}s, 1h {bh}b/{sh}s", "dexscreener")
+        pv = __import__("brain9").pressure_verdict(b5, s5, bh, sh)  # 401/403 fix: graded instead of 1-trade kill
+        res["pressure"] = (pv[0], f"5m {b5}b/{s5}s, 1h {bh}b/{sh}s", "dexscreener")
         info = pair.get("info") or {}; soc = {(s.get("type") or "").lower(): s.get("url", "") for s in info.get("socials") or []}
         links = [u for u in [soc.get("twitter") or soc.get("x"), soc.get("telegram")] + [w.get("url") for w in info.get("websites") or []] if u]
         if not (soc.get("twitter") or soc.get("x") or soc.get("telegram")):
@@ -35,7 +36,7 @@ def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50%
     except Exception as e:
         res["mint_authority"] = res["freeze_authority"] = ("unknown", f"rpc error {e}", "rpc")
     if "fail" in [res[k][0] for k in ("mint_authority", "freeze_authority")]: return res
-    try: rc = http_json(f"https://api.rugcheck.xyz/v1/tokens/{mint}/report", timeout=12, retries=0)  # 182: fail fast
+    try: rc = __import__("brain2").cached("rc:" + mint, 60, lambda: http_json(f"https://api.rugcheck.xyz/v1/tokens/{mint}/report", timeout=12, retries=0))  # 182 fail fast / 423 60s cache
     except Exception as e: rc = None; err = str(e)
     if not rc:
         for k in ("lp_locked", "top10", "dev_rugs", "bundled"): res[k] = ("unknown", "rugcheck unavailable", "rugcheck")
@@ -51,6 +52,7 @@ def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50%
         pct = (best.get("lp") or {}).get("lpLockedPct"); mtype = best.get("marketType", "")
         if "pump" in mtype and "amm" not in mtype or "dbc" in mtype or "launchlab" in mtype:
             res["lp_locked"] = ("pass", f"bonding curve ({mtype}) - no withdrawable LP", "rugcheck-approx")
+        elif __import__("brain9").pump_canonical(mint, mtype, pct): res["lp_locked"] = ("pass", f"canonical pump.fun migration pool ({mtype}), LP not dev-withdrawable", "approx-402")
         elif pct is None: res["lp_locked"] = ("unknown", f"no lpLockedPct ({mtype})", "rugcheck")
         else: res["lp_locked"] = ("pass" if pct >= 95 else "fail", f"{pct:.1f}% locked/burned ({mtype})", "rugcheck")
     else: res["lp_locked"] = ("unknown", "no markets in rugcheck", "rugcheck")

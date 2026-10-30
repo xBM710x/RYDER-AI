@@ -146,7 +146,7 @@ def journal_buy(m, d):
 def review(pos, tot):
     """277: post-trade review -> update signal weights, hour-of-day, calibration, source/dex/age stats, MAE/MFE, exit stats (all bounded)."""
     try:
-        j = S["journal"].get(pos["mint"]) or {}; win = tot > 0; wt = 0.5 if pos.get("version") == "v3x" else 1.0
+        j = S["journal"].get(pos["mint"]) or {}; win = tot > 0; wt = (0.25 if __import__("fomo").is_fomo(pos["mint"]) else 0.5) if pos.get("version") == "v3x" else 1.0  # 415
         if pos.get("version") not in ("v3", "v3x"): return
         for t in j.get("tags", []): x = S["checks"].setdefault(t, [0, 0]); x[0] += win * wt; x[1] += wt
         h = str(time.localtime(pos["opened"]).tm_hour); x = S["tod"].setdefault(h, [0, 0]); x[0] += win * wt; x[1] += wt
