@@ -45,7 +45,7 @@ def sell(pos, quote, reason):
     c = conn(); proceeds = pos["qty"] * price; pnl = proceeds - pos["cost"]
     c.execute("UPDATE positions SET status='closed',closed=?,exit=?,pnl=?,reason=? WHERE id=?", (time.time(), price, pnl, reason, pos["id"]))
     c.execute("UPDATE account SET v=v+? WHERE k=?", (proceeds, "cash" if pos.get("version", "v1") == "v1" else "cash_" + pos["version"])); c.commit(); c.close()
-    log("paper_exit", pos["mint"], pos["symbol"], entry=pos["entry"], exit=price, stop=pos["stop"], slip_pct=round((price / pos["stop"] - 1) * 100, 2), pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason=reason)
+    log("paper_exit", pos["mint"], pos["symbol"], entry=pos["entry"], exit=price, stop=pos["stop"], slip_pct=round((price / pos["stop"] - 1) * 100, 2), pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason=reason, book=pos.get("version"))
     try: alerts.on_exit(pos["symbol"], (price / pos["entry"] - 1) * 100, pnl, reason, pos.get("version", ""))
     except Exception: pass
     try:  # 210 decision grade (all paper books)

@@ -20,3 +20,17 @@ footer{color:#b29aaa}nav{background:#130d17ed;border-color:#ff48654f;box-shadow:
 .brand .rd-mascot{width:110px;height:110px;margin:-22px -8px -22px -12px}
 #rd-bigstar{display:none}.brand .rd-mascot{width:110px;height:110px;margin:-22px -8px -22px -12px}
 @media(min-width:900px){main:after{display:none!important}#rd-bigstar{display:block;position:fixed;pointer-events:none;width:290px;height:290px;left:calc(50% - 670px);top:calc(50% - 145px);z-index:0;opacity:1;filter:drop-shadow(0 0 14px #ff5a6e) drop-shadow(0 0 40px #ff3b4fcc) drop-shadow(0 0 80px #ff3b4f88)}#rd-bigstar .rd-mascot{width:100%;height:100%;margin:0;filter:none}#rd-bigstar .rd-face{transform-box:fill-box;transform-origin:center;scale:1.35}#rd-bigstar .rd-face ellipse,#rd-bigstar .rd-face path,#rd-bigstar .rd-face circle{fill:#fff;filter:drop-shadow(0 0 2px #fff)}.brand .rd-mascot{width:120px;height:120px}}
+/* v6: voice toggle, extra emotes, hops, victory lap */
+header{gap:8px}#rd-voice{margin-left:auto;font-size:18px;width:40px;height:40px;padding:0;line-height:1}
+#rd-voice+#settings{margin-left:0}
+.rd-excited .rd-body{animation:rdHop .9s ease-in-out infinite}
+.rd-nervous .rd-body{animation:rdShake .35s ease-in-out infinite}
+.rd-shades .rd-body{animation:rdBob 2.4s ease-in-out infinite}
+.rd-angry .rd-body{animation:rdShake .25s linear 4}
+@keyframes rdShake{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-1.5px) rotate(-3deg)}75%{transform:translateX(1.5px) rotate(3deg)}}
+.rd-hopnow{animation:rdHopOnce .9s cubic-bezier(.3,1.6,.5,1)!important}
+@keyframes rdHopOnce{0%{transform:translateY(0) rotate(0)}30%{transform:translateY(-14%) rotate(-8deg)}55%{transform:translateY(0) rotate(6deg)}75%{transform:translateY(-5%) rotate(-3deg)}100%{transform:translateY(0) rotate(0)}}
+.rd-lap{position:fixed;top:38%;left:-140px;width:120px;height:120px;z-index:50;pointer-events:none;animation:rdLap 2s ease-in-out forwards;filter:drop-shadow(0 0 14px #ff5a6e) drop-shadow(0 0 36px #ff3b4fcc)}
+.rd-lap svg{width:100%;height:100%}
+@keyframes rdLap{0%{transform:translateX(0) translateY(0) rotate(0)}25%{transform:translateX(30vw) translateY(-40px) rotate(180deg)}50%{transform:translateX(60vw) translateY(0) rotate(360deg)}75%{transform:translateX(90vw) translateY(-40px) rotate(540deg)}100%{transform:translateX(calc(100vw + 160px)) translateY(0) rotate(720deg)}}
+@media(prefers-reduced-motion:reduce){.rd-hopnow,.rd-lap,.rd-excited .rd-body,.rd-nervous .rd-body,.rd-angry .rd-body{animation:none!important}.rd-lap{display:none}}

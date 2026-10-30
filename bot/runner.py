@@ -188,7 +188,7 @@ def pending():
             ex["plan"] = plan_
             votes_line = "Votes: " + " · ".join(f"{a} {x[0]:.2f} ({x[1][:38]})" for a, x in v.items())  # 255
             if plan_: ex["why"] = plan_["text"] + "\n" + votes_line + "\n" + ex["why"]
-            if brain6.all_agree(v): alerts.send_async(f"🤝 RYDER strong agreement (paper): all six agents ≥0.70 on {p['sym']} · council {cons:.2f}")  # 233
+            if brain6.all_agree(v): log("strong_agreement", m, p["sym"], council=cons); alerts.send_async(f"🤝 RYDER strong agreement (paper): all six agents ≥0.70 on {p['sym']} · council {cons:.2f}")  # 233
             mult = round(mult * smul, 3); ex["why"] = line + " | " + str(ex.get("why", ""))[:200]
         ex["council"] = council
         if council: mult = round(mult * brain6.STARTER, 3); ex["starter"] = True  # 254 starter buy; add-on after confirmation

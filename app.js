@@ -62,3 +62,50 @@ setInterval(()=>document.querySelectorAll('#rd-extra [data-left]').forEach(s=>{l
 function ryderBigStar(){const s=document.querySelector('.brand .rd-mascot');if(!s)return;let b=document.getElementById('rd-bigstar');if(!b){b=document.createElement('div');b.id='rd-bigstar';b.setAttribute('aria-hidden','true');document.body.appendChild(b)}
  if(b.dataset.mood===s.dataset.mood)return;b.dataset.mood=s.dataset.mood;b.innerHTML=s.outerHTML.replace('id="rdb"','id="rdbB"').replace(/url\(#rdb\)/g,'url(#rdbB)').replace('<stop offset="0" stop-color="#F25C5C"/><stop offset="1" stop-color="#E03A3E"/>','<stop offset="0" stop-color="#FF8A9A"/><stop offset="1" stop-color="#FF3B4F"/>')}
 {const _r3=render;render=function(){_r3.apply(this,arguments);try{ryderBigStar()}catch{}}}
+
+/* RYDER voice + emotes + bounces (v6). Driven by data.json: ryder_events, opens, mood, market_mood. Muted until tapped. */
+(()=>{
+const V={buy:3,win:3,bigwin:2,loss:3,rug:3,agree:2,idle:2,dump:2,wake:2,nervous:1},RM=matchMedia('(prefers-reduced-motion: reduce)');
+let on=false,last=0,lastRug=0,lastIdle=Date.now(),lastEv=null,emote=null,emoteUntil=0,prevDump=null,nervousSeen=new Set(),cur=null;
+try{on=localStorage.getItem('ryder-voice')==='on';lastEv=+localStorage.getItem('ryder-last-ev')||null}catch{}
+const pick=k=>`audio/${k}_${1+Math.floor(Math.random()*V[k])}.mp3?v=6`;
+function say(k,force){if(!on||!V[k])return;const now=Date.now();if(!force&&now-last<8000)return;last=now;try{cur&&cur.pause();cur=new Audio(pick(k));cur.volume=.9;cur.play().catch(()=>{})}catch{}}
+function setEmote(m,ms){emote=m;emoteUntil=Date.now()+ms;try{ryderMascot(data&&data.mood)}catch{}}
+function hop(big){const els=[document.querySelector('.brand .rd-mascot'),document.getElementById('rd-bigstar')].filter(Boolean);els.forEach(e=>{e.classList.remove('rd-hopnow');void e.offsetWidth;e.classList.add('rd-hopnow');setTimeout(()=>e.classList.remove('rd-hopnow'),950)});
+ if(big&&!RM.matches){const s=document.querySelector('.brand .rd-mascot');if(!s)return;const d=document.createElement('div');d.className='rd-lap';d.setAttribute('aria-hidden','true');d.innerHTML=s.outerHTML.replace(/id="rdb"/,'id="rdbL"').replace(/url\(#rdb\)/g,'url(#rdbL)');document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}}
+/* faces */
+const E=(ry,dy)=>`<ellipse cx="43" cy="${54+dy}" rx="3.8" ry="${ry}" fill="#fff" transform="rotate(-15 43 ${54+dy})"/><ellipse cx="57" cy="${54+dy}" rx="3.8" ry="${ry}" fill="#fff" transform="rotate(-15 57 ${54+dy})"/>`;
+const FX={excited:E(7.5,-2)+'<path class="rd-mouth" d="M43.5 62 Q50 71 56.5 62 Z" fill="#fff"/>',
+ nervous:E(6.5,0)+'<path class="rd-mouth" d="M44 66 q2 -2 4 0 t4 0 t4 0" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M63 46 q2.5 4 0 6 q-2.5 -2 0 -6Z" fill="#9be7ff"/>',
+ shades:'<path d="M36 50 h28 v3 h-2 q-1 6 -7 6 q-5 0 -6 -5 h-2 q-1 5 -6 5 q-6 0 -7 -6 h-2Z" fill="#111"/><path d="M40 52 l4 0" stroke="#fff6" stroke-width="1.2"/><path class="rd-mouth" d="M45 65 Q51 68.5 56 64" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>',
+ angry:E(5.5,1)+'<path d="M38 46.5 L47 50 M62 46.5 L53 50" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path class="rd-mouth" d="M45 67.5 Q50 63.5 55 67.5" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/>'};
+const baseFace=ryderFace;ryderFace=m=>FX[m]||baseFace(m);
+ryderMascot=function(mood){const b=document.querySelector('.brand');if(!b)return;let m=mood;
+ if(emote&&Date.now()<emoteUntil)m=emote;else{emote=null;const o=(data&&data.opens)||[];if(o.some(p=>p.now<p.entry*0.97))m='nervous'}
+ const ok=['happy','sad','sleepy','alert','excited','nervous','shades','angry'];m=ok.includes(m)?m:'';let el=b.querySelector('.rd-mascot');if(el&&el.dataset.mood===m)return;
+ const html=`<svg class="rd-mascot rd-${m||'neutral'}" data-mood="${m}" viewBox="0 0 100 100" width="48" height="48" role="img" aria-label="RYDER red star${m?' · '+m:''}" style="overflow:visible"><defs><linearGradient id="rdb" x1="0.2" y1="0" x2="0.8" y2="1"><stop offset="0" stop-color="#F25C5C"/><stop offset="1" stop-color="#E03A3E"/></linearGradient></defs><g class="rd-body"><path fill="url(#rdb)" stroke="url(#rdb)" stroke-width="11" stroke-linejoin="round" d="M50.0 16.0 L60.0 40.2 L86.1 42.3 L66.2 59.3 L72.3 84.7 L50.0 71.0 L27.7 84.7 L33.8 59.3 L13.9 42.3 L40.0 40.2 Z"/><g class="rd-face">${ryderFace(m)}</g></g></svg>`;
+ const old=el||b.querySelector('img');if(old)old.outerHTML=html;else b.insertAdjacentHTML('afterbegin',html);try{ryderBigStar()}catch{}};
+setInterval(()=>{if(emote&&Date.now()>=emoteUntil){emote=null;try{ryderMascot(data&&data.mood)}catch{}}},2000);
+/* event diff */
+function react(d){const ev=Array.isArray(d.ryder_events)?d.ryder_events:[];const maxId=ev.reduce((a,e)=>Math.max(a,+e.id||0),0);
+ if(lastEv===null){lastEv=maxId;save();return}
+ const fresh=ev.filter(e=>+e.id>lastEv);if(maxId>lastEv){lastEv=maxId;save()}
+ const now=Date.now();let line=null,mood=null,ms=20000,big=false,bounce=false;
+ for(const e of fresh){let k=null,mo=null;
+  if(e.kind==='exit'){const w=(+e.pnl||0)>0;if(w&&(+e.pct||0)>=30){k='bigwin';mo='shades';big=true}else if(w){k='win';mo='happy'}else{k='loss';mo='sad'}bounce=true}
+  else if(e.kind==='buy'){k='buy';mo='excited';bounce=true}
+  else if(e.kind==='strong_agreement'){k='agree';mo='excited'}
+  else if(e.kind==='rug_dodged'&&now-lastRug>120000){k='rug';mo='angry';lastRug=now}
+  const pr=['bigwin','win','loss','buy','agree','rug'];if(k&&(!line||pr.indexOf(k)<pr.indexOf(line))){line=k;mood=mo}}
+ const mm=d.market_mood&&d.market_mood.mood;if(prevDump!==null&&mm==='risk-off'&&prevDump!=='risk-off'&&!line){line='dump';mood='nervous'}prevDump=mm||null;
+ for(const p of d.opens||[])if(p.now<p.entry*0.97&&!nervousSeen.has(p.sym)){nervousSeen.add(p.sym);if(!line){line='nervous';mood='nervous'}}
+ if(line){lastIdle=now;if(mood)setEmote(mood,big?30000:ms);if(bounce||big)hop(big);say(line)}
+ else if(d.mood==='sleepy'&&now-lastIdle>20*60000){lastIdle=now;say('idle')}}
+function save(){try{localStorage.setItem('ryder-last-ev',String(lastEv))}catch{}}
+{const _r4=render;render=function(){_r4.apply(this,arguments);try{react(data)}catch(e){console.warn(e)}}}
+/* tiny mute toggle in the existing header (no new panel) */
+const btn=document.createElement('button');btn.id='rd-voice';btn.type='button';
+const paint=()=>{btn.textContent=on?'🔊':'🔇';btn.setAttribute('aria-label',on?'Mute RYDER voice':'Unmute RYDER voice');btn.setAttribute('aria-pressed',String(on))};paint();
+btn.onclick=()=>{on=!on;try{localStorage.setItem('ryder-voice',on?'on':'off')}catch{}paint();if(on){setEmote('excited',4000);hop(false);say('wake',true)}};
+const st=document.getElementById('settings');if(st)st.before(btn);
+})();

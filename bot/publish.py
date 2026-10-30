@@ -17,7 +17,24 @@ def build():
     d["heartbeat"] = dict(at=d["updated_at"], runner_alive=age is not None and age < 120, runner_last_beat_s=age,
                           pending_entries=hb.get("pending"), live_feed=bool((hb.get("ws") or {}).get("connected")),
                           live_feed_events=(hb.get("ws") or {}).get("events"), publish_every_s=INTERVAL)
+    try: d["ryder_events"] = ryder_events()
+    except Exception: d["ryder_events"] = []
     return d
+RUG = ("rug", "dev_", "lp_", "bundle", "honeypot", "wash", "sniper", "linked_launch", "fresh_", "clone", "team_supply", "listing_scam", "wallet_", "mutable", "copycat")
+def ryder_events(n=25):
+    """App voice/emote cues: recent MAIN-book (v3) paper events only. No addresses beyond symbols, no secrets."""
+    import sqlite3
+    c = sqlite3.connect(os.path.join(D, "desk.db")); c.row_factory = sqlite3.Row; out = []
+    for r in c.execute("SELECT id, ts, kind, symbol, data FROM events WHERE kind IN ('paper_buy','paper_exit','kill','strong_agreement') AND ts>? ORDER BY id DESC LIMIT 400", (time.time() - 3 * 3600,)):
+        x = json.loads(r["data"] or "{}"); book = x.get("book") or "v3"
+        if r["kind"] in ("paper_buy", "paper_exit") and book != "v3": continue
+        if r["kind"] == "kill" and not any(k in str(x.get("reason", "")) for k in RUG): continue
+        e = dict(id=r["id"], t=round(r["ts"]), kind={"paper_buy": "buy", "paper_exit": "exit", "kill": "rug_dodged"}.get(r["kind"], r["kind"]), sym=(r["symbol"] or "")[:14])
+        if r["kind"] == "paper_exit": e.update(pct=x.get("pct"), pnl=x.get("pnl"), reason=x.get("reason"))
+        if r["kind"] == "kill": e["reason"] = x.get("reason")
+        out.append(e)
+        if len(out) >= n: break
+    c.close(); return out[::-1]
 def validate(d):  # mirrors app.js validate()
     for k in ['start','equity','cash','seen','passed','trades','wins','losses','nkills','realized']: assert isinstance(d[k], (int, float)), k
     assert d["start"] > 0 and isinstance(d["asof"], str)
