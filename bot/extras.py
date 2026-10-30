@@ -41,8 +41,9 @@ def regime():
         except Exception: pass
         if h24 is None:
             try:
-                g = http_json("https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd&include_24hr_change=true", timeout=8)
-                h24 = round(float(g["solana"]["usd_24h_change"]), 2); h1 = (STATE["regime"] or {}).get("sol_h1"); src = "coingecko"
+                pts = http_json("https://api.coingecko.com/api/v3/coins/solana/market_chart?vs_currency=usd&days=1", timeout=8)["prices"]  # ~5-min points, 24h
+                last = pts[-1]; h24 = round((last[1] / pts[0][1] - 1) * 100, 2)
+                p1 = min(pts, key=lambda x: abs(x[0] - (last[0] - 3600_000))); h1 = round((last[1] / p1[1] - 1) * 100, 2); src = "coingecko"
             except Exception: pass
         if h24 is not None:
             h1f = h1 or 0

@@ -84,3 +84,4 @@ Main desk bars and every rug/safety check unchanged.
 ## 2026-10-30 14:58 PT - Market mood fix (data side only, app untouched)
 Cause: extras.regime() fetched SOL change from DexScreener once per ~10 min; any failure (DexScreener now intermittently 429s) left mood 'unknown' and SOL 1h/24h empty until the next try, with no fallback.
 Fix: checked every minute off the positions thread; refresh every 5 min, retry 60s after a failure; CoinGecko fallback (24h; 1h keeps last good value); last good value kept up to 1h. Mood rules unchanged.
+Follow-up 15:06 PT: CoinGecko fallback now uses market_chart (days=1) so it gives both SOL 1h and 24h (DexScreener's SOL read was failing on 429s every time, leaving 1h empty).
