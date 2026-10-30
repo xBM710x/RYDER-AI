@@ -152,6 +152,20 @@ try: out["weights"] = __import__("analyst").weights()
 except Exception: pass
 out["postmortems"] = [dict(sym=e["symbol"], **{k: e["d"].get(k) for k in ("exit_pct", "peak_pct", "held_min", "reason", "lesson")}) for e in ev if e["kind"] == "postmortem"][-5:]
 out["alerts"] = dict(telegram_x="not configured (needs Braydon's own bot token/chat; skipped)")
+# ---- 61-120 compact fields ----
+try:
+    import brain, more
+    out["speed"] = dict(decision_s=_hb.get("decision_s"), deep_check_s=_hb.get("deep_check_s"), inflight=_hb.get("inflight"), workers=6, ws_wake=True)
+    out["brain"] = dict(model=_hb.get("model"), paused=_hb.get("paused"), drift=brain.drift(), calibration=brain.calibration(), memory_top=dict(sorted(brain.memory().items(), key=lambda kv: -kv[1]["n"])[:8]),
+                        audit=brain.audit_summary(), champion=dict(promoted=brain.promoted(), challenger=next((v for v in versions if v["v"] == V + "b"), None)))
+    out["lessons"] = brain.lessons()[:5]
+    out["rug_timing"] = _hb.get("rug_timing") or more.rug_timing()
+    out["migrations_seen"] = _hb.get("migrations", 0)
+    _bw = {e["mint"]: e["d"] for e in ev if e["kind"] == "paper_buy"}
+    for o, p in zip(opens, op): b = _bw.get(p["mint"], {}); o["win_prob"] = b.get("win_prob"); o["why"] = b.get("why")
+    for x, p in zip(closed, cl[-15:]): b = _bw.get(p["mint"], {}); x["win_prob"] = b.get("win_prob"); x["why"] = b.get("why")
+    out["skipped_features"] = ["103/104 X shill + mention velocity: needs X API access inside the bot loop", "105 curated KOL list: none supplied; uses learned smart wallets (#21)", "39 Telegram/X alerts"]
+except Exception as _e: out["brain_err"] = str(_e)[:120]
 line = "const DATA: any = " + json.dumps(out) + ";"
 open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "page_data_line.txt"), "w").write(line)
 print(line)

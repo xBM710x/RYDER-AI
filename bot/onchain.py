@@ -1,11 +1,12 @@
 """v2 on-chain checks via public Solana RPC (no keys). Rate-limited, fail-closed with explicit 'unknown'."""
-import time
+import time, threading
 from common import rpc, dex_market
-_last = [0.0]
+_last = [0.0]; _L = threading.Lock()
 def r(method, params):
-    dt = time.time() - _last[0]
-    if dt < 0.25: time.sleep(0.25 - dt)  # <=4 req/s to public RPC
-    _last[0] = time.time()
+    with _L:  # thread-safe global rate limit: <=4 req/s to public RPC
+        dt = time.time() - _last[0]
+        if dt < 0.25: time.sleep(0.25 - dt)
+        _last[0] = time.time()
     for i in range(2):
         try: return rpc(method, params)
         except Exception:

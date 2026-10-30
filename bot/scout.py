@@ -10,9 +10,12 @@ def tag(dex, mint=""):
     if mint.endswith("bonk"): t += "(bonk)"
     if mint.endswith("pump") and "pump" not in t: t += "(pump-origin)"
     return t
+_LP = [0.0]
 def scout():
     cands = {}
-    for page in (1, 2):
+    poll = time.time() - _LP[0] >= CFG["SCAN_SEC"]  # REST polling at most every SCAN_SEC; websocket coins handled instantly
+    if poll: _LP[0] = time.time()
+    for page in ((1, 2) if poll else ()):
         try:
             for p in http_json(f"https://api.geckoterminal.com/api/v2/networks/solana/new_pools?page={page}").get("data", []):
                 m = p["relationships"]["base_token"]["data"]["id"].replace("solana_", "")
@@ -20,7 +23,7 @@ def scout():
                 cands.setdefault(m, dict(mint=m, name=p["attributes"]["name"], source="geckoterminal",
                                          dex=tag(p["relationships"]["dex"]["data"]["id"], m)))
         except Exception as e: print("scout gecko err", e)
-    for url in ("https://api.dexscreener.com/token-profiles/latest/v1", "https://api.dexscreener.com/token-boosts/latest/v1"):
+    for url in (("https://api.dexscreener.com/token-profiles/latest/v1", "https://api.dexscreener.com/token-boosts/latest/v1") if poll else ()):
         try:
             for t in http_json(url) or []:
                 if t.get("chainId") == "solana":

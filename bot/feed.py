@@ -6,11 +6,13 @@ def _run():
     while True:
         try:
             w = websocket.create_connection("wss://pumpportal.fun/api/data", timeout=60)
-            w.send(json.dumps({"method": "subscribeNewToken"})); STATS["connected"] = True
+            w.send(json.dumps({"method": "subscribeNewToken"})); w.send(json.dumps({"method": "subscribeMigration"})); STATS["connected"] = True  # 101: graduations too
             while True:
                 try: m = json.loads(w.recv())
                 except websocket.WebSocketTimeoutException: continue
-                if m.get("mint"):
+                if m.get("mint") and m.get("txType") == "migrate":
+                    NEW.append(dict(mint=m["mint"], name="", source="pumpportal-migration", dex="pumpswap", creator=None, t=time.time())); STATS["migrations"] = STATS.get("migrations", 0) + 1
+                elif m.get("mint"):
                     NEW.append(dict(mint=m["mint"], name=m.get("symbol") or m.get("name") or "", source="pumpportal-ws",
                                     dex="pumpfun", creator=m.get("traderPublicKey"), t=time.time()))
                     STATS["events"] += 1; STATS["last"] = time.time()

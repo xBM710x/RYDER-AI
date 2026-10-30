@@ -3,7 +3,7 @@ VERIFIED (on-chain via Solana RPC): mint authority, freeze authority.
 SOURCED (RugCheck/DexScreener data, not independently verified): LP locked/burned, top-10 %, 1h volume.
 APPROXIMATED (heuristics on RugCheck data): dev past rugs, bundled launch."""
 from common import http_json, rpc, CFG
-import onchain, detect, extras
+import onchain, detect, extras, more
 AMM_TYPES = {"AMM", "LOCKER"}  # RugCheck knownAccounts types excluded from holder concentration
 def check(mint, pair):
     res = {}  # name -> (status pass/fail/unknown, detail, provenance)
@@ -72,6 +72,8 @@ def check(mint, pair):
         if fee > 0: res["honeypot"] = ("fail", f"transfer tax {fee}%", "rugcheck"); return res
         sym = ((pair or {}).get("baseToken") or {}).get("symbol"); dup = extras.copycat(sym, mint, ((pair or {}).get("liquidity") or {}).get("usd"))
         if dup: res["copycat"] = ("fail", f"${sym} already exists with more liquidity ({dup[:8]})", "names-db"); return res
+        pk = more.precheck(mint, pair, rc)
+        if pk: res[pk[0]] = ("fail", pk[1], "v3-precheck"); return res
         hn, hr = extras.holder_rate(rc, pair); res["_holders"] = ("pass", f"{hn}|{hr}", "meta")
         extras.save_holders(mint, [h.get("owner") for h in th])
     cr = rc.get("creator"); res["_creator"] = ("pass", cr or "", "meta"); detect.remember_creator(mint, cr, pair)
