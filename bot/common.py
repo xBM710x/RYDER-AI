@@ -72,18 +72,27 @@ def _http_json(url, body=None, timeout=12, retries=1):
             if i == retries: raise
             time.sleep(1.5)
 RPCS = [CFG["RPC"], "https://solana-rpc.publicnode.com"]  # 123 backup free RPC failover
+RPC_COOL = {}  # (endpoint, method) -> (until, strikes). 2026-10-30: publicnode answers 403 "Request blocked" to getTokenAccountsByOwner
 def rpc(method, params):
-    err = None
+    """Failover across free RPCs. 403/429 on an endpoint+method -> that pair cools off (2, 4, 8 .. 30 min) instead of being retried every minute."""
+    err = None; now = time.time()
     for u in list(RPCS):
+        until, k = RPC_COOL.get((u, method), (0, 0))
+        if now < until: continue
         try:
             r = http_json(u, {"jsonrpc": "2.0", "id": 1, "method": method, "params": params}, timeout=20 if u == RPCS[0] else 15)
-            if "error" in r and (r["error"] or {}).get("code") in (429, -32005, -32429): err = RuntimeError(r["error"]); continue
+            if "error" in r and ("blocked" in str(r["error"]).lower() or (r["error"] or {}).get("code") == -32052):
+                RPC_COOL[(u, method)] = (now + min(1800, 120 * 2 ** k), k + 1); err = RuntimeError(r["error"]); continue
+            if "error" in r and (r["error"] or {}).get("code") in (429, -32005, -32429): RPC_COOL[(u, method)] = (now + min(1800, 120 * 2 ** k), k + 1); err = RuntimeError(r["error"]); continue
             if "error" in r: raise RuntimeError(r["error"])
+            RPC_COOL.pop((u, method), None)
             if u != RPCS[0]: RPCS.remove(u); RPCS.insert(0, u)  # promote the healthy endpoint
             return r["result"]
         except RuntimeError: raise
-        except Exception as e: err = e
-    raise err
+        except Exception as e:
+            if getattr(e, "code", None) in (403, 429): RPC_COOL[(u, method)] = (now + min(1800, 120 * 2 ** k), k + 1)
+            err = e
+    raise err or RuntimeError(f"all RPCs cooling off for {method}")
 _DC = {}
 def dex_market(mints):
     """DexScreener batch (<=30 mints) -> {mint: best-liquidity solana pair}"""

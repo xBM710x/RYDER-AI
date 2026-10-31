@@ -132,3 +132,18 @@ Main-desk bars unchanged ($28K vol / $18K liq / 0.55). No safety check loosened.
 5. Telegram buy alerts (main + FOMO) list the six agent votes with short reasons.
 6. Freeze watchdog (b14-watchdog): positions loop silent 90s -> starts a fresh positions thread (old one exits on its next loop via a generation token),
    max once per 5 min, logged to hang.log + 'selfheal' event. brain10 background jobs stuck >10 min are freed. Scan loop still relies on supervisor (180s heartbeat).
+
+## 2026-10-30 ~22:40 PT — stall root cause, scan watchdog, RPC 403 fix, rugcheck retry — PAPER ONLY
+- 9:37 PM PT stall: NOT a RYDER loop. Events table has a 151s gap 21:35:11 -> 21:37:42 across ALL threads (scan + positions); the separate
+  publisher process also missed its 21:37:56 push (21:34:53 -> 21:40:12); brain11's 10s watchdog thread itself did not run until 140s.
+  The whole box/process was frozen (CPU/VM pause). Positions thread stack at dump time was idle in time.sleep.
+  Now: brain14 watchdog measures its own sleep drift; >45s overrun = 'process_pause' (hang.log + event), loop stamps reset, no pointless restart.
+  brain11 skips stack dumps right after a pause; scan dump threshold 150s -> 100s.
+- Scan loop moved off the main thread into 'scan_loop' (generation token). scan() silent 120s -> fresh scan thread (max 1 per 10 min), hang.log.
+  Main thread now only supervises. `python3 runner.py N` (cycles) still runs inline.
+- Fomo wallet 403: publicnode returns 403 "Request blocked" for getTokenAccountsByOwner (mainnet-beta works). common.rpc now cools off an
+  endpoint+method after 403/429/blocked (2,4,8..30 min). wallet_watch backs off 2/4/8/15 min on failure, keeps last balances (no fake 'sold'), marks 'stale'.
+- rugcheck retry: 62 coins/24h passed volume+liquidity and died only on 'lp_locked: unknown (rugcheck unavailable)' (report not generated yet).
+  They are re-run through the full fail-closed evaluate() at +150s and +300s (max 2). No check loosened.
+- Not done on purpose: faster entry (90s wait is also the orderflow/lower-lows rug watch -> shortening it weakens safety);
+  agent self-calibration already exists (brain13 shadow grades -> trust), but 0 council decisions so far, so nothing to calibrate.

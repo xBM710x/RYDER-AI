@@ -33,6 +33,8 @@ def kill(m, sym, reason, detail, final=True, pair=None, **kw):
     if pair and reason in ("volume_1h", "liquidity"): brain10.note_kill(m, sym, reason, pair)  # 441
     elif final: brain10.unwatch(m)  # 442 any other final kill (safety) removes it from the watch
     log("kill", m, sym, reason=reason, detail=detail, final=final, px=float((pair or {}).get("priceUsd") or 0) or None, **kw)
+    try: brain14.rc_retry(m, sym, reason, detail, final)  # rugcheck had no report yet -> same full check again later
+    except Exception: pass
 def evaluate(cd, pair, relax=False):
     t0 = time.time(); m = cd["mint"]; sym = (pair or {}).get("baseToken", {}).get("symbol") or cd["name"]
     if pair and cd["dex"].startswith("unknown"): cd["dex"] = scout.tag(pair.get("dexId", ""), m)
@@ -462,11 +464,22 @@ def main(cycles=None):
     def _restart_pos():
         PL[0] = threading.Thread(target=pos_loop, args=(brain14.GEN[0],), daemon=True); PL[0].start()
     brain14.start(_restart_pos)  # freeze watchdog: restarts only the positions thread
-    while cycles is None or n < cycles:
-        t0 = time.time(); brain11.tick("scan")
-        try: scan(); n += 1
-        except Exception: log("error", where="scan", trace=traceback.format_exc()[-800:])
-        ss = brain10.scan_hint(brain4.scan_sec(feed.STATS, len(INFLIGHT) + len(PENDING), CFG["SCAN_SEC"]))  # 198 / 451
-        while time.time() - t0 < ss and not feed.NEW: time.sleep(1)  # wake immediately on live launches
-        time.sleep(0.5)
+    def scan_loop(gen=0, cycles=None):
+        n = 0
+        while cycles is None or n < cycles:
+            if gen != brain14.SGEN[0]: return  # scan watchdog started a newer scan thread
+            t0 = time.time(); brain11.tick("scan")
+            try: scan(); n += 1
+            except Exception: log("error", where="scan", trace=traceback.format_exc()[-800:])
+            ss = brain10.scan_hint(brain4.scan_sec(feed.STATS, len(INFLIGHT) + len(PENDING), CFG["SCAN_SEC"]))  # 198 / 451
+            while time.time() - t0 < ss and not feed.NEW: brain11.tick("scan"); time.sleep(1)  # wake immediately on live launches
+            time.sleep(0.5)
+    if cycles is not None: return scan_loop(0, cycles)
+    SL = [threading.Thread(target=scan_loop, args=(0,), daemon=True, name="scan_loop")]; SL[0].start()
+    def _restart_scan():
+        SL[0] = threading.Thread(target=scan_loop, args=(brain14.SGEN[0],), daemon=True, name="scan_loop"); SL[0].start()
+    brain14.SCAN_RESTART[0] = _restart_scan
+    while True:  # main thread only supervises now
+        time.sleep(30)
+        if not SL[0].is_alive(): log("selfheal", what="scan_loop_dead"); brain14.SGEN[0] += 1; _restart_scan()
 if __name__ == "__main__": main(int(sys.argv[1]) if len(sys.argv) > 1 else None)

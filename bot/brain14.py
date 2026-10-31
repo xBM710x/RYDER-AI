@@ -111,13 +111,26 @@ def votes_text(council):
         out.append(f"{'✅' if vote >= 0.5 else '⚠️'} {NAMES.get(a, a)} {vote:.2f}: {str(why).split(';')[0][:70]}")
     return "🗳 Agent votes (consensus " + f"{(council or {}).get('consensus', 0):.2f}" + ")\n" + "\n".join(out)
 # ---------- 6 freeze watchdog ----------
-GEN = [0]; RESTART = [None]; _RL = []
+GEN = [0]; RESTART = [None]; _RL = []; SGEN = [0]; SCAN_RESTART = [None]; _SRL = []; PAUSES = []
 def watchdog():
+    """Also detects whole-process / box pauses: if this thread's own 15s sleep overran by 30s+, every thread was frozen (9:37 PM PT 2026-10-30:
+    all runner threads AND the separate publisher process went silent together for ~150s) -> logged as a pause, loop stamps reset, no restart."""
     import brain11, brain10
+    last = time.time()
     while True:
         time.sleep(15)
         try:
-            now = time.time(); t = brain11.LOOP_T.get("pos")
+            now = time.time(); gap = now - last; last = now
+            if gap > 45:
+                PAUSES.append((time.strftime("%H:%M:%S"), round(gap))); del PAUSES[:-20]; STATS["process_pause"] += 1
+                _hang(f"whole process paused {gap:.0f}s (watchdog thread itself did not run) -> box/CPU stall, not a RYDER loop; no restart")
+                log("process_pause", sec=round(gap)); brain11.LOOP_T["pos"] = brain11.LOOP_T["scan"] = now; continue
+            ts = brain11.LOOP_T.get("scan")
+            if ts and now - ts > 120 and SCAN_RESTART[0] and not [x for x in _SRL if now - x < 600]:
+                _SRL.append(now); SGEN[0] += 1; STATS["scan_restart"] += 1
+                _hang(f"scan loop silent {now - ts:.0f}s -> restarted scan thread only (gen {SGEN[0]})")
+                log("selfheal", what="scan_loop_stuck", silent_s=round(now - ts), gen=SGEN[0]); brain11.LOOP_T["scan"] = now; SCAN_RESTART[0]()
+            t = brain11.LOOP_T.get("pos")
             if t and now - t > 90 and RESTART[0] and not [x for x in _RL if now - x < 300]:
                 _RL.append(now); GEN[0] += 1; STATS["pos_restart"] += 1
                 _hang(f"positions loop silent {now - t:.0f}s (step {brain11.CUR.get('pos')}) -> restarted positions thread only (gen {GEN[0]})")
@@ -131,10 +144,28 @@ def watchdog():
 BUSY_T = {}
 def start(restart_fn):
     RESTART[0] = restart_fn; threading.Thread(target=watchdog, daemon=True, name="b14-watchdog").start()
+# ---------- rugcheck-unavailable retry ----------
+RC = {}  # mint -> [due_ts, tries, sym]
+def rc_retry(m, sym, reason, detail, final):
+    """62 coins in 24h passed volume + liquidity and were then killed only because rugcheck.xyz had no report yet ('unable to generate report').
+    Retry them through the SAME full evaluate() (fail-closed, every check re-run) after 150s and 300s. Max 2 retries; nothing is loosened."""
+    if not final or "rugcheck unavailable" not in str(detail): return
+    r = RC.setdefault(m, [0, 0, sym])
+    if r[1] >= 2: return
+    r[0] = time.time() + 150 * (r[1] + 1); STATS["rc_retry_sched"] += 1
+    if len(RC) > 2000: [RC.pop(k) for k in list(RC)[:500]]
+def rc_due():
+    import brain10, brain2
+    now = time.time()
+    for m, r in list(RC.items()):
+        if r[0] and now >= r[0]:
+            r[0] = 0; r[1] += 1; brain2.REJ.pop(m, None); STATS["rc_retry"] += 1
+            brain10.QUEUE.append(dict(mint=m, name=r[2] or "", source="rugcheck-retry", dex="unknown", recheck=True))
 def jobs(k):
     import brain10
+    if k % 15 == 7: rc_due()
     if k % 600 == 450: brain10._bg("b14_rugsweep", sweep_dead_cf)
     if k % 300 == 222: brain10._bg("b14_snap", reprice_snapshots)
 def status():
     c = conn(); _rt(c); n = c.execute("SELECT kind, COUNT(*) FROM rug_assets GROUP BY kind").fetchall(); c.close()
-    return dict(stats=dict(STATS), rug_assets=dict(n), gen=GEN[0])
+    return dict(stats=dict(STATS), rug_assets=dict(n), gen=GEN[0], scan_gen=SGEN[0], pauses=PAUSES[-5:])

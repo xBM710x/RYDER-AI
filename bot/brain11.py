@@ -27,11 +27,13 @@ def _dump(why):
     log("hang_dump", why=why, file="hang.log")
 def watchdog():
     """509/510: independent thread. Positions loop silent 60s or scan loop silent 150s -> stack dump (before the supervisor's 180s kill)."""
+    last = time.time()
     while True:
         time.sleep(10)
         try:
-            now = time.time()
-            for n, lim in (("pos", 30), ("scan", 150)):  # 536 dump at 30s so the stuck stack is captured before recovery
+            now = time.time(); gap = now - last; last = now
+            if gap > 40: continue  # whole-process pause (brain14 logs it); a stack dump now would only show the recovery
+            for n, lim in (("pos", 30), ("scan", 100)):  # 536 dump at 30s so the stuck stack is captured before recovery
                 t = LOOP_T.get(n)
                 if t and now - t > lim: STATS["stall_" + n] += 1; _dump(f"{n} loop silent {now - t:.0f}s")
         except Exception: pass

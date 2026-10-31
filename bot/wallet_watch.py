@@ -14,7 +14,18 @@ def balances():
             i = a["account"]["data"]["parsed"]["info"]; amt = float(i["tokenAmount"]["uiAmount"] or 0)
             if i["mint"] not in SKIP: out[i["mint"]] = out.get(i["mint"], 0) + amt
     return out
+BACK = [0, 0]  # 403/429 backoff: (until, strikes)
 def tick():
+    """Fomo-wallet 403 fix: on an RPC failure keep the last known balances (no fake 'sold all'), back off 2/4/8/15 min, log once per streak."""
+    if time.time() < BACK[0]: return
+    try: _tick(); BACK[:] = [0, 0]
+    except Exception as e:
+        BACK[1] += 1; BACK[0] = time.time() + 60 * min(15, 2 ** BACK[1])
+        try:
+            st = json.load(open(P)); st["stale"] = dict(err=str(e)[:80], since=st.get("stale", {}).get("since") or time.time()); json.dump(st, open(P, "w"))
+        except Exception: pass
+        if BACK[1] == 1: raise
+def _tick():
     import alerts, brain3
     from common import dex_market
     try: st = json.load(open(P))
@@ -50,4 +61,4 @@ def tick():
         if sol and sp: st["sol_usd"] = round(sol * sp, 2); total += sol * sp
     except Exception: pass
     st["total_usd"] = round(total, 2)
-    st.update(bal=new, t=time.time()); json.dump(st, open(P, "w"))
+    st.pop("stale", None); st.update(bal=new, t=time.time()); json.dump(st, open(P, "w"))
