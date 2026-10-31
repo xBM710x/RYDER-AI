@@ -147,3 +147,12 @@ Main-desk bars unchanged ($28K vol / $18K liq / 0.55). No safety check loosened.
   They are re-run through the full fail-closed evaluate() at +150s and +300s (max 2). No check loosened.
 - Not done on purpose: faster entry (90s wait is also the orderflow/lower-lows rug watch -> shortening it weakens safety);
   agent self-calibration already exists (brain13 shadow grades -> trust), but 0 council decisions so far, so nothing to calibrate.
+
+## 2026-10-30 ~22:50 PT — rugcheck outage found, candidate priority — PAPER ONLY
+- ROOT CAUSE of no trades tonight: rugcheck.xyz /report (and /report/summary) returns 400 "unable to generate report" for EVERY token, even BONK,
+  since ~7 PM PT (lp_locked 'rugcheck unavailable' kills per hour: 16:00 2/17, 18:00 4/9, 19:00 10/10, 20:00 24/24, 21:00 20/20, 22:00 21/21; 0 before 4 PM).
+  rugcheck host 1 ok / 87 errors since 10:23 PM. Fail-closed stays (no check loosened) -> nothing that passes volume+liquidity can buy until rugcheck is back
+  or a vetted replacement LP-lock/insider source is added (needs Braydon's call).
+- brain14.rc_probe: BONK probe every ~10 min, 'rugcheck_health' event on change, heartbeat b14.rugcheck. rugcheck retries pause while it is down.
+- Scan ordering: candidates evaluated strongest-first (1h volume + liquidity vs bar, capped; re-checks / Fomo-wallet hints first). Ordering only.
+- Data too thin (0 council votes, 0 snapshots, 0 v3x/FOMO trades ever): per-agent learning and FOMO confidence sizing NOT built.

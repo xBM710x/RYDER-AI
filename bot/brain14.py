@@ -154,7 +154,18 @@ def rc_retry(m, sym, reason, detail, final):
     if r[1] >= 2: return
     r[0] = time.time() + 150 * (r[1] + 1); STATS["rc_retry_sched"] += 1
     if len(RC) > 2000: [RC.pop(k) for k in list(RC)[:500]]
+RCH = dict(down=None, since=None, checked=0)
+def rc_probe():
+    """Rugcheck outage probe: BONK (always has a report). Since ~7 PM PT 2026-10-30 every /report call returns 400 'unable to generate report',
+    so every coin that clears volume + liquidity is killed fail-closed on lp_locked. Logged once per state change; retries paused while down."""
+    from common import http_json
+    try: ok = bool(http_json("https://api.rugcheck.xyz/v1/tokens/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263/report/summary", timeout=10, retries=0))
+    except Exception: ok = False
+    RCH["checked"] = round(time.time())
+    if RCH["down"] is None or RCH["down"] == ok:
+        RCH["down"] = not ok; RCH["since"] = time.strftime("%H:%M"); log("rugcheck_health", down=not ok)
 def rc_due():
+    if RCH.get("down"): return  # pointless while rugcheck is down; resumes when the probe sees it back
     import brain10, brain2
     now = time.time()
     for m, r in list(RC.items()):
@@ -164,8 +175,9 @@ def rc_due():
 def jobs(k):
     import brain10
     if k % 15 == 7: rc_due()
+    if k % 600 == 60: brain10._bg("b14_rcprobe", rc_probe)
     if k % 600 == 450: brain10._bg("b14_rugsweep", sweep_dead_cf)
     if k % 300 == 222: brain10._bg("b14_snap", reprice_snapshots)
 def status():
     c = conn(); _rt(c); n = c.execute("SELECT kind, COUNT(*) FROM rug_assets GROUP BY kind").fetchall(); c.close()
-    return dict(stats=dict(STATS), rug_assets=dict(n), gen=GEN[0], scan_gen=SGEN[0], pauses=PAUSES[-5:])
+    return dict(stats=dict(STATS), rug_assets=dict(n), gen=GEN[0], scan_gen=SGEN[0], pauses=PAUSES[-5:], rugcheck=RCH)

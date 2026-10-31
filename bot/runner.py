@@ -20,7 +20,10 @@ def _scan():
     cands, total = scout.scout(); cands = [c for c in cands if c["mint"] not in INFLIGHT and not brain2.rejected(c["mint"])]  # 138
     mkt = dex_market([c["mint"] for c in cands]) if cands else {}
     if total or cands: log("scan", n_raw=total, n_new_or_due=len(cands))
-    for cd in cands:
+    def _pri(cd):  # strongest first: 1h volume (capped at 3x the bar) + liquidity, re-checks and Fomo-wallet hints ahead; ordering only
+        p = mkt.get(cd["mint"]) or {}; v = float((p.get("volume") or {}).get("h1") or 0); l = float((p.get("liquidity") or {}).get("usd") or 0)
+        return -(min(v / CFG["MIN_VOL_H1"], 3) + min(l / CFG["MIN_LIQ"], 3) + (1 if cd.get("recheck") or cd.get("source") == "fomo-wallet" else 0))
+    for cd in sorted(cands, key=_pri):
         INFLIGHT.add(cd["mint"]); POOL.submit(_eval_safe, cd, mkt.get(cd["mint"]))
 def _eval_safe(cd, pair):
     try: evaluate(cd, pair)
