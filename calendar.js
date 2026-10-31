@@ -40,3 +40,12 @@ function init(){document.querySelectorAll('nav a').forEach(a=>a.addEventListener
  setInterval(()=>{if(!view().hidden&&!document.hidden)load()},60000)}
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
 })();
+/* Live Pacific clock beside the mute button (absolute, no layout shift) */
+(function(){const f=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true});
+let el;function place(){const h=document.querySelector('header'),m=document.getElementById('rd-voice');if(!h)return;
+ if(!el){el=document.createElement('div');el.id='rclock';el.setAttribute('aria-label','Pacific time');h.style.position='relative';h.appendChild(el)}
+ const hr=h.getBoundingClientRect(),ref=(m||document.getElementById('settings')).getBoundingClientRect();
+ el.style.right=(hr.right-ref.left+5)+'px';el.style.top=(ref.top-hr.top+ref.height/2)+'px'}
+function tick(){place();const p=Object.fromEntries(f.formatToParts(new Date()).map(x=>[x.type,x.value]));
+ el.innerHTML=`<span class="t">${p.hour}:${p.minute}<sup>${p.second}</sup></span><span class="l">${p.dayPeriod} PT</span>`}
+const go=()=>{tick();setInterval(tick,1000);addEventListener('resize',place)};document.readyState==='loading'?addEventListener('DOMContentLoaded',go):go()})();
