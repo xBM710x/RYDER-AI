@@ -570,8 +570,8 @@ def promotion_hint():
 def jobs(k):
     """Periodic learning jobs (runner pos loop, 1s ticks)."""
     try:
-        if k % 900 == 600: nearmiss_learn(); agent_accuracy(); best_skipped()
+        if k % 900 == 600: __import__("brain10")._bg("b7_learn", lambda: (nearmiss_learn(), agent_accuracy(), best_skipped()))  # 535 off the positions thread
         lt = time.localtime()
-        if lt.tm_hour == 3 and lt.tm_min == 20 and k % 60 == 0: nearmiss_learn(); regret_tune()  # 281/282 nightly replay + bounded tune
+        if lt.tm_hour == 3 and lt.tm_min == 20 and k % 60 == 0: __import__("brain10")._bg("b7_nightly", lambda: (nearmiss_learn(), regret_tune()))  # 281/282 nightly replay + bounded tune
         if k % 1800 == 1200: guard_changes()
     except Exception as e: log("error", where="brain7.jobs", trace=str(e)[:200])

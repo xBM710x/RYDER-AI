@@ -85,3 +85,10 @@ Main desk bars and every rug/safety check unchanged.
 Cause: extras.regime() fetched SOL change from DexScreener once per ~10 min; any failure (DexScreener now intermittently 429s) left mood 'unknown' and SOL 1h/24h empty until the next try, with no fallback.
 Fix: checked every minute off the positions thread; refresh every 5 min, retry 60s after a failure; CoinGecko fallback (24h; 1h keeps last good value); last good value kept up to 1h. Mood rules unchanged.
 Follow-up 15:06 PT: CoinGecko fallback now uses market_chart (days=1) so it gives both SOL 1h and 24h (DexScreener's SOL read was failing on 429s every time, leaving 1h empty).
+
+## 2026-10-30 17:02 PT - upgrades 532-537 (freeze work, paper only). Backup: ../backup_pre532_20261030_165957
+hang.log caught one stall (15:54:21 PT, positions loop silent 81s) but the dump fired after the loop had already recovered, so no stuck stack was captured.
+Likely causes fixed: (a) heavy learning jobs ran ON the positions thread (brain.audit/train every 900 ticks, brain7 nearmiss_learn/agent_accuracy/best_skipped every 900 ticks, nightly regret_tune) -> now background, single-instance (534/535);
+(b) the positions thread queued behind scan threads in the DexScreener rate limiter (931s total throttle wait since 15:06) -> open-position price calls skip the queue (537).
+532/533: every positions-loop step is timed; >3s logs 'slow_step' and is listed in heartbeat b11 (slow, slow_by_step, in_progress). 536: stall dump now at 30s and names the step in progress.
+No bars or safety checks changed.

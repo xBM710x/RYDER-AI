@@ -392,7 +392,7 @@ def jobs(k):
         st = state(); brain6.latency_check(st["decision_s"].get("p90"), st["latency"].get("scan_s_avg"))  # 239
     if k % 3600 == 100: CFG["ENTRY_DELAY"] = brain6.learned_wait()  # 236
     if time.localtime().tm_hour == 3 and time.localtime().tm_min == 5 and k % 60 == 0: brain2.nightly_review()  # 159
-    if k % 900 == 0: brain.audit(); brain.check_promotion(); brain.drift(); brain.train()
+    if k % 900 == 0: brain10._bg("brain_learn", lambda: (brain.audit(), brain.check_promotion(), brain.drift(), brain.train()))  # 534 off the positions thread
     lt = time.localtime()
     if lt.tm_hour == 3 and lt.tm_min == 0 and k % 60 == 0: brain.nightly()
     if lt.tm_wday == 6 and lt.tm_hour == 8 and lt.tm_min == 0 and k % 60 == 0: brain.weekly_report()
@@ -428,11 +428,12 @@ def main(cycles=None):
         while True:
             k += 1; brain11.tick("pos")
             try:
-                positions()
-                if k % 3 == 0: pending()  # 422: 5s -> 3s
+                brain11.timed("positions", positions)
+                if k % 3 == 0: brain11.timed("pending", pending)  # 422: 5s -> 3s
                 if k % 600 == 0: detect.sweep_dead(); analyst.retune()
                 if k % 30 == 0: reentry()
-                jobs(k); brain3.jobs(k); brain7.jobs(k); brain9.jobs(k); brain10.jobs(k); brain12.jobs(k)
+                for jn_, jf_ in (("jobs", jobs), ("brain3", brain3.jobs), ("brain7", brain7.jobs), ("brain9", brain9.jobs), ("brain10", brain10.jobs), ("brain12", brain12.jobs)):
+                    brain11.timed(jn_, jf_, k)  # 532 per-job timing; >3s logs slow_step
                 if k % 60 == 30: brain8.patience()  # 367
                 if k % 3600 == 3599: brain8.hourly()  # 370/389
                 if k % 300 == 150: brain3.POOL.submit(brain3._safe, "requeue_volume", brain4.requeue_volume)  # 188

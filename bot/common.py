@@ -36,6 +36,7 @@ def http_json(url, body=None, timeout=12, retries=1):
         if hit and now - hit[0] < 900: NET["stale_served"] += 1; return hit[1]
         NET["cooled_skip"] += 1; raise Cooling(f"{h} cooling {cool[0]-now:.0f}s after 429")
     gap = _RL.get(h)
+    if gap and "pos_loop" in _th.current_thread().name and "dexscreener" in h: gap = 0  # 537 open-position prices skip the queue (exits never wait behind scans)
     if gap:
         with _RLK: wait = max(0.0, _NEXT.get(h, 0) - now); _NEXT[h] = max(now, _NEXT.get(h, 0)) + gap
         if wait > 20: NET["cooled_skip"] += 1; _NEXT[h] -= gap; raise Cooling(f"{h} queue {wait:.0f}s")  # 498 never block a thread >20s
