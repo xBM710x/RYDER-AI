@@ -200,3 +200,13 @@ Main-desk bars unchanged ($28K vol / $18K liq / 0.55). No safety check loosened.
 - Stale-data breaker: price data > 60s old -> no entry (pairs stamped _ts in common.dex_market). Exits unaffected.
 - Liquidity-drop breaker: >30% drop vs 5-min max -> coin paused 30 min for buys; open v3+ positions exit 'liq_drop'.
 - Breaker self-tests: test_breakers.py / brain17.selftest at startup + hourly; failure -> 'breaker_selftest' event + Telegram alert.
+
+## 2026-10-31 ~01:10 PT — Skeptic, trade diary, locked lanes, 2-loss half size (brain18, approved by Braydon) — PAPER ONLY, adds rejects/lowers size only
+- Skeptic (executor.buy, v3+ desks, after the scorecard): reject 'skeptic_<why>' on any scorecard factor < 0.40, +40% in 5 min (25% when the
+  desk's last 5 diary lines have 2+ 'no lift'), +500% in 1h, pool < $5K or < 40x the paper size, any non-pass dev/bundle/cluster/wash result,
+  top10 > 30%, pool down >15% in 10 min. Backtest (backtest18.py, 20 coins that reached scoring, decision-time data): 0 rejected.
+- Diary: on every v3+ full close -> 2 lines (right/wrong) in brain18.json + 'diary' event; data.json 'diary' (last 20); Logger shows newest 5 in logger.tail.
+- Locked lanes (brain18.lanes): after the agents vote, each council step may raise only its own agent's vote; raising another agent's vote
+  is reverted (lowering allowed), vetoed votes (< veto line) can't be raised by anyone incl. the debate step. 'lane_block' events.
+- Two-loss brake: 2 losing full exits in a row on a desk -> 0.5x size on top of the existing streak brake (0.75x/0.5x) -> 0.375x at 2, 0.25x at 3+.
+- Self-tests now 12 (locked_lanes, two_loss_half, skeptic, diary added). liq_drop stat no longer counts self-test mints.

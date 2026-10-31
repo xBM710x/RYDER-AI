@@ -25,6 +25,8 @@ def build():
     except Exception: d["skip_tally"] = None
     try: d["copy_desk"] = copy_desk()
     except Exception: d["copy_desk"] = None
+    try: d["diary"] = (json.load(open(os.path.join(D, "brain18.json"))).get("diary") or [])[-20:][::-1]  # b18 trade diary (newest first; data only)
+    except Exception: d["diary"] = []
     try: d["calendar"] = calendar_export(d)
     except Exception: d["calendar"] = None
     return d

@@ -39,6 +39,7 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
         last = [r["pnl"] for r in c.execute("SELECT pnl FROM positions WHERE status='closed' AND version=? AND reason!='partial_tp' ORDER BY closed DESC LIMIT 3", (ver,))]
         streak = next((i for i, p in enumerate(last) if p > 0), len(last))
         if streak >= 2: size *= 0.5 if streak >= 3 else 0.75  # v3: shrink after losing streak
+        if __import__("brain18").two_loss_mult(ver) < 1: size *= 0.5; log("size_brake", mint, symbol, mult=0.5, why="2 losses in a row on this desk (b18)", book=ver)
         if ver == CFG["VERSION"]: RISK.update(day_pnl=round(today, 2), day_limit=-0.15 * CFG["START_BALANCE"], loss_streak=streak, size_mult=round(mult * (0.5 if streak >= 3 else 0.75 if streak >= 2 else 1), 2), ts=time.time())
     if CFG["VERSION"] not in ("v1", "v2") and 1 <= size < 5 and cash >= 5: size = 5.0  # 382 no dust paper fills (min $5)
     if size < 1: log("skip", mint, symbol, reason="insufficient paper cash", cash=cash); c.close(); return
@@ -46,6 +47,8 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
         cap = MAX_COIN_PCT * equity(c, ver); held = sum(r[0] for r in c.execute("SELECT cost FROM positions WHERE mint=? AND status='open' AND version=?", (mint, ver)))
         if held + size > cap: size = max(0, cap - held)  # per-coin exposure cap (12% of desk equity, adds/re-buys included)
         if size < 1: log("skip", mint, symbol, reason="per-coin exposure cap", held=round(held, 2), cap=round(cap, 2), book=ver); c.close(); return
+        skz = __import__("brain18").skeptic(mint, pair, xr, extra.get("scorecard"), size, ver)  # b18 Skeptic: final veto, never approves
+        if skz: log("kill", mint, symbol, reason=skz.split(":")[0], detail=skz, final=True, book=ver); c.close(); return
         mv = mev_cost(size, (pair.get("liquidity") or {}).get("usd")); price *= 1 + mv  # sandwich/MEV cost on the paper fill
     stop = price * (1 - stop_pct) if stop_pct else risk.initial_stop(price)  # stop fixed before entry
     c.execute("INSERT INTO positions(mint,symbol,pair,entry,qty,cost,stop,peak,trailing,opened,status,version) VALUES(?,?,?,?,?,?,?,?,0,?,'open',?)",
@@ -77,6 +80,7 @@ def sell(pos, quote, reason):
     log("paper_exit", pos["mint"], pos["symbol"], entry=pos["entry"], exit=price, stop=pos["stop"], slip_pct=round((price / pos["stop"] - 1) * 100, 2), pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason=reason, book=pos.get("version"))
     try: alerts.on_exit(pos["symbol"], (price / pos["entry"] - 1) * 100, pnl, reason, pos.get("version", ""), __import__("brain7").exit_extra(dict(pos, peak=max(pos.get("peak") or 0, quote)), quote))  # 355
     except Exception: pass
+    if pos.get("version") not in ("v1", "v2"): __import__("brain18").on_close(pos, price, pnl, reason)  # b18 trade diary
     try:  # 210 decision grade (all paper books)
         import brain5; c3 = conn(); tp = c3.execute("SELECT COALESCE(SUM(pnl),0) FROM positions WHERE mint=? AND reason='partial_tp' AND version=?", (pos["mint"], pos.get("version"))).fetchone()[0]; c3.close()
         brain5.on_close(pos, pnl + tp)

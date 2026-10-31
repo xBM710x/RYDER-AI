@@ -214,15 +214,17 @@ def pending():
             h1_ = brain6.gecko_holders(m) if h0 else None; rising = bool(h0 and h1_ and h1_ > h0 * 1.1 and abs(ch) < 0.05)  # 243
             dr = brain6.dip_reaction(m); sm1 = brain6.smart_first_minute(m); sh = brain6.shape(m); ss_ = brain6.shape_sim(sh)  # 229 / 242 / 237
             mc_ = pair.get("marketCap") or pair.get("fdv") or 0; nar_ = ex.get("narrative") or "other"; hv = dict(brain6.theme_velocity())  # 232 / 245 / 251
+            import brain18; v0_ = dict(v)  # b18 locked lanes: snapshot after the agents vote
             aadj = brain6.theme_memory(nar_) + brain6.mcap_adj(mc_) + (0.05 * (ss_ - 0.5) if ss_ is not None else 0) + 0.03 * min(sm1, 3)
             v["analyst"] = (round(min(1, max(0, v["analyst"][0] + aadj)), 3), v["analyst"][1] + f", theme30d/mcap/shape adj {aadj:+.2f}")
             v["executor"] = (round(min(1, v["executor"][0] + (0.05 if rising else 0) + (0.05 * (dr - 0.5) if dr is not None else 0)), 3), v["executor"][1] + (", holders rising on flat price" if rising else "") + (f", dip reaction {dr}" if dr is not None else ""))
             if hv.get(nar_, 0) > 1.5: v["scout"] = (round(min(1, v["scout"][0] + 0.04), 3), v["scout"][1] + f", theme heating x{hv[nar_]}")
             if brain6.rug_hour(): v["risk"] = (round(max(0, v["risk"][0] - 0.1), 3), v["risk"][1] + ", rug-prone hour")  # 235
+            v = brain18.lanes(v0_, v, "agent_adj", {"analyst", "executor", "scout"})  # each line above writes only its own agent; risk may only go down
             ex.update(shape=sh, holders_rising=rising, dip_reaction=dr, smart_first_min=sm1)
-            v = brain14.adjust(v, pair, cdd, m, p.get("creator"))  # six-upgrade: copycat-of-dead-coin -> Risk (lower-only), Fomo-wallet note
-            v = brain13.adjust(v, pair, cdd, m)  # agent upgrades: rug memory / wash flag / source / exit-ability / late entry (lower-only)
-            v, deb = brain5.debate(v)  # 205
+            v = brain18.lanes(v, brain14.adjust(dict(v), pair, cdd, m, p.get("creator")), "brain14", {"risk"})  # six-upgrade: copycat-of-dead-coin -> Risk (lower-only), Fomo-wallet note
+            v = brain18.lanes(v, brain13.adjust(dict(v), pair, cdd, m), "brain13", set())  # agent upgrades: rug memory / wash flag / source / exit-ability / late entry (lower-only)
+            v_, deb = brain5.debate(v); v = brain18.lanes(v, v_, "debate", set())  # 205; b18: debate can't raise a vote or lift a veto
             go, cons, smul, rsn = brain2.decide(v)
             if go:
                 dg13 = brain13.disagreement(v, cons, brain2.BRAIN["thresholds"]["min_consensus"], brain2.BRAIN["trust"])

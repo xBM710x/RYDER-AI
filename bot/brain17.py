@@ -143,6 +143,18 @@ def selftest(alert=True):
     t("max_chase", chase)
     t("wallet_demotion", lambda: demoted("w", {"w": [5, -1, -2, -3]}) and not demoted("w", {"w": [-1, -2, 4]}) and not demoted("w", {"w": [-1, -2]}))
     t("scorecard_floor", lambda: weak(scorecard({"priceChange": {"m5": -40}, "txns": {"m5": {"sells": 30, "buys": 2}}}, {"top10": ("pass", "top10 5%")})) == "weak_timing" and weak(scorecard({}, {})) is None)
+    import brain18
+    def ln():
+        v = {"risk": (0.10, "veto"), "scout": (0.50, "s"), "analyst": (0.60, "a")}
+        m = brain18.lanes(v, {"risk": (0.90, "raised"), "scout": (0.95, "x"), "analyst": (0.40, "low")}, "_test", {"scout"}, veto=0.25)
+        m2 = brain18.lanes(v, dict(v, risk=(0.80, "own raise")), "_test", {"risk"}, veto=0.25)
+        return m["risk"][0] == 0.10 and m["scout"][0] == 0.95 and m["analyst"][0] == 0.40 and m2["risk"][0] == 0.10 and \
+            brain18.lanes({"a": (0.5, "")}, {"a": (0.9, "")}, "_test", set(), veto=0.25)["a"][0] == 0.5
+    t("locked_lanes", ln)
+    t("two_loss_half", lambda: brain18.two_loss_mult("_t", [-1, -2, 5]) == 0.5 and brain18.two_loss_mult("_t", [3, -2]) == 1.0 and brain18.two_loss_mult("_t", [-1]) == 1.0 and "brain18" in src and "two_loss_mult(ver)" in src)
+    t("skeptic", lambda: brain18.skeptic("_selftest_x", {"priceChange": {"m5": 80}}, {}, {"rug": 1}).startswith("skeptic_spike") and brain18.skeptic("_selftest_x", {"liquidity": {"usd": 50000}}, {"dev_rugs": ("pass",)}, {"rug": 0.9}) is None
+                          and brain18.skeptic("_selftest_x", {}, {}, {"holders": 0.37}).startswith("skeptic_weak") and "skeptic(mint" in src)
+    t("diary", lambda: all(brain18.diary_lines("T", 1.0, 0.92, 1.0, -2.4, "stop_loss", 5)[i].startswith(p) for i, p in ((0, "What went right"), (1, "What went wrong"))))
     LAST_TEST.clear(); LAST_TEST.update(R, at=round(time.time()))
     bad = [k for k, v in R.items() if not v]
     log("breaker_selftest", ok=not bad, failed=bad, n=len(R))
