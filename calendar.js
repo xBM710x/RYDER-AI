@@ -30,8 +30,8 @@ function draw(){const v=view();if(!C){v.innerHTML='<div class="card cal-empty">C
  <div class="card"><div class="cal-nav"><button data-m="-1" aria-label="Previous month">‹</button><b>${mName}</b><button data-m="1" aria-label="Next month">›</button></div>
  <div class="cal-grid cal-wk">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(w=>`<span>${w}</span>`).join('')}</div><div class="cal-grid">${g}</div>
  <p class="cal-note">Realized paper P&amp;L by day, Pacific time</p></div>
- <div class="cal-stats"><div class="card"><span>Green days</span><b class="up">${green}</b></div><div class="card"><span>Red days</span><b class="dn">${red}</b></div>
- <div class="card"><span>Best day</span><b class="${best&&days[best].pnl>0?'up':'dn'}">${best?money(days[best].pnl,1):'—'}</b><small>${bd}</small></div><div class="card"><span>Green streak</span><b>${streak}</b><small>best ${maxs}</small></div></div>`;
+ <div class="cal-stats"><div class="card"><span>Green days</span><b class="up">${green}</b><small>of ${ks.length} day${ks.length==1?'':'s'}</small></div><div class="card"><span>Red days</span><b class="dn">${red}</b><small>of ${ks.length} day${ks.length==1?'':'s'}</small></div>
+ <div class="card"><span>Best day</span><b class="${best&&days[best].pnl>0?'up':'dn'}">${best?money(days[best].pnl,1):'—'}</b><small>${bd}</small></div><div class="card"><span>Green streak</span><b>${streak}d</b><small>in a row · best ${maxs}d</small></div></div>`;
  v.querySelectorAll('.cal-nav button').forEach(b=>b.onclick=()=>{let [y,m]=ym.split('-').map(Number);m+=+b.dataset.m;if(m<1){m=12;y--}if(m>12){m=1;y++}ym=`${y}-${String(m).padStart(2,'0')}`;draw()})}
 async function load(){try{const r=await fetch('data.json?cal='+Date.now(),{cache:'no-store',credentials:'omit'});if(r.ok){const d=await r.json();if(d&&d.calendar)C=d.calendar}}catch{}draw()}
 function show(on){const v=view();v.hidden=!on;document.body.classList.toggle('cal-on',on);if(on){window.scrollTo(0,0);load()}}
