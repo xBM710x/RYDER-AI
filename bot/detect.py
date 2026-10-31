@@ -30,6 +30,7 @@ def sweep_dead(min_age=1800, n=30):
         p = mk.get(r["mint"]); px = float((p or {}).get("priceUsd") or 0); liq = ((p or {}).get("liquidity") or {}).get("usd") or 0
         dead = (r["first_price"] and px < r["first_price"] * 0.1) or liq < 1000
         __import__("brain13").outcome(r["mint"], dead)  # shared rug memory
+        if dead and p: __import__("brain14").remember(r["mint"], p, r["creator"])  # copycat-rug memory
         if dead: add_rugger(r["creator"], f"token {r['mint'][:8]} died (px {px:.3g} vs {r['first_price']:.3g}, liq ${liq:,.0f})"); added += 1
         c = conn(); c.execute("UPDATE creators SET checked=1 WHERE mint=?", (r["mint"],)); c.commit(); c.close()
     return added

@@ -115,3 +115,20 @@ New (only lower votes or add a reject; no bars or hard checks loosened):
 hang.log 20:30 PT caught the positions loop stuck 125s inside logger.conn() on the schema PRAGMA/ALTER. Every DB connection (thousands/hour, 10+ threads + publisher) re-ran
 CREATE TABLE IF NOT EXISTS / PRAGMA table_info in rollback-journal mode, so threads queued on the SQLite lock (up to the 30s busy timeout, repeatedly).
 Fix: desk.db switched to WAL (readers never block the writer; persists in the file), synchronous=NORMAL, schema checked once per process. 200 connections now take ~5 ms.
+
+## 2026-10-30 ~22:30 PT — six upgrades (brain14.py, backtest14.py) — PAPER ONLY
+Main-desk bars unchanged ($28K vol / $18K liq / 0.55). No safety check loosened. No new app panels.
+1. Backtest (`python3 backtest14.py` -> reports/backtest14.json). 5,483 killed coins re-priced ~1h later over 13.6h: 9.5% died (-80%+), 6.4% ran +30%.
+   - Scout source death-rate: old trigger 60% never fired. Tightened to 30% (brain13): flags 178 coins, 29.8% died vs 8.8% of the rest; clipped 1h move -29.8% vs -9.7%.
+     Source memory seeded from that history (pumpportal-ws 33% dead, pumpportal-migration 34%, geckoterminal 8.5%).
+   - Wash flag / 5m>25% / mcap>20x liq / rug fingerprint / disagreement: NOT backtestable yet (pair shape was never stored; no council decisions since the agent upgrade).
+     Snapshots are now stored at council time and re-priced at 60 min (table `snapshots`); rerun backtest14.py later.
+   - Copycat by symbol only: flags 23% of coins, 12.3% died vs 8.7% -> kept as a soft Risk nudge only.
+2. Mood-aware FOMO exits (v3x FOMO trades): risk-off SOL -> TP +6%, stop -4%; hot -> past +8% hold with trailing floor max(+5%, peak-3%); neutral unchanged (+8%).
+   Main desk exits already mood-aware (brain7.regime_trail) -> untouched.
+3. Copycat-rug memory: dead coins (counterfactual -90%, detect.sweep_dead) -> rug_assets img/name14/sym/creator. Risk vote: same image or creator -0.35 (usually veto),
+   same name -0.15, symbol only -0.08. Exact image match also hits the existing more.precheck hard kill (stricter).
+4. Fomo wallet hints: wallet buys -> also 45-min brain10 re-check watch; Scout's reason notes "your Fomo wallet holds it". No score bump, no trading from it. Read-only.
+5. Telegram buy alerts (main + FOMO) list the six agent votes with short reasons.
+6. Freeze watchdog (b14-watchdog): positions loop silent 90s -> starts a fresh positions thread (old one exits on its next loop via a generation token),
+   max once per 5 min, logged to hang.log + 'selfheal' event. brain10 background jobs stuck >10 min are freed. Scan loop still relies on supervisor (180s heartbeat).

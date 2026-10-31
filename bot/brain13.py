@@ -13,6 +13,18 @@ def _load():
     except Exception: return {}
 S = _load(); [S.setdefault(k, v) for k, v in dict(fp={}, cand={}, src={}, shadow=[], sgrades={}).items()]
 STATS = collections.Counter()
+def _seed_src():
+    """backtest14 (2026-10-30): seed per-source death rates from the counterfactual table (1h after first sight, dead = -80% or worse)
+    so the Scout rule works before live memory fills. Only adds sources not yet in memory."""
+    if S["src"]: return
+    try:
+        from logger import conn
+        c = conn(); src = {}
+        for m, d in c.execute("SELECT mint, data FROM events WHERE kind='kill'"): src.setdefault(m, json.loads(d).get("source") or "?")
+        for m, p in c.execute("SELECT mint, pct FROM counterfactual"):
+            r = S["src"].setdefault(src.get(m, "?"), [0, 0]); r[0] += 1; r[1] += p <= -80
+        c.close()
+    except Exception: pass
 def save():
     with _L:
         try: json.dump(S, open(SF + ".tmp", "w"), default=str); os.replace(SF + ".tmp", SF)
@@ -54,7 +66,7 @@ def adjust(v, pair, cd, m):
         if d > 0: v[a] = (round(max(0, v[a][0] - d), 3), v[a][1] + f"; {why}")
     if rr is not None and rr >= 0.5: dn("risk", 0.35 if rr >= 0.7 else 0.2, f"rug memory: {rr:.0%} of {n} look-alikes died")   # risk: shared rug memory (can trigger RISK VETO)
     if wash_flag(pair): dn("filter", 0.25, "wash flag: all 1h trades inside the last 5 min on a >10-min-old pair")             # filter: wash pattern
-    if sr is not None and sr >= 0.6: dn("scout", 0.15, f"source {(cd or {}).get('source')} rug rate {sr:.0%} of {sn}")           # scout: source quality
+    if sr is not None and sr >= 0.30: dn("scout", 0.15, f"source {(cd or {}).get('source')} rug rate {sr:.0%} of {sn}")           # scout: source quality
     liq = _f((pair.get("liquidity") or {}).get("usd")); mc = _f(pair.get("marketCap") or pair.get("fdv"))
     if liq and mc > 20 * liq: dn("executor", 0.15, f"mcap {mc/liq:.0f}x liquidity (hard to exit)")                              # executor: exit-ability
     m5 = _f((pair.get("priceChange") or {}).get("m5"))
@@ -96,6 +108,7 @@ def shadow_job():
 def jobs(k):
     if k % 600 == 321: __import__("brain10")._bg("b13_shadow", shadow_job)
     if k % 120 == 55: __import__("brain10")._bg("b13_save", save)
+_seed_src()
 def status():
     top = sorted(((r[1] / r[0], r[0], k) for k, r in S["fp"].items() if r[0] >= 4), reverse=True)[:5]
     return dict(stats=dict(STATS), fingerprints=len(S["fp"]), riskiest=[dict(fp=k, rug_rate=round(x, 2), n=n) for x, n, k in top],
