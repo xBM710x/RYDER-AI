@@ -24,7 +24,7 @@ function draw(){const v=view();if(!C){v.innerHTML='<div class="card cal-empty">C
  const pnl=C.equity-C.start,pct=pnl/C.start*100,wr=C.trades?Math.round(C.wins/C.trades*100):0,mName=first.toLocaleString('en-US',{month:'long',year:'numeric',timeZone:'UTC'});
  const bd=best?new Date(best+'T12:00:00Z').toLocaleString('en-US',{month:'short',day:'numeric',timeZone:'UTC'}):'—';
 
- v.innerHTML=`<div class="card cal-head"><div class="row"><span class="label">Paper equity · all desks</span><b class="cal-sim">PAPER / SIM</b></div>
+ v.innerHTML=`<div class="card cal-head"><div class="row"><span class="label">Paper equity · ${esc(C.desk||'')}</span><b class="cal-sim">PAPER / SIM</b></div>
  <div class="cal-eq">${money(C.equity)}</div><div class="cal-pnl ${pnl>=0?'up':'dn'}">${money(pnl,1)} (${pct>=0?'+':''}${pct.toFixed(2)}%)</div>
  <div class="cal-sub">${C.trades} closed trade${C.trades==1?'':'s'} · ${wr}% win rate${C.open?` · ${C.open} open`:''} · start ${money(C.start)}</div>${spark(C.curve||[],C.start)}</div>
  <div class="card"><div class="cal-nav"><button data-m="-1" aria-label="Previous month">‹</button><b>${mName}</b><button data-m="1" aria-label="Next month">›</button></div>
@@ -33,7 +33,10 @@ function draw(){const v=view();if(!C){v.innerHTML='<div class="card cal-empty">C
  <div class="cal-stats"><div class="card"><span>Green days</span><b class="up">${green}</b><small>of ${ks.length} day${ks.length==1?'':'s'}</small></div><div class="card"><span>Red days</span><b class="dn">${red}</b><small>of ${ks.length} day${ks.length==1?'':'s'}</small></div>
  <div class="card"><span>Best day</span><b class="${best&&days[best].pnl>0?'up':'dn'}">${best?money(days[best].pnl,1):'—'}</b><small>${bd}</small></div><div class="card"><span>Green streak</span><b>${streak}d</b><small>in a row · best ${maxs}d</small></div></div>`;
  v.querySelectorAll('.cal-nav button').forEach(b=>b.onclick=()=>{let [y,m]=ym.split('-').map(Number);m+=+b.dataset.m;if(m<1){m=12;y--}if(m>12){m=1;y++}ym=`${y}-${String(m).padStart(2,'0')}`;draw()})}
-async function load(){try{const r=await fetch('data.json?cal='+Date.now(),{cache:'no-store',credentials:'omit'});if(r.ok){const d=await r.json();if(d&&d.calendar)C=d.calendar}}catch{}draw()}
+function deskOnly(d){const c=d.calendar,v=d.version||'v3',L=(c.list||[]).filter(t=>t.ver===v),cl=L.filter(t=>!t.open).sort((a,b)=>a.closed-b.closed),days={},curve=[];let eq=d.start||300;
+ cl.forEach(t=>{const k=ld(t.closed),x=days[k]||(days[k]={pnl:0,n:0,w:0});x.pnl=Math.round((x.pnl+t.pnl)*100)/100;x.n++;x.w+=t.pnl>0;eq+=t.pnl;curve.push({t:t.closed,v:Math.round(eq*100)/100})});
+ const lab=(L[0]&&L[0].desk)||'Main';return{...c,desk:`${lab} desk (${v})`,start:d.start||300,equity:d.equity,trades:cl.length,wins:cl.filter(t=>t.pnl>0).length,open:L.length-cl.length,days,curve,list:L}}
+async function load(){try{const r=await fetch('data.json?cal='+Date.now(),{cache:'no-store',credentials:'omit'});if(r.ok){const d=await r.json();if(d&&d.calendar)C=deskOnly(d)}}catch{}draw()}
 function show(on){const v=view();v.hidden=!on;document.body.classList.toggle('cal-on',on);if(on){window.scrollTo(0,0);load()}}
 function init(){document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',e=>{if(a.getAttribute('href')==='#calendar'){e.preventDefault();show(true);if(location.hash!=='#calendar')history.replaceState(null,'','#calendar')}else show(false)}));
  if(location.hash==='#calendar'){document.querySelectorAll('nav a').forEach(n=>n.classList.toggle('active',n.getAttribute('href')==='#calendar'));show(true)}
