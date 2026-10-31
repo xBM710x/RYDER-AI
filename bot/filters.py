@@ -3,7 +3,7 @@ VERIFIED (on-chain via Solana RPC): mint authority, freeze authority.
 SOURCED (RugCheck/DexScreener data, not independently verified): LP locked/burned, top-10 %, 1h volume.
 APPROXIMATED (heuristics on RugCheck data): dev past rugs, bundled launch."""
 from common import http_json, rpc, CFG
-import onchain, detect, extras, more
+import onchain, detect, extras, more, fb
 AMM_TYPES = {"AMM", "LOCKER"}  # RugCheck knownAccounts types excluded from holder concentration
 def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50% of the volume bar (safety checks unchanged)
     res = {}  # name -> (status pass/fail/unknown, detail, provenance)
@@ -38,8 +38,19 @@ def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50%
     if "fail" in [res[k][0] for k in ("mint_authority", "freeze_authority")]: return res
     try: rc = __import__("brain2").cached("rc:" + mint, 60, lambda: http_json(f"https://api.rugcheck.xyz/v1/tokens/{mint}/report", timeout=12, retries=0))  # 182 fail fast / 423 60s cache
     except Exception as e: rc = None; err = str(e)
+    FB = None
+    if not rc:  # backup on-chain check (fb.py), only when rugcheck has no report; at least as strict, fail closed
+        try: FB = fb.build(mint, pair)
+        except Exception as e: FB = None; res["_fb_err"] = ("pass", str(e)[:120], "meta")
+        if FB: rc = FB[0]
+    FB = False
+    if not rc:  # backup on-chain report (rcfallback.py, approved 2026-10-30 22:51 PT): at least as strict; anything unverifiable -> reject
+        try: rc, fbwhy = __import__("rcfallback").report(mint, pair)
+        except Exception as e: rc, fbwhy = None, f"rpc error {str(e)[:80]}"
+        FB = bool(rc)
+        if not rc: err = "rugcheck unavailable; backup: " + str(fbwhy)
     if not rc:
-        for k in ("lp_locked", "top10", "dev_rugs", "bundled"): res[k] = ("unknown", "rugcheck unavailable", "rugcheck")
+        for k in ("lp_locked", "top10", "dev_rugs", "bundled"): res[k] = ("unknown", "rugcheck unavailable" + (f" | backup check: {fbwhy}" if fbwhy else ""), "rugcheck")
         try:  # 182 RPC fallback for holder concentration (LP/dev/bundle stay unknown -> still fail closed)
             t10 = __import__("brain4").rpc_top10(mint)
             if t10 is not None: res["top10"] = ("pass" if t10 <= CFG["MAX_TOP10"] else "fail", f"{t10:.1f}% (RPC fallback)", "rpc-fallback")
@@ -47,7 +58,9 @@ def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50%
         return res
     # LP
     mk = rc.get("markets") or []
-    if mk:
+    if FB: res["lp_locked"] = (rc["_lp"][0], rc["_lp"][1], "onchain-backup")
+    if FB and any("extension not allowed" in (r.get("name") or "") for r in rc.get("risks") or []): res["clone_contract"] = ("fail", rc["risks"][0]["name"], "onchain-backup"); return res
+    elif mk:
         best = max(mk, key=lambda m: (m.get("lp") or {}).get("quoteUSD") or 0)
         pct = (best.get("lp") or {}).get("lpLockedPct"); mtype = best.get("marketType", "")
         if "pump" in mtype and "amm" not in mtype or "dbc" in mtype or "launchlab" in mtype:
@@ -66,6 +79,7 @@ def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50%
     bad = [r for r in risks if any(w in r.lower() for w in ("rug", "creator history", "previous"))]
     if rc.get("rugged"): res["dev_rugs"] = ("fail", "token flagged rugged", "rugcheck-approx")
     elif bad: res["dev_rugs"] = ("fail", "; ".join(bad), "rugcheck-approx")
+    elif FB and rc.get("creator"): res["dev_rugs"] = ("pass", "backup: pending on-chain dev history (unknown -> reject)", "onchain-backup")
     elif rc.get("creator"): res["dev_rugs"] = ("pass", f"no rug flags for creator ({len(rc.get('creatorTokens') or [])} other tokens)", "rugcheck-approx")
     else: res["dev_rugs"] = ("unknown", "no creator", "rugcheck")
     # bundled (approx): insider networks holding meaningful supply
@@ -73,8 +87,12 @@ def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50%
     nets = rc.get("insiderNetworks") or []
     held = sum(n.get("currentHolding") or 0 for n in nets) / supply * 100 if supply else 0
     bund = [r for r in risks if "bundle" in r.lower() or "insider" in r.lower()]
-    if held > 10 or bund: res["bundled"] = ("fail", f"insiders hold {held:.1f}%; {bund}", "rugcheck-approx")
+    if FB: res["bundled"] = ("pass", "backup: pending on-chain bundle check (unknown -> reject)", "onchain-backup")
+    elif held > 10 or bund: res["bundled"] = ("fail", f"insiders hold {held:.1f}%; {bund}", "rugcheck-approx")
     else: res["bundled"] = ("pass", f"insiders hold {held:.1f}%, {rc.get('graphInsidersDetected') or 0} insider wallets", "rugcheck-approx")
+    if FB:
+        res.update(FB[1]); res["_backup_check"] = ("pass", "rugcheck unavailable -> on-chain backup check (fb.py)", "meta")
+        if any(v[0] != "pass" for k, v in res.items() if not k.startswith("_")): return res
     if CFG["VERSION"] not in ("v1", "v2"):
         mut = [r for r in risks if "mutable" in r.lower()]
         if mut or (rc.get("tokenMeta") or {}).get("mutable"): res["mutable_meta"] = ("fail", "metadata is mutable", "rugcheck"); return res
@@ -99,12 +117,14 @@ def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50%
         cr = rc.get("creator")
         try: st, dt = onchain.dev_history(cr, mint) if cr else ("unknown", "no creator")
         except Exception as e: st, dt = "unknown", f"rpc error {e}"
-        if st == "unknown": res["dev_rugs"] = (res["dev_rugs"][0], res["dev_rugs"][1] + f" | on-chain unknown: {dt}", "rugcheck-approx-fallback")
+        if st == "unknown" and FB: res["dev_rugs"] = ("unknown", f"backup check needs on-chain dev history: {dt}", "fallback-onchain")
+        elif st == "unknown": res["dev_rugs"] = (res["dev_rugs"][0], res["dev_rugs"][1] + f" | on-chain unknown: {dt}", "rugcheck-approx-fallback")
         else: res["dev_rugs"] = (st, dt, "rpc-onchain")
         if res["dev_rugs"][0] == "pass":
             try: st, dt = onchain.bundle_check(mint, cr)
             except Exception as e: st, dt = "unknown", f"rpc error {e}"
-            if st == "unknown": res["bundled"] = (res["bundled"][0], res["bundled"][1] + f" | on-chain unknown: {dt}", "rugcheck-approx-fallback")
+            if st == "unknown" and FB: res["bundled"] = ("unknown", f"backup check needs on-chain bundle check: {dt}", "fallback-onchain")
+            elif st == "unknown": res["bundled"] = (res["bundled"][0], res["bundled"][1] + f" | on-chain unknown: {dt}", "rugcheck-approx-fallback")
             else: res["bundled"] = (st, dt, "rpc-onchain")
         if res["dev_rugs"][0] == "fail" and res["dev_rugs"][2] == "rpc-onchain": detect.add_rugger(cr, "serial launcher: " + res["dev_rugs"][1][:80])
     # v3: top-holder funding cluster (only for survivors; budget-limited public RPC)
@@ -112,7 +132,7 @@ def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50%
         owners = [h.get("owner") for h in th if h.get("owner") and h.get("owner") != cr]
         try: st, dt = detect.holder_cluster(owners)
         except Exception as e: st, dt = "unknown", f"rpc error {e}"
-        res["holder_cluster"] = (st, dt, "rpc-onchain") if st != "unknown" else ("pass", dt + " (skipped, not counted)", "unverified")
+        res["holder_cluster"] = (st, dt, "rpc-onchain") if st != "unknown" else (("unknown", dt + " (backup check: must verify)", "fallback-onchain") if FB else ("pass", dt + " (skipped, not counted)", "unverified"))
         if res["holder_cluster"][0] == "pass":
             try: st, dt = extras.sell_sim(mint)
             except Exception as e: st, dt = "unknown", f"jupiter quote error {str(e)[:60]}"
@@ -120,7 +140,10 @@ def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50%
     if CFG["VERSION"] not in ("v1", "v2") and all(v[0] == "pass" for v in res.values()) and pair:
         try: st, dt = onchain.wash_check(pair["pairAddress"])
         except Exception as e: st, dt = "unknown", f"rpc error {e}"
-        res["wash"] = (st, dt, "rpc-onchain") if st != "unknown" else ("pass", dt + " (skipped, not counted)", "unverified")
+        res["wash"] = (st, dt, "rpc-onchain") if st != "unknown" else (("unknown", dt + " (backup check: must verify)", "fallback-onchain") if FB else ("pass", dt + " (skipped, not counted)", "unverified"))
+    if FB:  # nothing may pass on a placeholder
+        for k in ("dev_rugs", "bundled"):
+            if "pending" in res[k][1]: res[k] = ("unknown", "backup check: on-chain verification did not run", "fallback-onchain")
     return res
 def verdict(res):
     for k, (s, d, p) in res.items():

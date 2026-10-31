@@ -19,7 +19,39 @@ def build():
                           live_feed_events=(hb.get("ws") or {}).get("events"), publish_every_s=INTERVAL)
     try: d["ryder_events"] = ryder_events()
     except Exception: d["ryder_events"] = []
+    try: d["trade_quality"] = __import__("brain15").quality()  # data only (no panel): expectancy, profit factor, drawdown per desk
+    except Exception: d["trade_quality"] = None
+    try: d["calendar"] = calendar_export(d)
+    except Exception: d["calendar"] = None
     return d
+DESK_LABEL = {"v1": "v1", "v2": "v2", "v3": "Main", "v3b": "Strict", "v3x": "FOMO"}
+def calendar_export(d):
+    """Calendar view: REAL paper trades from positions table, all desks. Days in America/Los_Angeles. No addresses/secrets."""
+    import sqlite3
+    from zoneinfo import ZoneInfo
+    tz = ZoneInfo("America/Los_Angeles")
+    c = sqlite3.connect("file:" + os.path.join(D, "desk.db") + "?mode=ro", uri=True, timeout=10)
+    rows = c.execute("SELECT symbol, version, cost, opened, closed, pnl, status, reason FROM positions ORDER BY opened").fetchall(); c.close()
+    vers = d.get("versions") or []
+    start = round(sum(300.0 for _ in vers) or 300.0, 2)
+    open_cost = sum(r[2] or 0 for r in rows if r[6] != "closed")
+    equity = round(sum(v.get("cash") or 0 for v in vers) + open_cost, 2) if vers else d.get("equity")
+    trades, days, curve, eq = [], {}, [], start
+    for sym, ver, cost, op, cl, pnl, st, why in rows:
+        closed = st == "closed" and cl
+        t = dict(sym=(sym or "")[:14], desk=DESK_LABEL.get(ver or "v1", ver), ver=ver, usd=round(cost or 0, 2),
+                 opened=round(op), closed=round(cl) if closed else None, open=not closed, reason=why if closed else None,
+                 pnl=round(pnl, 2) if closed and pnl is not None else None,
+                 pct=round(pnl / cost * 100, 2) if closed and pnl is not None and cost else None)
+        trades.append(t)
+    for t in sorted([t for t in trades if not t["open"]], key=lambda t: t["closed"]):
+        day = datetime.datetime.fromtimestamp(t["closed"], tz).strftime("%Y-%m-%d")
+        x = days.setdefault(day, dict(pnl=0.0, n=0, w=0)); x["pnl"] = round(x["pnl"] + t["pnl"], 2); x["n"] += 1; x["w"] += t["pnl"] > 0
+        eq += t["pnl"]; curve.append(dict(t=t["closed"], v=round(eq, 2)))
+    nc = [t for t in trades if not t["open"]]
+    return dict(tz="America/Los_Angeles", start=start, equity=equity, realized=round(sum(t["pnl"] for t in nc), 2),
+                trades=len(nc), wins=sum(t["pnl"] > 0 for t in nc), open=len(trades) - len(nc),
+                today=datetime.datetime.now(tz).strftime("%Y-%m-%d"), days=days, curve=curve, list=trades[::-1][:100])
 RUG = ("rug", "dev_", "lp_", "bundle", "honeypot", "wash", "sniper", "linked_launch", "fresh_", "clone", "team_supply", "listing_scam", "wallet_", "mutable", "copycat")
 def ryder_events(n=25):
     """App voice/emote cues: recent MAIN-book (v3) paper events only. No addresses beyond symbols, no secrets."""

@@ -18,7 +18,9 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
     if c.execute("SELECT 1 FROM positions WHERE mint=? AND status='open' AND version=?", (mint, ver)).fetchone(): c.close(); return
     if ver == CFG["VERSION"] and c.execute("SELECT COUNT(*) FROM positions WHERE version=? AND opened>?", (ver, time.time() - 3600)).fetchone()[0] >= CFG["MAX_PER_HOUR"]:
         log("skip", mint, symbol, reason=f"max {CFG['MAX_PER_HOUR']} trades/hour"); c.close(); return
-    size = min(cash, equity(c, ver) * CFG["MAX_PCT_PER_TRADE"] * mult); quote = float(pair["priceUsd"])
+    m15, why15 = __import__("brain15").size_mult(ver, mint in __import__("rcfallback").USED)  # down-only: drawdown / expectancy / backup-check brakes
+    if why15: log("size_brake", mint, symbol, mult=m15, why=why15, book=ver)
+    size = min(cash, equity(c, ver) * CFG["MAX_PCT_PER_TRADE"] * mult * m15); quote = float(pair["priceUsd"])
     sl = __import__('brain6').split_slip(size, pair) if CFG['VERSION'] not in ('v1', 'v2') else CFG['SLIP']  # 186 depth-based slippage
     if sl > 0.03: log('skip', mint, symbol, reason=f'est. slippage {sl*100:.1f}% too high for pool depth'); c.close(); return
     price = quote * (1 + sl) / (1 - CFG["FEE"])  # v3: paper fill incl. slippage + fee

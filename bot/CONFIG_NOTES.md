@@ -156,3 +156,23 @@ Main-desk bars unchanged ($28K vol / $18K liq / 0.55). No safety check loosened.
 - brain14.rc_probe: BONK probe every ~10 min, 'rugcheck_health' event on change, heartbeat b14.rugcheck. rugcheck retries pause while it is down.
 - Scan ordering: candidates evaluated strongest-first (1h volume + liquidity vs bar, capped; re-checks / Fomo-wallet hints first). Ordering only.
 - Data too thin (0 council votes, 0 snapshots, 0 v3x/FOMO trades ever): per-agent learning and FOMO confidence sizing NOT built.
+
+## 2026-10-30 ~23:20 PT — rugcheck BACKUP safety check (approved by Braydon 22:51 PT) + brakes/stats — PAPER ONLY
+- rcfallback.py + fbchain.py: used ONLY when rugcheck.xyz returns no report. On-chain (free RPC, read-only) rugcheck-shaped report -> every downstream
+  filters.check gate runs unchanged. Strict rules:
+  * LP: pump.fun bonding curve verified on-chain (PDA owned by pump program, complete=0) = no withdrawable LP; PumpSwap pool verified (owner pAMM,
+    base=mint, quote=SOL) and LP burned = 1 - LP mint supply / pool.lp_supply >= 95%. Reversed/non-canonical pools (SOL as base: the CHIPCR/Qcatom
+    pattern) -> reject. Any other pool holding >= max($1k, 10%) of the coin's liquidity -> reject (NIO case). Other DEXes -> reject.
+  * Token-2022: only metadataPointer/tokenMetadata extensions; metadata update authority set -> mutable -> reject; any transfer-fee config -> reject.
+    Legacy SPL: Metaplex is_mutable read on-chain. Mint/freeze authority as before.
+  * Holders: every token account via getProgramAccounts; pool/curve vaults excluded; top-10 <= 25%, identical-bag/sniper checks as before.
+  * Dev history, bundle check, holder cluster, wash: MUST return pass in backup mode (unknown -> reject; rugcheck path tolerated unknown).
+  * Backup-approved trades: 0.5x size (brain15).
+- Validation (reports/validate_fb.json, validate_fb.py; coins re-read NOW, hours after the original decision):
+  155 coins rugcheck flagged/rugged -> 115 rejected, 40 passed. All 77 LP flags rejected, CHIPCR + Qcatom rejected, dev_rugs 2/2, honeypot 1/1.
+  The 40 passes were all holder-based flags (top10 20, bundle_sizes 9, insiders 9, snipers 2) whose holder makeup has changed since; in live mode
+  those coins also face the strict on-chain bundle/cluster checks — not retro-testable.
+  22 coins that passed rugcheck -> 14 pass, 8 reject (3 reversed PumpSwap pools, CHIPCR/Qcatom (correct: rugged), BONK + WIF (Orca/Raydium not supported),
+  ANONPAD (bug: $0 side pool) fixed).
+- brain15: trade-quality stats per desk (win rate, expectancy, profit factor, payoff, max drawdown, avg hold) in heartbeat + data.json 'trade_quality'
+  (data only, no panel). Down-only size brakes: equity >10% under peak -> 0.5x (off again within 5%); 20+ trades and rolling-20 expectancy < 0 -> 0.5x.
