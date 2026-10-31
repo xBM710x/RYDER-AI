@@ -98,3 +98,15 @@ No bars or safety checks changed.
 filters.py: removed the pump.fun canonical-pool LP shortcut; brain9.pump_canonical() now always False. LP-lock rule is strict again on all desks (pump_fun_amm with RugCheck 0% locked -> lp_locked FAIL; smoke-tested).
 Reason: CHIPCR and Qcatom passed only via this shortcut and both went to $0 liquidity within ~30 min.
 runner.py: entry-wait rejections for pumping >10% now also log a 'skipped_chased' event (wait price, price now, move %, limit, score). Logging only, no behavior change.
+
+## 2026-10-30 21:05 PT - agent council upgrades (brain13.py, paper only, lower-only). Backup: ../backup_pre_agents_20261030_205851
+Six agents (brain2.votes): scout (source/pattern/momentum), filter (verified safety checks/holder concentration), analyst (score/win prob/smart wallets/theme),
+executor (liquidity/price impact/buy pressure), risk (open positions/day P&L/market regime/creator history, has veto), logger (hour-of-day win rate/lessons).
+New (only lower votes or add a reject; no bars or hard checks loosened):
+- Shared rug memory: every scored coin's fingerprint (dex, pair age, liq band, mcap/liq band, one-burst trading, source) is graded dead/alive by detect.sweep_dead 30+ min later.
+  risk -0.20 when >=50% of 4+ look-alikes died (-0.35 at >=70%, can trigger the existing RISK VETO); scout -0.15 when a source's rug rate >=60% over 8+ coins.
+- filter -0.25 wash flag: identical 5m and 1h buy/sell counts on a pair older than 10 min.
+- executor -0.15 when market cap > 20x liquidity (hard to exit). analyst -0.08 when already +25% in 5m.
+- Disagreement check before buys: an agent with trust >=1.0 voting <0.40 -> consensus must be min_consensus +0.05 or the buy is rejected (logged).
+- 'council_votes' log event per council decision: each agent's vote, trust, weight share and reason.
+- Shadow self-grading: council decisions re-priced 60 min later (right = vote>=0.5 matches +10% with liq>=$5k); folded into brain2 trust at 0.25 weight. Logger vote reason shows shadow accuracy after 20+ grades.

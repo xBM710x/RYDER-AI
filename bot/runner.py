@@ -2,7 +2,7 @@
 import time, sys, traceback, threading
 from common import CFG, dex_market
 from logger import conn, log
-import brain12, brain11, brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
+import brain13, brain12, brain11, brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
 REENTRY = {}  # 34: mint -> (exit price, ts, sym)
 ENTRYLIQ = {}  # 26: mint -> liquidity at entry
 brain10.ENTRYLIQ = ENTRYLIQ  # 480 shared entry liquidity
@@ -111,6 +111,7 @@ def evaluate(cd, pair, relax=False):
         adj = round(adj + brain8.staying_power(checks, pair) - (0.05 if res.get("socials", ("", "", ""))[2] == "soft-366" else 0), 3)  # 379 / 366
     sc2 = round(sc + adj, 3); brain8.count("scored")
     dp = brain.dump_pattern(f)
+    if pair: brain13.note_candidate(m, pair, cd)  # shared rug memory: fingerprint at score time
     log("score", m, sym, score=sc2, base_score=sc, adj=adj, parts=parts, b7=b7, dex=cd["dex"], filters={k: v for k, v in res.items()})
     DEC.append(round(time.time() - first, 2))
     if dp: return kill(m, sym, "dump_pattern", dp, True, pair)
@@ -214,8 +215,12 @@ def pending():
             if hv.get(nar_, 0) > 1.5: v["scout"] = (round(min(1, v["scout"][0] + 0.04), 3), v["scout"][1] + f", theme heating x{hv[nar_]}")
             if brain6.rug_hour(): v["risk"] = (round(max(0, v["risk"][0] - 0.1), 3), v["risk"][1] + ", rug-prone hour")  # 235
             ex.update(shape=sh, holders_rising=rising, dip_reaction=dr, smart_first_min=sm1)
+            v = brain13.adjust(v, pair, cdd, m)  # agent upgrades: rug memory / wash flag / source / exit-ability / late entry (lower-only)
             v, deb = brain5.debate(v)  # 205
             go, cons, smul, rsn = brain2.decide(v)
+            if go:
+                dg13 = brain13.disagreement(v, cons, brain2.BRAIN["thresholds"]["min_consensus"], brain2.BRAIN["trust"])
+                if dg13: go, rsn = False, dg13
             if deb: rsn += " · " + deb
             if go and CFG["VERSION"] not in ("v1", "v2"):
                 go_b, deb7 = brain7.borderline(v, cons, m)  # 284
@@ -226,6 +231,7 @@ def pending():
                 if sp["sells"] > sp["buys"] + 3: go, rsn = False, f"second opinion: sells {sp['sells']} > buys {sp['buys']} in 10s"
             line = brain2.one_line(p["sym"], v, cons, rsn)
             council = dict(consensus=cons, size=smul, votes={a: list(x) for a, x in v.items()}, reason=line, pattern=brain2.pattern_key(cdd, pair))
+            brain13.explain(m, p["sym"], v, cons, go, line, brain2.BRAIN["trust"]); brain13.S["shadow"][-1]["px0"] = float(pair.get("priceUsd") or 0)
             stp = brain3.strength_stop(extras.vol_stop(pair), cons); plan_ = None
             if go:  # 201-209 / 213-217: calibrated confidence, EV gate, Kelly size, plan
                 go, kmul, plan_, ev_why = brain5.decide(p["sym"], m, pair, v, cons, f, ex.get("narrative"), stp, p.get("impact"), reg)
@@ -405,7 +411,7 @@ def state():
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
         decision_s=dict(avg=round(sum(DEC) / len(DEC), 2) if DEC else None, p90=sorted(DEC)[int(len(DEC) * 0.9)] if DEC else None, n=len(DEC)),
         deep_check_s=dict(avg=round(sum(DEEP) / len(DEEP), 1) if DEEP else None, max=max(DEEP) if DEEP else None, n=len(DEEP)), inflight=len(INFLIGHT),
-        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), b10=brain10.status(), b11=brain11.status(), b12=brain12.status(), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
+        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), b10=brain10.status(), b11=brain11.status(), b12=brain12.status(), b13=brain13.status(), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
         latency=dict(scan_s_avg=round(sum(LAT) / len(LAT), 1) if LAT else None, scan_s_last=LAT[-1] if LAT else None, pos_check_s=CFG["POS_SEC"],
                      ws_last_event_s=round(now - feed.STATS["last"]) if feed.STATS.get("last") else None),
         sources={h: dict(v, ok_rate=round(v["ok"] / max(1, v["ok"] + v["err"]), 2)) for h, v in HEALTH.items()})
@@ -432,7 +438,7 @@ def main(cycles=None):
                 if k % 3 == 0: brain11.timed("pending", pending)  # 422: 5s -> 3s
                 if k % 600 == 0: detect.sweep_dead(); analyst.retune()
                 if k % 30 == 0: reentry()
-                for jn_, jf_ in (("jobs", jobs), ("brain3", brain3.jobs), ("brain7", brain7.jobs), ("brain9", brain9.jobs), ("brain10", brain10.jobs), ("brain12", brain12.jobs)):
+                for jn_, jf_ in (("jobs", jobs), ("brain3", brain3.jobs), ("brain7", brain7.jobs), ("brain9", brain9.jobs), ("brain10", brain10.jobs), ("brain12", brain12.jobs), ("brain13", brain13.jobs)):
                     brain11.timed(jn_, jf_, k)  # 532 per-job timing; >3s logs slow_step
                 if k % 60 == 30: brain8.patience()  # 367
                 if k % 3600 == 3599: brain8.hourly()  # 370/389
