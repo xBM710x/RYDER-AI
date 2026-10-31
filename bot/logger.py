@@ -3,8 +3,14 @@ import sqlite3, json, time, os
 from common import CFG
 D = os.path.dirname(os.path.abspath(__file__))
 DB, JL = os.path.join(D, "desk.db"), os.path.join(D, "events.jsonl")
+_READY = [False]
 def conn():
+    """Freeze fix 2026-10-30: schema setup ran on EVERY connection (executescript + PRAGMA + possible ALTER) in rollback-journal mode, so 10+ threads
+    and the publisher queued on the DB lock (hang.log 20:30 PT: positions loop stuck 125s inside conn()). Now WAL mode (readers never block the writer),
+    schema checked once per process, busy timeout 30s."""
     c = sqlite3.connect(DB, timeout=30); c.row_factory = sqlite3.Row
+    if _READY[0]: return c
+    c.execute("PRAGMA journal_mode=WAL"); c.execute("PRAGMA synchronous=NORMAL")
     c.executescript("""
     CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY, ts REAL, kind TEXT, mint TEXT, symbol TEXT, data TEXT);
     CREATE TABLE IF NOT EXISTS seen(mint TEXT PRIMARY KEY, first_ts REAL, last_ts REAL, checks INT, done INT);
@@ -15,6 +21,7 @@ def conn():
         if "version" not in [r[1] for r in c.execute(f"PRAGMA table_info({t})")]:
             c.execute(f"ALTER TABLE {t} ADD COLUMN version TEXT DEFAULT 'v1'")
     if "tp_done" not in [r[1] for r in c.execute("PRAGMA table_info(positions)")]: c.execute("ALTER TABLE positions ADD COLUMN tp_done INT DEFAULT 0")
+    c.commit(); _READY[0] = True
     return c
 def log(kind, mint=None, symbol=None, **data):
     ts = time.time(); rec = dict(ts=ts, time=time.strftime("%Y-%m-%d %H:%M:%S"), kind=kind, version=CFG["VERSION"], mint=mint, symbol=symbol, **data)

@@ -110,3 +110,8 @@ New (only lower votes or add a reject; no bars or hard checks loosened):
 - Disagreement check before buys: an agent with trust >=1.0 voting <0.40 -> consensus must be min_consensus +0.05 or the buy is rejected (logged).
 - 'council_votes' log event per council decision: each agent's vote, trust, weight share and reason.
 - Shadow self-grading: council decisions re-priced 60 min later (right = vote>=0.5 matches +10% with liq>=$5k); folded into brain2 trust at 0.25 weight. Logger vote reason shows shadow accuracy after 20+ grades.
+
+## 2026-10-30 21:08 PT - FREEZE ROOT CAUSE fixed (logger.py)
+hang.log 20:30 PT caught the positions loop stuck 125s inside logger.conn() on the schema PRAGMA/ALTER. Every DB connection (thousands/hour, 10+ threads + publisher) re-ran
+CREATE TABLE IF NOT EXISTS / PRAGMA table_info in rollback-journal mode, so threads queued on the SQLite lock (up to the 30s busy timeout, repeatedly).
+Fix: desk.db switched to WAL (readers never block the writer; persists in the file), synchronous=NORMAL, schema checked once per process. 200 connections now take ~5 ms.
