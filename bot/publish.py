@@ -21,9 +21,32 @@ def build():
     except Exception: d["ryder_events"] = []
     try: d["trade_quality"] = __import__("brain15").quality()  # data only (no panel): expectancy, profit factor, drawdown per desk
     except Exception: d["trade_quality"] = None
+    try: d["skip_tally"] = skip_tally()
+    except Exception: d["skip_tally"] = None
     try: d["calendar"] = calendar_export(d)
     except Exception: d["calendar"] = None
     return d
+SKIP_BUCKETS = [("Volume too low", ("volume_1h",)), ("Liquidity too low", ("liquidity", "thin_pool")), ("No socials", ("socials",)),
+    ("Copycat / scam name", ("copycat", "scam_name")), ("LP not locked", ("lp_locked",)),
+    ("Bundled / top holders", ("top10", "sniper_wallets", "bundle_sizes", "bundled", "holder_cluster")),
+    ("Dev / contract risk", ("mint_authority", "dev_rugs", "honeypot_shape", "honeypot", "fresh_dev"))]
+def skip_tally(hours=24):
+    """Logger card: last-24h skip reasons (one per coin check) in plain-English buckets; best/worst closed paper trade same window."""
+    import sqlite3
+    since = time.time() - hours * 3600
+    c = sqlite3.connect("file:" + os.path.join(D, "desk.db") + "?mode=ro", uri=True, timeout=10)
+    raw = {}
+    for (dat,) in c.execute("SELECT data FROM events WHERE kind='kill' AND ts>?", (since,)):
+        try: r = str(json.loads(dat or "{}").get("reason", ""))
+        except Exception: r = ""
+        k = r.split(":")[0].split("(")[0].strip(); raw[k] = raw.get(k, 0) + 1
+    pn = [r[0] for r in c.execute("SELECT pnl FROM positions WHERE status='closed' AND closed>? AND pnl IS NOT NULL", (since,))]
+    c.close()
+    out, used = [], set()
+    for name, keys in SKIP_BUCKETS:
+        out.append([name, sum(raw.get(k, 0) for k in keys)]); used.update(keys)
+    out.append(["Other checks", sum(v for k, v in raw.items() if k not in used)])
+    return dict(hours=hours, total=sum(raw.values()), buckets=out, best=round(max(pn), 2) if pn else None, worst=round(min(pn), 2) if pn else None)
 DESK_LABEL = {"v1": "v1", "v2": "v2", "v3": "Main", "v3b": "Strict", "v3x": "FOMO"}
 def calendar_export(d):
     """Calendar view: REAL paper trades from positions table, all desks. Days in America/Los_Angeles. No addresses/secrets."""
