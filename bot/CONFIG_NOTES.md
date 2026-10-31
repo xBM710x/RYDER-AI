@@ -92,3 +92,4 @@ Likely causes fixed: (a) heavy learning jobs ran ON the positions thread (brain.
 (b) the positions thread queued behind scan threads in the DexScreener rate limiter (931s total throttle wait since 15:06) -> open-position price calls skip the queue (537).
 532/533: every positions-loop step is timed; >3s logs 'slow_step' and is listed in heartbeat b11 (slow, slow_by_step, in_progress). 536: stall dump now at 30s and names the step in progress.
 No bars or safety checks changed.
+538 (17:07 PT): brain3.holdings_watch iterated HOLD while another thread filled it at startup ('dictionary changed size during iteration'); now iterates a snapshot.

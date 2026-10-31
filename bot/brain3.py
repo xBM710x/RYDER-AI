@@ -29,8 +29,8 @@ def _risk(m, pair):
 def holdings_watch():
     try: st = json.load(open(HS))
     except Exception: st = {}
-    mk = dex_market(list(HOLD.values())); fut = {s: POOL.submit(_risk, m, mk.get(m) or {}) for s, m in HOLD.items() if mk.get(m)}
-    for s, m in HOLD.items():
+    mk = dex_market(list(dict(HOLD).values())); fut = {s: POOL.submit(_risk, m, mk.get(m) or {}) for s, m in list(HOLD.items()) if mk.get(m)}
+    for s, m in list(HOLD.items()):
         pr = mk.get(m)
         if not pr: continue
         px, liq = float(pr.get("priceUsd") or 0), (pr.get("liquidity") or {}).get("usd") or 0; fl = fut[s].result(); o = st.get(s)
