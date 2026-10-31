@@ -2,7 +2,7 @@
 import time, sys, traceback, threading
 from common import CFG, dex_market
 from logger import conn, log
-import brain17, brain16, brain14, brain13, brain12, brain11, brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
+import brain19, brain18, brain17, brain16, brain14, brain13, brain12, brain11, brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
 REENTRY = {}  # 34: mint -> (exit price, ts, sym)
 ENTRYLIQ = {}  # 26: mint -> liquidity at entry
 brain10.ENTRYLIQ = ENTRYLIQ  # 480 shared entry liquidity
@@ -302,6 +302,9 @@ def positions():
         if p.get("version") not in ("v1", "v2"):
             bs = brain6.big_sell(p["mint"])  # 223 event-driven: big sell just hit the stream
             if bs and (len(bs) >= 2 or price < p["entry"] * 1.03): executor.sell(p, price, "big_sell"); extras.postmortem(p, price, "big_sell"); continue
+            brain19.shadow(p, price, pr)  # b19 exit manager (shadow only: logs, never sells)
+            sf19 = brain19.FLAG.pop(p["mint"], None)  # b19 rug sentinel
+            if sf19: executor.sell(p, price, sf19); extras.postmortem(p, price, sf19); more.remember_rug(p["mint"], pr); continue
             rf = RUGF.pop(p["mint"], None)  # 248 per-minute rug re-check result
             if rf: executor.sell(p, price, "rug_recheck"); extras.postmortem(p, price, "rug_recheck"); more.remember_rug(p["mint"], pr); continue
             if time.time() - RUGT.get(p["mint"], 0) > 60:
@@ -371,6 +374,7 @@ HOLDCHK = {}; RUGF = {}; RUGT = {}; ADDED = set(); OPENM = set()
 def _rugchk(m):
     r = brain6.rug_recheck(m)
     if r: RUGF[m] = r
+    else: brain19.sentinel(m, executor.LIQ.get(m))  # b19 on-chain rug sentinel (dev sell / LP shrink / top holders / authority)
 def top10(mint):
     try:
         rc = __import__("common").http_json(f"https://api.rugcheck.xyz/v1/tokens/{mint}/report", timeout=20)
@@ -423,7 +427,7 @@ def state():
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
         decision_s=dict(avg=round(sum(DEC) / len(DEC), 2) if DEC else None, p90=sorted(DEC)[int(len(DEC) * 0.9)] if DEC else None, n=len(DEC)),
         deep_check_s=dict(avg=round(sum(DEEP) / len(DEEP), 1) if DEEP else None, max=max(DEEP) if DEEP else None, n=len(DEEP)), inflight=len(INFLIGHT),
-        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), b10=brain10.status(), b11=brain11.status(), b12=brain12.status(), b13=brain13.status(), b14=brain14.status(), b16=brain16.status(), b17=brain17.status(), trade_quality=__import__("brain15").quality(), rc_backup_used=len(__import__("rcfallback").USED), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
+        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), b10=brain10.status(), b11=brain11.status(), b12=brain12.status(), b13=brain13.status(), b14=brain14.status(), b16=brain16.status(), b17=brain17.status(), b18=__import__("brain18").status(), b19=brain19.status(), trade_quality=__import__("brain15").quality(), rc_backup_used=len(__import__("rcfallback").USED), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
         latency=dict(scan_s_avg=round(sum(LAT) / len(LAT), 1) if LAT else None, scan_s_last=LAT[-1] if LAT else None, pos_check_s=CFG["POS_SEC"],
                      ws_last_event_s=round(now - feed.STATS["last"]) if feed.STATS.get("last") else None),
         sources={h: dict(v, ok_rate=round(v["ok"] / max(1, v["ok"] + v["err"]), 2)) for h, v in HEALTH.items()})
@@ -451,7 +455,7 @@ def main(cycles=None):
                 if k % 3 == 0: brain11.timed("pending", pending)  # 422: 5s -> 3s
                 if k % 600 == 0: detect.sweep_dead(); analyst.retune()
                 if k % 30 == 0: reentry()
-                for jn_, jf_ in (("jobs", jobs), ("brain3", brain3.jobs), ("brain7", brain7.jobs), ("brain9", brain9.jobs), ("brain10", brain10.jobs), ("brain12", brain12.jobs), ("brain13", brain13.jobs), ("brain14", brain14.jobs), ("brain17", brain17.jobs)):
+                for jn_, jf_ in (("jobs", jobs), ("brain3", brain3.jobs), ("brain7", brain7.jobs), ("brain9", brain9.jobs), ("brain10", brain10.jobs), ("brain12", brain12.jobs), ("brain13", brain13.jobs), ("brain14", brain14.jobs), ("brain17", brain17.jobs), ("brain19", brain19.jobs)):
                     brain11.timed(jn_, jf_, k)  # 532 per-job timing; >3s logs slow_step
                 if k % 60 == 30: brain8.patience()  # 367
                 if k % 3600 == 3599: brain8.hourly()  # 370/389

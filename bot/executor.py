@@ -39,6 +39,9 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
         last = [r["pnl"] for r in c.execute("SELECT pnl FROM positions WHERE status='closed' AND version=? AND reason!='partial_tp' ORDER BY closed DESC LIMIT 3", (ver,))]
         streak = next((i for i, p in enumerate(last) if p > 0), len(last))
         if streak >= 2: size *= 0.5 if streak >= 3 else 0.75  # v3: shrink after losing streak
+        mm19, mw19 = __import__("brain19").mood_mult()  # b19 market mood: 0.5..1.0 or pause (never grows)
+        if mm19 <= 0: log("skip", mint, symbol, reason="mood_pause", detail=mw19, book=ver); c.close(); return
+        if mm19 < 1: size *= mm19; log("size_brake", mint, symbol, mult=mm19, why="market mood: " + str(mw19), book=ver)
         if __import__("brain18").two_loss_mult(ver) < 1: size *= 0.5; log("size_brake", mint, symbol, mult=0.5, why="2 losses in a row on this desk (b18)", book=ver)
         if ver == CFG["VERSION"]: RISK.update(day_pnl=round(today, 2), day_limit=-0.15 * CFG["START_BALANCE"], loss_streak=streak, size_mult=round(mult * (0.5 if streak >= 3 else 0.75 if streak >= 2 else 1), 2), ts=time.time())
     if CFG["VERSION"] not in ("v1", "v2") and 1 <= size < 5 and cash >= 5: size = 5.0  # 382 no dust paper fills (min $5)
@@ -80,7 +83,10 @@ def sell(pos, quote, reason):
     log("paper_exit", pos["mint"], pos["symbol"], entry=pos["entry"], exit=price, stop=pos["stop"], slip_pct=round((price / pos["stop"] - 1) * 100, 2), pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason=reason, book=pos.get("version"))
     try: alerts.on_exit(pos["symbol"], (price / pos["entry"] - 1) * 100, pnl, reason, pos.get("version", ""), __import__("brain7").exit_extra(dict(pos, peak=max(pos.get("peak") or 0, quote)), quote))  # 355
     except Exception: pass
-    if pos.get("version") not in ("v1", "v2"): __import__("brain18").on_close(pos, price, pnl, reason)  # b18 trade diary
+    if pos.get("version") not in ("v1", "v2"):
+        __import__("brain18").on_close(pos, price, pnl, reason)  # b18 trade diary
+        try: b19 = __import__("brain19"); b19.on_close(pos, price, reason); b19.S["sent"].pop(pos["mint"], None)
+        except Exception: pass
     try:  # 210 decision grade (all paper books)
         import brain5; c3 = conn(); tp = c3.execute("SELECT COALESCE(SUM(pnl),0) FROM positions WHERE mint=? AND reason='partial_tp' AND version=?", (pos["mint"], pos.get("version"))).fetchone()[0]; c3.close()
         brain5.on_close(pos, pnl + tp)

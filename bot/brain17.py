@@ -155,6 +155,20 @@ def selftest(alert=True):
     t("skeptic", lambda: brain18.skeptic("_selftest_x", {"priceChange": {"m5": 80}}, {}, {"rug": 1}).startswith("skeptic_spike") and brain18.skeptic("_selftest_x", {"liquidity": {"usd": 50000}}, {"dev_rugs": ("pass",)}, {"rug": 0.9}) is None
                           and brain18.skeptic("_selftest_x", {}, {}, {"holders": 0.37}).startswith("skeptic_weak") and "skeptic(mint" in src)
     t("diary", lambda: all(brain18.diary_lines("T", 1.0, 0.92, 1.0, -2.4, "stop_loss", 5)[i].startswith(p) for i, p in ((0, "What went right"), (1, "What went wrong"))))
+    import brain19
+    def emt():
+        p = dict(id=0, opened=time.time() - 600, entry=1.0, peak=1.30, stop=0.92, symbol="T", mint="_selftest")
+        fade = dict(priceChange={"m5": -5}, txns={"m5": {"buys": 3, "sells": 9}})
+        r1, s1 = brain19.exit_signal(p, 1.20, fade); r2, s2 = brain19.exit_signal(p, 1.25, fade)
+        r3, _ = brain19.exit_signal(dict(p, peak=1.0), 1.0, dict(volume={"m5": 10, "h1": 12000}))
+        r4, s4 = brain19.exit_signal(dict(p, peak=1.0, stop=0.92), 0.95, {})
+        return r1 == "exit_mgr_fade" and r2 is None and s2 >= p["stop"] and r3 == "exit_mgr_vol_collapse" and r4 is None and s4 == 0.92
+    t("exit_manager", emt)
+    t("rug_sentinel", lambda: brain19.sentinel_eval(dict(auth=[None, None]), dict(auth=["X", None])) == "rug_sentinel_authority" and brain19.sentinel_eval(dict(dev=100), dict(dev=50)) == "rug_sentinel_dev_sell"
+      and brain19.sentinel_eval(dict(liq=10000), dict(liq=5000)) == "rug_sentinel_lp_shrink" and brain19.sentinel_eval(dict(top=10), dict(top=30)) == "rug_sentinel_top_holders" and brain19.sentinel_eval(dict(top=10, liq=1e4, dev=5), dict(top=12, liq=9e3, dev=5)) is None)
+    t("wallet_scout", lambda: brain19.copyable("w", "bad", {"w": [5, 3, -1]}) and not brain19.copyable("w", "good", {"w": [-5, 1, -1]}) and brain19.copyable("w", "good", {"w": [1]}) and not brain19.copyable("w", "bad", {}))
+    t("market_mood", lambda: brain19.mood_eval(-8, -10, 0.3, 0.1, 20)[0] == 0.5 and brain19.mood_eval(1, 3, 1.2, 0.6, 20)[0] == 1.0 and brain19.mood_eval(1, 3, 2.0, 0.02, 20)[0] == 0.0 and max(brain19.mood_eval(5, 50, 5, 1, 30)[0], 0) <= 1.0)
+    t("coach_never_applies", lambda: (lambda s: "applied=False" in s and "CFG[" not in s and "config" not in s.lower().replace("never changes config", "")) (open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "coach.py")).read()))
     LAST_TEST.clear(); LAST_TEST.update(R, at=round(time.time()))
     bad = [k for k, v in R.items() if not v]
     log("breaker_selftest", ok=not bad, failed=bad, n=len(R))

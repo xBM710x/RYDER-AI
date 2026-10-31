@@ -13,7 +13,8 @@ from logger import conn, log
 D = os.path.dirname(os.path.abspath(__file__)); SF = os.path.join(D, "brain16.json"); DESK = "vC"
 WALLETS = {"bystevenr": "AH75Bn6QHSt5K2Ad4p1otns3JTwpSJWZTwiwKWNhmnKx", "vvvvvvvvvv": "4Bc4Ue2G37zoQCiksAvwMgXQQJFKcYQThnoHPKizAmWB",
            "G41T3R98": "4t5cayg6FDWkyQwyuYq9DqcRRCQ7e6JXyf9J7f2wfZQW", "awtorkowski7": "7zs3Cda5C8XWadmFKKfuPyXpo78F5AFY6RXQ3Ec5p9k7",
-           "SavageCountry": "CdMRJEA33ee3JsLjMNkc9LohTkczSpom63vkyRu988qa", "OinkersRUs": "DPAN2Vig8BokpQCCu4mtV1mTWYLS7ktKe1hHKVBcsayL"}
+           "SavageCountry": "CdMRJEA33ee3JsLjMNkc9LohTkczSpom63vkyRu988qa", "OinkersRUs": "DPAN2Vig8BokpQCCu4mtV1mTWYLS7ktKe1hHKVBcsayL",
+           "jusatrades": "3GVsTbR5KL4voNTC5Q9G1gaUMfcJ7pZCj8SZ8HybmdhY"}  # fomoradar.io/traders/jusatrades (verified on-chain match; matches provadata 3GVs…mdhY), active 2026-10-30
 NOT_FOUND = {"tikitikitrader": "only a shortened address (GDpq…jQrN) is public; full address needs a paid/keyed API -> not guessed"}
 PROGS = ("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA", "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb")
 SKIP = {"So11111111111111111111111111111111111111112", "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"}
@@ -83,7 +84,7 @@ def poll_one():
         a, b = new.get(m, 0), old.get(m, 0)
         if a > b * 1.01 and a > 0:
             _h(who, m)[0] += 1; STATS["seen_buy"] += 1
-            if (S["grade"].get(who) or {}).get("g") == "good" and m not in PENDING: on_buy(who, m)
+            if __import__("brain19").copyable(who, (S["grade"].get(who) or {}).get("g")) and m not in PENDING: on_buy(who, m)  # b19: copy-P&L grade on top of behaviour
         elif a < b * 0.99:
             _h(who, m)[1] += 1; STATS["seen_sell"] += 1; on_sell(who, m, (b - a) / b if b else 1.0)
 def on_buy(who, m):
@@ -138,7 +139,7 @@ def job_loop():
     while True:
         k += 1
         try:
-            if time.time() - S["graded_at"] > 6 * 3600: regrade()
+            if time.time() - S["graded_at"] > 6 * 3600 or any(w not in S["grade"] for w in WALLETS): regrade()
             poll_one(); run_pending()
             if k % 15 == 0: save()
         except Exception as e: STATS["err"] += 1; log("error", where="brain16", trace=str(e)[:200]) if STATS["err"] % 20 == 1 else None

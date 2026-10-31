@@ -210,3 +210,14 @@ Main-desk bars unchanged ($28K vol / $18K liq / 0.55). No safety check loosened.
   is reverted (lowering allowed), vetoed votes (< veto line) can't be raised by anyone incl. the debate step. 'lane_block' events.
 - Two-loss brake: 2 losing full exits in a row on a desk -> 0.5x size on top of the existing streak brake (0.75x/0.5x) -> 0.375x at 2, 0.25x at 3+.
 - Self-tests now 12 (locked_lanes, two_loss_half, skeptic, diary added). liq_drop stat no longer counts self-test mints.
+
+## 2026-10-31 ~01:15 PT — five agents (brain19 + coach.py, approved by Braydon) — PAPER ONLY, no LLM in loop, only exits sooner / shrinks / pauses
+- Exit manager: SHADOW ONLY (no price-path history to backtest vs current exits). Would-exit: after +15% run, m5 red + sells>buys -> protect
+  stop 6% under peak; volume collapse (m5 vol < 10% of h1/12, >5 min old, < +3%) -> exit. Scored vs the real exit on each close (data.json agents5.exit_mgr).
+- Rug sentinel (on the per-minute recheck thread): authority appears / dev sells / LP < 60% of first seen / top-10 ex-pool +15 pts -> exit
+  'rug_sentinel_<why>'. getTokenLargestAccounts is 403 on the free RPC -> top-holder part is inactive until a working RPC.
+- Wallet scout: 3+ closed copies: +total & >=50% wins -> copyable even if behaviour bad; -total -> not copyable. jusatrades added
+  (3GVsTbR5KL4voNTC5Q9G1gaUMfcJ7pZCj8SZ8HybmdhY, fomoradar verified, active on-chain 10-30). escobarpablo / zelda89 skipped.
+- Market mood: SOL trend, launch rate (scan n_raw 1h vs 24h avg), survival (coins 1-6h old with >=50% of first liquidity) -> 0.5..1.0 or pause; refresh 15 min.
+- Coach: coach.py, 3 AM PT via brain19.jobs; writes reports/coach_<date>.md + coach_latest.json. Never applies anything.
+- Self-tests 17.

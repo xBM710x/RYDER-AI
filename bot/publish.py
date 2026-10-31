@@ -27,6 +27,13 @@ def build():
     except Exception: d["copy_desk"] = None
     try: d["diary"] = (json.load(open(os.path.join(D, "brain18.json"))).get("diary") or [])[-20:][::-1]  # b18 trade diary (newest first; data only)
     except Exception: d["diary"] = []
+    try:  # b19 minimal status (data only, no panel)
+        b19 = json.load(open(os.path.join(D, "brain19.json"))); sc = b19.get("scored") or []; dd = [x["would_pct"] - x["real_pct"] for x in sc]; mo = b19.get("mood") or {}
+        try: co = json.load(open(os.path.join(D, "reports", "coach_latest.json"))).get("suggestion") or {}
+        except Exception: co = {}
+        d["agents5"] = dict(exit_mgr=dict(mode="shadow", n=len(dd), better=sum(x > 0 for x in dd), worse=sum(x < 0 for x in dd)), mood=dict(mult=mo.get("mult"), why=mo.get("why")),
+                            sentinel_watching=len(b19.get("sent") or {}), coach=dict(tweak=co.get("tweak"), ok=co.get("ok"), applied=False))
+    except Exception: d["agents5"] = None
     try: d["calendar"] = calendar_export(d)
     except Exception: d["calendar"] = None
     return d
