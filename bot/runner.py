@@ -2,7 +2,7 @@
 import time, sys, traceback, threading
 from common import CFG, dex_market
 from logger import conn, log
-import brain14, brain13, brain12, brain11, brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
+import brain16, brain14, brain13, brain12, brain11, brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
 REENTRY = {}  # 34: mint -> (exit price, ts, sym)
 ENTRYLIQ = {}  # 26: mint -> liquidity at entry
 brain10.ENTRYLIQ = ENTRYLIQ  # 480 shared entry liquidity
@@ -296,7 +296,7 @@ def positions():
     for p in ps:
         pr = mkt.get(p["mint"])
         if not pr or not pr.get("priceUsd"): continue
-        price = float(pr["priceUsd"]); brain2.tick(p["mint"], pr)
+        price = float(pr["priceUsd"]); brain2.tick(p["mint"], pr); executor.LIQ[p["mint"]] = (pr.get("liquidity") or {}).get("usd")  # exit MEV model
         if p.get("version") not in ("v1", "v2"):
             bs = brain6.big_sell(p["mint"])  # 223 event-driven: big sell just hit the stream
             if bs and (len(bs) >= 2 or price < p["entry"] * 1.03): executor.sell(p, price, "big_sell"); extras.postmortem(p, price, "big_sell"); continue
@@ -322,6 +322,7 @@ def positions():
                 executor.sell(p, price, "flat_time"); extras.postmortem(p, price, "flat_time"); continue
             if brain7.partial15(p, price) and not fomo.is_fomo(p["mint"]):  # 272 first partial at +15%
                 executor.partial(p, price, 1); p = dict(p, qty=p["qty"] / 2, cost=p["cost"] / 2, tp_done=1, trailing=1)
+            if brain16.scale_out(p, price): continue  # v3x / copy desk scale-outs (main desk untouched); next tick re-reads the smaller position
             sp = brain2.spike(p["mint"], 5)
             if sp["sells"] >= 8 and sp["sells"] > 2 * sp["buys"] and sp["px"] <= -4:  # 124 5s sell spike -> instant exit
                 executor.sell(p, price, "sell_spike_5s"); extras.postmortem(p, price, "sell_spike_5s"); continue
@@ -418,7 +419,7 @@ def state():
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
         decision_s=dict(avg=round(sum(DEC) / len(DEC), 2) if DEC else None, p90=sorted(DEC)[int(len(DEC) * 0.9)] if DEC else None, n=len(DEC)),
         deep_check_s=dict(avg=round(sum(DEEP) / len(DEEP), 1) if DEEP else None, max=max(DEEP) if DEEP else None, n=len(DEEP)), inflight=len(INFLIGHT),
-        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), b10=brain10.status(), b11=brain11.status(), b12=brain12.status(), b13=brain13.status(), b14=brain14.status(), trade_quality=__import__("brain15").quality(), rc_backup_used=len(__import__("rcfallback").USED), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
+        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), b10=brain10.status(), b11=brain11.status(), b12=brain12.status(), b13=brain13.status(), b14=brain14.status(), b16=brain16.status(), trade_quality=__import__("brain15").quality(), rc_backup_used=len(__import__("rcfallback").USED), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
         latency=dict(scan_s_avg=round(sum(LAT) / len(LAT), 1) if LAT else None, scan_s_last=LAT[-1] if LAT else None, pos_check_s=CFG["POS_SEC"],
                      ws_last_event_s=round(now - feed.STATS["last"]) if feed.STATS.get("last") else None),
         sources={h: dict(v, ok_rate=round(v["ok"] / max(1, v["ok"] + v["err"]), 2)) for h, v in HEALTH.items()})
@@ -466,7 +467,8 @@ def main(cycles=None):
     threading.Thread(target=guard, daemon=True).start()
     def _restart_pos():
         PL[0] = threading.Thread(target=pos_loop, args=(brain14.GEN[0],), daemon=True); PL[0].start()
-    brain14.start(_restart_pos)  # freeze watchdog: restarts only the positions thread
+    brain14.start(_restart_pos)
+    brain16.start()  # paper copy-trade desk vC (read-only wallet polling)  # freeze watchdog: restarts only the positions thread
     def scan_loop(gen=0, cycles=None):
         n = 0
         while cycles is None or n < cycles:

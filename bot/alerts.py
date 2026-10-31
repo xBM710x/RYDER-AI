@@ -27,7 +27,7 @@ def send_async(text): threading.Thread(target=send, args=(text,), daemon=True).s
 fmt = lambda v: f"{v:.3g}" if v < 1 else f"{v:,.2f}"
 def on_buy(sym, usd, price, score, stop, liq, url, book, why=None):
     if book.endswith("b") or book.endswith("x"): return
-    send_async(f"🟢 RYDER BUY (paper)\n{sym} · ${usd:.2f} at ${fmt(price)}\nScore {score} · stop −{(1-stop/price)*100:.1f}% · liq ${liq or 0:,.0f}\n" + (f"🧠 {why[:1400]}\n" if why else "") + f"{url or ''}")
+    send_async(("📋 COPY " if book == "vC" else "") + f"🟢 RYDER BUY (paper)\n{sym} · ${usd:.2f} at ${fmt(price)}\nScore {score} · stop −{(1-stop/price)*100:.1f}% · liq ${liq or 0:,.0f}\n" + (f"🧠 {why[:1400]}\n" if why else "") + f"{url or ''}")
 def on_exit(sym, pct, pnl, reason, book, extra=""):
     if book.endswith("b") or book.endswith("x"): return
     icon = "🏆" if reason == "partial_tp" else ("✅" if pnl > 0 else "🔴")

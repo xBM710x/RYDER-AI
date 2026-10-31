@@ -166,6 +166,78 @@ try:
     for x, p in zip(closed, cl[-15:]): b = _bw.get(p["mint"], {}); x["win_prob"] = b.get("win_prob"); x["why"] = b.get("why")
     out["skipped_features"] = ["103/104 X shill + mention velocity: needs X API access inside the bot loop", "105 curated KOL list: none supplied; uses learned smart wallets (#21)", "39 Telegram/X alerts"]
 except Exception as _e: out["brain_err"] = str(_e)[:120]
+# ---- near-miss watchlist (display only; does not affect trading) ----
+def _near_misses(limit=10, window=3600):
+    LAB = dict(volume_1h="1h volume too low", liquidity="liquidity too low / unknown", pressure="more sells than buys", socials="no or reused socials",
+               mint_authority="mint not revoked", freeze_authority="freeze authority set", top10="top 10 holders too heavy", lp_locked="LP not locked",
+               dev_rugs="dev has rug history", bundled="bundled launch", bundle_sizes="bundled wallets", copycat="copycat name", honeypot="possible honeypot",
+               mutable_meta="metadata changeable", wash="wash trading", holder_cluster="holders share a funder", dev_sell="dev sold early", recheck="failed entry recheck")
+    now = time.time(); seenm = {}; P = os.path.join(os.path.dirname(os.path.abspath(__file__)), "events.jsonl")
+    try: lines = open(P).readlines()[-20000:]
+    except Exception: return []
+    for l in lines:
+        try: e = json.loads(l)
+        except Exception: continue
+        if e.get("ts", 0) < now - window or e.get("version", V) != V or not e.get("mint"): continue
+        k = e.get("kind"); item = None
+        if k == "kill":
+            ch = e.get("checks") or {}; f = [n for n, v in ch.items() if str(v).startswith("fail")]; p = [n for n, v in ch.items() if str(v).startswith("pass")]
+            r = e.get("reason") or ""
+            if r.startswith("score<"): item = dict(why="score just under 0.6", rank=2)
+            elif len(p) >= 2 and ((not f and r) or f == [r]):
+                n = f[0] if f else r; item = dict(why=LAB.get(n, n.replace("_", " ")), rank=len(p))
+        elif k == "score" and (e.get("score") or 0) < CFG["MIN_SCORE"] and (e.get("score") or 0) >= CFG["MIN_SCORE"] - 0.15:
+            item = dict(why=f"score {e.get('score')} just under {CFG['MIN_SCORE']}", rank=9)
+        if item:
+            item.update(sym=(e.get("symbol") or "?")[:14], price=e.get("px") or e.get("price"), mcap=e.get("mcap") or e.get("fdv"), dex=fam(e.get("dex") or ""),
+                        t=time.strftime("%H:%M", time.localtime(e["ts"])), ts=round(e["ts"]), near_miss=True)
+            seenm[e["mint"]] = item
+        elif k in ("score", "paper_buy"): seenm.pop(e["mint"], None)
+    L = sorted(seenm.values(), key=lambda x: (x["ts"], x["rank"]), reverse=True)[:limit]
+    for x in L: x.pop("rank", None)
+    return L
+try:
+    if not out.get("watchlist"): out["watchlist"] = _near_misses()
+    else: out["watchlist"] = list(out["watchlist"]) + _near_misses(max(0, 10 - len(out["watchlist"])))
+except Exception: pass
+# ---- all books in versions + v3x/v3b trades in existing lists (tagged; main-book stats untouched) ----
+try:
+    _have = {x["v"] for x in out["versions"]}
+    for _v in ("v3b", "v3x"):
+        if _v not in _have: out["versions"].append(vsum(_v))
+    _LBL = dict(v1="v1", v2="v2", v3="v3 main", v3b="v3b strict", v3x="v3x FOMO practice")
+    for x in out["versions"]: x["label"] = _LBL.get(x["v"], x["v"])
+    import fomo as _fm
+    _xb = {r["mint"]: json.loads(r["data"]) for r in c.execute("SELECT mint, data FROM events WHERE kind='paper_buy' ORDER BY ts")}
+    def _tag(p): return "FOMO" if (_xb.get(p["mint"]) or {}).get("fomo") or _fm.is_fomo(p["mint"]) else "practice"
+    _xc = [dict(r) for r in c.execute("SELECT * FROM positions WHERE status='closed' AND version='v3x' ORDER BY closed DESC LIMIT 10")][::-1]
+    _xo = [dict(r) for r in c.execute("SELECT * FROM positions WHERE status='open' AND version='v3x'")]
+    for p in _xc:
+        out["closed"].append(dict(sym=f"{p['symbol']} · v3x {_tag(p)}", entry=p["entry"], exit=p["exit"], pnl=round(p["pnl"], 2), pct=round((p["exit"]/p["entry"]-1)*100, 1),
+            reason=p["reason"], t=time.strftime("%H:%M", time.localtime(p["closed"])), dex=dexof.get(p["mint"], ""), book="v3x", practice=True, fomo=_tag(p) == "FOMO"))
+    _xm = dex_market([p["mint"] for p in _xo]) if _xo else {}
+    for p in _xo:
+        px = float((_xm.get(p["mint"]) or {}).get("priceUsd") or p["entry"])
+        out["opens"].append(dict(sym=f"{p['symbol']} · v3x {_tag(p)}", entry=p["entry"], now=px, stop=p["stop"], trail=bool(p["trailing"]), usd=round(p["cost"], 2),
+            pnl=round(p["qty"] * px - p["cost"], 2), dex=dexof.get(p["mint"], ""), book="v3x", practice=True, fomo=_tag(p) == "FOMO"))
+except Exception as _e: out["books_err"] = str(_e)[:120]
+try:  # copy desk vC: same rows in the existing Trades lists, labelled 'copy' (data only, no new panel)
+    _cb = {r["mint"]: json.loads(r["data"]).get("copy_of") for r in c.execute("SELECT mint, data FROM events WHERE kind='paper_buy' AND data LIKE '%copy_of%'")}
+    for p in [dict(r) for r in c.execute("SELECT * FROM positions WHERE status='closed' AND version='vC' ORDER BY closed DESC LIMIT 10")][::-1]:
+        out["closed"].append(dict(sym=f"{p['symbol']} · copy {_cb.get(p['mint']) or ''}".strip(), entry=p["entry"], exit=p["exit"], pnl=round(p["pnl"], 2), pct=round((p["exit"]/p["entry"]-1)*100, 1),
+            reason=p["reason"], t=time.strftime("%H:%M", time.localtime(p["closed"])), dex=dexof.get(p["mint"], ""), book="vC", practice=True, copy=True))
+    _co = [dict(r) for r in c.execute("SELECT * FROM positions WHERE status='open' AND version='vC'")]; _cm = dex_market([p["mint"] for p in _co]) if _co else {}
+    for p in _co:
+        px = float((_cm.get(p["mint"]) or {}).get("priceUsd") or p["entry"])
+        out["opens"].append(dict(sym=f"{p['symbol']} · copy {_cb.get(p['mint']) or ''}".strip(), entry=p["entry"], now=px, stop=p["stop"], trail=bool(p["trailing"]), usd=round(p["cost"], 2),
+            pnl=round(p["qty"] * px - p["cost"], 2), dex=dexof.get(p["mint"], ""), book="vC", practice=True, copy=True))
+except Exception as _e: out["copy_err"] = str(_e)[:120]
+try:  # read-only Fomo wallet summary (public address, no keys)
+    _ws = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "wallet_watch_state.json")))
+    _top = [x for x in (_ws.get("top") or []) if x.get("usd", 0) >= 1][:3]
+    if _ws.get("sol_usd"): _top = sorted(_top + [dict(sym="SOL", usd=_ws["sol_usd"])], key=lambda x: -x["usd"])[:3]
+    out["fomo_wallet"] = dict(total_usd=_ws.get("total_usd"), top=_top, at=time.strftime("%H:%M", time.localtime(_ws.get("t", 0))))
+except Exception: pass
 line = "const DATA: any = " + json.dumps(out) + ";"
 open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "page_data_line.txt"), "w").write(line)
 print(line)

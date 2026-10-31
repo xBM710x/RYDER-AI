@@ -43,6 +43,9 @@ def dev_history(creator, current_mint, max_tx=12, budget=30):
         liq = ((p or {}).get("liquidity") or {}).get("usd") or 0; fdv = (p or {}).get("fdv") or 0
         if liq < 2000 and fdv < 15000: dead.append(m)
     note += f", collapsed {len(dead)}/{min(len(created),30)}"
+    grad = [m for m in created[:30] if (mk.get(m) or {}).get("dexId") not in (None, "pumpfun")]  # left the bonding curve (PumpSwap/Raydium/...)
+    note += f", graduated {len(grad)}/{min(len(created),30)}"
+    if len(created) >= 5 and len(grad) / min(len(created), 30) <= 0.10: return "fail", note + " (serial launcher: 5+ launches, <=10% graduated)"
     if len(created) >= 2 and len(dead) / min(len(created), 30) >= 0.75: return "fail", note + " (serial launcher, most prior tokens dead)"
     return "pass", note
 def bundle_check(mint, creator=None, max_pages=3):

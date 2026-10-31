@@ -176,3 +176,18 @@ Main-desk bars unchanged ($28K vol / $18K liq / 0.55). No safety check loosened.
   ANONPAD (bug: $0 side pool) fixed).
 - brain15: trade-quality stats per desk (win rate, expectancy, profit factor, payoff, max drawdown, avg hold) in heartbeat + data.json 'trade_quality'
   (data only, no panel). Down-only size brakes: equity >10% under peak -> 0.5x (off again within 5%); 20+ trades and rolling-20 expectancy < 0 -> 0.5x.
+
+## 2026-10-31 ~00:20 PT — copy desk + grading + scale-outs + exposure cap + MEV fills + serial launcher (approved by Braydon) — PAPER ONLY
+- brain16.py: paper copy desk 'vC' ($300 start). Wallets (public third-party trackers that match them on-chain to Fomo trades:
+  fomoradar.io/traders/<name>, fomoapi.io/traders/oinkersrus; each confirmed active on-chain):
+  bystevenr AH75Bn6QHSt5K2Ad4p1otns3JTwpSJWZTwiwKWNhmnKx · vvvvvvvvvv 4Bc4Ue2G37zoQCiksAvwMgXQQJFKcYQThnoHPKizAmWB ·
+  G41T3R98 4t5cayg6FDWkyQwyuYq9DqcRRCQ7e6JXyf9J7f2wfZQW · awtorkowski7 7zs3Cda5C8XWadmFKKfuPyXpo78F5AFY6RXQ3Ec5p9k7 ·
+  SavageCountry CdMRJEA33ee3JsLjMNkc9LohTkczSpom63vkyRu988qa · OinkersRUs DPAN2Vig8BokpQCCu4mtV1mTWYLS7ktKe1hHKVBcsayL.
+  tikitikitrader NOT found (only shortened GDpq…jQrN public) -> not used.
+  Read-only balance polling (one wallet / 20s). Buy -> 30s delay -> chase guard +10% -> full filters.check (all safety; FOMO floors $4K/$6K) -> 5% size.
+  Wallet sells fraction f -> vC sells f (>=90% = full exit). Only wallets graded 'good' are copied; graded from last 40 txs + live, every 6h.
+- Scale-outs: v3x +40% / +80% (25% each, after its existing first partial); vC 25% at +20/+50/+100%. Main desk untouched.
+- Per-coin exposure cap: 12% of desk equity per coin incl. adds (all v3+ desks).
+- MEV/sandwich model: +0.15% + size/liquidity (cap 2%, unknown liq 1%) on every v3+ paper buy, add, sell and partial, on top of slippage + fee.
+- Serial launcher (onchain.dev_history): 5+ prior launches with <=10% graduated off the bonding curve -> fail (same fail-closed rules as the existing dev check).
+- executor.partial now takes a fraction (default 0.5 = unchanged behaviour). Copy trades appear in existing Trades lists as 'SYM · copy <trader>' (data only).
