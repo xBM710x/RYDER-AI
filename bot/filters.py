@@ -52,7 +52,7 @@ def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50%
         pct = (best.get("lp") or {}).get("lpLockedPct"); mtype = best.get("marketType", "")
         if "pump" in mtype and "amm" not in mtype or "dbc" in mtype or "launchlab" in mtype:
             res["lp_locked"] = ("pass", f"bonding curve ({mtype}) - no withdrawable LP", "rugcheck-approx")
-        elif __import__("brain9").pump_canonical(mint, mtype, pct): res["lp_locked"] = ("pass", f"canonical pump.fun migration pool ({mtype}), LP not dev-withdrawable", "approx-402")
+        # 402 pump.fun canonical-pool shortcut REVERTED 2026-10-30 (CHIPCR + Qcatom passed via it, then went to $0 liquidity)
         elif pct is None: res["lp_locked"] = ("unknown", f"no lpLockedPct ({mtype})", "rugcheck")
         else: res["lp_locked"] = ("pass" if pct >= 95 else "fail", f"{pct:.1f}% locked/burned ({mtype})", "rugcheck")
     else: res["lp_locked"] = ("unknown", "no markets in rugcheck", "rugcheck")

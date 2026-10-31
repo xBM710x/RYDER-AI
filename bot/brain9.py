@@ -20,7 +20,7 @@ def pressure_verdict(b5, s5, bh, sh):
 def pump_canonical(mint, mtype, pct):
     """402 (data fix, approx): graduated pump.fun coins on PumpSwap (pump_fun_amm) show 0% 'locked' on RugCheck, but the canonical
     migration pool's LP is burned/held by the pump program, not the dev. Only for mints that originated on pump.fun (end in 'pump')."""
-    return mint.endswith("pump") and "pump_fun_amm" in (mtype or "") and (pct or 0) < 95
+    return False  # REVERTED 2026-10-30 (Braydon approved): LP-lock check strict again on all desks
 # ---------- exits ----------
 def exit_check(p, price, pr, reg):
     """404/406/407/409/410/427/428/436 exit rules. Returns (reason, 'sell'|'partial'|'stop', new_stop) or None."""

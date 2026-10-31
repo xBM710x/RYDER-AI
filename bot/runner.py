@@ -150,7 +150,7 @@ def pending():
         p = PENDING.pop(m); pair = mkt.get(m)
         if not pair or not pair.get("priceUsd"): log("kill", m, p["sym"], reason="recheck", detail="no price on recheck", final=True); continue
         ch = float(pair["priceUsd"]) / p["price"] - 1
-        if ch > CFG["MAX_PUMP"]: log("kill", m, p["sym"], reason="recheck", detail=f"pumped {ch*100:+.1f}% during wait (chasing)", final=True); continue
+        if ch > CFG["MAX_PUMP"]: log("kill", m, p["sym"], reason="recheck", detail=f"pumped {ch*100:+.1f}% during wait (chasing)", final=True); log("skipped_chased", m, p["sym"], wait_price=p["price"], now=float(pair["priceUsd"]), move=round(ch * 100, 1), limit=round(CFG["MAX_PUMP"] * 100), score=p.get("score")); continue  # logging only
         if ch < CFG["MAX_DUMP"]: log("kill", m, p["sym"], reason="recheck", detail=f"dumping {ch*100:+.1f}% during wait", final=True); continue
         if p["creator"]:
             now = detect.dev_balance(p["creator"], m)

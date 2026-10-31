@@ -93,3 +93,8 @@ Likely causes fixed: (a) heavy learning jobs ran ON the positions thread (brain.
 532/533: every positions-loop step is timed; >3s logs 'slow_step' and is listed in heartbeat b11 (slow, slow_by_step, in_progress). 536: stall dump now at 30s and names the step in progress.
 No bars or safety checks changed.
 538 (17:07 PT): brain3.holdings_watch iterated HOLD while another thread filled it at startup ('dictionary changed size during iteration'); now iterates a snapshot.
+
+## 2026-10-30 20:58 PT - REVERT 402 (Braydon approved) + skipped_chased log. Backup: ../backup_pre_revert402_20261030_205650
+filters.py: removed the pump.fun canonical-pool LP shortcut; brain9.pump_canonical() now always False. LP-lock rule is strict again on all desks (pump_fun_amm with RugCheck 0% locked -> lp_locked FAIL; smoke-tested).
+Reason: CHIPCR and Qcatom passed only via this shortcut and both went to $0 liquidity within ~30 min.
+runner.py: entry-wait rejections for pumping >10% now also log a 'skipped_chased' event (wait price, price now, move %, limit, score). Logging only, no behavior change.
