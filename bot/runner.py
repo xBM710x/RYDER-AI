@@ -2,7 +2,7 @@
 import time, sys, traceback, threading
 from common import CFG, dex_market
 from logger import conn, log
-import brain16, brain14, brain13, brain12, brain11, brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
+import brain17, brain16, brain14, brain13, brain12, brain11, brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
 REENTRY = {}  # 34: mint -> (exit price, ts, sym)
 ENTRYLIQ = {}  # 26: mint -> liquidity at entry
 brain10.ENTRYLIQ = ENTRYLIQ  # 480 shared entry liquidity
@@ -202,7 +202,7 @@ def pending():
         mult = round(rm * tm * sm * pmult, 3)
         ex.update(flow=fl, price_check=pd, feats=f, bucket=p.get("bucket"), win_prob=wp, win_src=wsrc, size_x=mult, impact=p.get("impact"),
                   why=brain.explain(p["sym"], p["score"], wp, wsrc, conf, mult, p.get("why_adj") or [], p.get("struct") or "n/a", p.get("dev") or "n/a"))
-        council = None
+        council = None; ex["_res"] = p.get("res")  # b17 scorecard input (not logged)
         if CFG["VERSION"] not in ("v1", "v2"):  # 141-152 agent council
             c0 = conn(); opn = c0.execute("SELECT COUNT(*) FROM positions WHERE status='open' AND version=?", (CFG["VERSION"],)).fetchone()[0]
             d0 = time.mktime(time.localtime()[:3] + (0, 0, 0, 0, 0, -1)); dp = c0.execute("SELECT COALESCE(SUM(pnl),0) FROM positions WHERE status='closed' AND version=? AND closed>=?", (CFG["VERSION"], d0)).fetchone()[0]; c0.close()
@@ -281,7 +281,7 @@ def pending():
             if plan_: ex["why"] = plan_["text"] + "\n" + votes_line + "\n" + ex["why"]
             if brain6.all_agree(v): log("strong_agreement", m, p["sym"], council=cons); alerts.send_async(f"🤝 RYDER strong agreement (paper): all six agents ≥0.70 on {p['sym']} · council {cons:.2f}")  # 233
             mult = round(mult * smul, 3); ex["why"] = line + " | " + str(ex.get("why", ""))[:200]
-        ex["council"] = council
+        ex["council"] = council; ex["_res"] = p.get("res")  # b17 scorecard input (not logged)
         if council: mult = round(mult * brain6.STARTER, 3); ex["starter"] = True  # 254 starter buy; add-on after confirmation
         ok = executor.buy(m, p["sym"], pair, p["score"], mult=mult, stop_pct=brain3.strength_stop(extras.vol_stop(pair), (council or {}).get("consensus")), conf=conf, extra=ex)
         if p["score"] >= CFG["AB_SCORE"]: executor.buy(m, p["sym"], pair, p["score"], ver=CFG["VERSION"] + "b", conf=conf, extra=ex)  # 38: B book = stricter score, fixed -8%
@@ -336,6 +336,8 @@ def positions():
             if detect.dev_sold(dv[1], nb):
                 more.remember_rug(p["mint"], pr); executor.sell(p, price, "dev_sell"); detect.add_rugger(dv[0], "sold while we held " + p["mint"][:8]); DEVBAL.pop(p["mint"], None); continue
         el = ENTRYLIQ.get(p["mint"]); liq = (pr.get("liquidity") or {}).get("usd") or 0
+        if p.get("version") not in ("v1", "v2") and brain17.note_liq(p["mint"], liq):  # b17 liquidity-drop breaker: >30% drain in 5 min -> exit like lp_pull
+            more.remember_rug(p["mint"], pr); executor.sell(p, price, "liq_drop"); log("liq_drop", p["mint"], p["symbol"], liq=liq, book=p.get("version")); continue
         if el and liq < el * 0.7:  # 26/128 (tightened 50%->30% pull): LP pulled -> instant exit
             more.remember_rug(p["mint"], pr); executor.sell(p, price, "lp_pull"); extras.postmortem(p, price, "lp_pull"); detect.add_rugger(DEVBAL.get(p["mint"], ("",))[0], "LP pulled on " + p["mint"][:8]); continue
         v3 = p.get("version") not in ("v1", "v2")
@@ -419,7 +421,7 @@ def state():
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
         decision_s=dict(avg=round(sum(DEC) / len(DEC), 2) if DEC else None, p90=sorted(DEC)[int(len(DEC) * 0.9)] if DEC else None, n=len(DEC)),
         deep_check_s=dict(avg=round(sum(DEEP) / len(DEEP), 1) if DEEP else None, max=max(DEEP) if DEEP else None, n=len(DEEP)), inflight=len(INFLIGHT),
-        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), b10=brain10.status(), b11=brain11.status(), b12=brain12.status(), b13=brain13.status(), b14=brain14.status(), b16=brain16.status(), trade_quality=__import__("brain15").quality(), rc_backup_used=len(__import__("rcfallback").USED), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
+        paused=brain.paused(), b7=brain7.status(), b8=brain8.status(), b9=brain9.status(), b10=brain10.status(), b11=brain11.status(), b12=brain12.status(), b13=brain13.status(), b14=brain14.status(), b16=brain16.status(), b17=brain17.status(), trade_quality=__import__("brain15").quality(), rc_backup_used=len(__import__("rcfallback").USED), council=brain2.summary(), pos_health=brain6.HEALTH, stream=dict(subs=len(brain6.SUBS), events=brain6.STATS.get('trade_events', 0)), selfheal=SHEAL, rug_timing=more.rug_timing(), migrations=feed.STATS.get("migrations", 0), model=dict(trained=MODELN(), src="ml" if brain.MODEL["m"] is not None else "rules"),
         latency=dict(scan_s_avg=round(sum(LAT) / len(LAT), 1) if LAT else None, scan_s_last=LAT[-1] if LAT else None, pos_check_s=CFG["POS_SEC"],
                      ws_last_event_s=round(now - feed.STATS["last"]) if feed.STATS.get("last") else None),
         sources={h: dict(v, ok_rate=round(v["ok"] / max(1, v["ok"] + v["err"]), 2)) for h, v in HEALTH.items()})
@@ -447,7 +449,7 @@ def main(cycles=None):
                 if k % 3 == 0: brain11.timed("pending", pending)  # 422: 5s -> 3s
                 if k % 600 == 0: detect.sweep_dead(); analyst.retune()
                 if k % 30 == 0: reentry()
-                for jn_, jf_ in (("jobs", jobs), ("brain3", brain3.jobs), ("brain7", brain7.jobs), ("brain9", brain9.jobs), ("brain10", brain10.jobs), ("brain12", brain12.jobs), ("brain13", brain13.jobs), ("brain14", brain14.jobs)):
+                for jn_, jf_ in (("jobs", jobs), ("brain3", brain3.jobs), ("brain7", brain7.jobs), ("brain9", brain9.jobs), ("brain10", brain10.jobs), ("brain12", brain12.jobs), ("brain13", brain13.jobs), ("brain14", brain14.jobs), ("brain17", brain17.jobs)):
                     brain11.timed(jn_, jf_, k)  # 532 per-job timing; >3s logs slow_step
                 if k % 60 == 30: brain8.patience()  # 367
                 if k % 3600 == 3599: brain8.hourly()  # 370/389
@@ -468,6 +470,7 @@ def main(cycles=None):
     def _restart_pos():
         PL[0] = threading.Thread(target=pos_loop, args=(brain14.GEN[0],), daemon=True); PL[0].start()
     brain14.start(_restart_pos)
+    threading.Thread(target=brain17.selftest, daemon=True, name="b17-selftest0").start()  # breaker self-tests at startup
     brain16.start()  # paper copy-trade desk vC (read-only wallet polling)  # freeze watchdog: restarts only the positions thread
     def scan_loop(gen=0, cycles=None):
         n = 0

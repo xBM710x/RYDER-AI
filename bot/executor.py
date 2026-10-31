@@ -18,6 +18,13 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
     if c.execute("SELECT 1 FROM positions WHERE mint=? AND status='open' AND version=?", (mint, ver)).fetchone(): c.close(); return
     if ver == CFG["VERSION"] and c.execute("SELECT COUNT(*) FROM positions WHERE version=? AND opened>?", (ver, time.time() - 3600)).fetchone()[0] >= CFG["MAX_PER_HOUR"]:
         log("skip", mint, symbol, reason=f"max {CFG['MAX_PER_HOUR']} trades/hour"); c.close(); return
+    xr = (extra or {}).get("_res"); extra = {k: v for k, v in (extra or {}).items() if k != "_res"}
+    if ver not in ("v1", "v2"):  # b17: stale-data + liquidity-drop breakers, 7-factor scorecard floors (adds rejects only)
+        import brain17
+        bz = brain17.stale(pair) or brain17.liq_blocked(mint, pair)
+        if bz: log("kill", mint, symbol, reason=bz.split(":")[0], detail=bz, final=False, book=ver); c.close(); return
+        okz, extra = brain17.gate(mint, symbol, pair, xr, ver, extra)
+        if not okz: c.close(); return
     m15, why15 = __import__("brain15").size_mult(ver, mint in __import__("rcfallback").USED)  # down-only: drawdown / expectancy / backup-check brakes
     if why15: log("size_brake", mint, symbol, mult=m15, why=why15, book=ver)
     size = min(cash, equity(c, ver) * CFG["MAX_PCT_PER_TRADE"] * mult * m15); quote = float(pair["priceUsd"])

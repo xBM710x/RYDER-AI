@@ -89,9 +89,12 @@ def poll_one():
 def on_buy(who, m):
     p = dex_market([m]).get(m)
     if not p or not p.get("priceUsd"): STATS["copy_no_pair"] += 1; return
-    PENDING[m] = dict(t=time.time(), px0=float(p["priceUsd"]), sym=(p.get("baseToken") or {}).get("symbol") or m[:6], who=who)
+    PENDING[m] = dict(t=time.time(), px0=float(p["priceUsd"]), sym=(p.get("baseToken") or {}).get("symbol") or m[:6], who=who, bal0=(S["bal"].get(who) or {}).get(m, 0))
     log("copy_signal", m, PENDING[m]["sym"], who=who, px=PENDING[m]["px0"], book=DESK)
 def on_sell(who, m, frac):
+    d = PENDING.get(m)
+    if d and d["who"] == who and frac >= 0.5:  # copied trader sold before our delayed copy buy -> skip it
+        PENDING.pop(m, None); log("kill", m, d["sym"], reason="copy_wallet_sold_early", detail=f"{who} sold {frac:.0%} before our copy filled", final=True, book=DESK); STATS["copy_sold_early"] += 1
     c = conn(); ps = [dict(r) for r in c.execute("SELECT * FROM positions WHERE status='open' AND version=? AND mint=?", (DESK, m))]; c.close()
     if not ps: return
     p = ps[0]; pr = dex_market([m]).get(m)
@@ -109,10 +112,14 @@ def run_pending():
         if not p or not p.get("priceUsd"): continue
         px = float(p["priceUsd"])
         if px > d["px0"] * (1 + CHASE): log("skip", m, d["sym"], reason="copy_chased", move=round(px / d["px0"] - 1, 3), book=DESK); STATS["copy_chased"] += 1; continue
+        wb = (S["bal"].get(d["who"]) or {}).get(m, 0)
+        if d.get("bal0") and wb < d["bal0"] * 0.5: log("kill", m, d["sym"], reason="copy_wallet_sold_early", detail=f"{d['who']} sold before our copy filled", final=True, book=DESK); STATS["copy_sold_early"] += 1; continue
+        _c = conn(); eq = executor.equity(_c, DESK); _c.close(); zb = __import__("brain17").copy_block(d["who"], eq * __import__("common").CFG["MAX_PCT_PER_TRADE"] * SIZE_MULT, eq)
+        if zb: log("kill", m, d["sym"], reason=zb.split(":")[0], detail=zb, final=True, book=DESK); continue
         res = filters.check(m, p, relax=0.15)  # every safety check; volume/liquidity at the FOMO floors ($4K/$6K)
         ok, why = filters.verdict(res)
         if not ok: log("kill", m, d["sym"], reason="copy_" + why.split(":")[0], detail=why, final=True, book=DESK); STATS["copy_rejected"] += 1; continue
-        if executor.buy(m, d["sym"], p, 0, ver=DESK, mult=SIZE_MULT, extra=dict(copy_of=d["who"], copy=True)): STATS["copy_buys"] += 1
+        if executor.buy(m, d["sym"], p, 0, ver=DESK, mult=SIZE_MULT, extra=dict(copy_of=d["who"], copy=True, _res=res)): STATS["copy_buys"] += 1
 # ---------- scale-outs (v3x + vC) ----------
 TIERS = {"v3x": [(0.40, 0.25), (0.80, 0.25)], DESK: [(0.20, 0.25), (0.50, 0.25), (1.00, 0.25)]}
 def scale_out(p, price):

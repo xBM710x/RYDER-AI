@@ -191,3 +191,12 @@ Main-desk bars unchanged ($28K vol / $18K liq / 0.55). No safety check loosened.
 - MEV/sandwich model: +0.15% + size/liquidity (cap 2%, unknown liq 1%) on every v3+ paper buy, add, sell and partial, on top of slippage + fee.
 - Serial launcher (onchain.dev_history): 5+ prior launches with <=10% graduated off the bonding curve -> fail (same fail-closed rules as the existing dev check).
 - executor.partial now takes a fraction (default 0.5 = unchanged behaviour). Copy trades appear in existing Trades lists as 'SYM · copy <trader>' (data only).
+
+## 2026-10-31 ~00:15 PT — fail-mode upgrades (brain17, approved by Braydon) — PAPER ONLY, adds rejects/pauses/exits only
+- 7-factor scorecard (rug, hype, holders, dev, bundle, originality, timing; 0-1; unknown=0.5) in executor.buy for v3+ desks. Floors: 0.35 (hype/timing 0.25).
+  Below floor -> kill 'weak_<factor>'. NO overall 0.85 gate. Backtest (backtest17.py, 20 coins that reached scoring): 0 newly rejected at chosen floors;
+  all-0.50 would reject 6 (weak_holders). Scorecard + why_bought on paper_buy events -> data.json calendar.list per trade.
+- Copy desk: demote wallet after 3 losing copies in a row; max 20% of vC equity open per copied wallet; 'copy_wallet_sold_early' skip (skip_tally bucket).
+- Stale-data breaker: price data > 60s old -> no entry (pairs stamped _ts in common.dex_market). Exits unaffected.
+- Liquidity-drop breaker: >30% drop vs 5-min max -> coin paused 30 min for buys; open v3+ positions exit 'liq_drop'.
+- Breaker self-tests: test_breakers.py / brain17.selftest at startup + hourly; failure -> 'breaker_selftest' event + Telegram alert.

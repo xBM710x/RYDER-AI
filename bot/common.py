@@ -105,6 +105,9 @@ def dex_market(mints):
             try: pairs = http_json("https://api.dexscreener.com/tokens/v1/solana/" + ",".join(chunk)) or []; _DC[key] = (time.time(), pairs)
             except Exception: continue
             if len(_DC) > 500: _DC.clear()
+        _t = _DC.get(key, (time.time(),))[0]  # b17 stale-data breaker: when this price data was fetched
+        for p in pairs:
+            if isinstance(p, dict): p["_ts"] = _t
         for p in pairs:
             m = p.get("baseToken", {}).get("address")
             if m not in chunk: continue

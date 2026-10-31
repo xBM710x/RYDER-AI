@@ -29,7 +29,8 @@ def build():
 SKIP_BUCKETS = [("Volume too low", ("volume_1h",)), ("Liquidity too low", ("liquidity", "thin_pool")), ("No socials", ("socials",)),
     ("Copycat / scam name", ("copycat", "scam_name")), ("LP not locked", ("lp_locked",)),
     ("Bundled / top holders", ("top10", "sniper_wallets", "bundle_sizes", "bundled", "holder_cluster")),
-    ("Dev / contract risk", ("mint_authority", "dev_rugs", "honeypot_shape", "honeypot", "fresh_dev"))]
+    ("Dev / contract risk", ("mint_authority", "dev_rugs", "honeypot_shape", "honeypot", "fresh_dev")),
+    ("Wallet sold early", ("copy_wallet_sold_early",))]
 def skip_tally(hours=24):
     """Logger card: last-24h skip reasons (one per coin check) in plain-English buckets; best/worst closed paper trade same window."""
     import sqlite3
@@ -54,18 +55,25 @@ def calendar_export(d):
     from zoneinfo import ZoneInfo
     tz = ZoneInfo("America/Los_Angeles")
     c = sqlite3.connect("file:" + os.path.join(D, "desk.db") + "?mode=ro", uri=True, timeout=10)
-    rows = c.execute("SELECT symbol, version, cost, opened, closed, pnl, status, reason FROM positions ORDER BY opened").fetchall(); c.close()
+    rows = c.execute("SELECT symbol, version, cost, opened, closed, pnl, status, reason, mint FROM positions ORDER BY opened").fetchall()
+    why = {}  # b17: scorecard + plain-English 'why I bought it' from the paper_buy event (data only)
+    for m_, ts_, dat_ in c.execute("SELECT mint, ts, data FROM events WHERE kind='paper_buy' AND data LIKE '%why_bought%'"):
+        try: j_ = json.loads(dat_); why.setdefault(m_, []).append((ts_, j_.get("book"), j_.get("scorecard"), j_.get("why_bought")))
+        except Exception: pass
+    c.close()
     vers = d.get("versions") or []
     start = round(sum(300.0 for _ in vers) or 300.0, 2)
     open_cost = sum(r[2] or 0 for r in rows if r[6] != "closed")
     equity = round(sum(v.get("cash") or 0 for v in vers) + open_cost, 2) if vers else d.get("equity")
     trades, days, curve, eq = [], {}, [], start
-    for sym, ver, cost, op, cl, pnl, st, why in rows:
+    for sym, ver, cost, op, cl, pnl, st, why_, mint in rows:
         closed = st == "closed" and cl
         t = dict(sym=(sym or "")[:14], desk=DESK_LABEL.get(ver or "v1", ver), ver=ver, usd=round(cost or 0, 2),
-                 opened=round(op), closed=round(cl) if closed else None, open=not closed, reason=why if closed else None,
+                 opened=round(op), closed=round(cl) if closed else None, open=not closed, reason=why_ if closed else None,
                  pnl=round(pnl, 2) if closed and pnl is not None else None,
                  pct=round(pnl / cost * 100, 2) if closed and pnl is not None and cost else None)
+        wb = next((x for x in why.get(mint, []) if abs(x[0] - op) < 120 and x[1] in (ver, None)), None)
+        if wb: t.update(scorecard=wb[2], why_bought=wb[3])
         trades.append(t)
     for t in sorted([t for t in trades if not t["open"]], key=lambda t: t["closed"]):
         day = datetime.datetime.fromtimestamp(t["closed"], tz).strftime("%Y-%m-%d")
