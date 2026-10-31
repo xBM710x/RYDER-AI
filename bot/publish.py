@@ -23,6 +23,8 @@ def build():
     except Exception: d["trade_quality"] = None
     try: d["skip_tally"] = skip_tally()
     except Exception: d["skip_tally"] = None
+    try: d["copy_desk"] = copy_desk()
+    except Exception: d["copy_desk"] = None
     try: d["calendar"] = calendar_export(d)
     except Exception: d["calendar"] = None
     return d
@@ -84,6 +86,35 @@ def calendar_export(d):
                 trades=len(nc), wins=sum(t["pnl"] > 0 for t in nc), open=len(trades) - len(nc),
                 today=datetime.datetime.now(tz).strftime("%Y-%m-%d"), days=days, curve=curve, list=trades[::-1][:100])
 RUG = ("rug", "dev_", "lp_", "bundle", "honeypot", "wash", "sniper", "linked_launch", "fresh_", "clone", "team_supply", "listing_scam", "wallet_", "mutable", "copycat")
+def copy_desk():
+    """Read-only copy desk (vC) summary: paper equity, today, grades by public trader name. No wallet addresses/keys."""
+    import sqlite3, ast, re
+    c = sqlite3.connect("file:" + os.path.join(D, "desk.db") + "?mode=ro", uri=True)
+    cash = c.execute("SELECT v FROM account WHERE k='cash_vC'").fetchone(); start = 300.0
+    rows = c.execute("SELECT mint, symbol, cost, qty, pnl, status, opened, closed, reason FROM positions WHERE version='vC'").fetchall()
+    t0 = time.mktime(datetime.date.today().timetuple())
+    closed = [r for r in rows if r[5] == "closed"]; today = [r for r in closed if (r[7] or 0) >= t0]
+    realized = sum(r[4] or 0 for r in closed); openc = sum(r[2] or 0 for r in rows if r[5] == "open")
+    equity = (float(cash[0]) + openc) if cash else start + realized
+    wins = sum(1 for r in today if (r[4] or 0) > 0)
+    names = list(ast.literal_eval(re.search(r"WALLETS\s*=\s*(\{.*?\})", open(os.path.join(D, "brain16.py")).read(), re.S).group(1)).keys())
+    try: G = json.load(open(os.path.join(D, "brain16.json"))).get("grade", {})
+    except Exception: G = {}
+    try: dem = __import__("brain17").demoted
+    except Exception: dem = lambda w: False
+    wl = []
+    for n in names:
+        g = G.get(n) or {}; gr = g.get("g") or "grading"; why = g.get("why") or "first grade pending"
+        try:
+            if dem(n): gr, why = "demoted", "lost 3 copies in a row"
+        except Exception: pass
+        wl.append(dict(name=n, grade=gr, why=why))
+    last = None
+    for k, sym, ts, data in c.execute("SELECT kind, symbol, ts, data FROM events WHERE kind IN ('copy_signal','paper_buy','paper_exit','paper_partial') AND (kind='copy_signal' OR data LIKE '%\"book\": \"vC\"%' OR data LIKE '%copy_of%') ORDER BY id DESC LIMIT 1"):
+        x = json.loads(data or "{}"); last = dict(kind={"copy_signal": "signal", "paper_buy": "buy", "paper_exit": "exit", "paper_partial": "partial"}.get(k, k), sym=(sym or "")[:14], who=x.get("who") or x.get("copy_of"), t=round(ts), pnl=x.get("pnl"))
+    c.close()
+    return dict(equity=round(equity, 2), start=start, today_pnl=round(sum(r[4] or 0 for r in today), 2), trades_today=len(today), trades=len(closed),
+                open=sum(1 for r in rows if r[5] == "open"), win_rate=round(100 * wins / len(today)) if today else None, wallets=wl, last=last)
 def ryder_events(n=25):
     """App voice/emote cues: recent MAIN-book (v3) paper events only. No addresses beyond symbols, no secrets."""
     import sqlite3
