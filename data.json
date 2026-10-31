@@ -48,7 +48,7 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Oct 31 14:46 PT",
+ "asof": "Oct 31 14:52 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
@@ -234,7 +234,7 @@
    "v": 302.4
   },
   {
-   "t": "14:46",
+   "t": "14:52",
    "v": 302.4
   }
  ],
@@ -738,9 +738,9 @@
   }
  ],
  "agent_activity": {
-  "LOGGER": 17,
-  "SCOUT": 147,
-  "FILTER": 1111,
+  "LOGGER": 13,
+  "SCOUT": 102,
+  "FILTER": 928,
   "ANALYST": 1,
   "EXECUTOR": 1
  },
@@ -899,7 +899,7 @@
    "trained": 0,
    "src": "rules"
   },
-  "paused": null,
+  "paused": "data outage: no DexScreener success in 90s",
   "drift": {
    "alarm": false,
    "note": "needs 20 trades (1)"
@@ -983,7 +983,7 @@
  "rug_timing": {
   "n": 0
  },
- "migrations_seen": 15,
+ "migrations_seen": 14,
  "skipped_features": [
   "103/104 X shill + mention velocity: needs X API access inside the bot loop",
   "105 curated KOL list: none supplied; uses learned smart wallets (#21)",
@@ -1008,14 +1008,14 @@
   "at": "14:45"
  },
  "paper": true,
- "updated_at": "2026-10-31T21:46:11+00:00",
+ "updated_at": "2026-10-31T21:52:00+00:00",
  "heartbeat": {
-  "at": "2026-10-31T21:46:11+00:00",
+  "at": "2026-10-31T21:52:00+00:00",
   "runner_alive": true,
   "runner_last_beat_s": 1,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 113,
+  "live_feed_events": 109,
   "publish_every_s": 180
  },
  "ryder_events": [
@@ -1118,15 +1118,15 @@
  },
  "skip_tally": {
   "hours": 24,
-  "total": 28767,
+  "total": 28716,
   "buckets": [
    [
     "Volume too low",
-    24205
+    24158
    ],
    [
     "Liquidity too low",
-    3340
+    3336
    ],
    [
     "No socials",
