@@ -5,6 +5,12 @@ D = os.path.dirname(os.path.abspath(__file__))
 INTERVAL = 180
 API = "https://api.github.com/repos/xBM710x/RYDER-AI/contents/data.json"
 def build():
+    # Initialize once with all old processes stopped before the first shared launch.
+    import paper_account as pa
+    from logger import conn
+    c0 = conn()
+    try: pa.ensure(c0)
+    finally: c0.close()
     subprocess.run([sys.executable, os.path.join(D, "export_dashboard.py")], cwd=D, check=True, stdout=subprocess.DEVNULL)
     line = open(os.path.join(D, "page_data_line.txt")).read().strip()
     d = json.loads(line[line.index("{"):line.rindex("}") + 1])
@@ -36,6 +42,24 @@ def build():
     except Exception: d["agents5"] = None
     try: d["calendar"] = calendar_export(d)
     except Exception: d["calendar"] = None
+    if pa.MODE:
+        from common import dex_market
+        c0 = conn()
+        try:
+            op = c0.execute("SELECT mint FROM positions WHERE status='open' AND version IN ('v3','vC')").fetchall()
+            market = dex_market([r[0] for r in op]) if op else {}
+            marks = {m: float(p.get("priceUsd") or 0) for m, p in market.items()}
+            shared = pa.summary(c0, marks)
+        finally: c0.close()
+        d["shared_account"] = shared
+        # Preserve the original per-strategy export for drill-downs and auditing.
+        d["strategy_results"] = shared["strategies"]
+        d.update({k: shared[k] for k in ("start", "cash", "equity", "realized")})
+        # Old curve is main-only. Show the current shared total until a joint time series is collected.
+        d["curve"] = [dict(t=d["asof"], v=shared["equity"])]
+        if d.get("copy_desk"):
+            d["copy_desk"]["strategy_equity"] = d["copy_desk"]["equity"]
+            d["copy_desk"].update(equity=shared["equity"], start=shared["start"], shared=True)
     return d
 SKIP_BUCKETS = [("Volume too low", ("volume_1h",)), ("Liquidity too low", ("liquidity", "thin_pool")), ("No socials", ("socials",)),
     ("Copycat / scam name", ("copycat", "scam_name")), ("LP not locked", ("lp_locked",)),
@@ -179,3 +203,4 @@ if __name__ == "__main__":
         print(time.strftime("[%Y-%m-%d %H:%M:%S]"), msg, flush=True)
         if not loop: break
         time.sleep(interval)
+
