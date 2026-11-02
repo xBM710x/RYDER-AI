@@ -60,6 +60,12 @@ def build():
         if d.get("copy_desk"):
             d["copy_desk"]["strategy_equity"] = d["copy_desk"]["equity"]
             d["copy_desk"].update(equity=shared["equity"], start=shared["start"], shared=True)
+    from logger import conn
+    import app_upgrades, stonkfun
+    c0 = conn()
+    try: d["app_upgrades"] = app_upgrades.build(c0, d, pa.BOOKS if pa.MODE else ("v3",))
+    finally: c0.close()
+    d["stonkfun"] = stonkfun.status()
     return d
 SKIP_BUCKETS = [("Volume too low", ("volume_1h",)), ("Liquidity too low", ("liquidity", "thin_pool")), ("No socials", ("socials",)),
     ("Copycat / scam name", ("copycat", "scam_name")), ("LP not locked", ("lp_locked",)),

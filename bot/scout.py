@@ -43,6 +43,8 @@ def scout():
     for m in __import__("brain8").due_migrations(): cands.setdefault(m, dict(mint=m, name="", source="pumpportal-migration-recheck", dex="pumpswap", grad=True, recheck=True))
     for m, v in __import__("brain8").due_second(): cands.setdefault(m, dict(mint=m, name="", source="second-chance", dex="unknown", recheck=True, v0=v))
     for t in __import__("brain10").due(): cands[t["mint"]] = t  # 444 accel-watch re-checks
+    # StonkFun candidates pass exactly the same market resolution + safety gates.
+    for t in __import__('stonkfun').discover(): cands.setdefault(t['mint'], t)
     # handoff: only tokens never finalized and due for (re)check
     c = conn(); now = time.time(); out = []
     for m, d in cands.items():
@@ -61,3 +63,4 @@ def scout():
     out.sort(key=lambda d: -__import__('brain2').source_score(d))  # 122 freshest/best source first
     out = __import__('brain8').order(out) if any(d.get("vol") for d in out) else out  # 376
     return out, len(cands)
+
