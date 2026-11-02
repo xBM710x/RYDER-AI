@@ -3,17 +3,21 @@ import time
 from common import CFG
 from logger import conn, log
 import risk, alerts
+import paper_account as pa
 CK = 'cash' if CFG['VERSION'] == 'v1' else 'cash_' + CFG['VERSION']
 RISK = {}  # last computed risk state (exported)
 def balance(c, ck=None):
-    ck = ck or CK; r = c.execute("SELECT v FROM account WHERE k=?", (ck,)).fetchone()
+    pa.ensure(c, CFG["START_BALANCE"])
+    ck = ck or CK
+    if ck in ("cash_v3", "cash_vC") and pa.MODE: ck = pa.KEY
+    r = c.execute("SELECT v FROM account WHERE k=?", (ck,)).fetchone()
     if r is None: c.execute("INSERT INTO account VALUES(?,?)", (ck, CFG["START_BALANCE"])); c.commit(); return CFG["START_BALANCE"]
     return r["v"]
 def equity(c, ver=None):
     ver = ver or CFG["VERSION"]
-    return balance(c, "cash_" + ver) + sum(r["cost"] for r in c.execute("SELECT cost FROM positions WHERE status='open' AND version=?", (ver,)))
+    return balance(c, pa.key_for(ver)) + pa.open_cost(c, ver)
 def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None, extra=None):
-    ver = ver or CFG["VERSION"]; CK = "cash_" + ver
+    ver = ver or CFG["VERSION"]; CK = pa.key_for(ver)
     c = conn(); cash = balance(c, CK)
     if c.execute("SELECT 1 FROM positions WHERE mint=? AND status='open' AND version=?", (mint, ver)).fetchone(): c.close(); return
     if ver == CFG["VERSION"] and c.execute("SELECT COUNT(*) FROM positions WHERE version=? AND opened>?", (ver, time.time() - 3600)).fetchone()[0] >= CFG["MAX_PER_HOUR"]:
@@ -47,13 +51,21 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
     if CFG["VERSION"] not in ("v1", "v2") and 1 <= size < 5 and cash >= 5: size = 5.0  # 382 no dust paper fills (min $5)
     if size < 1: log("skip", mint, symbol, reason="insufficient paper cash", cash=cash); c.close(); return
     if CFG["VERSION"] not in ("v1", "v2"):
-        cap = MAX_COIN_PCT * equity(c, ver); held = sum(r[0] for r in c.execute("SELECT cost FROM positions WHERE mint=? AND status='open' AND version=?", (mint, ver)))
+        cap = MAX_COIN_PCT * equity(c, ver); held = pa.open_cost(c, ver, mint)
         if held + size > cap: size = max(0, cap - held)  # per-coin exposure cap (12% of desk equity, adds/re-buys included)
         if size < 1: log("skip", mint, symbol, reason="per-coin exposure cap", held=round(held, 2), cap=round(cap, 2), book=ver); c.close(); return
         skz = __import__("brain18").skeptic(mint, pair, xr, extra.get("scorecard"), size, ver)  # b18 Skeptic: final veto, never approves
         if skz: log("kill", mint, symbol, reason=skz.split(":")[0], detail=skz, final=True, book=ver); c.close(); return
         mv = mev_cost(size, (pair.get("liquidity") or {}).get("usd")); price *= 1 + mv  # sandwich/MEV cost on the paper fill
     stop = price * (1 - stop_pct) if stop_pct else risk.initial_stop(price)  # stop fixed before entry
+    # Serialize the final budget check + debit across Main and Copy worker threads.
+    if pa.MODE and ver in pa.BOOKS:
+        c.execute("BEGIN IMMEDIATE")
+        if c.execute("SELECT 1 FROM positions WHERE mint=? AND status='open' AND version=?", (mint, ver)).fetchone():
+            c.rollback(); c.close(); return
+        size = pa.cap_order(c, ver, size, mint, CFG["MAX_PCT_PER_TRADE"], MAX_COIN_PCT)
+        if size < 1:
+            c.rollback(); c.close(); return
     c.execute("INSERT INTO positions(mint,symbol,pair,entry,qty,cost,stop,peak,trailing,opened,status,version) VALUES(?,?,?,?,?,?,?,?,0,?,'open',?)",
               (mint, symbol, pair["pairAddress"], price, size / price, size, stop, price, time.time(), ver))
     c.execute("UPDATE account SET v=v-? WHERE k=?", (size, CK)); c.commit(); c.close()
@@ -77,9 +89,16 @@ def _exit_px(pos, quote, qty):
     return px
 def sell(pos, quote, reason):
     price = _exit_px(pos, quote, pos["qty"])  # v3: paper fill incl. slippage + fee (+ MEV model)
-    c = conn(); proceeds = pos["qty"] * price; pnl = proceeds - pos["cost"]
+    c = conn(); pa.ensure(c, CFG["START_BALANCE"])
+    if pa.MODE and pos.get("version") in pa.BOOKS:
+        c.execute("BEGIN IMMEDIATE")
+        current = c.execute("SELECT * FROM positions WHERE id=? AND status='open'", (pos["id"],)).fetchone()
+        if current is None: c.rollback(); c.close(); return
+        pos = dict(current)
+        price = _exit_px(pos, quote, pos["qty"])
+    proceeds = pos["qty"] * price; pnl = proceeds - pos["cost"]
     c.execute("UPDATE positions SET status='closed',closed=?,exit=?,pnl=?,reason=? WHERE id=?", (time.time(), price, pnl, reason, pos["id"]))
-    c.execute("UPDATE account SET v=v+? WHERE k=?", (proceeds, "cash" if pos.get("version", "v1") == "v1" else "cash_" + pos["version"])); c.commit(); c.close()
+    c.execute("UPDATE account SET v=v+? WHERE k=?", (proceeds, pa.key_for(pos.get("version", "v1")))); c.commit(); c.close()
     log("paper_exit", pos["mint"], pos["symbol"], entry=pos["entry"], exit=price, stop=pos["stop"], slip_pct=round((price / pos["stop"] - 1) * 100, 2), pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason=reason, book=pos.get("version"))
     try: alerts.on_exit(pos["symbol"], (price / pos["entry"] - 1) * 100, pnl, reason, pos.get("version", ""), __import__("brain7").exit_extra(dict(pos, peak=max(pos.get("peak") or 0, quote)), quote))  # 355
     except Exception: pass
@@ -104,21 +123,36 @@ def sell(pos, quote, reason):
         except Exception as e: log("error", where="learn", trace=str(e)[:200])
 def add(pos, quote, usd, pair):
     """254: paper add-on to a starter position after confirmation (same stop; averaged entry)."""
-    sl = __import__('brain6').split_slip(usd, pair); price = quote * (1 + sl) / (1 - CFG["FEE"]); ck = "cash" if pos["version"] == "v1" else "cash_" + pos["version"]
+    sl = __import__('brain6').split_slip(usd, pair); price = quote * (1 + sl) / (1 - CFG["FEE"]); ck = pa.key_for(pos["version"])
     price *= 1 + mev_cost(usd, (pair.get("liquidity") or {}).get("usd"))
     c = conn(); cash = balance(c, ck); usd = min(usd, cash, max(0, MAX_COIN_PCT * equity(c, pos["version"]) - pos["cost"]))  # per-coin cap
     if usd < 1: c.close(); return False
+    if pa.MODE and pos["version"] in pa.BOOKS:
+        c.execute("BEGIN IMMEDIATE")
+        current = c.execute("SELECT * FROM positions WHERE id=? AND status='open'", (pos["id"],)).fetchone()
+        if current is None: c.rollback(); c.close(); return False
+        pos = dict(current)
+        usd = pa.cap_order(c, pos["version"], usd, pos["mint"], CFG["MAX_PCT_PER_TRADE"], MAX_COIN_PCT)
+        if usd < 1: c.rollback(); c.close(); return False
     q = usd / price; nq = pos["qty"] + q; ne = (pos["cost"] + usd) / nq
     c.execute("UPDATE positions SET qty=?, cost=?, entry=? WHERE id=?", (nq, pos["cost"] + usd, ne, pos["id"])); c.execute("UPDATE account SET v=v-? WHERE k=?", (usd, ck)); c.commit(); c.close()
     log("paper_add", pos["mint"], pos["symbol"], usd=round(usd, 2), price=price, new_entry=ne, book=pos["version"]); return True
 def partial(pos, quote, level=1, frac=0.5, reason="partial_tp"):
     """v3: sell half at +30% as its own closed row (reason partial_tp); remaining half keeps trailing. frac/reason: scale-outs and copy sells."""
     frac = max(0.01, min(0.99, frac)); price = _exit_px(pos, quote, pos["qty"] * frac); hq, hc = pos["qty"] * frac, pos["cost"] * frac; pnl = hq * price - hc
-    c = conn()
+    c = conn(); pa.ensure(c, CFG["START_BALANCE"])
+    if pa.MODE and pos.get("version") in pa.BOOKS:
+        c.execute("BEGIN IMMEDIATE")
+        current = c.execute("SELECT * FROM positions WHERE id=? AND status='open'", (pos["id"],)).fetchone()
+        if current is None: c.rollback(); c.close(); return
+        pos = dict(current)
+        hq, hc = pos["qty"] * frac, pos["cost"] * frac
+        price = _exit_px(pos, quote, hq); pnl = hq * price - hc
     c.execute("INSERT INTO positions(mint,symbol,pair,entry,qty,cost,stop,peak,trailing,opened,closed,exit,pnl,reason,status,version,tp_done) VALUES(?,?,?,?,?,?,?,?,1,?,?,?,?,'partial_tp','closed',?,1)",
               (pos["mint"], pos["symbol"], pos["pair"], pos["entry"], hq, hc, pos["stop"], pos["peak"], pos["opened"], time.time(), price, pnl, pos["version"]))
     c.execute("UPDATE positions SET qty=?, cost=?, tp_done=?, trailing=1 WHERE id=?", (pos["qty"] - hq, pos["cost"] - hc, level, pos["id"]))
-    c.execute("UPDATE account SET v=v+? WHERE k=?", (hq * price, "cash" if pos["version"] == "v1" else "cash_" + pos["version"])); c.commit(); c.close()
+    c.execute("UPDATE account SET v=v+? WHERE k=?", (hq * price, pa.key_for(pos["version"]))); c.commit(); c.close()
     log("paper_exit", pos["mint"], pos["symbol"], entry=pos["entry"], exit=price, pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason="partial_tp", level=level, why=reason, frac=round(frac, 3), book=pos.get("version"))
     try: alerts.on_exit(pos["symbol"], (price / pos["entry"] - 1) * 100, pnl, "partial_tp", pos.get("version", ""))
     except Exception: pass
+
