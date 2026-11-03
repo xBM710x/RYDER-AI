@@ -2,7 +2,18 @@
 Loads .env (secrets stay in your environment, never printed), runs self-tests, then keeps
 runner.py and publish.py alive. Restarts the runner if heartbeat.json goes stale (>180s).
 Publisher only runs when RYDER_GITHUB_TOKEN is set (only ONE computer should publish)."""
-import os, sys, time, subprocess, datetime
+import os, sys, time, subprocess, datetime, signal
+
+# One supervisor per state directory, including manual starts after installation.
+if os.name != "nt":
+    import fcntl
+    _lock = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "supervisor.lock"), "a")
+    try: fcntl.flock(_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        print("RYDER is already running for this directory.", flush=True); sys.exit(0)
+
+def _stop(signum, frame): raise KeyboardInterrupt
+signal.signal(signal.SIGTERM, _stop)
 D = os.path.dirname(os.path.abspath(__file__)); os.chdir(D)
 def log(m):
     line = datetime.datetime.now().strftime("%F %T") + " " + m
@@ -34,6 +45,12 @@ try:
             log("runner heartbeat stale; restarting"); runner.kill(); runner.wait(); os.utime(hb, None)
         time.sleep(20)
 except KeyboardInterrupt:
-    log("stopping (Ctrl+C)")
+    log("stopping")
+finally:
     for p in (runner, pub):
         if p and p.poll() is None: p.terminate()
+
+    for p in (runner, pub):
+        if p:
+            try: p.wait(timeout=15)
+            except subprocess.TimeoutExpired: p.kill(); p.wait()

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-# Stop RYDER's Mac background job and remove auto-start.
-launchctl unload ~/Library/LaunchAgents/com.ryder.bot.plist 2>/dev/null || true
-rm -f ~/Library/LaunchAgents/com.ryder.bot.plist; echo "RYDER stopped and auto-start removed."
+set -euo pipefail
+launchctl bootout "gui/$(id -u)/com.ryder.bot" 2>/dev/null || true
+rm -f "$HOME/Library/LaunchAgents/com.ryder.bot.plist"
+echo 'RYDER background service stopped; auto-start and auto-update removed. Memory retained.'
