@@ -20,9 +20,8 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
     ver = ver or CFG["VERSION"]; CK = pa.key_for(ver)
     c = conn(); cash = balance(c, CK)
     if c.execute("SELECT 1 FROM positions WHERE mint=? AND status='open' AND version=?", (mint, ver)).fetchone(): c.close(); return
-    if ver == CFG["VERSION"] and c.execute("SELECT COUNT(*) FROM positions WHERE version=? AND opened>?", (ver, time.time() - 3600)).fetchone()[0] >= CFG["MAX_PER_HOUR"]:
-        log("skip", mint, symbol, reason=f"max {CFG['MAX_PER_HOUR']} trades/hour"); c.close(); return
-    xr = (extra or {}).get("_res"); extra = {k: v for k, v in (extra or {}).items() if k != "_res"}
+    lab_eligible = (extra or {}).get("_runner_eligible") is True
+    xr = (extra or {}).get("_res"); extra = {k: v for k, v in (extra or {}).items() if k not in ("_res", "_runner_eligible")}
     if ver not in ("v1", "v2"):  # b17: stale-data + liquidity-drop breakers, 7-factor scorecard floors (adds rejects only)
         import brain17
         bz = brain17.stale(pair) or brain17.liq_blocked(mint, pair)
@@ -66,6 +65,13 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
         size = pa.cap_order(c, ver, size, mint, CFG["MAX_PCT_PER_TRADE"], MAX_COIN_PCT)
         if size < 1:
             c.rollback(); c.close(); return
+    # Research enqueue is isolated from the ledger. All existing safety/budget gates above ran first.
+    if ver == 'v3' and lab_eligible:
+        try: __import__('capacity_lab').offer(mint, symbol, pair, score, extra.get('source'))
+        except Exception: pass
+    # Recheck under the shared-account write lock; do not raise the main trade limit.
+    if ver == CFG['VERSION'] and c.execute("SELECT COUNT(*) FROM positions WHERE version=? AND opened>?", (ver, time.time()-3600)).fetchone()[0] >= CFG['MAX_PER_HOUR']:
+        c.rollback(); c.close(); log('skip', mint, symbol, reason=f"max {CFG['MAX_PER_HOUR']} trades/hour", fully_gated=True); return
     c.execute("INSERT INTO positions(mint,symbol,pair,entry,qty,cost,stop,peak,trailing,opened,status,version) VALUES(?,?,?,?,?,?,?,?,0,?,'open',?)",
               (mint, symbol, pair["pairAddress"], price, size / price, size, stop, price, time.time(), ver))
     c.execute("UPDATE account SET v=v-? WHERE k=?", (size, CK)); c.commit(); c.close()

@@ -45,6 +45,9 @@ def scout():
     for t in __import__("brain10").due(): cands[t["mint"]] = t  # 444 accel-watch re-checks
     # StonkFun candidates pass exactly the same market resolution + safety gates.
     for t in __import__('stonkfun').discover(): cands.setdefault(t['mint'], t)
+    from market_breadth import INSTANCE as deeper
+    for t in deeper.discover(lambda url: http_json(url, timeout=8, retries=0)):
+        t['dex'] = tag(t['dex'], t['mint']); cands.setdefault(t['mint'], t)
     # handoff: only tokens never finalized and due for (re)check
     c = conn(); now = time.time(); out = []
     for m, d in cands.items():

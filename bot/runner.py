@@ -18,6 +18,9 @@ DEEP = collections.deque(maxlen=100)  # deep-check time per coin (s)
 INFLIGHT = set()
 def _scan():
     cands, total = scout.scout(); cands = [c for c in cands if c["mint"] not in INFLIGHT and not brain2.rejected(c["mint"])]  # 138
+    from scan_scheduler import INSTANCE as scheduler
+    scheduler.offer(cands)
+    cands = scheduler.take(INFLIGHT, brain2.rejected)
     mkt = dex_market([c["mint"] for c in cands]) if cands else {}
     try: __import__('desk_observations').observe(cands, mkt, (extras.STATE.get('regime') or {}).get('mood'))
     except Exception: pass  # display telemetry cannot block trade evaluation
@@ -287,6 +290,7 @@ def pending():
             mult = round(mult * smul, 3); ex["why"] = line + " | " + str(ex.get("why", ""))[:200]
         ex["council"] = council; ex["_res"] = p.get("res")  # b17 scorecard input (not logged)
         if council: mult = round(mult * brain6.STARTER, 3); ex["starter"] = True  # 254 starter buy; add-on after confirmation
+        ex["_runner_eligible"] = True  # display-only capacity lab receives only this fully gated handoff
         ok = executor.buy(m, p["sym"], pair, p["score"], mult=mult, stop_pct=brain3.strength_stop(extras.vol_stop(pair), (council or {}).get("consensus")), conf=conf, extra=ex)
         if p["score"] >= CFG["AB_SCORE"]: executor.buy(m, p["sym"], pair, p["score"], ver=CFG["VERSION"] + "b", conf=conf, extra=ex)  # 38: B book = stricter score, fixed -8%
         if ok: ENTRYLIQ[m] = (pair.get("liquidity") or {}).get("usd") or 0; brain8.count("bought")
@@ -423,7 +427,7 @@ def jobs(k):
 def state():
     from common import HEALTH
     now = time.time()
-    return dict(ts=now, pending=len(PENDING), ws=feed.STATS,
+    return dict(ts=now, pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=__import__("scan_scheduler").INSTANCE.status(), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
         watch=[dict(sym=p["sym"][:14], mint=m, wait_left=max(0, round(CFG["ENTRY_DELAY"] - (now - p["t"]))), price=p["price"], score=p["score"]) for m, p in list(PENDING.items())[:10]],
         reentry=[dict(sym=v[2], exit=v[0], mins_left=round(60 - (now - v[1]) / 60)) for v in REENTRY.values()],
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
@@ -446,6 +450,7 @@ def main(cycles=None):
     try: ST = more.selftest()  # 120
     except Exception: ST = {}
     if not ST.get("dexscreener", {}).get("ok", True): log("skip", reason="selftest: DexScreener down at startup; brain.paused() will hold buys until it recovers")
+    __import__("capacity_lab").start()
     feed.start(); brain3.start(); brain11.start()  # 509
     def pos_loop(gen=0):
         k = 0

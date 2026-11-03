@@ -1,0 +1,14 @@
+# Broader coverage and evidence-based capacity research
+
+RYDER remains paper-only. Main/shared-account sizing, hourly entry limit, hard safety checks and risk vetoes are retained.
+
+- Rotating deeper Solana pages add one extra public discovery request per 90 seconds. New-pool pages 3–10 and trending/top-pool pages 2–5 are sampled in rotation. Schema validation, mint validation, deduplication and failure backoff apply. The existing public GeckoTerminal host limiter is adjusted to 6.2 seconds between requests, matching its approximate 10 calls/minute budget. This expands sampled coverage; it does not scan every Solana token.
+- A source-round-robin scheduler keeps at most 1,000 pending candidates, expires them after 10 minutes, and submits at most 16 evaluations in flight to the existing eight-worker executor. Fresh market resolution occurs after dequeue. Overflows and expirations are visible, not silently called scanned.
+- The capacity laboratory sees runner-qualified signals only after executor safety/risk and account-budget gates pass. Main's hourly limit is rechecked under the shared write lock immediately before insertion. Fully gated signals blocked only by frequency can reach the independent laboratory. Moving the main frequency check later increases safety-check work but does not raise its limit.
+- Two separate simulated $300 wallets compare 4 versus 8 entries/hour under the same simple model. Each entry is at most 10% of cost-based model equity, duplicate open coins are rejected, at most 10 positions per model are allowed, and a $45 UTC-day realized loss stops new entries. Modeled fees, slippage and MEV apply. Stops target -8%, trail activates at +15%, and a 30-minute time exit uses a fresh quote. Missing price/liquidity and stale/future observations never trigger fills. Simulated balances are never included in the shared account. This does not reproduce the main strategy's complete exit engine.
+- A purged walk-forward evaluator selects score thresholds using earlier completed paper openings, then evaluates later held-out openings. Overlapping labels and repeated test mints are removed from training. Minimum training history is 40 and test blocks are 10. It aggregates partial fills and excludes residual open positions. Coverage is restricted to executed trades with matched entry scores; it cannot estimate results for untraded coins. Small samples show insufficient history. Automatic promotion is always disabled.
+- Updater state now records successful checks even when only dashboard/data changes are fetched, preventing an outdated status age from implying that checks stopped.
+
+The dashboard exposes scanner health, coverage/backlog counts, the capacity models and walk-forward folds below the research views. If historical evidence is missing, it is not fabricated. No profitability or perfect-uptime claim is made.
+
+API reference: https://api.geckoterminal.com/docs/index.html

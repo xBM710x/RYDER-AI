@@ -67,6 +67,15 @@ def build():
     finally: c0.close()
     d["stonkfun"] = stonkfun.status()
     try:
+        from capacity_lab import summary
+        import learning_evaluation
+        c0 = conn()
+        try: evaluated = learning_evaluation.build(c0)
+        finally: c0.close()
+        d['opportunity_lab'] = dict(breadth=hb.get('market_breadth') or {},scheduler=hb.get('scan_scheduler') or {},capacity_worker=hb.get('capacity_worker'),capacity=summary(),evaluation=evaluated)
+    except Exception as e: d['opportunity_lab'] = dict(error=type(e).__name__)
+
+    try:
         import desk_observations, mission_control
         scope = 'shared' if d.get('shared_account') else 'main'
         desk_observations.equity(d['equity'], scope)

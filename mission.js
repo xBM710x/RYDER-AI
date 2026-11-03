@@ -49,3 +49,25 @@ function bindActions(host){host.querySelectorAll('[data-token]').forEach(b=>b.on
 const before=render;render=function(){before.apply(this,arguments);try{renderMission()}catch(e){console.warn('Research desk render failed',e)}};
 if(typeof data!=='undefined'&&data)renderMission();
 })();
+
+/* Live market-coverage and research extension. No sample fixtures or rule controls. */
+function renderOpportunityLab(d){
+ const value=d.opportunity_lab;if(!value)return;
+ let el=document.getElementById('opportunity-lab');if(!el){el=document.createElement('section');el.id='opportunity-lab';el.className='card';document.getElementById('mission-desk')?.appendChild(el)}
+ const e=x=>String(x??'Not recorded').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ if(value.error){el.innerHTML='<h2>Market coverage & capacity lab</h2><p class="sub">Collection unavailable: '+e(value.error)+'</p>';return}
+ const s=value.scheduler||{},b=value.breadth||{},c=value.capacity||{},v=value.evaluation||{};
+ el.innerHTML='<h2>Market coverage & capacity lab</h2><p class="sub">Separate research. Main trade limits are unchanged.</p>'+
+ '<h3>Scanner health</h3><div class="reason"><span>Pending / maximum</span><b>'+e(s.pending)+' / '+e(s.max_pending)+'</b></div>'+
+ '<div class="reason"><span>Dispatched candidates</span><b>'+e(s.dispatched)+'</b></div>'+
+ '<div class="reason"><span>Expired or rejected backlog</span><b>'+e(s.expired_or_rejected)+'</b></div>'+
+ '<div class="reason"><span>Overflow candidates</span><b>'+e(s.overflow??0)+'</b></div>'+
+ '<div class="reason"><span>Deeper-feed candidates / errors</span><b>'+e(b.candidates??0)+' / '+e(b.errors??0)+'</b></div>'+
+ '<h3>4-versus-8 entries/hour study</h3><p class="sub">'+e(c.status)+'</p>'+
+ (c.books||[]).map(x=>'<div class="details"><b>'+e(x.book)+' · '+e(x.max_entries_per_hour)+'/hour</b><br>Simulated equity '+(x.equity==null?'Unknown (stale marks)':'$'+e(x.equity))+' · realized $'+e(x.realized)+'<br>'+e(x.open)+' open · '+e(x.closed)+' closed · '+e(x.stale_marks)+' stale marks</div>').join('')+
+ '<p class="sub">'+e(c.note||'Collecting fully qualified signals. No shadow fills are inserted into the shared ledger.')+'</p>'+
+ '<h3>Purged walk-forward evaluation</h3><p class="sub">'+e(v.status)+' · '+e(v.sample_n)+' matched completed openings</p>'+
+ (v.folds||[]).map(f=>'<div class="details">Train n='+e(f.train_n)+' · unseen test threshold '+e(f.threshold)+'<br>Baseline n='+e(f.baseline.n)+' · mean net '+e(f.baseline.mean_net_pct)+'%<br>Challenger n='+e(f.challenger.n)+' · mean net '+e(f.challenger.mean_net_pct)+'%</div>').join('')+
+ '<p class="sub">'+e(v.note)+'</p><p class="sub">Automatic promotion: disabled. More paper entries do not establish better returns.</p>';
+}
+{const beforeOpportunityLab=render;render=function(){beforeOpportunityLab.apply(this,arguments);try{renderOpportunityLab(data)}catch(e){console.warn('Capacity lab render failed',e)}};if(typeof data!=='undefined'&&data)renderOpportunityLab(data)}

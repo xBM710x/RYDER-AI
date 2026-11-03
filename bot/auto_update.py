@@ -14,7 +14,7 @@ ROOT = BOT.parent
 PY = str(BOT / '.venv/bin/python')
 STOP = False
 CHILD = None
-TESTS = ['test_paper_account', 'test_app_upgrades', 'test_source_performance', 'test_auto_update', 'test_mission_control']
+TESTS = ['test_paper_account', 'test_app_upgrades', 'test_source_performance', 'test_auto_update', 'test_mission_control', 'test_market_lab']
 
 
 def state(value):
@@ -100,6 +100,7 @@ def update():
     if git('remote', 'get-url', 'origin') not in ('https://github.com/xBM710x/RYDER-AI.git', 'git@github.com:xBM710x/RYDER-AI.git'):
         log('Update held: unexpected repository origin');return False
     git('fetch', 'origin', 'main')
+    state('checked remote main')
     old = git('rev-parse', 'HEAD'); new = git('rev-parse', 'origin/main')
     if old == new:
         state('checked; up to date');return False
@@ -109,7 +110,7 @@ def update():
         log('Update held: dependencies or runtime-file changes need manual review');return False
     # Publishing data.json alone should not interrupt scanning.
     if not any(p.startswith('bot/') for p in paths):
-        git('merge', '--ff-only', new);return False
+        git('merge', '--ff-only', new);state('dashboard refreshed; bot code unchanged');return False
     with tempfile.TemporaryDirectory(prefix='ryder-check-') as td:
         # Archive via git checkout-index into isolated worktree; no state or .env copied.
         archive = Path(td)/'candidate.tar'

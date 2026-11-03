@@ -14,7 +14,7 @@ def _h(url, ok, ms):
 import socket; socket.setdefaulttimeout(20)  # 183 hard cap on every socket
 # ---------- 491-505 per-host rate limiting, 429 backoff, TTL cache, stale fallback ----------
 import threading as _th
-_RL = {"api.geckoterminal.com": 2.2, "api.dexscreener.com": 0.25, "api.rugcheck.xyz": 0.5}  # 491 min seconds between calls per host (GT free tier ~30/min)
+_RL = {"api.geckoterminal.com": 6.2, "api.dexscreener.com": 0.25, "api.rugcheck.xyz": 0.5}  # 491 min seconds between calls per host (GT free tier ~30/min)
 _TTL = (("/new_pools", 45), ("/trending_pools", 150), ("sort=h24_volume", 150), ("/info", 900), ("/token_price/", 20), ("token-boosts", 60), ("token-profiles", 60))  # 494/495
 _RLK = _th.Lock(); _NEXT = {}; _COOL = {}; _CACHE = {}; NET = dict(cache_hit=0, stale_served=0, cooled_skip=0, r429=0, throttled_ms=0)
 def _host(url): return url.split("/")[2] if "://" in url else url
