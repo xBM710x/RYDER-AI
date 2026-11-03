@@ -48,12 +48,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Nov 03 03:00 PT",
+ "asof": "Nov 03 03:04 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 12284,
- "seen": 45974,
+ "scans": 12306,
+ "seen": 46041,
  "passed": 4,
  "trades": 1,
  "wins": 1,
@@ -91,15 +91,15 @@
  "by_dex": [
   [
    "pumpfun",
-   39158
+   39215
   ],
   [
    "meteora",
-   3431
+   3437
   ],
   [
    "pumpswap",
-   2388
+   2392
   ],
   [
    "other/unknown",
@@ -125,19 +125,19 @@
  "kills": [
   [
    "volume_1h",
-   65252
+   65343
   ],
   [
    "liquidity",
-   6812
+   6822
   ],
   [
    "socials",
-   1735
+   1739
   ],
   [
    "copycat",
-   760
+   765
   ],
   [
    "thin_pool",
@@ -145,11 +145,11 @@
   ],
   [
    "lp_locked",
-   268
+   269
   ],
   [
    "top10",
-   96
+   97
   ],
   [
    "pressure",
@@ -161,15 +161,15 @@
   ],
   [
    "bundle_sizes",
-   37
+   38
+  ],
+  [
+   "bundled",
+   23
   ],
   [
    "pregrad",
    23
-  ],
-  [
-   "bundled",
-   22
   ],
   [
    "wash_shape",
@@ -620,6 +620,10 @@
   {
    "t": "Nov 03 03:00 PT",
    "v": 302.4
+  },
+  {
+   "t": "Nov 03 03:03 PT",
+   "v": 302.4
   }
  ],
  "opens": [],
@@ -640,14 +644,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "45974 pairs",
-   "text": "scan \u00b7 1 pairs, 1 new",
+   "stat": "46041 pairs",
+   "text": "scan \u00b7 2 pairs, 2 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed  \u00b7 1h vol < $40k",
+   "text": "killed LOUIE \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -670,168 +674,208 @@
   },
   {
    "name": "Logger",
-   "stat": "75536 why",
-   "text": "wrote 75536 reasons",
+   "stat": "75650 why",
+   "text": "wrote 75650 reasons",
    "tone": ""
   }
  ],
  "tail": [
   {
-   "t": "02:58",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 2 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "02:59",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "02:59",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 129 pairs, 12 new",
-   "tone": ""
-  },
-  {
-   "t": "02:59",
+   "t": "03:02",
    "ag": "FILTER",
-   "text": "killed PUMP \u00b7 thin_pool",
+   "text": "killed zkSNARK \u00b7 copycat",
    "tone": "red"
   },
   {
-   "t": "02:59",
+   "t": "03:02",
    "ag": "FILTER",
-   "text": "killed AGC \u00b7 liq < $25k",
+   "text": "killed zkTROON \u00b7 no/dupe socials",
    "tone": "red"
   },
   {
-   "t": "02:59",
+   "t": "03:02",
    "ag": "FILTER",
-   "text": "killed FUN \u00b7 liq < $25k",
+   "text": "killed Julia \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "02:59",
+   "t": "03:02",
    "ag": "FILTER",
-   "text": "killed FUN \u00b7 liq < $25k",
+   "text": "killed Julia \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "02:59",
+   "t": "03:02",
    "ag": "SCOUT",
    "text": "scan \u00b7 1 pairs, 1 new",
    "tone": ""
   },
   {
-   "t": "02:59",
+   "t": "03:02",
    "ag": "SCOUT",
    "text": "scan \u00b7 1 pairs, 1 new",
    "tone": ""
   },
   {
-   "t": "02:59",
+   "t": "03:02",
    "ag": "SCOUT",
-   "text": "scan \u00b7 144 pairs, 4 new",
+   "text": "scan \u00b7 101 pairs, 1 new",
    "tone": ""
   },
   {
-   "t": "02:59",
+   "t": "03:03",
    "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
+   "text": "scan \u00b7 53 pairs, 3 new",
    "tone": ""
   },
   {
-   "t": "02:59",
+   "t": "03:03",
+   "ag": "FILTER",
+   "text": "killed N\u2588\u2588\u2588 \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "03:03",
+   "ag": "FILTER",
+   "text": "killed N\u2588\u2588\u2588 \u00b7 no/dupe socials",
+   "tone": "red"
+  },
+  {
+   "t": "03:03",
    "ag": "SCOUT",
-   "text": "scan \u00b7 2 pairs, 1 new",
+   "text": "scan \u00b7 86 pairs, 3 new",
    "tone": ""
   },
   {
-   "t": "02:59",
+   "t": "03:03",
+   "ag": "FILTER",
+   "text": "killed suncat \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "03:03",
+   "ag": "FILTER",
+   "text": "killed suncat \u00b7 top10 > 25%",
+   "tone": "red"
+  },
+  {
+   "t": "03:03",
    "ag": "SCOUT",
-   "text": "scan \u00b7 2 pairs, 1 new",
+   "text": "scan \u00b7 4 pairs, 4 new",
    "tone": ""
   },
   {
-   "t": "03:00",
+   "t": "03:03",
    "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "03:00",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
+   "text": "scan \u00b7 2 pairs, 2 new",
    "tone": ""
   }
  ],
- "nkills": 75536,
+ "nkills": 75650,
  "mood": "sleepy",
  "kills_live": [
   {
-   "t": "03:00:17",
-   "sym": "\uae40\uc5ec\uc815",
-   "reason": "liquidity"
-  },
-  {
-   "t": "03:00:17",
-   "sym": "zkSNARK",
-   "reason": "copycat"
-  },
-  {
-   "t": "03:00:17",
-   "sym": "WAR",
+   "t": "03:02:24",
+   "sym": "ZER\u00d8",
    "reason": "volume_1h"
   },
   {
-   "t": "03:00:17",
-   "sym": "Apple",
-   "reason": "socials"
+   "t": "03:02:24",
+   "sym": "NOV19",
+   "reason": "volume_1h"
   },
   {
-   "t": "03:00:17",
+   "t": "03:02:24",
+   "sym": "JubJub",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "03:02:24",
+   "sym": "GTA",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "03:02:24",
    "sym": "SOL",
    "reason": "volume_1h"
   },
   {
-   "t": "03:00:17",
-   "sym": "Dog Think",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "03:00:17",
+   "t": "03:02:24",
    "sym": "Julia",
    "reason": "liquidity"
   },
   {
-   "t": "03:00:17",
-   "sym": "GTA67",
+   "t": "03:03:18",
+   "sym": "N\u2588\u2588\u2588",
+   "reason": "socials"
+  },
+  {
+   "t": "03:03:28",
+   "sym": "suncat",
+   "reason": "top10"
+  },
+  {
+   "t": "03:03:40",
+   "sym": "AISI",
    "reason": "volume_1h"
   },
   {
-   "t": "03:00:17",
-   "sym": "GETPAID",
+   "t": "03:03:40",
+   "sym": "LOUIE",
    "reason": "volume_1h"
   },
   {
-   "t": "03:00:17",
-   "sym": "MIDVOTE",
+   "t": "03:03:41",
+   "sym": "LOUIE",
    "reason": "volume_1h"
   },
   {
-   "t": "03:00:17",
-   "sym": "INUX",
+   "t": "03:03:41",
+   "sym": "LOUIE",
    "reason": "volume_1h"
-  },
-  {
-   "t": "03:00:18",
-   "sym": "WAR",
-   "reason": "bundle_sizes"
   }
  ],
  "watchlist": [
+  {
+   "why": "liquidity too low / unknown",
+   "sym": "suncat",
+   "price": 3.305e-05,
+   "mcap": null,
+   "dex": "pumpfun",
+   "t": "03:03",
+   "ts": 1793703807,
+   "near_miss": true
+  },
+  {
+   "why": "no or reused socials",
+   "sym": "N\u2588\u2588\u2588",
+   "price": 2.559e-05,
+   "mcap": null,
+   "dex": "pumpswap",
+   "t": "03:03",
+   "ts": 1793703799,
+   "near_miss": true
+  },
+  {
+   "why": "no or reused socials",
+   "sym": "zkTROON",
+   "price": 8.919e-06,
+   "mcap": null,
+   "dex": "meteora",
+   "t": "03:02",
+   "ts": 1793703744,
+   "near_miss": true
+  },
+  {
+   "why": "no or reused socials",
+   "sym": "AGC",
+   "price": 1.774e-05,
+   "mcap": null,
+   "dex": "pumpswap",
+   "t": "03:01",
+   "ts": 1793703670,
+   "near_miss": true
+  },
   {
    "why": "bundled wallets",
    "sym": "WAR",
@@ -891,46 +935,6 @@
    "t": "02:58",
    "ts": 1793703484,
    "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "BSCZ",
-   "price": 1.108e-05,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "02:56",
-   "ts": 1793703419,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "JubJub",
-   "price": 1.668e-05,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "02:56",
-   "ts": 1793703419,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "LIJU",
-   "price": 3.757e-05,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "02:56",
-   "ts": 1793703383,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "YouTube",
-   "price": 0.000125,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "02:55",
-   "ts": 1793703353,
-   "near_miss": true
   }
  ],
  "reentry_watch": [],
@@ -945,7 +949,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 45974,
+  "scanned": 46041,
   "passed_filters": 4,
   "scored_ok": 4,
   "entry_wait": 5,
@@ -975,8 +979,8 @@
   },
   {
    "h": "03",
-   "scans": 48,
-   "kills": 308,
+   "scans": 70,
+   "kills": 422,
    "trades": 0,
    "pnl": 0.0
   },
@@ -1122,9 +1126,9 @@
   }
  ],
  "agent_activity": {
-  "SCOUT": 391,
-  "FILTER": 2263,
-  "LOGGER": 13
+  "SCOUT": 387,
+  "FILTER": 2217,
+  "LOGGER": 14
  },
  "rug_list": {
   "count": 50,
@@ -1165,30 +1169,30 @@
   "gauge": 40
  },
  "latency": {
-  "scan_s_avg": 0.9,
+  "scan_s_avg": 1.0,
   "scan_s_last": 0.3,
   "pos_check_s": 1,
-  "ws_last_event_s": 1
+  "ws_last_event_s": 2
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 373,
+   "ms": 300,
    "err": 8
   },
   "api.geckoterminal.com": {
    "ok_rate": 0.99,
-   "ms": 216,
+   "ms": 262,
    "err": 6
   },
   "api.rugcheck.xyz": {
    "ok_rate": 1.0,
-   "ms": 1299,
-   "err": 5
+   "ms": 1615,
+   "err": 6
   },
   "api.mainnet-beta.solana.com": {
    "ok_rate": 1.0,
-   "ms": 599,
+   "ms": 528,
    "err": 8
   },
   "lite-api.jup.ag": {
@@ -1198,7 +1202,7 @@
   },
   "www.stonkfun.xyz": {
    "ok_rate": 0.99,
-   "ms": 558,
+   "ms": 509,
    "err": 4
   },
   "solana-rpc.publicnode.com": {
@@ -1278,13 +1282,13 @@
  },
  "speed": {
   "decision_s": {
-   "avg": 0.47,
-   "p90": 0.72,
+   "avg": 0.55,
+   "p90": 0.85,
    "n": 200
   },
   "deep_check_s": {
    "avg": 0.1,
-   "max": 1.23,
+   "max": 1.21,
    "n": 100
   },
   "inflight": 0,
@@ -1380,56 +1384,42 @@
  "rug_timing": {
   "n": 0
  },
- "migrations_seen": 156,
+ "migrations_seen": 158,
  "skipped_features": [
   "103/104 X shill + mention velocity: needs X API access inside the bot loop",
   "105 curated KOL list: none supplied; uses learned smart wallets (#21)",
   "39 Telegram/X alerts"
  ],
  "fomo_wallet": {
-  "total_usd": 35.97,
+  "total_usd": 35.74,
   "top": [
    {
     "sym": "NIO",
-    "usd": 16.93
+    "usd": 16.87
    },
    {
     "sym": "GTA6",
-    "usd": 7.63
+    "usd": 7.68
    },
    {
     "sym": "WASTED",
-    "usd": 4.13
+    "usd": 4.05
    }
   ],
-  "at": "02:59"
+  "at": "03:03"
  },
  "paper": true,
- "updated_at": "2026-11-03T11:00:42+00:00",
+ "updated_at": "2026-11-03T11:04:09+00:00",
  "heartbeat": {
-  "at": "2026-11-03T11:00:42+00:00",
+  "at": "2026-11-03T11:04:09+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 5,
+  "runner_last_beat_s": 3,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 2235,
+  "live_feed_events": 2262,
   "publish_every_s": 180
  },
  "ryder_events": [
-  {
-   "id": 89646,
-   "t": 1793702892,
-   "kind": "rug_dodged",
-   "sym": "zkSNARK",
-   "reason": "lp_locked"
-  },
-  {
-   "id": 89687,
-   "t": 1793702968,
-   "kind": "rug_dodged",
-   "sym": "zkSNARK",
-   "reason": "copycat"
-  },
   {
    "id": 89735,
    "t": 1793703036,
@@ -1548,6 +1538,34 @@
    "kind": "rug_dodged",
    "sym": "WAR",
    "reason": "bundle_sizes"
+  },
+  {
+   "id": 90122,
+   "t": 1793703670,
+   "kind": "rug_dodged",
+   "sym": "zkSNARK",
+   "reason": "copycat"
+  },
+  {
+   "id": 90155,
+   "t": 1793703671,
+   "kind": "rug_dodged",
+   "sym": "AI",
+   "reason": "lp_locked"
+  },
+  {
+   "id": 90166,
+   "t": 1793703706,
+   "kind": "rug_dodged",
+   "sym": "ascend",
+   "reason": "bundled"
+  },
+  {
+   "id": 90176,
+   "t": 1793703744,
+   "kind": "rug_dodged",
+   "sym": "zkSNARK",
+   "reason": "copycat"
   }
  ],
  "trade_quality": {
@@ -1599,31 +1617,31 @@
  },
  "skip_tally": {
   "hours": 24,
-  "total": 19173,
+  "total": 19260,
   "buckets": [
    [
     "Volume too low",
-    16444
+    16516
    ],
    [
     "Liquidity too low",
-    1730
+    1737
    ],
    [
     "No socials",
-    648
+    651
    ],
    [
     "Copycat / scam name",
-    192
+    194
    ],
    [
     "LP not locked",
-    47
+    48
    ],
    [
     "Bundled / top holders",
-    65
+    67
    ],
    [
     "Dev / contract risk",
@@ -1858,7 +1876,7 @@
    "wins": 0,
    "starting_capital": 300.0,
    "current_equity": 302.4,
-   "generated_at": 1793703645.501408
+   "generated_at": 1793703852.367323
   },
   "exposure": {
    "cost_usd": 0,
@@ -1977,7 +1995,7 @@
    "note": "Sampled follow-ups, not all skips. Price changes exclude fees, slippage and execution availability; a rise does not prove a safe trade. Partial exits count as closed fills. Unknown attribution stays Unknown."
   },
   "signal_quality": {
-   "scanned": 45974,
+   "scanned": 46041,
    "passed": 4,
    "pass_rate_pct": 0.009,
    "scope": "current version; checks can overlap",
@@ -1990,16 +2008,16 @@
  "stonkfun": {
   "source": "stonkfun",
   "ok": true,
-  "updated_at": 1793703585.049799,
+  "updated_at": 1793703797.701043,
   "candidates": 50,
-  "next_poll_at": 1793703645.049799,
-  "age_s": 61,
+  "next_poll_at": 1793703857.701043,
+  "age_s": 55,
   "stale": false,
   "status": "connected"
  },
  "mission_control": {
   "schema": 1,
-  "generated_at": 1793703645.830647,
+  "generated_at": 1793703852.665545,
   "cards": [
    {
     "id": 1,
@@ -2044,16 +2062,21 @@
     "rows": [
      [
       "geckoterminal",
-      59,
-      124.1
+      56,
+      141.9
      ],
      [
       "pumpportal-ws",
-      5,
-      2.0
+      3,
+      1.8
+     ],
+     [
+      "gecko-trending",
+      1,
+      36397.6
      ]
     ],
-    "note": "Creation-to-first-observation delay in radar sample; 56 unknown or implausible launch times excluded.",
+    "note": "Creation-to-first-observation delay in radar sample; 60 unknown or implausible launch times excluded.",
     "series": [],
     "unit": ""
    },
@@ -2071,43 +2094,43 @@
      [
       "api.dexscreener.com",
       "recent successful request",
-      11,
-      5773,
+      16,
+      5830,
       8
      ],
      [
       "api.geckoterminal.com",
       "recent successful request",
-      30,
-      671,
+      47,
+      679,
       6
      ],
      [
       "api.rugcheck.xyz",
       "recent successful request",
-      15,
-      1414,
+      44,
+      1426,
       6
      ],
      [
       "api.mainnet-beta.solana.com",
       "recent successful request",
-      14,
-      3060,
+      10,
+      3099,
       8
      ],
      [
       "lite-api.jup.ag",
       "no recent success",
-      9080,
+      9287,
       7,
       0
      ],
      [
       "www.stonkfun.xyz",
       "recent successful request",
-      60,
-      537,
+      55,
+      543,
       4
      ],
      [
@@ -2127,7 +2150,7 @@
      [
       "StonkFun",
       "connected",
-      61,
+      55,
       null,
       null
      ]
@@ -2146,103 +2169,103 @@
     ],
     "rows": [
      [
-      "AISI",
-      11,
+      "inucrypted",
+      5,
       "recent observation"
      ],
      [
-      "NORTHKOREA",
-      13,
-      "recent observation"
-     ],
-     [
-      "MiDT",
-      15,
-      "recent observation"
-     ],
-     [
-      "MOPHY",
+      "TRUMPDUMP",
       18,
       "recent observation"
      ],
      [
-      "MOFFY",
-      27,
+      "KOTH",
+      32,
       "recent observation"
      ],
      [
-      "zkSNARK",
-      29,
+      "LOUIE",
+      32,
       "recent observation"
      ],
      [
-      "GETPAID",
-      29,
+      "KOTH",
+      33,
       "recent observation"
      ],
      [
-      "Dog Think",
-      29,
+      "KOTH",
+      33,
       "recent observation"
      ],
      [
-      "Apple",
-      29,
+      "AISI",
+      33,
       "recent observation"
      ],
      [
-      "zkSNARK",
-      29,
+      "Cloak",
+      45,
       "recent observation"
      ],
      [
-      "GTA67",
-      29,
+      "MEMESUKE",
+      45,
       "recent observation"
      ],
      [
-      "MIDVOTE",
-      29,
+      "suncat",
+      45,
+      "recent observation"
+     ],
+     [
+      "Bellman",
+      54,
+      "recent observation"
+     ],
+     [
+      "Bellman",
+      54,
+      "recent observation"
+     ],
+     [
+      "N\u2588\u2588\u2588",
+      54,
+      "recent observation"
+     ],
+     [
+      "cbd",
+      80,
+      "recent observation"
+     ],
+     [
+      "Bicep love",
+      91,
+      "recent observation"
+     ],
+     [
+      "marijuana",
+      100,
+      "recent observation"
+     ],
+     [
+      "GTA",
+      109,
+      "recent observation"
+     ],
+     [
+      "ZER\u00d8",
+      109,
+      "recent observation"
+     ],
+     [
+      "DOOROC",
+      109,
       "recent observation"
      ],
      [
       "SOL",
-      29,
-      "recent observation"
-     ],
-     [
-      "INUX",
-      29,
-      "recent observation"
-     ],
-     [
-      "zkSNARK",
-      29,
-      "recent observation"
-     ],
-     [
-      "Julia",
-      29,
-      "recent observation"
-     ],
-     [
-      "TEST1",
-      29,
-      "recent observation"
-     ],
-     [
-      "\uae40\uc5ec\uc815",
-      29,
-      "recent observation"
-     ],
-     [
-      "WAR",
-      29,
-      "recent observation"
-     ],
-     [
-      "FbX8GWsH",
-      40,
+      109,
       "recent observation"
      ]
     ],
@@ -2283,6 +2306,528 @@
      "Recorded reason"
     ],
     "rows": [
+     [
+      1793703847.555962,
+      "inucrypted",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703834.865823,
+      "TRUMPDUMP",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703821.140364,
+      "LOUIE",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703821.118212,
+      "LOUIE",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703821.0823371,
+      "KOTH",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703820.239224,
+      "LOUIE",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703820.2234838,
+      "LOUIE",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703820.20516,
+      "AISI",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703820.202832,
+      "AISI",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703820.2001019,
+      "KOTH",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703820.199157,
+      "KOTH",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703808.532068,
+      "suncat",
+      "kill",
+      "top10"
+     ],
+     [
+      1793703807.4149098,
+      "suncat",
+      "kill",
+      "liquidity"
+     ],
+     [
+      1793703807.42468,
+      "MEMESUKE",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703807.412765,
+      "Cloak",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703798.786726,
+      "N\u2588\u2588\u2588",
+      "kill",
+      "socials"
+     ],
+     [
+      1793703798.795946,
+      "Bellman",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703798.7828422,
+      "Bellman",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703798.773807,
+      "N\u2588\u2588\u2588",
+      "kill",
+      "liquidity"
+     ],
+     [
+      1793703772.605574,
+      "cbd",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703761.866682,
+      "Bicep love",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703752.438506,
+      "marijuana",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.875995,
+      "Julia",
+      "kill",
+      "liquidity"
+     ],
+     [
+      1793703744.852926,
+      "Julia",
+      "kill",
+      "liquidity"
+     ],
+     [
+      1793703744.760967,
+      "SOL",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.746855,
+      "SOL",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.620429,
+      "JubJub",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.66111,
+      "GTA",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.649651,
+      "UDTF",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.616548,
+      "NOV19",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.6474922,
+      "GTA",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.60971,
+      "ZER\u00d8",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.426116,
+      "JubJub",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.4274719,
+      "NOV19",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.600152,
+      "CLOVER",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.449058,
+      "zkTROON",
+      "kill",
+      "socials"
+     ],
+     [
+      1793703744.598273,
+      "ZER\u00d8",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.542569,
+      "DOOROC",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.445994,
+      "ZER\u00d8",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.425312,
+      "DOOROC",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703744.396926,
+      "ZER\u00d8",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703743.99135,
+      "zkSNARK",
+      "kill",
+      "copycat"
+     ],
+     [
+      1793703733.0097868,
+      "inucrypted",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703732.977063,
+      "inucrypted",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703719.156708,
+      "HAPPYHRSE",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703715.106221,
+      "MiDT",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703705.781335,
+      "ascend",
+      "kill",
+      "bundled"
+     ],
+     [
+      1793703704.679704,
+      "ascend",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703704.66804,
+      "AISI",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703704.667541,
+      "AUBY2",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703682.1361668,
+      "SIGIL",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703673.873492,
+      "DUST",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703673.867738,
+      "DUST",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703673.842561,
+      "Ivy",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703671.109151,
+      "AI",
+      "kill",
+      "lp_locked"
+     ],
+     [
+      1793703670.838141,
+      "N\u2588\u2588\u2588",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.856301,
+      "DUST",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.837398,
+      "DUST",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.8303092,
+      "N\u2588\u2588\u2588",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.827732,
+      "N\u2588\u2588\u2588",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.203228,
+      "STENKS",
+      "kill",
+      "liquidity"
+     ],
+     [
+      1793703670.1695008,
+      "STENKS",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.002858,
+      "meme",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.111543,
+      "NOCHILL",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.109766,
+      "PEPEKIN",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.090453,
+      "NOCHILL",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.10692,
+      "PEPEKIN",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.096541,
+      "Dog Think",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.103056,
+      "MIMO",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.0816581,
+      "Dog Think",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.072599,
+      "Rise",
+      "kill",
+      "liquidity"
+     ],
+     [
+      1793703670.071563,
+      "DOOYET",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.047728,
+      "Dog Think",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.0566201,
+      "DOOYET",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.0210948,
+      "Rise",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.044999,
+      "zkTROON",
+      "kill",
+      "liquidity"
+     ],
+     [
+      1793703670.0439522,
+      "Dog Think",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.040559,
+      "zkTROON",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.024865,
+      "NOCHILL",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.022581,
+      "NOCHILL",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.007138,
+      "NEONPAW",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.009898,
+      "TOAD",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.005908,
+      "TOAD",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703670.003995,
+      "NEONPAW",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703669.996408,
+      "AGC",
+      "kill",
+      "socials"
+     ],
+     [
+      1793703669.99487,
+      "meme",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793703669.971683,
+      "zkSNARK",
+      "kill",
+      "copycat"
+     ],
      [
       1793703634.61534,
       "AISI",
@@ -2360,528 +2905,6 @@
       "MIDVOTE",
       "kill",
       "volume_1h"
-     ],
-     [
-      1793703617.157789,
-      "GETPAID",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703617.1625721,
-      "GTA67",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703617.15995,
-      "TEST1",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703617.156513,
-      "Julia",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793703617.039423,
-      "Julia",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703617.116232,
-      "SOL",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703617.12289,
-      "Dog Think",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703617.077751,
-      "Apple",
-      "kill",
-      "socials"
-     ],
-     [
-      1793703617.1094458,
-      "Dog Think",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703617.076021,
-      "SOL",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703617.072719,
-      "Apple",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703617.071357,
-      "WAR",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703617.0278358,
-      "zkSNARK",
-      "kill",
-      "copycat"
-     ],
-     [
-      1793703617.026297,
-      "zkSNARK",
-      "kill",
-      "copycat"
-     ],
-     [
-      1793703617.0210261,
-      "zkSNARK",
-      "kill",
-      "copycat"
-     ],
-     [
-      1793703617.008387,
-      "\uae40\uc5ec\uc815",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793703605.949068,
-      "FbX8GWsH",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703602.8526762,
-      "Gut",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703597.4417,
-      "zkSNARK",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703592.973595,
-      "PIZZABOT",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703588.26578,
-      "jubjub",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703586.899253,
-      "eX001",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703586.893141,
-      "WCAT",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703586.897283,
-      "zANT",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703586.8942342,
-      "eX001",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703586.8908741,
-      "zcat",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703564.880641,
-      "NORTHKOREA",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703559.524544,
-      "inucrypted",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.418568,
-      "AGC",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793703553.591158,
-      "FUN",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793703553.586995,
-      "FUN",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793703553.4879959,
-      "TOAD",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.4756968,
-      "zebra / ZEC",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.477013,
-      "TOAD",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.47806,
-      "satoshi",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.4644852,
-      "R$ch",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.471961,
-      "satoshi",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.4662569,
-      "ANSEM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.466609,
-      "inucrypted",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.451356,
-      "Dog Think",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.439544,
-      "ANSEM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.438431,
-      "cap",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.433758,
-      "Dog Think",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.4344032,
-      "R$ch",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.4354,
-      "BOARDY",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.4324942,
-      "cap",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.4321768,
-      "BOARDY",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703553.350868,
-      "PUMP",
-      "kill",
-      "thin_pool"
-     ],
-     [
-      1793703545.571739,
-      "DUST",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703545.554827,
-      "DUST",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703537.73365,
-      "NORTHKOREA",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703535.667618,
-      "zkTROON",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703534.797857,
-      "SMUG",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703529.617748,
-      "AISI",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703517.2269728,
-      "SCRVAN",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703517.203723,
-      "SCRVAN",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703517.1894379,
-      "Apple",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793703517.184163,
-      "Apple",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703517.150342,
-      "zkTTT",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793703517.16308,
-      "WWW",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793703517.14672,
-      "GETPAID",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703517.164128,
-      "DOGE PAID",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703517.161917,
-      "JUBJUB",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703517.1470988,
-      "DOGE PAID",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703517.152224,
-      "WWW",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703517.1584132,
-      "JUBJUB",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703517.141564,
-      "SURPLUS",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703517.1355898,
-      "zkTTT",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703517.134728,
-      "GETPAID",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703509.5521631,
-      "TRUTH",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703509.549951,
-      "NPAW",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703509.5265238,
-      "NPAW",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703504.4820411,
-      "Pepekin",
-      "kill",
-      "socials"
-     ],
-     [
-      1793703504.4672241,
-      "zkSnallerator",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703498.473763,
-      "zkSNARK",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703490.2368262,
-      "\u2b1c",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703483.832271,
-      "Dog Think",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703483.8211951,
-      "Dog Think",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703483.602544,
-      "\ud83c\udf85\ud83c\udfff",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703483.63868,
-      "NORTHKOREA",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703483.624322,
-      "INCUBOX",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703483.7020748,
-      "BROKEP",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703483.670718,
-      "BROKEP",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703483.64759,
-      "$BWIZ",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703483.643945,
-      "SURPLUS",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793703483.607691,
-      "$BWIZ",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793703483.627867,
-      "OMBRO",
-      "kill",
-      "copycat"
      ]
     ],
     "note": "Existing logger events; newest first; bounded recent window.",
@@ -3177,7 +3200,7 @@
      ],
      [
       "Equity observations",
-      95
+      96
      ]
     ],
     "note": "Seven-day observed shared-equity window, starting when this collector is installed. No backfilled main-only curve.",
@@ -3564,6 +3587,10 @@
        {
         "t": 1793703600,
         "v": 0.0
+       },
+       {
+        "t": 1793703780,
+        "v": 0.0
        }
       ]
      }
@@ -3615,17 +3642,17 @@
      [
       "Runner",
       "heartbeat",
-      8
+      6
      ],
      [
       "Publisher",
       "last successful push",
-      211
+      204
      ],
      [
       "Updater",
       "Update deferred (CalledProcessError); retrying later",
-      17803
+      18009
      ],
      [
       "Installed code",
@@ -3633,7 +3660,7 @@
       null
      ]
     ],
-    "note": "Separate process evidence; stale or absent timestamps are not healthy. Snapshot generated at 1793703645.",
+    "note": "Separate process evidence; stale or absent timestamps are not healthy. Snapshot generated at 1793703852.",
     "series": [],
     "unit": ""
    },
@@ -3667,6 +3694,1484 @@
   ],
   "tokens": [
    {
+    "mint": "5t6NLn13fJw3q6MVESfsJRnwSd2VTJXH5YJC1kbxm9yU",
+    "symbol": "inucrypted",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703847.496042,
+    "last_ts": 1793703847.496042,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 5.1695029735565186,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703847.555962,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "8gR8JGUMWkkkWd8oLGme1Mgz2VK2Npz6bSj1D5hhpump",
+    "symbol": "TRUMPDUMP",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703834.819714,
+    "last_ts": 1793703834.819714,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 17.8458309173584,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703834.865823,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "HK9pGtXGeM3dNH9F6yVzpS6JjdWxewEGu7g9EfUqHE5E",
+    "symbol": "KOTH",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703821.04971,
+    "last_ts": 1793703821.04971,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 31.615834951400757,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703821.0823371,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "DCyZ3PvbModJV65niUD31Lm1Q3eZ4TGnKxMLmzdNpump",
+    "symbol": "LOUIE",
+    "source": "pumpportal-migration",
+    "dex": "pumpswap",
+    "first_ts": 1793703452.861293,
+    "last_ts": 1793703821.04971,
+    "created": 1793168930.0,
+    "price": 3.013e-06,
+    "liquidity": 2822.39,
+    "regime": "neutral",
+    "age_s": 534922.6655449867,
+    "observation_age_s": 31.615834951400757,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703452.8924491,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703820.2234838,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703820.239224,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703821.118212,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703821.140364,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "3Ye7vg22nq8EdPn1GJ8scG7Z79gQ4yygrUcSCDjaBsgm",
+    "symbol": "KOTH",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703820.133611,
+    "last_ts": 1793703820.133611,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 32.53193402290344,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703820.199157,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "AKnhVQQD32Wsje2Sbx45QenDcMSEMtQPxM14Hqfupump",
+    "symbol": "KOTH",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703820.133611,
+    "last_ts": 1793703820.133611,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 32.53193402290344,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703820.2001019,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "4q7DJny3fgRVxCjg2uteKBfcmgRwmhnCpzUxkfPbpump",
+    "symbol": "AISI",
+    "source": "pumpportal-ws",
+    "dex": "pumpswap",
+    "first_ts": 1793703275.791036,
+    "last_ts": 1793703820.133611,
+    "created": 1793703449.0,
+    "price": 2.33e-09,
+    "liquidity": 7.84,
+    "regime": "neutral",
+    "age_s": 403.66554498672485,
+    "observation_age_s": 32.53193402290344,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703275.849282,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703450.996703,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703451.010398,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703820.202832,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703820.20516,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "8yehJKNhp8u1fjBdasQRn3mBdY47fwgFPGcF4nsuTap9",
+    "symbol": "Cloak",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703807.37956,
+    "last_ts": 1793703807.37956,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 45.28598499298096,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703807.412765,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "9XuHQ3GVyDjV7nyvXKdcmSWwsEmAjvCcEmeuBqA3pump",
+    "symbol": "MEMESUKE",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703807.37956,
+    "last_ts": 1793703807.37956,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 45.28598499298096,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703807.42468,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "AbJSsC2Q1MKD1SZXm3pogKgkaVKezsJKf51QiMBKpump",
+    "symbol": "suncat",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793696398.4781902,
+    "last_ts": 1793703807.37956,
+    "created": 1793696311.0,
+    "price": 3.305e-05,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 7541.665544986725,
+    "observation_age_s": 45.28598499298096,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703807.4149098,
+      "kind": "kill",
+      "reason": "liquidity"
+     },
+     {
+      "t": 1793703808.532068,
+      "kind": "kill",
+      "reason": "top10"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "FefsQESUB8WUjxVrjuv427MuJh8k279MP33WeQ5GxKTZ",
+    "symbol": "Bellman",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703798.7403588,
+    "last_ts": 1793703798.7403588,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 53.92518615722656,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703798.7828422,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "GJu3WjzmRZW6o43svW9zP45xH2nPnmCrqp7yJzQ7xWmy",
+    "symbol": "Bellman",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703798.7403588,
+    "last_ts": 1793703798.7403588,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 53.92518615722656,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703798.795946,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "CWPG4Ao1EWZNcf7K2YWYZf2sW3FMzznCRVnp4dqCpump",
+    "symbol": "N\u2588\u2588\u2588",
+    "source": "pumpportal-ws",
+    "dex": "pumpswap",
+    "first_ts": 1793703670.7535932,
+    "last_ts": 1793703798.7403588,
+    "created": 1793703669.0,
+    "price": 2.559e-05,
+    "liquidity": 11494.45,
+    "regime": "neutral",
+    "age_s": 183.66554498672485,
+    "observation_age_s": 53.92518615722656,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703670.838141,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703798.773807,
+      "kind": "kill",
+      "reason": "liquidity"
+     },
+     {
+      "t": 1793703798.786726,
+      "kind": "kill",
+      "reason": "socials"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "4Ek2RnFX2XeJRPuoduarRLZUYvqTUcPoQ5CTEs2Bpump",
+    "symbol": "cbd",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703772.526273,
+    "last_ts": 1793703772.526273,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 80.1392719745636,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703772.605574,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "22Va9izVjYiemXs17V4NSUYXtxzQuZRC98n4njdtpump",
+    "symbol": "Bicep love",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703761.813097,
+    "last_ts": 1793703761.813097,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 90.85244798660278,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703761.866682,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "4UrfLmCxjaN3sibqVmFmWXpxEPSdqbWZsXMCvKJtMf6M",
+    "symbol": "marijuana",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703752.3823218,
+    "last_ts": 1793703752.3823218,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 100.28322315216064,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703752.438506,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "Ck51if1cZxmeQrRfdLYoFHiYd3Ub4Sy1PpCsf2Zqpump",
+    "symbol": "GTA",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703743.8941891,
+    "last_ts": 1793703743.8941891,
+    "created": 1793703511.0,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 341.66554498672485,
+    "observation_age_s": 108.77135586738586,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703744.6474922,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703744.66111,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "GcotHpsG4Hww49gN9ebqtEhLvLv2EH9K3MxX5neYpump",
+    "symbol": "ZER\u00d8",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703743.8941891,
+    "last_ts": 1793703743.8941891,
+    "created": 1793703567.0,
+    "price": 3.403e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 285.66554498672485,
+    "observation_age_s": 108.77135586738586,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703744.396926,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703744.445994,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "8w8CMXHTqTwcpVCsgcLVFEYqXLj1x26waCBScqUhpump",
+    "symbol": "DOOROC",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703743.8941891,
+    "last_ts": 1793703743.8941891,
+    "created": 1793703568.0,
+    "price": 2.622e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 284.66554498672485,
+    "observation_age_s": 108.77135586738586,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703744.425312,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703744.542569,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "GbrHRu2d4mK2U9NobXW5D22TekBoWBzjqY3h3Rtwpump",
+    "symbol": "SOL",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703743.8941891,
+    "last_ts": 1793703743.8941891,
+    "created": 1793703580.0,
+    "price": 4.465e-07,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 272.66554498672485,
+    "observation_age_s": 108.77135586738586,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703744.746855,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703744.760967,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "2XSZ1eLKvE71XdCDd7N7itxyhCXztf21Fuu72LhkxCCy",
+    "symbol": "JubJub",
+    "source": "geckoterminal",
+    "dex": "meteora",
+    "first_ts": 1793703743.8941891,
+    "last_ts": 1793703743.8941891,
+    "created": 1793703580.0,
+    "price": 6.147e-05,
+    "liquidity": 0.0,
+    "regime": "neutral",
+    "age_s": 272.66554498672485,
+    "observation_age_s": 108.77135586738586,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703744.426116,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703744.620429,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "FAeKXRTgBoKTXZSiWDQfNfcgS6buq8PfwhY2hRGEwVCc",
+    "symbol": "Julia",
+    "source": "geckoterminal",
+    "dex": "meteora",
+    "first_ts": 1793703743.8941891,
+    "last_ts": 1793703743.8941891,
+    "created": 1793703583.0,
+    "price": 2.404e-06,
+    "liquidity": 0.54,
+    "regime": "neutral",
+    "age_s": 269.66554498672485,
+    "observation_age_s": 108.77135586738586,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703744.852926,
+      "kind": "kill",
+      "reason": "liquidity"
+     },
+     {
+      "t": 1793703744.875995,
+      "kind": "kill",
+      "reason": "liquidity"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "9Qm2n2mZcJTJnSParBuGoTKZf4bo4pFSx9UBHxmR4jLz",
+    "symbol": "zkTROON",
+    "source": "geckoterminal",
+    "dex": "meteora",
+    "first_ts": 1793703743.8941891,
+    "last_ts": 1793703743.8941891,
+    "created": 1793703585.0,
+    "price": 8.919e-06,
+    "liquidity": 16135.69,
+    "regime": "neutral",
+    "age_s": 267.66554498672485,
+    "observation_age_s": 108.77135586738586,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703744.449058,
+      "kind": "kill",
+      "reason": "socials"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "431CMoeUn8gSCvWPJMwPD2DqJJfgJBdqJtVFsviwpump",
+    "symbol": "NOV19",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703743.8941891,
+    "last_ts": 1793703743.8941891,
+    "created": 1793703589.0,
+    "price": 2.579e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 263.66554498672485,
+    "observation_age_s": 108.77135586738586,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703744.4274719,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703744.616548,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "CJTWB8b72gaMDHvWAzkxiYQKVvmHeJzdrW83p6S2pump",
+    "symbol": "ZER\u00d8",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703743.8941891,
+    "last_ts": 1793703743.8941891,
+    "created": 1793703591.0,
+    "price": 3.297e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 261.66554498672485,
+    "observation_age_s": 108.77135586738586,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703744.598273,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703744.60971,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "G8jwJ8Ry7Pz9PcduL9ntQi65oe8WAQJ5L76qmHuApump",
+    "symbol": "zkSNARK",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703743.8941891,
+    "last_ts": 1793703743.8941891,
+    "created": 1793703594.0,
+    "price": 3.086e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 258.66554498672485,
+    "observation_age_s": 108.77135586738586,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703743.99135,
+      "kind": "kill",
+      "reason": "copycat"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "8V16miNE7UHGUGD4cWP9MX8SNSJK1fhaxqTasHCJpump",
+    "symbol": "UDTF",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703743.8941891,
+    "last_ts": 1793703743.8941891,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 108.77135586738586,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703744.649651,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "5jkjqQ86aiwLT12BsGspC8Y5pDrRshcZ5QhJVTKmpump",
+    "symbol": "CLOVER",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703743.8941891,
+    "last_ts": 1793703743.8941891,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 108.77135586738586,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703744.600152,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "5CZffgijUwasBuPgrb8pk46kkLJrKqghmff5JTBdmHHC",
+    "symbol": "inucrypted",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703732.943986,
+    "last_ts": 1793703732.943986,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 119.72155904769897,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703732.977063,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "6554gVp5HYmpLufawnBpi8VadDTYvhDuMVkx6RpsaEyW",
+    "symbol": "inucrypted",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703732.943986,
+    "last_ts": 1793703732.943986,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 119.72155904769897,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793703733.0097868,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "BfLJiykABfToMQmcbGn7QN1WKjn1ZqPVPg3CtRLppump",
+    "symbol": "HAPPYHRSE",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703719.1035168,
+    "last_ts": 1793703719.1035168,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 133.56202816963196,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703719.156708,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "96FFZiuKfm5fHTgWbZpMnXR5GyQmYgPidMwLLyKBpump",
+    "symbol": "MiDT",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703715.085302,
+    "last_ts": 1793703715.085302,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 137.58024287223816,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703715.106221,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "5yLQRLbWhmZMJ3nC2KMPu61rg8UWPLLqbN5BpKTPpump",
+    "symbol": "AUBY2",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703704.628976,
+    "last_ts": 1793703704.628976,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 148.03656888008118,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703704.667541,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "8VcahLUnRftjAP2D9Ht15qRKW59beA4ckvWqvLrTpump",
+    "symbol": "AISI",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703704.628976,
+    "last_ts": 1793703704.628976,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 148.03656888008118,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703704.66804,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "8vFdgGFWkKS1euogVW4qmMurdnso8CPrfQNpB4qqpump",
+    "symbol": "ascend",
+    "source": "gecko-trending",
+    "dex": "pumpswap",
+    "first_ts": 1793703704.628976,
+    "last_ts": 1793703704.628976,
+    "created": 1793667307.0,
+    "price": 3.551e-05,
+    "liquidity": 15296.8,
+    "regime": "neutral",
+    "age_s": 36545.665544986725,
+    "observation_age_s": 148.03656888008118,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703704.679704,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703705.781335,
+      "kind": "kill",
+      "reason": "bundled"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "2JB5sAmZNNSLuFVbfApWSAv5dnU3KNikELZgSDVgiNUd",
+    "symbol": "SIGIL",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703682.1056,
+    "last_ts": 1793703682.1056,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 170.55994486808777,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703682.1361668,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "5zVaKgYcKaFYzmg8sQUJoaMy1sRyoUftcvdk9Xd8pump",
+    "symbol": "Ivy",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703673.811525,
+    "last_ts": 1793703673.811525,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 178.8540198802948,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703673.842561,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "GVAXTadyCYiSSg6UAE8kXWTHiD9k5SUzebhWjS2Vpump",
+    "symbol": "DUST",
+    "source": "pumpportal-ws",
+    "dex": "pumpswap",
+    "first_ts": 1793703310.970304,
+    "last_ts": 1793703673.811525,
+    "created": 1793703543.0,
+    "price": 8.374e-09,
+    "liquidity": 8.17,
+    "regime": "neutral",
+    "age_s": 309.66554498672485,
+    "observation_age_s": 178.8540198802948,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703311.1258938,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703545.554827,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703545.571739,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.837398,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.856301,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703673.867738,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703673.873492,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "3Fr77YgZ6vtthievGLtE9FeJoW5L5WhzJyWhsK6AGwdF",
+    "symbol": "N\u2588\u2588\u2588",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703670.7535932,
+    "last_ts": 1793703670.7535932,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 181.9119517803192,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.8303092,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "EXD33vmXN92YiXyKtJCkzE6suvcnt67Qf4ZCFHsBVeFh",
+    "symbol": "N\u2588\u2588\u2588",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703670.7535932,
+    "last_ts": 1793703670.7535932,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 181.9119517803192,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.827732,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "9Zem6bNpim5LvLUpAPtRGKd859Q3fkTTHvY8tjWpump",
+    "symbol": "TOAD",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703462.0,
+    "price": 3.44e-07,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 390.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.005908,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.009898,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "Cah7Puz5Bsx42cDKniNqDLB2R9YNa3952PwLcPuPpump",
+    "symbol": "DOOYET",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703520.0,
+    "price": 4.306e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 332.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.0566201,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.071563,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "DdEfXUsHvpaRYpx2ExmVH1PdThaJSGa9WJnKMfqgdzJr",
+    "symbol": "zkSNARK",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703524.0,
+    "price": 3.551e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 328.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703669.971683,
+      "kind": "kill",
+      "reason": "copycat"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "9m3kgayCM3WUA5Rpb7rBCFSCGTZ97pS2zQcFgaH3pump",
+    "symbol": "zkTROON",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703526.0,
+    "price": 2.875e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 326.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.040559,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.044999,
+      "kind": "kill",
+      "reason": "liquidity"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "7YPDHbxo9qmJoW9TMNVVEGhGRpS6Ygg1VAQ3ExzTpump",
+    "symbol": "NOCHILL",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703527.0,
+    "price": 3.189e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 325.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.090453,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.111543,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "BPqvyML1JXSS2WjHazTNdrAr9QzNGo6GjxWC6n9Hpump",
+    "symbol": "Dog Think",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703527.0,
+    "price": 5.761e-07,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 325.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.0816581,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.096541,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "CP6cHJBRLCN3rtUSUkCgjQupLhzQQN8Vm9GUJWdtjupx",
+    "symbol": "NEONPAW",
+    "source": "geckoterminal",
+    "dex": "meteoradbc",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793637315.0,
+    "price": 4.472e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 66537.66554498672,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.003995,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.007138,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "HD6dikVESL6uR8Px7ns6YfZUWmW7qNXRC9QQnqPgpump",
+    "symbol": "Rise",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703531.0,
+    "price": 2.603e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 321.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.0210948,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.072599,
+      "kind": "kill",
+      "reason": "liquidity"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "2K2GjjNczm5HKxUa8tT5jLXUJQXQka5tYkBm1LWwr1zc",
+    "symbol": "PEPEKIN",
+    "source": "geckoterminal",
+    "dex": "meteora",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703534.0,
+    "price": 2.59e-07,
+    "liquidity": 0.0,
+    "regime": "neutral",
+    "age_s": 318.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.10692,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.109766,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "4VnpxDCryVbcmARNbFStCKVxifXK7aE3yxHxQDFFpump",
+    "symbol": "STENKS",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703539.0,
+    "price": 1.458e-07,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 313.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.1695008,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.203228,
+      "kind": "kill",
+      "reason": "liquidity"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "DsJaaPf1Qk53ieHVxEGAKS9wpt22abVZJ3efpWhGTwFZ",
+    "symbol": "AGC",
+    "source": "geckoterminal",
+    "dex": "pumpswap",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703545.0,
+    "price": 1.774e-05,
+    "liquidity": 28860.55,
+    "regime": "neutral",
+    "age_s": 307.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703669.996408,
+      "kind": "kill",
+      "reason": "socials"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "CkuacGGQLvhMtsKDPvJPPkWVzx8ri5WNJSHvs4ajpump",
+    "symbol": "Dog Think",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703550.0,
+    "price": 1.443e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 302.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.0439522,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.047728,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "C8C9eVMZ2BwLQuY4TDxCiF81gyLtmkYXKtCngT6tDSx",
+    "symbol": "AI",
+    "source": "geckoterminal",
+    "dex": "pumpswap",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703550.0,
+    "price": 5.561e-07,
+    "liquidity": 96243.9,
+    "regime": "neutral",
+    "age_s": 302.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703671.109151,
+      "kind": "kill",
+      "reason": "lp_locked"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "6hNrHYbs41dHpGLxSb6ac4WTwDhFawNTcr5ytn7upump",
+    "symbol": "meme",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703552.0,
+    "price": 5.92e-06,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 300.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703669.99487,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.002858,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "BFd4BJSJFGYUW9eyTHaFZnGA22AjyS2RqezrcDx1pump",
+    "symbol": "NOCHILL",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": 1793703558.0,
+    "price": 1.43e-07,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": 294.66554498672485,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.022581,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793703670.024865,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "651Lf8vbmmGboepCBNsdcnrHh394C4pKXyJtjDAdpump",
+    "symbol": "MIMO",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793703669.85157,
+    "last_ts": 1793703669.85157,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "neutral",
+    "age_s": null,
+    "observation_age_s": 182.8139750957489,
+    "freshness": "delayed observation",
+    "events": [
+     {
+      "t": 1793703670.103056,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
     "mint": "4bPE7nk48o35bN2CAK5dwnk6Q9oHQM4CBu9MbVeapump",
     "symbol": "AISI",
     "source": "pumpportal-ws",
@@ -3678,8 +5183,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 11.248141050338745,
-    "freshness": "recent observation",
+    "observation_age_s": 218.08303904533386,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703634.61534,
@@ -3701,8 +5206,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 13.383790969848633,
-    "freshness": "recent observation",
+    "observation_age_s": 220.21868896484375,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703632.646865,
@@ -3724,8 +5229,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 15.47569990158081,
-    "freshness": "recent observation",
+    "observation_age_s": 222.31059789657593,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703630.430153,
@@ -3747,8 +5252,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 18.45531392097473,
-    "freshness": "recent observation",
+    "observation_age_s": 225.29021191596985,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703627.402624,
@@ -3770,8 +5275,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 26.941285133361816,
-    "freshness": "recent observation",
+    "observation_age_s": 233.77618312835693,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703618.97515,
@@ -3792,9 +5297,9 @@
     "price": 3.33e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 182.83064699172974,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 389.66554498672485,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703617.026297,
@@ -3815,9 +5320,9 @@
     "price": 6.126e-09,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 180.83064699172974,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 387.66554498672485,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703617.157789,
@@ -3843,9 +5348,9 @@
     "price": 7.98e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 172.83064699172974,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 379.66554498672485,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703617.1094458,
@@ -3871,9 +5376,9 @@
     "price": 7.944e-06,
     "liquidity": 12709.55,
     "regime": "neutral",
-    "age_s": 169.83064699172974,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 376.66554498672485,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703617.072719,
@@ -3899,9 +5404,9 @@
     "price": 3.071e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 158.83064699172974,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 365.66554498672485,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703617.0278358,
@@ -3922,9 +5427,9 @@
     "price": 4.202e-12,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 167.83064699172974,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 374.66554498672485,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703617.1625721,
@@ -3950,9 +5455,9 @@
     "price": 2.586e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 151.83064699172974,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 358.66554498672485,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703617.163865,
@@ -3978,9 +5483,9 @@
     "price": 3.385e-07,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 150.83064699172974,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 357.66554498672485,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703617.076021,
@@ -4006,9 +5511,9 @@
     "price": 6.824e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 149.83064699172974,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 356.66554498672485,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703617.213521,
@@ -4034,9 +5539,9 @@
     "price": 3.331e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 147.83064699172974,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 354.66554498672485,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703617.0210261,
@@ -4057,9 +5562,9 @@
     "price": 6.272e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 139.83064699172974,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 346.66554498672485,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703617.039423,
@@ -4086,8 +5591,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703617.15995,
@@ -4108,9 +5613,9 @@
     "price": 1.936e-06,
     "liquidity": 2114.33,
     "regime": "neutral",
-    "age_s": 3764.8306469917297,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 3971.665544986725,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793699836.723437,
@@ -4151,9 +5656,9 @@
     "price": 6.778e-05,
     "liquidity": 20954.45,
     "regime": "neutral",
-    "age_s": 5469.83064699173,
-    "observation_age_s": 28.889379024505615,
-    "freshness": "recent observation",
+    "age_s": 5676.665544986725,
+    "observation_age_s": 235.72427701950073,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793699991.262132,
@@ -4190,8 +5695,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 39.96423602104187,
-    "freshness": "recent observation",
+    "observation_age_s": 246.799134016037,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703605.949068,
@@ -4213,8 +5718,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 43.05576014518738,
-    "freshness": "recent observation",
+    "observation_age_s": 249.8906581401825,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703602.8526762,
@@ -4236,8 +5741,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 48.49188303947449,
-    "freshness": "recent observation",
+    "observation_age_s": 255.3267810344696,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703597.4417,
@@ -4259,8 +5764,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 52.97551202774048,
-    "freshness": "recent observation",
+    "observation_age_s": 259.8104100227356,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703592.973595,
@@ -4282,8 +5787,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 57.694602966308594,
-    "freshness": "recent observation",
+    "observation_age_s": 264.5295009613037,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703588.26578,
@@ -4304,9 +5809,9 @@
     "price": 4.311e-07,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 232.83064699172974,
-    "observation_age_s": 59.01291108131409,
-    "freshness": "recent observation",
+    "age_s": 439.66554498672485,
+    "observation_age_s": 265.8478090763092,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703586.8942342,
@@ -4333,8 +5838,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 59.01291108131409,
-    "freshness": "recent observation",
+    "observation_age_s": 265.8478090763092,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703586.893141,
@@ -4356,8 +5861,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 59.01291108131409,
-    "freshness": "recent observation",
+    "observation_age_s": 265.8478090763092,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793702291.825731,
@@ -4389,8 +5894,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 59.01291108131409,
-    "freshness": "recent observation",
+    "observation_age_s": 265.8478090763092,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793702291.824712,
@@ -4422,8 +5927,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 81.16858291625977,
-    "freshness": "recent observation",
+    "observation_age_s": 288.0034809112549,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703564.880641,
@@ -4445,8 +5950,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 86.35381603240967,
-    "freshness": "recent observation",
+    "observation_age_s": 293.1887140274048,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703559.524544,
@@ -4467,9 +5972,9 @@
     "price": 0.0009065,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 231.83064699172974,
-    "observation_age_s": 92.70883297920227,
-    "freshness": "recent observation",
+    "age_s": 438.66554498672485,
+    "observation_age_s": 299.5437309741974,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703553.4321768,
@@ -4496,8 +6001,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 92.70883297920227,
-    "freshness": "recent observation",
+    "observation_age_s": 299.5437309741974,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703553.4756968,
@@ -4518,9 +6023,9 @@
     "price": 3.083e-07,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 221.83064699172974,
-    "observation_age_s": 92.70883297920227,
-    "freshness": "recent observation",
+    "age_s": 428.66554498672485,
+    "observation_age_s": 299.5437309741974,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703553.477013,
@@ -4546,9 +6051,9 @@
     "price": 1.386e-11,
     "liquidity": 0.0,
     "regime": "neutral",
-    "age_s": 217.83064699172974,
-    "observation_age_s": 92.70883297920227,
-    "freshness": "recent observation",
+    "age_s": 424.66554498672485,
+    "observation_age_s": 299.5437309741974,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703553.418568,
@@ -4569,9 +6074,9 @@
     "price": null,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 216.83064699172974,
-    "observation_age_s": 92.70883297920227,
-    "freshness": "recent observation",
+    "age_s": 423.66554498672485,
+    "observation_age_s": 299.5437309741974,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703553.471961,
@@ -4597,9 +6102,9 @@
     "price": 3.308e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 208.83064699172974,
-    "observation_age_s": 92.70883297920227,
-    "freshness": "recent observation",
+    "age_s": 415.66554498672485,
+    "observation_age_s": 299.5437309741974,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703553.433758,
@@ -4625,9 +6130,9 @@
     "price": 3.184e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 197.83064699172974,
-    "observation_age_s": 92.70883297920227,
-    "freshness": "recent observation",
+    "age_s": 404.66554498672485,
+    "observation_age_s": 299.5437309741974,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703553.439544,
@@ -4653,9 +6158,9 @@
     "price": 1.561e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 196.83064699172974,
-    "observation_age_s": 92.70883297920227,
-    "freshness": "recent observation",
+    "age_s": 403.66554498672485,
+    "observation_age_s": 299.5437309741974,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703553.4344032,
@@ -4681,9 +6186,9 @@
     "price": 1.185e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 193.83064699172974,
-    "observation_age_s": 92.70883297920227,
-    "freshness": "recent observation",
+    "age_s": 400.66554498672485,
+    "observation_age_s": 299.5437309741974,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703553.4324942,
@@ -4710,8 +6215,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 92.70883297920227,
-    "freshness": "recent observation",
+    "observation_age_s": 299.5437309741974,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703553.466609,
@@ -4732,9 +6237,9 @@
     "price": 2.06e-05,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 2611.8306469917297,
-    "observation_age_s": 92.70883297920227,
-    "freshness": "recent observation",
+    "age_s": 2818.665544986725,
+    "observation_age_s": 299.5437309741974,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793701035.285513,
@@ -4775,9 +6280,9 @@
     "price": 0.004083,
     "liquidity": 2313598.08,
     "regime": "neutral",
-    "age_s": 35753187.83064699,
-    "observation_age_s": 92.70883297920227,
-    "freshness": "recent observation",
+    "age_s": 35753394.66554499,
+    "observation_age_s": 299.5437309741974,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793699888.334972,
@@ -4788,39 +6293,6 @@
       "t": 1793703553.350868,
       "kind": "kill",
       "reason": "thin_pool"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "GVAXTadyCYiSSg6UAE8kXWTHiD9k5SUzebhWjS2Vpump",
-    "symbol": "DUST",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703310.970304,
-    "last_ts": 1793703545.02685,
-    "created": 1793703309.0,
-    "price": 2.464e-08,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 336.83064699172974,
-    "observation_age_s": 100.80379700660706,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793703311.1258938,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703545.554827,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703545.571739,
-      "kind": "kill",
-      "reason": "volume_1h"
      }
     ],
     "score": null
@@ -4837,8 +6309,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 108.20990800857544,
-    "freshness": "recent observation",
+    "observation_age_s": 315.04480600357056,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703537.73365,
@@ -4860,8 +6332,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 110.23047494888306,
-    "freshness": "recent observation",
+    "observation_age_s": 317.0653729438782,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703535.667618,
@@ -4883,8 +6355,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 111.11126899719238,
-    "freshness": "recent observation",
+    "observation_age_s": 317.9461669921875,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703534.797857,
@@ -4906,8 +6378,8 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 116.25223016738892,
-    "freshness": "recent observation",
+    "observation_age_s": 323.08712816238403,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703529.617748,
@@ -4928,8 +6400,8 @@
     "price": 4.168e-11,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 313.83064699172974,
-    "observation_age_s": 128.82823491096497,
+    "age_s": 520.6655449867249,
+    "observation_age_s": 335.6631329059601,
     "freshness": "delayed observation",
     "events": [
      {
@@ -4956,8 +6428,8 @@
     "price": 3.118e-08,
     "liquidity": 0.0,
     "regime": "neutral",
-    "age_s": 310.83064699172974,
-    "observation_age_s": 128.82823491096497,
+    "age_s": 517.6655449867249,
+    "observation_age_s": 335.6631329059601,
     "freshness": "delayed observation",
     "events": [
      {
@@ -4984,8 +6456,8 @@
     "price": 2.664e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 302.83064699172974,
-    "observation_age_s": 128.82823491096497,
+    "age_s": 509.66554498672485,
+    "observation_age_s": 335.6631329059601,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5012,8 +6484,8 @@
     "price": 4.875e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 300.83064699172974,
-    "observation_age_s": 128.82823491096497,
+    "age_s": 507.66554498672485,
+    "observation_age_s": 335.6631329059601,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5040,8 +6512,8 @@
     "price": 4.248e-07,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 298.83064699172974,
-    "observation_age_s": 128.82823491096497,
+    "age_s": 505.66554498672485,
+    "observation_age_s": 335.6631329059601,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5068,8 +6540,8 @@
     "price": 1.58e-07,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 294.83064699172974,
-    "observation_age_s": 128.82823491096497,
+    "age_s": 501.66554498672485,
+    "observation_age_s": 335.6631329059601,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5096,8 +6568,8 @@
     "price": 2.759e-07,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 294.83064699172974,
-    "observation_age_s": 128.82823491096497,
+    "age_s": 501.66554498672485,
+    "observation_age_s": 335.6631329059601,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5125,7 +6597,7 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 128.82823491096497,
+    "observation_age_s": 335.6631329059601,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5148,7 +6620,7 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 136.37673687934875,
+    "observation_age_s": 343.2116348743439,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5171,7 +6643,7 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 136.37673687934875,
+    "observation_age_s": 343.2116348743439,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5194,7 +6666,7 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 136.37673687934875,
+    "observation_age_s": 343.2116348743439,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5237,7 +6709,7 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 141.44607305526733,
+    "observation_age_s": 348.28097105026245,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5259,8 +6731,8 @@
     "price": 6.299e-05,
     "liquidity": 18751.19,
     "regime": "neutral",
-    "age_s": 266.83064699172974,
-    "observation_age_s": 141.44607305526733,
+    "age_s": 473.66554498672485,
+    "observation_age_s": 348.28097105026245,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5288,7 +6760,7 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 147.68548917770386,
+    "observation_age_s": 354.520387172699,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5311,7 +6783,7 @@
     "liquidity": null,
     "regime": "neutral",
     "age_s": null,
-    "observation_age_s": 156.20872592926025,
+    "observation_age_s": 363.04362392425537,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5333,8 +6805,8 @@
     "price": 1.246e-05,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 284.83064699172974,
-    "observation_age_s": 162.33066487312317,
+    "age_s": 491.66554498672485,
+    "observation_age_s": 369.1655628681183,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5361,8 +6833,8 @@
     "price": 2.851e-06,
     "liquidity": null,
     "regime": "neutral",
-    "age_s": 279.83064699172974,
-    "observation_age_s": 162.33066487312317,
+    "age_s": 486.66554498672485,
+    "observation_age_s": 369.1655628681183,
     "freshness": "delayed observation",
     "events": [
      {
@@ -5389,1424 +6861,14 @@
     "price": 1.337e-05,
     "liquidity": 20708.95,
     "regime": "neutral",
-    "age_s": 276.83064699172974,
-    "observation_age_s": 162.33066487312317,
+    "age_s": 483.66554498672485,
+    "observation_age_s": 369.1655628681183,
     "freshness": "delayed observation",
     "events": [
      {
       "t": 1793703483.603919,
       "kind": "kill",
       "reason": "socials"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "6TFoeJ9gX8RpMP4j5c7t9PB8BDM6kfFysMcpwAp1pump",
-    "symbol": "$BWIZ",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703483.499982,
-    "last_ts": 1793703483.499982,
-    "created": 1793703372.0,
-    "price": 6.236e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 273.83064699172974,
-    "observation_age_s": 162.33066487312317,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703483.607691,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703483.64759,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "GYa6ynjq4rvwwWp2pumuubQXpg6GN5MeDfBi3uwpump",
-    "symbol": "zkSNARK",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703483.499982,
-    "last_ts": 1793703483.499982,
-    "created": 1793703376.0,
-    "price": 3.329e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 269.83064699172974,
-    "observation_age_s": 162.33066487312317,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703483.5832288,
-      "kind": "kill",
-      "reason": "copycat"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "FDZTVgS8JhWkJvSseotxWTB2N6A7toTKpivrc9cApump",
-    "symbol": "BROKEP",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703483.499982,
-    "last_ts": 1793703483.499982,
-    "created": 1793703378.0,
-    "price": 2.579e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 267.83064699172974,
-    "observation_age_s": 162.33066487312317,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703483.670718,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703483.7020748,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "GBT1TmzFgQnDQJ3tHNKS5EUovzpgyG1M8jGw197Hpump",
-    "symbol": "OMBRO",
-    "source": "geckoterminal",
-    "dex": "meteoradbc",
-    "first_ts": 1793703483.499982,
-    "last_ts": 1793703483.499982,
-    "created": 1793703358.0,
-    "price": 4.597e-12,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 287.83064699172974,
-    "observation_age_s": 162.33066487312317,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703483.627867,
-      "kind": "kill",
-      "reason": "copycat"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "3ToDrhNvXPbRW6xyWsAgYqADqxN6cNH6Kn5FhedvJZD3",
-    "symbol": "SURPLUS",
-    "source": "geckoterminal",
-    "dex": "meteoradbc",
-    "first_ts": 1793703483.499982,
-    "last_ts": 1793703483.499982,
-    "created": 1793703386.0,
-    "price": 4.597e-05,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 259.83064699172974,
-    "observation_age_s": 162.33066487312317,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703483.637904,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703483.643945,
-      "kind": "kill",
-      "reason": "liquidity"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "A1oiViVzxHztLJLPsunKocFxxogDHsTBw4J4jFhXpump",
-    "symbol": "INCUBOX",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703483.499982,
-    "last_ts": 1793703483.499982,
-    "created": 1793703399.0,
-    "price": 3.334e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 246.83064699172974,
-    "observation_age_s": 162.33066487312317,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703483.600766,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703483.624322,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "GAo2Yrtc4WcCc9QhXTULefTkq6KEAER68NLsdegzpump",
-    "symbol": "jubjub",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703483.499982,
-    "last_ts": 1793703483.499982,
-    "created": 1793703403.0,
-    "price": 2.579e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 242.83064699172974,
-    "observation_age_s": 162.33066487312317,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703483.603193,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703483.6196978,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "8JCS367f7NqAgQnVG2zXmon5zs5xGFDz9YhLt6TCpump",
-    "symbol": "Dog Think",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703483.499982,
-    "last_ts": 1793703483.499982,
-    "created": 1793703406.0,
-    "price": 5.334e-07,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 239.83064699172974,
-    "observation_age_s": 162.33066487312317,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703483.8211951,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703483.832271,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "FQN19WznYLoKuX5HCp8HemVDAzsE1oSMsX5xUN86pump",
-    "symbol": "NORTHKOREA",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703483.499982,
-    "last_ts": 1793703483.499982,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 162.33066487312317,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703483.63868,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "9cGhjKhFDAnA7qhUQYVGibV6GbEWr6Lae9akvQs9pump",
-    "symbol": "NORTHKOREA",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703464.2558248,
-    "last_ts": 1793703464.2558248,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 181.5748221874237,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703464.285046,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "3zmeAb6PFLrVbvCdRM8bTn5aTc93Maii8ZoEkemzpump",
-    "symbol": "AZK",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703452.861293,
-    "last_ts": 1793703452.861293,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 192.96935391426086,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703452.895227,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "DCyZ3PvbModJV65niUD31Lm1Q3eZ4TGnKxMLmzdNpump",
-    "symbol": "DCyZ3Pvb",
-    "source": "pumpportal-migration",
-    "dex": "pumpswap",
-    "first_ts": 1793703452.861293,
-    "last_ts": 1793703452.861293,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 192.96935391426086,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703452.8924491,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "7jQXoEzzuB81pssketF8mxswLeoGwFKZk69ygbX7pump",
-    "symbol": "RADJ",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703450.911176,
-    "last_ts": 1793703450.911176,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 194.91947102546692,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703450.9753861,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "4q7DJny3fgRVxCjg2uteKBfcmgRwmhnCpzUxkfPbpump",
-    "symbol": "AISI",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703275.791036,
-    "last_ts": 1793703450.911176,
-    "created": 1793703274.0,
-    "price": 4.943e-08,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 371.83064699172974,
-    "observation_age_s": 194.91947102546692,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703275.849282,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703450.996703,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703451.010398,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "Gfegrm1xKqCVmc7reGEZYNo6T6AT987ZUdwo5ePHbFUN",
-    "symbol": "FUNCAT",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703447.852792,
-    "last_ts": 1793703447.852792,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 197.9778549671173,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703447.894099,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "FAnDMGU5pXLjLNbChn4VigDgGzfcGZZASqvshrEZsCCq",
-    "symbol": "ZKSNARK",
-    "source": "geckoterminal",
-    "dex": "raydium",
-    "first_ts": 1793702811.008181,
-    "last_ts": 1793703447.852792,
-    "created": 1793702703.0,
-    "price": 6.95e-08,
-    "liquidity": 0.82,
-    "regime": "neutral",
-    "age_s": 942.8306469917297,
-    "observation_age_s": 197.9778549671173,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793702811.298033,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793702811.308328,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703447.878796,
-      "kind": "kill",
-      "reason": "copycat"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "GypEMXvhiF3gucCtrUJ8nvLQXZCZhJ4g6uVCB9Kwpump",
-    "symbol": "NORTHKOREA",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703437.6007512,
-    "last_ts": 1793703437.6007512,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 208.22989583015442,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703437.6288562,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "56V7tTX28ZxQPTA51oDrf55SZcF6RYEUwSe2reyvS6rw",
-    "symbol": "zkSnallerator",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703427.238542,
-    "last_ts": 1793703427.238542,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 218.5921049118042,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703427.280709,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "3jrSF38AE8fhLCKidPPJGUxe2AfrVs7UTVoo6nLme7Rm",
-    "symbol": "Speed",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703425.217552,
-    "last_ts": 1793703425.217552,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 220.61309504508972,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703425.287135,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "WHj8C2Y4jrSLhdh7n1svkfEVRWfKWwD2im39UbSpump",
-    "symbol": "Speed",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703425.217552,
-    "last_ts": 1793703425.217552,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 220.61309504508972,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703425.288198,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "BVGxw29MLyQLFneMQjMx6fSvwm7JqeyUrq3VEgEh7MiW",
-    "symbol": "RIDUWAN",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703420.052898,
-    "last_ts": 1793703420.052898,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 225.77774906158447,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703420.142258,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "2HrCKL73WArky1xi2rTAdv4xgaD3zitET751rUVCpump",
-    "symbol": "SHUTUP",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703420.052898,
-    "last_ts": 1793703420.052898,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 225.77774906158447,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703420.1153212,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "Cot8raG4S3Nwz9v6rcEVdGiCYJfCM4W28opmq1Q669K6",
-    "symbol": "BSCZ",
-    "source": "geckoterminal",
-    "dex": "meteora",
-    "first_ts": 1793703419.233642,
-    "last_ts": 1793703419.233642,
-    "created": 1793703275.0,
-    "price": 1.108e-05,
-    "liquidity": 18968.89,
-    "regime": "neutral",
-    "age_s": 370.83064699172974,
-    "observation_age_s": 226.5970048904419,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703419.3506749,
-      "kind": "kill",
-      "reason": "socials"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "DUVdwSbMRVMygordUBqZLceezbPrXAy4oLFJKehYMUug",
-    "symbol": "JubJub",
-    "source": "geckoterminal",
-    "dex": "meteora",
-    "first_ts": 1793703419.233642,
-    "last_ts": 1793703419.233642,
-    "created": 1793703283.0,
-    "price": 1.668e-05,
-    "liquidity": 22061.37,
-    "regime": "neutral",
-    "age_s": 362.83064699172974,
-    "observation_age_s": 226.5970048904419,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703419.355117,
-      "kind": "kill",
-      "reason": "socials"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "3aZFLbb5mFk97M1Fvy8tX6wEaAhvMBBoVzUQCVaKpump",
-    "symbol": "SATINU",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703419.233642,
-    "last_ts": 1793703419.233642,
-    "created": 1793703290.0,
-    "price": 5.168e-07,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 355.83064699172974,
-    "observation_age_s": 226.5970048904419,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703419.3637729,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703419.368223,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "H8evUT6w7ik17T1DD9e7YgDau5pZJ1QH4kV2Yz7KZz9W",
-    "symbol": "zkSNARK",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703419.233642,
-    "last_ts": 1793703419.233642,
-    "created": 1793703306.0,
-    "price": 7.452e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 339.83064699172974,
-    "observation_age_s": 226.5970048904419,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703419.269407,
-      "kind": "kill",
-      "reason": "copycat"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "JhDAXK6DHgBMzD5uy5wJTNfLQ7iMqfiFiqS1QcNBAGS",
-    "symbol": "BOARDY",
-    "source": "geckoterminal",
-    "dex": "bags",
-    "first_ts": 1793703419.233642,
-    "last_ts": 1793703419.233642,
-    "created": 1793703308.0,
-    "price": 2.709e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 337.83064699172974,
-    "observation_age_s": 226.5970048904419,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703419.401122,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703419.40482,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "EbKAh8qK6SK1Hnju5hBMVKm4EKGW5kYE49Rvd47aBAGS",
-    "symbol": "ROOTBOT",
-    "source": "geckoterminal",
-    "dex": "pumpswap",
-    "first_ts": 1793703419.233642,
-    "last_ts": 1793703419.233642,
-    "created": 1793703302.0,
-    "price": 6.353e-05,
-    "liquidity": 112312.43,
-    "regime": "neutral",
-    "age_s": 343.83064699172974,
-    "observation_age_s": 226.5970048904419,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703420.497122,
-      "kind": "kill",
-      "reason": "lp_locked"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "3kRJTwtUr3Bn1hRMcjHbHKoYWxdgeAQDXKr8ULeppump",
-    "symbol": "XYZ",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703419.233642,
-    "last_ts": 1793703419.233642,
-    "created": 1793703312.0,
-    "price": 2.582e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 333.83064699172974,
-    "observation_age_s": 226.5970048904419,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703419.3689668,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703419.471495,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "4wtBUxrLMyRA6ejDp2Dw2pvFANrXrzpsfx2JUVVtpump",
-    "symbol": "Weave",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703419.233642,
-    "last_ts": 1793703419.233642,
-    "created": 1793703313.0,
-    "price": 3.461e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 332.83064699172974,
-    "observation_age_s": 226.5970048904419,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703419.352185,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703419.358856,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "CTSvXvXRKFwrgPX1WoERBCDNYB7NgNuvgYmbQcvDpump",
-    "symbol": "zkSNARK",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703419.233642,
-    "last_ts": 1793703419.233642,
-    "created": 1793703313.0,
-    "price": 2.58e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 332.83064699172974,
-    "observation_age_s": 226.5970048904419,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703419.3191879,
-      "kind": "kill",
-      "reason": "copycat"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "Hcg44PVUPsxQUSvedpYJ2NENfXwWCoWT2EVgeew6pump",
-    "symbol": "Dog Think",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703419.233642,
-    "last_ts": 1793703419.233642,
-    "created": 1793703317.0,
-    "price": 2.774e-07,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 328.83064699172974,
-    "observation_age_s": 226.5970048904419,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703419.352434,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703419.3679092,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "Gu2rKqiyMde3vi2LQhUj8bjXSsqJHWU2yF5LFEzypump",
-    "symbol": "AUBY",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703419.233642,
-    "last_ts": 1793703419.233642,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 226.5970048904419,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703419.3872871,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "6RNdK9zWVtmDqew8jbbtChn9HHyP8Zq6ftkU2WMPpump",
-    "symbol": "MCH",
-    "source": "geckoterminal",
-    "dex": "pumpswap",
-    "first_ts": 1793700868.199594,
-    "last_ts": 1793703419.233642,
-    "created": 1793703318.0,
-    "price": 5.77e-09,
-    "liquidity": 5.12,
-    "regime": "neutral",
-    "age_s": 327.83064699172974,
-    "observation_age_s": 226.5970048904419,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793700868.348887,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793700868.451782,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703419.373825,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703419.4180439,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "7ffpE3Lr2bR7uKJUKpDrA8p97z5BicTvyeVC9LcTCgEo",
-    "symbol": "zkSNARK",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703397.3743942,
-    "last_ts": 1793703397.3743942,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 248.45625281333923,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703397.559115,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "Ct5B2V94LdEN2YtpMJA5HyCcgGL8RPvp7pj7hNR5pump",
-    "symbol": "AISI",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703396.524608,
-    "last_ts": 1793703396.524608,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 249.30603909492493,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703396.573528,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "DneuxrzY4AicYy8wrw3FU5GgMi5UpQRGso6NE4Xwpump",
-    "symbol": "GTA",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703394.4955158,
-    "last_ts": 1793703394.4955158,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 251.33513116836548,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703394.5630322,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "GTMJfoqMHASUd1A7xt7kTZyL1uMPdq6Beu6tJNiVWPUN",
-    "symbol": "jubjub",
-    "source": "geckoterminal",
-    "dex": "meteora",
-    "first_ts": 1793703382.323981,
-    "last_ts": 1793703382.323981,
-    "created": 1793703186.0,
-    "price": 5.243e-07,
-    "liquidity": 0.14,
-    "regime": "neutral",
-    "age_s": 459.83064699172974,
-    "observation_age_s": 263.5066659450531,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703382.416378,
-      "kind": "kill",
-      "reason": "liquidity"
-     },
-     {
-      "t": 1793703382.429973,
-      "kind": "kill",
-      "reason": "liquidity"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "H3YExqqk8oSvAjGcBLJSsuXW2qpLYx7nFK923PJRHS7N",
-    "symbol": "CAPY",
-    "source": "geckoterminal",
-    "dex": "orca",
-    "first_ts": 1793703382.323981,
-    "last_ts": 1793703382.323981,
-    "created": 1793703200.0,
-    "price": 0.0006549,
-    "liquidity": 320901.29,
-    "regime": "neutral",
-    "age_s": 445.83064699172974,
-    "observation_age_s": 263.5066659450531,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703382.418059,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703382.471787,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "r8r9BphFPt9wx1wQXnJatHf1cRnuKWuy89o5QqFpump",
-    "symbol": "JubJub",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703382.323981,
-    "last_ts": 1793703382.323981,
-    "created": 1793703182.0,
-    "price": 3.51e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 463.83064699172974,
-    "observation_age_s": 263.5066659450531,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703382.405341,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703382.4214048,
-      "kind": "kill",
-      "reason": "liquidity"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "3NJQME5iaihGNpLDAHmEaxYK54SqiR4kxMUYWqT5M3xu",
-    "symbol": "LIJU",
-    "source": "geckoterminal",
-    "dex": "pumpswap",
-    "first_ts": 1793703382.323981,
-    "last_ts": 1793703382.323981,
-    "created": 1793703187.0,
-    "price": 3.757e-05,
-    "liquidity": 15680.3,
-    "regime": "neutral",
-    "age_s": 458.83064699172974,
-    "observation_age_s": 263.5066659450531,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703382.6028008,
-      "kind": "kill",
-      "reason": "socials"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "2Bo7LsCTWprSQYruNcLLjayJmDnBtPEG9iuerrifLoat",
-    "symbol": "CEO / DOGE",
-    "source": "geckoterminal",
-    "dex": "letsbonk/launchlab",
-    "first_ts": 1793703382.323981,
-    "last_ts": 1793703382.323981,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 263.5066659450531,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703382.473335,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "8cFAB1rJCu84UT4oRu92f13ZwAXhyk739VkLAFnApump",
-    "symbol": "Uni ",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703382.323981,
-    "last_ts": 1793703382.323981,
-    "created": 1793703191.0,
-    "price": 1.602e-08,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 454.83064699172974,
-    "observation_age_s": 263.5066659450531,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703382.407349,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703382.4377558,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "53FxHStsvrLzDtLANeZU9UGTzKEzG86wd4hME2gbpump",
-    "symbol": "SPYCAT",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703382.323981,
-    "last_ts": 1793703382.323981,
-    "created": 1793703197.0,
-    "price": 3.194e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 448.83064699172974,
-    "observation_age_s": 263.5066659450531,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703382.593964,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703382.6071959,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "CMecpu4xqPjRoWAb2RUJvvXN6zWvfxuQf595qg6kpump",
-    "symbol": "SATINU",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703382.323981,
-    "last_ts": 1793703382.323981,
-    "created": 1793703199.0,
-    "price": 7.454e-07,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 446.83064699172974,
-    "observation_age_s": 263.5066659450531,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703382.5056598,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703382.508319,
-      "kind": "kill",
-      "reason": "liquidity"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "9KAsF5v75x5aGfUxo8kA57qm7VdKuhjyaJeYdWckJTjM",
-    "symbol": "Pepekin",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703382.323981,
-    "last_ts": 1793703382.323981,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 263.5066659450531,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703382.476893,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "HsBS1NgGBwwNtcsnCDmZpxaqtuVq2FqLyjsqhXhU31LJ",
-    "symbol": "Pepekin",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703382.323981,
-    "last_ts": 1793703382.323981,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 263.5066659450531,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703382.473801,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "6aK2yEx6ePQjGwTnM495U2V2S4p2Fvugx2ETNE4fHVK6",
-    "symbol": "zkSNARK",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703368.977747,
-    "last_ts": 1793703368.977747,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 276.85290002822876,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703368.997768,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "H7yFqwdsCUta3YNuEhLPEffXcY2VpytG1KoMYTMQpump",
-    "symbol": "Incubox",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703366.06883,
-    "last_ts": 1793703366.06883,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 279.7618169784546,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703366.099349,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "9xMKibNhxNTLcVnSxphMZHLUnZFK7FfCUrjnyK5dY5YA",
-    "symbol": "WWW",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703352.4667819,
-    "last_ts": 1793703352.4667819,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 293.3638651371002,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703352.5098891,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "9VR8bkWNeJQ7688rmaexD8ZEC21CPLSNUv9BPzvpump",
-    "symbol": "YouTube",
-    "source": "pumpportal-ws",
-    "dex": "pumpswap",
-    "first_ts": 1793703232.2984,
-    "last_ts": 1793703352.4667819,
-    "created": 1793703230.0,
-    "price": 0.000125,
-    "liquidity": 26881.83,
-    "regime": "neutral",
-    "age_s": 415.83064699172974,
-    "observation_age_s": 293.3638651371002,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703232.357019,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703352.513761,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703352.525196,
-      "kind": "kill",
-      "reason": "socials"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "9A29SVWUvEAZUW1E2Cd1a4zLHGrovo96pJQJNKRUGcKM",
-    "symbol": "WWW",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793703348.4159849,
-    "last_ts": 1793703348.4159849,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": null,
-    "observation_age_s": 297.41466212272644,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703348.441931,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "GMmefjimx7YdJZD1LNwFX6AVx7Njuh5d36S9vLe6pump",
-    "symbol": "jubjub",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703346.576778,
-    "last_ts": 1793703346.576778,
-    "created": 1793703206.0,
-    "price": 2.58e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 439.83064699172974,
-    "observation_age_s": 299.25386905670166,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703346.630744,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703346.632483,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "628euiGrkCNeu9JrwCYeJ3S6RQVcSngEgQ48Uu2Tpump",
-    "symbol": "GIFPFP ",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703346.576778,
-    "last_ts": 1793703346.576778,
-    "created": 1793703233.0,
-    "price": 3.177e-06,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 412.83064699172974,
-    "observation_age_s": 299.25386905670166,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703346.640177,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793703346.6436899,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "8Q8wXm71gihCR2ZLhkLb5Ag9YLokMdU8JtXkcXcTpump",
-    "symbol": "JubJub",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793703346.576778,
-    "last_ts": 1793703346.576778,
-    "created": 1793703243.0,
-    "price": 1.097e-05,
-    "liquidity": null,
-    "regime": "neutral",
-    "age_s": 402.83064699172974,
-    "observation_age_s": 299.25386905670166,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793703346.629921,
-      "kind": "kill",
-      "reason": "liquidity"
-     },
-     {
-      "t": 1793703346.6432261,
-      "kind": "kill",
-      "reason": "liquidity"
      }
     ],
     "score": null
