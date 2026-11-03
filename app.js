@@ -116,4 +116,28 @@ const mx=Math.log10(1+Math.max(1,...t.buckets.map(b=>b[1])));
 return `<section class="card" id="skiptally"><div class="row"><h2>Why coins got skipped <span class="sub">/ ${e(t.hours)}h</span></h2><small class="st-bw">best <b class="${t.best>0?'up':'dn'}">${m(t.best)}</b> · worst <b class="${t.worst>0?'up':'dn'}">${m(t.worst)}</b></small></div><div class="st-grid">${t.buckets.map(([k,c])=>`<div class="st-i"><div class="st-r"><span>${e(k)}</span><b>${n(c)}</b></div><i style="width:${c?Math.max(3,Math.log10(1+c)/mx*100).toFixed(1):0}%"></i></div>`).join('')}</div><small class="st-foot">${n(t.total)} skips · 1 reason per coin check · bars log scale · paper only</small></section>`}
 
 function copyCard(d){try{const c=d&&d.copy_desk;if(!c||typeof c.equity!=='number')return'';const e=x=>String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));const W=c.wallets||[];const good=W.filter(w=>w.grade==='good');const cnt={};W.filter(w=>w.grade!=='good').forEach(w=>{(cnt[w.grade]=cnt[w.grade]||[]).push(w.name)});const tp=c.today_pnl||0;const sg=(tp>=0?'+':'-')+'$'+Math.abs(tp).toFixed(2);const L=c.last;const last=L?`${e(L.kind)} ${e(L.sym)}${L.who?' · copying '+e(L.who):''}${typeof L.pnl==='number'?' · '+(L.pnl>=0?'+':'-')+'$'+Math.abs(L.pnl).toFixed(2):''} · ${new Date(L.t*1000).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}`:"waiting for a graded wallet's buy";
-return `<section class="card" id="copydesk" style="border-color:rgba(255,60,110,.45);box-shadow:0 0 18px rgba(255,40,90,.18)"><div class="row"><h2>Copy desk <span class="sub">(paper)</span></h2><b style="font-family:monospace;font-size:20px;color:#fff;text-shadow:0 0 10px rgba(255,60,110,.7)">$${c.equity.toFixed(2)}</b></div><div class="sub" style="font-family:monospace;margin:6px 0 10px">Today ${sg} · ${c.trades_today||0} trade${c.trades_today===1?'':'s'} · win rate ${c.win_rate==null?'–':c.win_rate+'%'}</div><div style="font-size:13px;line-height:1.6"><div><span class="sub">Copying:</span> ${good.length?good.map(w=>'✅ '+e(w.name)).join(' · '):'<span style="color:#ff8fb0">none yet, 0 wallets graded ✅ good</span>'}</div><div><span class="sub">Skipped:</span> ${Object.entries(cnt).map(([g,n])=>`<span style="font-family:monospace">${n.length} ${e(g)}</span> (${n.map(e).join(', ')})`).join(' · ')||'–'}</div><div><span class="sub">Last:</span> ${last}</div></div></section>`}catch(_){return''}}
+return `<section class="card" id="copydesk" style="border-color:rgba(255,60,110,.45);box-shadow:0 0 18px rgba(255,40,90,.18)"><div class="row"><h2>Copy desk <span class="sub">${c.shared?"(shared paper account)":"(paper)"}</span></h2><b style="font-family:monospace;font-size:20px;color:#fff;text-shadow:0 0 10px rgba(255,60,110,.7)">$${c.equity.toFixed(2)}</b></div><div class="sub" style="font-family:monospace;margin:6px 0 10px">Today ${sg} · ${c.trades_today||0} trade${c.trades_today===1?'':'s'} · win rate ${c.win_rate==null?'–':c.win_rate+'%'}</div><div style="font-size:13px;line-height:1.6"><div><span class="sub">Copying:</span> ${good.length?good.map(w=>'✅ '+e(w.name)).join(' · '):'<span style="color:#ff8fb0">none yet, 0 wallets graded ✅ good</span>'}</div><div><span class="sub">Skipped:</span> ${Object.entries(cnt).map(([g,n])=>`<span style="font-family:monospace">${n.length} ${e(g)}</span> (${n.map(e).join(', ')})`).join(' · ')||'–'}</div><div><span class="sub">Last:</span> ${last}</div></div></section>`}catch(_){return''}}
+
+/* Optional publisher-backed upgrade cards. Never invent unavailable telemetry. */
+function renderRyderUpgradeCards(d) {
+  const host=document.getElementById('dashboard'); if(!host)return;
+  let el=document.getElementById('ryder-upgrades');
+  if(!el){el=document.createElement('section');el.id='ryder-upgrades';el.className='card';host.appendChild(el)}
+  const u=d.app_upgrades,s=d.stonkfun;
+  const line=(k,v)=>'<div class="reason"><span>'+esc(k)+'</span><b>'+esc(v)+'</b></div>';
+  if(!u){el.innerHTML='<h2>App upgrades</h2><p class="sub">Recap, exposure and journal are awaiting the bot publisher update.</p>';return}
+  const rec=u.recap||{},ex=u.exposure||{},sig=u.signal_quality||{};
+  el.innerHTML='<h2>Session recap <span class="sub">/ last 24 hours</span></h2>'+
+    line('Realized paper P&L',Number.isFinite(rec.realized)?money(rec.realized):'Unknown')+
+    line('Closed fills (includes partial exits)',rec.closed_fills??'Unknown')+
+    '<h3>Risk & exposure</h3>'+line('Open allocation at entry cost',Number.isFinite(ex.cost_usd)?'$'+ex.cost_usd.toFixed(2):'Unknown')+
+    line('Open positions',ex.open_positions??'Unknown')+line('Maximum per trade','10%')+
+    '<h3>Signal quality</h3>'+line('Passed / scanned',String(sig.passed??'?')+' / '+String(sig.scanned??'?'))+
+    '<p class="sub">Current-version counts. Check failures can overlap.</p>'+
+    '<h3>StonkFun discovery</h3>'+line('Source',s?.status||'Not observed')+
+    (s?.updated_at?line('Last checked',new Date(s.updated_at*1000).toLocaleString()):'')+
+    '<h3>Trade journal</h3>'+((u.journal||[]).map(t=>'<div class="details"><b>'+esc(t.sym)+'</b> '+esc(money(t.pnl))+
+       '<br>Entry: '+esc(typeof t.entry_reason==='string'?t.entry_reason:'Not recorded')+
+       '<br>Exit: '+esc(t.reason||'Unknown')+(t.partial?' · partial exit':'')+'</div>').join('')||'<p class="sub">No closed paper trades in these strategies.</p>');
+}
+{const previousRyderRender=render;render=function(){previousRyderRender.apply(this,arguments);renderRyderUpgradeCards(data)}}
