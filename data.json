@@ -48,7 +48,7 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Nov 02 16:57 PT",
+ "asof": "Nov 02 17:14 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
@@ -246,7 +246,7 @@
    "v": 302.4
   },
   {
-   "t": "16:57",
+   "t": "17:14",
    "v": 302.4
   }
  ],
@@ -304,12 +304,6 @@
   }
  ],
  "tail": [
-  {
-   "t": "16:55",
-   "ag": "FILTER",
-   "text": "killed Confidence \u00b7 no/dupe socials",
-   "tone": "red"
-  },
   {
    "t": "16:55",
    "ag": "FILTER",
@@ -393,6 +387,12 @@
    "ag": "FILTER",
    "text": "killed ascend \u00b7 sniper_wallets",
    "tone": "red"
+  },
+  {
+   "t": "17:14",
+   "ag": "LOGGER",
+   "text": "process_pause",
+   "tone": ""
   }
  ],
  "nkills": 69465,
@@ -750,9 +750,9 @@
   }
  ],
  "agent_activity": {
-  "LOGGER": 15,
-  "SCOUT": 138,
-  "FILTER": 1062
+  "LOGGER": 8,
+  "SCOUT": 111,
+  "FILTER": 858
  },
  "rug_list": {
   "count": 47,
@@ -796,7 +796,7 @@
   "scan_s_avg": 0.5,
   "scan_s_last": 0.1,
   "pos_check_s": 1,
-  "ws_last_event_s": 7
+  "ws_last_event_s": 4
  },
  "sources": {
   "api.dexscreener.com": {
@@ -806,17 +806,17 @@
   },
   "api.geckoterminal.com": {
    "ok_rate": 0.98,
-   "ms": 63,
+   "ms": 64,
    "err": 1
   },
   "api.rugcheck.xyz": {
    "ok_rate": 0.98,
-   "ms": 1367,
+   "ms": 1186,
    "err": 2
   },
   "api.mainnet-beta.solana.com": {
    "ok_rate": 1.0,
-   "ms": 648,
+   "ms": 644,
    "err": 0
   },
   "lite-api.jup.ag": {
@@ -1004,7 +1004,7 @@
   "39 Telegram/X alerts"
  ],
  "fomo_wallet": {
-  "total_usd": 38.83,
+  "total_usd": 38.64,
   "top": [
    {
     "sym": "GNS",
@@ -1016,17 +1016,17 @@
    },
    {
     "sym": "GTA6",
-    "usd": 5.39
+    "usd": 5.29
    }
   ],
-  "at": "16:56"
+  "at": "17:14"
  },
  "paper": true,
- "updated_at": "2026-11-03T00:57:21+00:00",
+ "updated_at": "2026-11-03T01:14:19+00:00",
  "heartbeat": {
-  "at": "2026-11-03T00:57:21+00:00",
+  "at": "2026-11-03T01:14:19+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 25,
+  "runner_last_beat_s": 1,
   "pending_entries": 0,
   "live_feed": true,
   "live_feed_events": 160,
