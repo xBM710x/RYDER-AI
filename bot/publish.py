@@ -66,6 +66,17 @@ def build():
     try: d["app_upgrades"] = app_upgrades.build(c0, d, pa.BOOKS if pa.MODE else ("v3",))
     finally: c0.close()
     d["stonkfun"] = stonkfun.status()
+    try:
+        import desk_observations, mission_control
+        scope = 'shared' if d.get('shared_account') else 'main'
+        desk_observations.equity(d['equity'], scope)
+        c0 = conn()
+        try: d['mission_control'] = mission_control.build(c0, d, hb)
+        finally: c0.close()
+        _, curve = desk_observations.snapshot(scope=scope)
+        if curve: d['curve'] = [dict(t=datetime.datetime.fromtimestamp(p['ts'], datetime.timezone.utc).astimezone(__import__('zoneinfo').ZoneInfo('America/Los_Angeles')).strftime('%b %d %H:%M PT'), v=p['value']) for p in curve]
+    except Exception as e:
+        d['mission_control'] = dict(error=type(e).__name__, cards=[], tokens=[])
     return d
 SKIP_BUCKETS = [("Volume too low", ("volume_1h",)), ("Liquidity too low", ("liquidity", "thin_pool")), ("No socials", ("socials",)),
     ("Copycat / scam name", ("copycat", "scam_name")), ("LP not locked", ("lp_locked",)),
@@ -200,7 +211,10 @@ def publish_once():
     except Exception: same = False
     if same and "--skip-unchanged" in sys.argv: return "unchanged (skipped commit)"
     body = {"message": "stats update" if not same else "heartbeat", "content": base64.b64encode((json.dumps(d, indent=1) + "\n").encode()).decode(), "sha": cur["sha"], "branch": "main"}
-    r = gh("PUT", body); return "pushed commit " + r["commit"]["sha"][:7]
+    r = gh("PUT", body)
+    with open(os.path.join(D, 'publisher-status.json.tmp'), 'w') as f: json.dump(dict(ts=time.time(), commit=r['commit']['sha'][:12]), f)
+    os.replace(os.path.join(D, 'publisher-status.json.tmp'), os.path.join(D, 'publisher-status.json'))
+    return "pushed commit " + r["commit"]["sha"][:7]
 if __name__ == "__main__":
     loop = "--loop" in sys.argv; interval = INTERVAL
     while True:

@@ -14,10 +14,22 @@ ROOT = BOT.parent
 PY = str(BOT / '.venv/bin/python')
 STOP = False
 CHILD = None
-TESTS = ['test_paper_account', 'test_app_upgrades', 'test_source_performance', 'test_auto_update']
+TESTS = ['test_paper_account', 'test_app_upgrades', 'test_source_performance', 'test_auto_update', 'test_mission_control']
+
+
+def state(value):
+    import json
+    try:
+        data = dict(ts=time.time(), state=value)
+        try: data['commit'] = git('rev-parse', 'HEAD')
+        except Exception: pass
+        tmp = BOT/'updater-status.json.tmp'
+        tmp.write_text(json.dumps(data)); os.replace(tmp, BOT/'updater-status.json')
+    except OSError: pass
 
 
 def log(message):
+    state(message)
     print(time.strftime('%Y-%m-%d %H:%M:%S'), message, flush=True)
 
 
@@ -60,6 +72,8 @@ def backup():
         if target.execute('PRAGMA integrity_check').fetchone()[0] != 'ok':
             raise RuntimeError('backup integrity check failed')
     os.chmod(path, 0o600)
+    import json
+    path.with_name(path.name+'.checked.json').write_text(json.dumps(dict(integrity='ok',ts=time.time())))
 
 
 def stop_child():
@@ -87,7 +101,8 @@ def update():
         log('Update held: unexpected repository origin');return False
     git('fetch', 'origin', 'main')
     old = git('rev-parse', 'HEAD'); new = git('rev-parse', 'origin/main')
-    if old == new: return False
+    if old == new:
+        state('checked; up to date');return False
     git('merge-base', '--is-ancestor', old, new)
     paths = git('diff', '--name-only', old, new).splitlines()
     if not allowed(paths):
@@ -135,7 +150,7 @@ def main():
     # Release lock automatically on exec; replacement process acquires it anew.
     signal.signal(signal.SIGTERM, shutdown);signal.signal(signal.SIGINT, shutdown)
     try:
-        start_child(); next_check = time.monotonic()+60
+        start_child(); state('background owner started'); next_check = time.monotonic()+60
         while not STOP:
             if CHILD.poll() is not None:
                 stop_child();start_child()

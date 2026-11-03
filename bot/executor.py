@@ -72,7 +72,7 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
     try:
         import brain9; brain9.note_entry(mint, price); brain9.milestone("buy"); ver == CFG["VERSION"] and brain9.note_margins(pair, mint)  # 413/414/433
     except Exception: pass
-    log("paper_buy", mint, symbol, price=price, quote=quote, usd=round(size, 2), stop=stop, score=score, conf=conf, book=ver, liq=(pair.get("liquidity") or {}).get("usd"), url=pair.get("url"), **(extra or {}))
+    log("paper_buy", mint, symbol, modeled_costs=buy_costs(size, price, quote, sl), price=price, quote=quote, usd=round(size, 2), stop=stop, score=score, conf=conf, book=ver, liq=(pair.get("liquidity") or {}).get("usd"), url=pair.get("url"), **(extra or {}))
     try: alerts.on_buy(symbol, size, price, score, stop, (pair.get("liquidity") or {}).get("usd"), pair.get("url"), ver, (str((extra or {}).get("why1") or "") + "\n" + ((extra or {}).get("plan") or {}).get("text", "") + "\n" + str(((extra or {}).get("council") or {}).get("reason") or "") + "\n" + __import__("brain14").votes_text((extra or {}).get("council"))).strip())
     except Exception: pass
     return True
@@ -99,7 +99,7 @@ def sell(pos, quote, reason):
     proceeds = pos["qty"] * price; pnl = proceeds - pos["cost"]
     c.execute("UPDATE positions SET status='closed',closed=?,exit=?,pnl=?,reason=? WHERE id=?", (time.time(), price, pnl, reason, pos["id"]))
     c.execute("UPDATE account SET v=v+? WHERE k=?", (proceeds, pa.key_for(pos.get("version", "v1")))); c.commit(); c.close()
-    log("paper_exit", pos["mint"], pos["symbol"], entry=pos["entry"], exit=price, stop=pos["stop"], slip_pct=round((price / pos["stop"] - 1) * 100, 2), pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason=reason, book=pos.get("version"))
+    log("paper_exit", pos["mint"], pos["symbol"], modeled_costs=exit_costs(pos, quote, price, pos["qty"]), entry=pos["entry"], exit=price, stop=pos["stop"], slip_pct=round((price / pos["stop"] - 1) * 100, 2), pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason=reason, book=pos.get("version"))
     try: alerts.on_exit(pos["symbol"], (price / pos["entry"] - 1) * 100, pnl, reason, pos.get("version", ""), __import__("brain7").exit_extra(dict(pos, peak=max(pos.get("peak") or 0, quote)), quote))  # 355
     except Exception: pass
     if pos.get("version") not in ("v1", "v2"):
@@ -152,7 +152,20 @@ def partial(pos, quote, level=1, frac=0.5, reason="partial_tp"):
               (pos["mint"], pos["symbol"], pos["pair"], pos["entry"], hq, hc, pos["stop"], pos["peak"], pos["opened"], time.time(), price, pnl, pos["version"]))
     c.execute("UPDATE positions SET qty=?, cost=?, tp_done=?, trailing=1 WHERE id=?", (pos["qty"] - hq, pos["cost"] - hc, level, pos["id"]))
     c.execute("UPDATE account SET v=v+? WHERE k=?", (hq * price, pa.key_for(pos["version"]))); c.commit(); c.close()
-    log("paper_exit", pos["mint"], pos["symbol"], entry=pos["entry"], exit=price, pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason="partial_tp", level=level, why=reason, frac=round(frac, 3), book=pos.get("version"))
+    log("paper_exit", pos["mint"], pos["symbol"], modeled_costs=exit_costs(pos, quote, price, hq), entry=pos["entry"], exit=price, pnl=round(pnl, 2), pct=round((price / pos["entry"] - 1) * 100, 2), quote=quote, reason="partial_tp", level=level, why=reason, frac=round(frac, 3), book=pos.get("version"))
     try: alerts.on_exit(pos["symbol"], (price / pos["entry"] - 1) * 100, pnl, "partial_tp", pos.get("version", ""))
     except Exception: pass
 
+
+
+def buy_costs(size, fill, quote, slip):
+    """Exact additive decomposition of existing modeled entry price, not new costs."""
+    qty=size/fill; base=qty*quote
+    slippage=base*slip; fees=base*(1+slip)*CFG['FEE']/(1-CFG['FEE'])
+    total=size-base
+    return dict(fees=fees,slippage=slippage,mev=total-slippage-fees,total=total)
+
+
+def exit_costs(pos, quote, fill, qty):
+    base=qty*quote; slippage=base*CFG['SLIP']; fees=base*(1-CFG['SLIP'])*CFG['FEE'];total=qty*(quote-fill)
+    return dict(fees=fees,slippage=slippage,mev=total-slippage-fees,total=total)

@@ -19,6 +19,8 @@ INFLIGHT = set()
 def _scan():
     cands, total = scout.scout(); cands = [c for c in cands if c["mint"] not in INFLIGHT and not brain2.rejected(c["mint"])]  # 138
     mkt = dex_market([c["mint"] for c in cands]) if cands else {}
+    try: __import__('desk_observations').observe(cands, mkt, (extras.STATE.get('regime') or {}).get('mood'))
+    except Exception: pass  # display telemetry cannot block trade evaluation
     if total or cands: log("scan", n_raw=total, n_new_or_due=len(cands))
     def _pri(cd):  # strongest first: 1h volume (capped at 3x the bar) + liquidity, re-checks and Fomo-wallet hints ahead; ordering only
         p = mkt.get(cd["mint"]) or {}; v = float((p.get("volume") or {}).get("h1") or 0); l = float((p.get("liquidity") or {}).get("usd") or 0)
@@ -195,7 +197,7 @@ def pending():
         reg = extras.regime(); tm, _ = extras.tod_mult()
         conf = extras.confidence(p["score"], p.get("res", {}), extras.smart_hits(p.get("owners"), m), p.get("rate", 0), reg)
         conf = round(min(1, conf + (0.05 if more.good_dev(p["creator"]) else 0) + (0.03 if fl["liq_add"] else 0)), 3)  # 102 / 110
-        ex = dict(source=(p.get("cd") or {}).get("source"), dex=p.get("dex"), narrative=extras.narrative(p["sym"]), stage=extras.launch_stage(pair).get("stage"), holders=p.get("holders"), holder_rate=p.get("rate"))
+        ex = dict(entry_regime=reg.get("mood"), entry_age_min=(time.time()-float(pair["pairCreatedAt"])/1000)/60 if pair.get("pairCreatedAt") else None, source=(p.get("cd") or {}).get("source"), dex=p.get("dex"), narrative=extras.narrative(p["sym"]), stage=extras.launch_stage(pair).get("stage"), holders=p.get("holders"), holder_rate=p.get("rate"))
         f = p.get("feats") or brain.features(pair, {}, p["score"]); wp, wsrc = brain.win_prob(f); sm = brain.size_mult(conf, wp)
         rs_ = brain4.rel_strength(pair, reg); rm = reg.get("size_mult", 1)
         if rm < 1 and rs_ > 20: rm = 0.75  # 189 relative strength in a falling market
