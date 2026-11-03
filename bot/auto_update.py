@@ -14,7 +14,7 @@ ROOT = BOT.parent
 PY = str(BOT / '.venv/bin/python')
 STOP = False
 CHILD = None
-TESTS = ['test_paper_account', 'test_app_upgrades', 'test_source_performance', 'test_auto_update', 'test_mission_control', 'test_market_lab']
+TESTS = ['test_paper_account', 'test_app_upgrades', 'test_source_performance', 'test_auto_update', 'test_mission_control', 'test_market_lab', 'test_decision_review']
 
 
 def state(value):

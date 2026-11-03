@@ -38,6 +38,7 @@ function deskOnly(d){const c=d.calendar,v=d.version||'v3',L=(c.list||[]).filter(
  const lab=(L[0]&&L[0].desk)||'Main';return{...c,desk:`${lab} desk (${v})`,start:d.start||300,equity:d.equity,trades:cl.length,wins:cl.filter(t=>t.pnl>0).length,open:L.length-cl.length,days,curve,list:L}}
 async function load(){try{const r=await fetch('data.json?cal='+Date.now(),{cache:'no-store',credentials:'omit'});if(r.ok){const d=await r.json();if(d&&d.calendar)C=deskOnly(d)}}catch{}draw()}
 function show(on){const v=view();v.hidden=!on;document.body.classList.toggle('cal-on',on);if(on){window.scrollTo(0,0);load()}}
+window.ryderCalendarShow=show;
 function init(){document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',e=>{if(a.getAttribute('href')==='#calendar'){e.preventDefault();show(true);if(location.hash!=='#calendar')history.replaceState(null,'','#calendar')}else show(false)}));
  if(location.hash==='#calendar'){document.querySelectorAll('nav a').forEach(n=>n.classList.toggle('active',n.getAttribute('href')==='#calendar'));show(true)}
  setInterval(()=>{if(!view().hidden&&!document.hidden)load()},60000)}

@@ -86,6 +86,12 @@ def build():
         if curve: d['curve'] = [dict(t=datetime.datetime.fromtimestamp(p['ts'], datetime.timezone.utc).astimezone(__import__('zoneinfo').ZoneInfo('America/Los_Angeles')).strftime('%b %d %H:%M PT'), v=p['value']) for p in curve]
     except Exception as e:
         d['mission_control'] = dict(error=type(e).__name__, cards=[], tokens=[])
+    try:
+        import decision_review
+        c0 = conn()
+        try: d['decision_review'] = decision_review.build(c0, hb)
+        finally: c0.close()
+    except Exception as e: d['decision_review'] = dict(error=type(e).__name__)
     return d
 SKIP_BUCKETS = [("Volume too low", ("volume_1h",)), ("Liquidity too low", ("liquidity", "thin_pool")), ("No socials", ("socials",)),
     ("Copycat / scam name", ("copycat", "scam_name")), ("LP not locked", ("lp_locked",)),
