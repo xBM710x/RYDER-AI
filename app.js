@@ -141,3 +141,19 @@ function renderRyderUpgradeCards(d) {
        '<br>Exit: '+esc(t.reason||'Unknown')+(t.partial?' · partial exit':'')+'</div>').join('')||'<p class="sub">No closed paper trades in these strategies.</p>');
 }
 {const previousRyderRender=render;render=function(){previousRyderRender.apply(this,arguments);renderRyderUpgradeCards(data)}}
+
+/* Existing logger and counterfactual jobs supply these read-only summaries. */
+function renderSourcePerformance(d){
+ const host=document.getElementById('dashboard'),a=d.app_upgrades?.source_performance;
+ if(!host||!a)return;
+ const card=document.createElement('section');card.className='card';card.id='source-performance';
+ const m=a.missed||{};
+ card.innerHTML='<h2>Source performance <span class="sub">/ last 24 hours</span></h2>'+
+ (a.sources||[]).map(s=>'<div class="details"><b>'+esc(s.source)+' · '+esc(s.dex)+'</b><br>'+esc(money(s.realized))+' realized · '+esc(s.closed_fills)+' closed fills · '+esc(s.win_rate_pct)+'% winning fills · '+esc(s.partial_fills)+' partial exits</div>').join('')+
+ (!(a.sources||[]).length?'<p class="sub">No closed paper fills in this window.</p>':'')+
+ '<h3>Skipped-token follow-ups</h3><p class="sub">'+esc(m.status)+' · '+esc(m.measured??0)+' measured · '+esc(m.unknown??0)+' unknown<br>'+esc(m.rose_20??0)+' rose ≥20% · '+esc(m.fell_20??0)+' fell ≥20%</p>'+
+ (m.samples||[]).map(r=>'<div class="details"><b>'+esc(r.mint.slice(0,8))+'…</b> · '+esc(r.reason||'Unknown reason')+'<br>Later observed price: '+(Number.isFinite(r.change_pct)?esc((r.change_pct>=0?'+':'')+r.change_pct.toFixed(1)+'%'):'Unknown')+' · checked '+esc(new Date(r.checked_at*1000).toLocaleString())+'</div>').join('')+
+ '<p class="sub">'+esc(a.note)+'</p>';
+ document.getElementById('source-performance')?.remove();host.appendChild(card);
+}
+{const beforeSourcePerformance=render;render=function(){beforeSourcePerformance.apply(this,arguments);renderSourcePerformance(data)}}

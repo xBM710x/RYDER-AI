@@ -195,7 +195,7 @@ def pending():
         reg = extras.regime(); tm, _ = extras.tod_mult()
         conf = extras.confidence(p["score"], p.get("res", {}), extras.smart_hits(p.get("owners"), m), p.get("rate", 0), reg)
         conf = round(min(1, conf + (0.05 if more.good_dev(p["creator"]) else 0) + (0.03 if fl["liq_add"] else 0)), 3)  # 102 / 110
-        ex = dict(narrative=extras.narrative(p["sym"]), stage=extras.launch_stage(pair).get("stage"), holders=p.get("holders"), holder_rate=p.get("rate"))
+        ex = dict(source=(p.get("cd") or {}).get("source"), dex=p.get("dex"), narrative=extras.narrative(p["sym"]), stage=extras.launch_stage(pair).get("stage"), holders=p.get("holders"), holder_rate=p.get("rate"))
         f = p.get("feats") or brain.features(pair, {}, p["score"]); wp, wsrc = brain.win_prob(f); sm = brain.size_mult(conf, wp)
         rs_ = brain4.rel_strength(pair, reg); rm = reg.get("size_mult", 1)
         if rm < 1 and rs_ > 20: rm = 0.75  # 189 relative strength in a falling market

@@ -34,6 +34,7 @@ def build(c, d, books=('v3',), clock=time.time):
                               pct_of_equity=round(cost/equity*100,2) if equity>0 else None,
                               max_trade_pct=10, basis='entry cost'),
                 journal=journals,
+                source_performance=__import__("source_performance").build(c, books, clock),
                 signal_quality=dict(scanned=d.get('seen'), passed=d.get('passed'),
                                     pass_rate_pct=round(d['passed']/d['seen']*100,3) if d.get('seen') else None,
                                     scope='current version; checks can overlap', books=list(books)))
