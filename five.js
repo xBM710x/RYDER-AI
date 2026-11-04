@@ -64,6 +64,13 @@
         rows(Object.entries(session.agents),([agent,r])=>agent+' · completed: '+(r.loss||0)+' losses / '+(r.gain||0)+' gains / '+(r.flat||0)+' flat · skipped replays: '+(r.skipped_gain||0)+' gains / '+(r.skipped_nonpositive||0)+' flat or losses');
     }
     if(page==='overview' && pulse) {
+      const books=data.volume_research?.books || [];
+      const recent=(data.tail||[]).slice(-3).reverse();
+      const bookHtml=books.map(book=>'<details><summary>'+escape(book.book)+' lab · '+escape(book.open)+' open / '+escape(book.closed)+' closed</summary>'+
+        ((book.activity||[]).map(fill=>empty(when(fill.ts)+' · '+fill.side+' '+fill.symbol+' · $'+fill.cost+' allocated'+(fill.pnl==null?'':' · net $'+fill.pnl))).join('')||empty('Waiting for published fill details.'))+'</details>').join('');
+      mount(pulse,'work-feed','<h2>RYDER at work</h2>'+empty('Snapshot: '+(data.asof||'unknown'))+
+        '<p>Main desk · '+escape(data.trades)+' reported trades</p>'+recent.map(r=>empty(r.t+' · '+r.ag+' · '+r.text)).join('')+
+        '<h3>Volume lab · separate paper accounts</h3>'+ (bookHtml||empty('Waiting for lab activity.')),true);
       const stages=feed.stages || [];
       mount(pulse,'five-funnel','<h2>Trade funnel</h2>'+empty('Unique tokens first seen in the last 24 hours. Select a stage for up to 20 examples.')+(ready?'<div class="sleek-subnav">'+stages.map((s,i)=>button('stage',i,s.label+' · '+s.count,stage===i)).join('')+'</div>':wait)+(stages[stage]?.mints.map(m=>button('five-token',m,(feed.tokens[m]?.symbol || m.slice(0,8))+' · '+(feed.tokens[m]?.events?.at(-1)?.why || feed.tokens[m]?.events?.at(-1)?.kind || 'discovered'))).join('')||''),true);
       const points=feed.ranges?.[range] || [];
