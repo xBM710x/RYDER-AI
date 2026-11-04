@@ -1,6 +1,7 @@
 """Night Desk runner (PAPER ONLY). v3: scan every 30s + live websocket launches, positions every 1s, delayed entry with recheck."""
 import time, sys, traceback, threading
 from common import CFG, dex_market
+import strategy_desk as sd
 import volume_research as vr
 from scan_scheduler import INSTANCE as scan_queue
 from logger import conn, log
@@ -61,7 +62,8 @@ def evaluate(cd, pair, relax=False):
     if not relax:
         if cd.get("volume_retry"):
             log("volume_followup", m, sym, delay=cd["volume_retry"], volume=volume_state, passed_filters=ok, reason=why)
-        if volume_state != "unknown" or not why.startswith("volume_1h"):
+        retryable = why.startswith(("volume_1h:unknown",)) or (why.startswith(("volume_1h:fail","liquidity:fail")) and sd.near(pair,t0))
+        if not retryable:
             vr.FOLLOW.finish(m)
         if pair and volume_state in ("pass","fail") and CFG["VERSION"] not in ("v1","v2"):
             vr.offer(cd,pair,brain8.projected_vol(pair),brain8.vol_bar(brain4.vol_bar(pair)),time.time())
@@ -73,7 +75,7 @@ def evaluate(cd, pair, relax=False):
         c = conn(); r = c.execute("SELECT checks, first_ts FROM seen WHERE mint=?", (m,)).fetchone()
         checks = (r["checks"] if r else 0) + 1; first = (r["first_ts"] if r else t0) or t0
         final = not ((why.startswith("volume_1h") or why.startswith("liquidity")) and checks < brain8.max_checks(cd, pair)) or ok  # 365
-        if why.startswith("volume_1h:unknown") and cd.get("volume_retry") != 900 and vr.FOLLOW.schedule(cd,t0):
+        if retryable and cd.get("volume_retry") != 900 and vr.FOLLOW.schedule(dict(cd,retry_reason=why),t0):
             final = False
         c.execute("UPDATE seen SET checks=?, last_ts=?, done=? WHERE mint=?", (checks, time.time(), int(final), m)); c.commit(); c.close()
     if len(res) > 2: DEEP.append(round(time.time() - t0, 2))
@@ -83,6 +85,8 @@ def evaluate(cd, pair, relax=False):
             threshold = brain8.vol_bar(brain4.vol_bar(pair))
             if brain8.projected_vol(pair) >= threshold*0.75:
                 replay_evidence["volume_rule_replay"] = __import__("session_research").changed_rule(res)
+        if not relax and sd.near(pair,t0):
+            log("strategy_block", m, sym, strategy=sd.setup(pair,t0), reason=why)
         kill(m, sym, why.split(":")[0], why, final, pair, dex=cd["dex"], source=cd["source"], **replay_evidence, checks={k: v[0] + "/" + v[2] for k, v in res.items()})
         if checks == 1: DEC.append(round(time.time() - first, 2))
         if final and not pair: brain7.mark_dead(m)  # 335
@@ -155,7 +159,7 @@ def evaluate(cd, pair, relax=False):
     if not ok_q: return kill(m, sym, "queue_full", f"score {sc2} below every waiting coin", False, pair)
     if drop: dp_ = PENDING.pop(drop, None); dp_ and log("kill", drop, dp_["sym"], reason="swapped", detail=f"swapped for better coin {sym} ({sc2})", final=False)
     brain6.want([m])  # 222 stream trades while it waits
-    PENDING[m] = dict(h0f=brain3.POOL.submit(brain6.gecko_holders, m), exp=bool(relax), fomo=isinstance(relax, float), fomo_f=relax if isinstance(relax, float) else None, t=time.time(), sym=sym, price=float(pair["priceUsd"]), score=sc2, creator=cr, res=res, rate=float(hr or 0), holders=int(hn or 0),
+    PENDING[m] = dict(entry_strategy=sd.setup(pair,t0) if not relax else "standard", signal_pool=pair.get("pairAddress"), signal_ts=pair.get("_ts"), h0f=brain3.POOL.submit(brain6.gecko_holders, m), exp=bool(relax), fomo=isinstance(relax, float), fomo_f=relax if isinstance(relax, float) else None, t=time.time(), sym=sym, price=float(pair["priceUsd"]), score=sc2, creator=cr, res=res, rate=float(hr or 0), holders=int(hn or 0),
                       owners=[], dex=cd["dex"], cd=dict(source=cd.get("source"), t=cd.get("t")), feats=f, bucket=bk, why_adj=why_adj, struct=locals().get("d", ""), dev=locals().get("dd", ""), impact=locals().get("imp"),
                       b7=b7, t0=time.time(), devbal=detect.dev_balance(cr, m) if cr else None, tx5=(pair.get("txns") or {}).get("m5"), liq0=(pair.get("liquidity") or {}).get("usd"))
     brain8.count("entry_wait"); log("entry_wait", m, sym, price=float(pair["priceUsd"]), delay=CFG["ENTRY_DELAY"], score=sc2, experimental=bool(relax))
@@ -312,6 +316,14 @@ def pending():
             mult = round(mult * smul, 3); ex["why"] = line + " | " + str(ex.get("why", ""))[:200]
         ex["council"] = council; ex["_res"] = p.get("res")  # b17 scorecard input (not logged)
         if council: mult = round(mult * brain6.STARTER, 3); ex["starter"] = True  # 254 starter buy; add-on after confirmation
+        strategy = p.get("entry_strategy","standard")
+        if strategy != "standard":
+            try: route, detail = extras.sell_sim(m)
+            except Exception: route, detail = "unknown", "round-trip route unavailable"
+            if route != "pass" or not sd.confirmed(strategy,p["price"],pair,p.get("signal_pool"),time.time(),p.get("signal_ts")):
+                log("strategy_block",m,p["sym"],strategy=strategy,reason=detail if route!="pass" else "price, pool, pressure or quote age failed at confirmation")
+                continue
+        ex["entry_strategy"]=strategy
         ex["_runner_eligible"] = True  # display-only capacity lab receives only this fully gated handoff
         log("entry_confirmed", m, p["sym"], experimental=bool(p.get("exp")), why=ex.get("why"))
         ok = executor.buy(m, p["sym"], pair, p["score"], mult=mult, stop_pct=brain3.strength_stop(extras.vol_stop(pair), (council or {}).get("consensus")), conf=conf, extra=ex)
@@ -355,7 +367,8 @@ def positions():
             if time.time() - p["opened"] > brain7.flat_minutes(extras.STATE.get("regime")) * 60 and not p["trailing"] and abs(price / p["entry"] - 1) < 0.04:  # 274/276
                 executor.sell(p, price, "flat_time"); extras.postmortem(p, price, "flat_time"); continue
             if brain7.partial15(p, price) and not fomo.is_fomo(p["mint"]):  # 272 first partial at +15%
-                executor.partial(p, price, 1); p = dict(p, qty=p["qty"] / 2, cost=p["cost"] / 2, tp_done=1, trailing=1)
+                frac = sd.exit_policy(pr)[0] if p.get("version")==CFG["VERSION"] else .5
+                executor.partial(p,price,1,frac,"first target / current buy pressure"); p = dict(p, qty=p["qty"]*(1-frac), cost=p["cost"]*(1-frac), tp_done=1, trailing=1)
             if brain16.scale_out(p, price): continue  # v3x / copy desk scale-outs (main desk untouched); next tick re-reads the smaller position
             sp = brain2.spike(p["mint"], 5)
             if sp["sells"] >= 8 and sp["sells"] > 2 * sp["buys"] and sp["px"] <= -4:  # 124 5s sell spike -> instant exit
@@ -389,6 +402,9 @@ def positions():
             if fx14: executor.sell(p, price, fx14); extras.postmortem(p, price, fx14); continue
             if time.time() - p["opened"] > fomo.FLAT_MIN * 60 and price < p["entry"] * (1 + fomo.FLAT_BAND): executor.sell(p, price, "fomo_time"); extras.postmortem(p, price, "fomo_time"); continue
         tp0 = ((0.04 if (v3 and brain6.market_turning(extras.STATE.get('regime')) and price > p['entry'] * 1.10) else None) or (brain2.trail_pct(extras.vol_stop(pr) + 0.02, pr, p['peak'] / p['entry'] - 1) + (0.02 if brain4.buyers_arriving(brain2.spike(p['mint'], 5), pr) else 0))) if v3 else None  # 191
+        if v3 and p.get("version")==CFG["VERSION"]:
+            _, width = sd.exit_policy(pr)
+            if width is not None and tp0 is not None: tp0 = width if width>.08 else min(tp0,width)
         u = risk.update(p, price, trail_pct=brain7.regime_trail(brain7.trail_tighten(tp0, p['peak'] / p['entry'] - 1), extras.STATE.get('regime')) if v3 else None, sell_spike=spike)  # 271 / 276
         if u["time_stop"]: executor.sell(p, price, "time_stop"); extras.postmortem(p, price, "time_stop"); continue
         if u["partial"]: executor.partial(p, price, u["partial"]); p = dict(p, qty=p["qty"] / 2, cost=p["cost"] / 2, tp_done=u["partial"])
@@ -450,8 +466,8 @@ def jobs(k):
 def state():
     from common import HEALTH
     now = time.time()
-    return dict(ts=now,volume_followups=vr.FOLLOW.status(), pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=dict(scan_queue.status(),rest=scout.WORKER.status()), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
-        watch=[dict(sym=p["sym"][:14], mint=m, dex=p.get("dex"), source=(p.get("cd") or {}).get("source"), latest=p.get("last_quote"), previous=p.get("previous_quote"), wait_left=max(0, round(CFG["ENTRY_DELAY"] - (now - p["t"]))), price=p["price"], score=p["score"]) for m, p in list(PENDING.items())[:10]],
+    return dict(ts=now,strategy_release="strategy-desk-1",volume_followups=vr.FOLLOW.status(), strategy_watch=vr.FOLLOW.watch(time.time()), pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=dict(scan_queue.status(),rest=scout.WORKER.status()), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
+        watch=[dict(sym=p["sym"][:14], strategy=p.get("entry_strategy","standard"), mint=m, dex=p.get("dex"), source=(p.get("cd") or {}).get("source"), latest=p.get("last_quote"), previous=p.get("previous_quote"), wait_left=max(0, round(CFG["ENTRY_DELAY"] - (now - p["t"]))), price=p["price"], score=p["score"]) for m, p in list(PENDING.items())[:10]],
         reentry=[dict(sym=v[2], exit=v[0], mins_left=round(60 - (now - v[1]) / 60)) for v in REENTRY.values()],
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
         decision_s=dict(avg=round(sum(DEC) / len(DEC), 2) if DEC else None, p90=sorted(DEC)[int(len(DEC) * 0.9)] if DEC else None, n=len(DEC)),

@@ -60,6 +60,11 @@ class Followups:
                 self.stats['checked'] += 1
         return out
 
+    def watch(self, now):
+        with self.lock:
+            return [dict(mint=m,symbol=cd.get("name") or m[:8],due=start+DELAYS[i],reason=cd.get("retry_reason","missing volume"))
+                    for m,(start,i,cd) in sorted(self.jobs.items(),key=lambda x:x[1][0]+DELAYS[x[1][1]])[:12]]
+
     def status(self):
         with self.lock:
             return dict(self.stats,pending=len(self.jobs))
