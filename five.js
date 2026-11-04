@@ -65,6 +65,19 @@
       const rows=watch.map(w=>({...radar.find(t=>t.mint===w.mint),...w})).filter(w=>source==='All'||(String(w.dex)+' '+String(w.source)).toLowerCase().replace(/[^a-z0-9]/g,'').includes(source.toLowerCase()));
       mount(desk,'five-watch','<h2>Fast-mover watchlist</h2>'+empty('Automatically pinned while awaiting entry confirmation.')+'<div class="sleek-subnav">'+['All','PumpFun','StonkFun','Meteora'].map(k=>button('source',k,k,source===k)).join('')+'</div>'+(rows.map(w=>'<p>'+button('five-token',w.mint,w.sym)+' · '+escape(w.wait_left)+'s to recheck · '+(w.previous>0 && w.latest>0?((w.latest/w.previous-1)*100).toFixed(2)+'% since prior quote':'Waiting for two quotes')+'</p>').join('')||(ready?empty('No pending tokens for this source.'):wait))+'<details><summary>Browse token timelines</summary>'+radar.map(t=>button('five-token',t.mint,t.symbol)).join('')+'</details>',true);
     }
+    if(page==='research' && research==='diagnostics' && review){
+      const checks=data.decision_review?.diagnostics;
+      if(!checks){review.innerHTML=wait;return;}
+      const row=(left,right)=>'<div class="reason"><span>'+escape(left)+'</span><b>'+escape(right)+'</b></div>';
+      const reasons=checks.reasons.map(([label,count])=>row(label,count+' tokens')+
+        '<meter aria-label="'+escape(label)+'" min="0" max="'+checks.skip_count+'" value="'+count+'"></meter>').join('');
+      review.innerHTML='<h3>Why tokens were skipped</h3>'+empty('Latest skip per token in the last 24 hours, sampled from up to 4,000 logged decisions. '+checks.skip_count+' unique tokens.')+
+        (reasons||empty('No skip decisions recorded in this window.'))+
+        '<h3>Peak to final exit</h3>'+empty('Largest declines from a positive recorded peak to the last fill, in percentage points. '+checks.measured+' measurable openings out of '+checks.completed+' completed in the seven-day sample.')+
+        (checks.giveback.map(r=>row(r.symbol+' · '+r.book,r.giveback_pp+' pp')).join('')||empty('No measurable positive peak and final exit yet.'))+
+        '<h3>Confidence vs. outcomes</h3>'+empty('Average predicted win probability versus the share of openings that closed with a net gain. '+checks.scored+' of '+checks.completed+' openings had a recorded prediction.')+
+        (checks.calibration.map(r=>row((r.band*20)+'–'+((r.band+1)*20)+'% band · '+r.count+' trades',r.predicted+'% predicted / '+r.actual+'% won')).join('')||empty('Waiting for completed paper trades with recorded predictions.'));
+    }
     if(page==='research' && research==='race' && review){
       const books=data.opportunity_lab?.capacity?.books || [];
       review.innerHTML='<h3>Strategy race</h3>'+empty('Same qualified signals and modeled costs. Control allows 4 entries per hour and challenger allows 8. Each starts with $300 paper.')+(books.map(b=>'<div class="details"><b>'+escape(b.book)+'</b> · '+escape(b.open+b.closed)+' entries · '+escape(b.open)+' open<br>Realized net $'+escape(b.realized)+' · worst realized drawdown $'+escape(b.realized_drawdown??'pending')+'</div>').join('')||empty('Waiting for qualified candidates.'))+empty('Drawdown tracks closed results. Open losses are excluded.');

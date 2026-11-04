@@ -21,4 +21,13 @@ class ReviewTests(unittest.TestCase):
   self.c.execute('INSERT INTO events VALUES(?,?,?,?,?)',(99800,'kill','C','C','{}'));m=build(self.c,clock=lambda:100000)['missed'];self.assertEqual((m['measured'],m['unknown'],m['universe']),(1,2,3))
  def test_peak_not_invented_on_time_axis(self):
   self.trade();r=build(self.c,clock=lambda:100000)['replays'][0];self.assertEqual(r['peak_pct'],50);self.assertEqual(len(r['points']),2);self.assertEqual(r['giveback_pp'],30)
+ def test_diagnostics_dedupes_and_preserves_unknowns(self):
+  self.trade(); self.trade(m='B')
+  self.c.executemany('INSERT INTO events VALUES(?,?,?,?,?)',[
+   (99980,'kill','A','A','{"reason":"old"}'),(99990,'skip','A','A','{"reason":"volume"}'),
+   (99000,'paper_buy','A','A','{"win_prob":1}'),(99000,'paper_buy','B','B','{"win_prob":5}')])
+  d=build(self.c,clock=lambda:100000)['diagnostics']
+  self.assertEqual(d['reasons'],[('volume',1)])
+  self.assertEqual((d['scored'],d['completed'],d['measured']),(1,2,2))
+  self.assertEqual(d['calibration'],[dict(band=4,count=1,predicted=100,actual=100)])
 if __name__=='__main__':unittest.main()

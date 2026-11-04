@@ -42,6 +42,8 @@ def build():
     except Exception: d["agents5"] = None
     try: d["calendar"] = calendar_export(d)
     except Exception: d["calendar"] = None
+    import reliability
+    checks = reliability.assess([], {}, None, time.time())
     if pa.MODE:
         from common import dex_market
         c0 = conn()
@@ -49,7 +51,10 @@ def build():
             op = c0.execute("SELECT mint FROM positions WHERE status='open' AND version IN ('v3','vC')").fetchall()
             market = dex_market([r[0] for r in op]) if op else {}
             marks = {m: float(p.get("priceUsd") or 0) for m, p in market.items()}
+            c0.execute("BEGIN")
             shared = pa.summary(c0, marks)
+            audit_positions = c0.execute("SELECT mint,qty,cost FROM positions WHERE status='open' AND version IN ('v3','vC')").fetchall()
+            checks = reliability.assess(audit_positions, market, shared, time.time())
         finally: c0.close()
         d["shared_account"] = shared
         # Preserve the original per-strategy export for drill-downs and auditing.
@@ -107,6 +112,7 @@ def build():
         d['desk_five'] = five
     except Exception as err:
         d['desk_five'] = dict(error=type(err).__name__)
+    d["agents"].extend(checks)
     return d
 SKIP_BUCKETS = [("Volume too low", ("volume_1h",)), ("Liquidity too low", ("liquidity", "thin_pool")), ("No socials", ("socials",)),
     ("Copycat / scam name", ("copycat", "scam_name")), ("LP not locked", ("lp_locked",)),
