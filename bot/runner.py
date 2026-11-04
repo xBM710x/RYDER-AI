@@ -139,7 +139,7 @@ def evaluate(cd, pair, relax=False):
     PENDING[m] = dict(h0f=brain3.POOL.submit(brain6.gecko_holders, m), exp=bool(relax), fomo=isinstance(relax, float), fomo_f=relax if isinstance(relax, float) else None, t=time.time(), sym=sym, price=float(pair["priceUsd"]), score=sc2, creator=cr, res=res, rate=float(hr or 0), holders=int(hn or 0),
                       owners=[], dex=cd["dex"], cd=dict(source=cd.get("source"), t=cd.get("t")), feats=f, bucket=bk, why_adj=why_adj, struct=locals().get("d", ""), dev=locals().get("dd", ""), impact=locals().get("imp"),
                       b7=b7, t0=time.time(), devbal=detect.dev_balance(cr, m) if cr else None, tx5=(pair.get("txns") or {}).get("m5"), liq0=(pair.get("liquidity") or {}).get("usd"))
-    brain8.count("entry_wait"); log("entry_wait", m, sym, price=float(pair["priceUsd"]), delay=CFG["ENTRY_DELAY"], score=sc2)
+    brain8.count("entry_wait"); log("entry_wait", m, sym, price=float(pair["priceUsd"]), delay=CFG["ENTRY_DELAY"], score=sc2, experimental=bool(relax))
 def pending():
     brain6.WANT.clear(); brain6.WANT.update(set(PENDING) | OPENM)  # 222 stream only what we wait on or hold
     early = [m for m, p in PENDING.items() if time.time() - p["t"] < CFG["ENTRY_DELAY"]]
@@ -149,6 +149,9 @@ def pending():
             pr = mk.get(m)
             if not pr: continue
             brain2.tick(m, pr); q = float(pr.get("priceUsd") or 0); p = PENDING.get(m)
+            if p and q:
+                p["previous_quote"] = p.get("last_quote", p["price"])
+                p["last_quote"] = q
             if p and q and q / p["price"] - 1 < CFG["MAX_DUMP"]: PENDING.pop(m, None); log("kill", m, p["sym"], reason="recheck", detail=f"dumped {(q/p['price']-1)*100:+.1f}% mid-wait (early abort)", final=True)
             elif p and p["score"] >= 0.75 and time.time() - p["t"] >= 45 and brain2.pressure(pr) > 0.6: p["t"] -= CFG["ENTRY_DELAY"]
             elif p and p["score"] >= 0.65 and time.time() - p["t"] >= 60 and brain7.holds_level(m)[0] != "spike_fade": p["t"] -= CFG["ENTRY_DELAY"]  # 368
@@ -291,6 +294,7 @@ def pending():
         ex["council"] = council; ex["_res"] = p.get("res")  # b17 scorecard input (not logged)
         if council: mult = round(mult * brain6.STARTER, 3); ex["starter"] = True  # 254 starter buy; add-on after confirmation
         ex["_runner_eligible"] = True  # display-only capacity lab receives only this fully gated handoff
+        log("entry_confirmed", m, p["sym"], experimental=bool(p.get("exp")), why=ex.get("why"))
         ok = executor.buy(m, p["sym"], pair, p["score"], mult=mult, stop_pct=brain3.strength_stop(extras.vol_stop(pair), (council or {}).get("consensus")), conf=conf, extra=ex)
         if p["score"] >= CFG["AB_SCORE"]: executor.buy(m, p["sym"], pair, p["score"], ver=CFG["VERSION"] + "b", conf=conf, extra=ex)  # 38: B book = stricter score, fixed -8%
         if ok: ENTRYLIQ[m] = (pair.get("liquidity") or {}).get("usd") or 0; brain8.count("bought")
@@ -428,7 +432,7 @@ def state():
     from common import HEALTH
     now = time.time()
     return dict(ts=now, pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=__import__("scan_scheduler").INSTANCE.status(), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
-        watch=[dict(sym=p["sym"][:14], mint=m, wait_left=max(0, round(CFG["ENTRY_DELAY"] - (now - p["t"]))), price=p["price"], score=p["score"]) for m, p in list(PENDING.items())[:10]],
+        watch=[dict(sym=p["sym"][:14], mint=m, dex=p.get("dex"), source=(p.get("cd") or {}).get("source"), latest=p.get("last_quote"), previous=p.get("previous_quote"), wait_left=max(0, round(CFG["ENTRY_DELAY"] - (now - p["t"]))), price=p["price"], score=p["score"]) for m, p in list(PENDING.items())[:10]],
         reentry=[dict(sym=v[2], exit=v[0], mins_left=round(60 - (now - v[1]) / 60)) for v in REENTRY.values()],
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
         decision_s=dict(avg=round(sum(DEC) / len(DEC), 2) if DEC else None, p90=sorted(DEC)[int(len(DEC) * 0.9)] if DEC else None, n=len(DEC)),

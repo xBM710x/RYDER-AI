@@ -92,6 +92,21 @@ def build():
         try: d['decision_review'] = decision_review.build(c0, hb)
         finally: c0.close()
     except Exception as e: d['decision_review'] = dict(error=type(e).__name__)
+    try:
+        import desk_five
+        from contextlib import closing
+        with closing(conn()) as db:
+            five = desk_five.build(db)
+            books = ('v3','vC') if scope == 'shared' else ('v3','v3')
+            five['fills'] = [dict(r) for r in db.execute("""
+                SELECT mint,symbol,opened,closed,reason,version FROM positions
+                WHERE version IN (?,?) ORDER BY COALESCE(closed,opened) DESC LIMIT 200""", books)]
+        with closing(desk_observations.connect()) as observations:
+            five['ranges'] = desk_five.equity_ranges(observations,scope,time.time())
+        five['watch'] = hb.get('watch') or []
+        d['desk_five'] = five
+    except Exception as err:
+        d['desk_five'] = dict(error=type(err).__name__)
     return d
 SKIP_BUCKETS = [("Volume too low", ("volume_1h",)), ("Liquidity too low", ("liquidity", "thin_pool")), ("No socials", ("socials",)),
     ("Copycat / scam name", ("copycat", "scam_name")), ("LP not locked", ("lp_locked",)),

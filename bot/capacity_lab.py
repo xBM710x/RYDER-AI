@@ -105,6 +105,12 @@ def summary(clock=time.time):
             p=[dict(r) for r in c.execute('SELECT * FROM fills WHERE book=?',(book,))]
             opened=[r for r in p if r['closed'] is None];closed=[r for r in p if r['closed'] is not None]
             stale=sum(clock()-r['mark_ts']>30 for r in opened)
-            rows.append(dict(book=book,max_entries_per_hour=limit,cash=round(cash,2),equity=round(cash+sum(r['qty']*r['mark'] for r in opened),2) if not stale else None,open=len(opened),closed=len(closed),realized=round(sum(r['pnl'] for r in closed),2),stale_marks=stale))
+            running = peak = 300.0
+            drawdown = 0.0
+            for fill in sorted(closed, key=lambda r: (r["closed"],r["id"])):
+                running += fill["pnl"]
+                peak = max(peak, running)
+                drawdown = max(drawdown, peak-running)
+            rows.append(dict(realized_drawdown=round(drawdown,2),book=book,max_entries_per_hour=limit,cash=round(cash,2),equity=round(cash+sum(r['qty']*r['mark'] for r in opened),2) if not stale else None,open=len(opened),closed=len(closed),realized=round(sum(r['pnl'] for r in closed),2),stale_marks=stale))
         return dict(status='paper-only capacity study',books=rows,stats=dict(STATS),note='Two separate simulated $300 balances; not the main/shared account. Same qualified signals, entry model and simple exits; only hourly capacity differs. Not a replay of the full main exit strategy. UTC day loss cap $45. Missing/stale quotes never trigger fills. No automatic promotion.')
     finally:c.close()
