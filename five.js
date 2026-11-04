@@ -69,6 +69,7 @@
       const bookHtml=books.map(book=>'<details><summary>'+escape(book.book)+' lab · '+escape(book.open)+' open / '+escape(book.closed)+' closed</summary>'+
         ((book.activity||[]).map(fill=>empty(when(fill.ts)+' · '+fill.side+' '+fill.symbol+' · $'+fill.cost+' allocated'+(fill.pnl==null?'':' · net $'+fill.pnl))).join('')||empty('Waiting for published fill details.'))+'</details>').join('');
       mount(pulse,'work-feed','<h2>RYDER at work</h2>'+empty('Snapshot: '+(data.asof||'unknown'))+
+        (data.opportunity_lab?.scheduler?.rest?empty('Recent queue wait (90th percentile): '+(data.opportunity_lab.scheduler.wait_p90_s??'—')+'s · last background discovery poll: '+(data.opportunity_lab.scheduler.rest.last_poll_s??'—')+'s'):'')+
         '<p>Main desk · '+escape(data.trades)+' reported trades</p>'+recent.map(r=>empty(r.t+' · '+r.ag+' · '+r.text)).join('')+
         '<h3>Volume lab · separate paper accounts</h3>'+ (bookHtml||empty('Waiting for lab activity.')),true);
       const stages=feed.stages || [];

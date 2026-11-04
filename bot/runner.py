@@ -2,6 +2,7 @@
 import time, sys, traceback, threading
 from common import CFG, dex_market
 import volume_research as vr
+from scan_scheduler import INSTANCE as scan_queue
 from logger import conn, log
 import brain19, brain18, brain17, brain16, brain14, brain13, brain12, brain11, brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
 REENTRY = {}  # 34: mint -> (exit price, ts, sym)
@@ -449,7 +450,7 @@ def jobs(k):
 def state():
     from common import HEALTH
     now = time.time()
-    return dict(ts=now,volume_followups=vr.FOLLOW.status(), pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=__import__("scan_scheduler").INSTANCE.status(), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
+    return dict(ts=now,volume_followups=vr.FOLLOW.status(), pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=dict(scan_queue.status(),rest=scout.WORKER.status()), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
         watch=[dict(sym=p["sym"][:14], mint=m, dex=p.get("dex"), source=(p.get("cd") or {}).get("source"), latest=p.get("last_quote"), previous=p.get("previous_quote"), wait_left=max(0, round(CFG["ENTRY_DELAY"] - (now - p["t"]))), price=p["price"], score=p["score"]) for m, p in list(PENDING.items())[:10]],
         reentry=[dict(sym=v[2], exit=v[0], mins_left=round(60 - (now - v[1]) / 60)) for v in REENTRY.values()],
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
@@ -516,7 +517,11 @@ def main(cycles=None):
             try: scan(); n += 1
             except Exception: log("error", where="scan", trace=traceback.format_exc()[-800:])
             ss = brain10.scan_hint(brain4.scan_sec(feed.STATS, len(INFLIGHT) + len(PENDING), CFG["SCAN_SEC"]))  # 198 / 451
-            while time.time() - t0 < ss and not feed.NEW: brain11.tick("scan"); time.sleep(1)  # wake immediately on live launches
+            while time.time() - t0 < ss:
+                if feed.NEW or scout.WORKER.ready.is_set() or scan_queue.has_room_for_pending(INFLIGHT):
+                    break
+                brain11.tick("scan")
+                time.sleep(0.25)  # wake immediately on live launches
             time.sleep(0.5)
     if cycles is not None: return scan_loop(0, cycles)
     SL = [threading.Thread(target=scan_loop, args=(0,), daemon=True, name="scan_loop")]; SL[0].start()

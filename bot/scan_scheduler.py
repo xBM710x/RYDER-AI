@@ -4,7 +4,7 @@ import threading
 import time
 class Scheduler:
     def __init__(self,capacity=1000,ttl=600,max_inflight=16):
-        self.capacity=capacity;self.ttl=ttl;self.max_inflight=max_inflight;self.pending=collections.OrderedDict();self.turn=0;self.lock=threading.Lock();self.stats=collections.Counter()
+        self.capacity=capacity;self.ttl=ttl;self.max_inflight=max_inflight;self.pending=collections.OrderedDict();self.turn=0;self.lock=threading.Lock();self.stats=collections.Counter();self.waits=collections.deque(maxlen=256)
     def offer(self,candidates,clock=time.time):
         now=clock()
         with self.lock:
@@ -23,9 +23,12 @@ class Scheduler:
                 if m not in inflight:groups.setdefault(cd.get('source') or 'unknown',[]).append(m)
             sources=list(groups);out=[]
             while budget and sources:
-                idx=self.turn%len(sources);src=sources[idx];m=groups[src].pop(0);_,cd=self.pending.pop(m);out.append(cd);budget-=1;self.turn+=1
+                idx=self.turn%len(sources);src=sources[idx];m=groups[src].pop(0);queued,cd=self.pending.pop(m);self.waits.append(max(0,now-queued));out.append(cd);budget-=1;self.turn+=1
                 if not groups[src]:sources.remove(src)
             self.stats['dispatched']+=len(out);return out
+    def has_room_for_pending(self, inflight):
+        with self.lock:
+            return len(inflight)<self.max_inflight and any(m not in inflight for m in self.pending)
     def status(self):
-        with self.lock:return dict(self.stats,pending=len(self.pending),max_pending=self.capacity,max_inflight=self.max_inflight,ttl_s=self.ttl)
+        with self.lock:return dict(self.stats,wait_p90_s=round(sorted(self.waits)[int(.9*(len(self.waits)-1))],2) if self.waits else None,pending=len(self.pending),max_pending=self.capacity,max_inflight=self.max_inflight,ttl_s=self.ttl)
 INSTANCE=Scheduler()

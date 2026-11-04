@@ -3,6 +3,7 @@ import time
 from common import http_json, CFG
 from logger import conn
 import feed
+from discovery_worker import WORKER
 DEX_TAG = {"pump-fun": "pumpfun", "pumpswap": "pumpswap", "pumpfun": "pumpfun", "raydium": "raydium", "raydium-clmm": "raydium",
            "raydium-launchlab": "letsbonk/launchlab", "meteora": "meteora", "meteora-dbc": "meteora", "meteora-damm-v2": "meteora", "orca": "orca"}
 def tag(dex, mint=""):
@@ -13,7 +14,7 @@ def tag(dex, mint=""):
 _LP = [0.0]
 BOOSTED = {}
 def boost_bump(m): return 0.03 if time.time() - BOOSTED.get(m, 0) < 3600 else 0.0
-def scout():
+def _poll_rest():
     cands = {}
     poll = time.time() - _LP[0] >= CFG["SCAN_SEC"]  # REST polling at most every SCAN_SEC; websocket coins handled instantly
     if poll: _LP[0] = time.time()
@@ -33,21 +34,26 @@ def scout():
                     if "boosts" in url: BOOSTED[t["tokenAddress"]] = time.time()  # boosted/trending -> small score bump later (safety checks unchanged)
                     cands.setdefault(t["tokenAddress"], dict(mint=t["tokenAddress"], name="", source="dexscreener-boost" if "boosts" in url else "dexscreener", dex=tag("", t["tokenAddress"])))
         except Exception as e: print("scout dexs err", e)
-    import wallet_watch
-    while wallet_watch.QUEUE: t = wallet_watch.QUEUE.pop(0); t["dex"] = tag("", t["mint"]); cands[t["mint"]] = t  # Fomo-wallet buy signals
-    for t in feed.drain():
-        cands.setdefault(t["mint"], t)  # v3 live websocket launches
-        if t.get("source") == "pumpportal-migration": __import__("brain8").migration_recheck(t["mint"])  # 377
     if poll:
         for t in __import__("brain8").discover(): cands.setdefault(t["mint"], t); __import__("brain10").note_trend(t["mint"], t["source"])  # 374/375/466
-    for m in __import__("brain8").due_migrations(): cands.setdefault(m, dict(mint=m, name="", source="pumpportal-migration-recheck", dex="pumpswap", grad=True, recheck=True))
-    for m, v in __import__("brain8").due_second(): cands.setdefault(m, dict(mint=m, name="", source="second-chance", dex="unknown", recheck=True, v0=v))
-    for t in __import__("brain10").due(): cands[t["mint"]] = t  # 444 accel-watch re-checks
     # StonkFun candidates pass exactly the same market resolution + safety gates.
     for t in __import__('stonkfun').discover(): cands.setdefault(t['mint'], t)
     from market_breadth import INSTANCE as deeper
     for t in deeper.discover(lambda url: http_json(url, timeout=8, retries=0)):
         t['dex'] = tag(t['dex'], t['mint']); cands.setdefault(t['mint'], t)
+    return list(cands.values())
+
+def scout():
+    cands = {row['mint']: row for row in WORKER.collect(_poll_rest)}
+    import wallet_watch
+    while wallet_watch.QUEUE: t = wallet_watch.QUEUE.pop(0); t["dex"] = tag("", t["mint"]); cands[t["mint"]] = t  # Fomo-wallet buy signals
+    for t in feed.drain():
+        if t.get("source") == "pumpportal-migration": cands[t["mint"]] = t
+        else: cands.setdefault(t["mint"], t)
+        if t.get("source") == "pumpportal-migration": __import__("brain8").migration_recheck(t["mint"])  # 377
+    for m in __import__("brain8").due_migrations(): cands.setdefault(m, dict(mint=m, name="", source="pumpportal-migration-recheck", dex="pumpswap", grad=True, recheck=True))
+    for m, v in __import__("brain8").due_second(): cands.setdefault(m, dict(mint=m, name="", source="second-chance", dex="unknown", recheck=True, v0=v))
+    for t in __import__("brain10").due(): cands[t["mint"]] = t  # 444 accel-watch re-checks
     # handoff: only tokens never finalized and due for (re)check
     c = conn(); now = time.time(); out = []
     for m, d in cands.items():
