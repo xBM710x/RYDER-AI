@@ -11,12 +11,15 @@ def check(mint, pair, relax=False):  # relax: v3x experimental desk accepts ~50%
     import brain8
     if vol is not None and CFG["VERSION"] not in ("v1", "v2"): vol = brain8.projected_vol(pair)  # 364/387/398
     vb = lambda: brain8.vol_bar(__import__("brain4").vol_bar(pair)) if CFG["VERSION"] not in ("v1", "v2") else __import__("brain4").vol_bar(pair)  # 367/378
-    standard = vb()
+    standard = base_standard = vb()
     if not relax and CFG["VERSION"] == "v3":
         from paper_entry_window import threshold
         standard = threshold(pair,standard,__import__("time").time())
     res["volume_1h"] = ("unknown", "no DexScreener pair", "dexscreener") if vol is None else \
         (("pass" if vol >= (max(__import__("fomo").MIN_VOL_FLOOR, __import__("brain4").vol_bar(pair) * relax) if isinstance(relax, float) else standard * (0.5 if relax else 1)) else "fail"), f"${vol:,.0f}", "dexscreener")
+    if not relax and CFG["VERSION"] == "v3" and standard < base_standard:
+        status, detail, source = res["volume_1h"]
+        res["volume_1h"] = (status, detail + f"; paper activity window, required ${standard:,.0f}", source)
     if CFG["VERSION"] not in ("v1", "v2"):
         liq = ((pair or {}).get("liquidity") or {}).get("usd") or brain8.curve_liq(pair)  # 388
         res["liquidity"] = ("unknown", "no liquidity data", "dexscreener") if liq is None else (("pass" if liq >= (max(__import__("fomo").MIN_LIQ_FLOOR, CFG["MIN_LIQ"] * relax) if isinstance(relax, float) else brain8.liq_bar(CFG["MIN_LIQ"])) else "fail"), f"${liq:,.0f}", "dexscreener")  # 367
