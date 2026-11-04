@@ -122,6 +122,12 @@ def build():
         d['volume_research'] = research
     except Exception as err:
         d['volume_research'] = dict(error=type(err).__name__)
+    try:
+        import session_research
+        with closing(conn()) as session_db, closing(desk_observations.connect()) as obs:
+            d['session_research'] = session_research.build(session_db,obs,time.time())
+    except Exception as err:
+        d['session_research'] = dict(error=type(err).__name__)
     d["agents"].extend(checks)
     return d
 SKIP_BUCKETS = [("Volume too low", ("volume_1h",)), ("Liquidity too low", ("liquidity", "thin_pool")), ("No socials", ("socials",)),

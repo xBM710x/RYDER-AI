@@ -77,7 +77,12 @@ def evaluate(cd, pair, relax=False):
         c.execute("UPDATE seen SET checks=?, last_ts=?, done=? WHERE mint=?", (checks, time.time(), int(final), m)); c.commit(); c.close()
     if len(res) > 2: DEEP.append(round(time.time() - t0, 2))
     if not ok:
-        kill(m, sym, why.split(":")[0], why, final, pair, dex=cd["dex"], source=cd["source"], checks={k: v[0] + "/" + v[2] for k, v in res.items()})
+        replay_evidence = {}
+        if not relax and volume_state == "fail" and pair and CFG["VERSION"] not in ("v1","v2"):
+            threshold = brain8.vol_bar(brain4.vol_bar(pair))
+            if brain8.projected_vol(pair) >= threshold*0.75:
+                replay_evidence["volume_rule_replay"] = __import__("session_research").changed_rule(res)
+        kill(m, sym, why.split(":")[0], why, final, pair, dex=cd["dex"], source=cd["source"], **replay_evidence, checks={k: v[0] + "/" + v[2] for k, v in res.items()})
         if checks == 1: DEC.append(round(time.time() - first, 2))
         if final and not pair: brain7.mark_dead(m)  # 335
         vol = ((pair or {}).get("volume") or {}).get("h1") or 0

@@ -5,6 +5,11 @@
   const empty = text => '<p class="sub">' + escape(text) + '</p>';
   const button = (name, value, text, active=false) => '<button type="button" data-' + name + '="' + escape(value) + '" aria-pressed="' + active + '">' + escape(text) + '</button>';
   let stage = -1, source = 'All', range = '24H';
+  function voteSplit(votes){
+    const scores=Object.entries(votes||{}).map(([agent,v])=>[agent,parseFloat(String(v).replace(/^\[/,''))]);
+    const objections=scores.filter(([,score])=>score<0.5);
+    return objections.length && scores.some(([,score])=>score>=0.5)?empty('Split decision · objections: '+objections.map(([agent])=>agent).join(', ')):'';
+  }
   function timeline(mint) {
     const feed = data.desk_five || {};
     const token = feed.tokens?.[mint] || {};
@@ -22,7 +27,7 @@
     }
     const dialog = document.querySelector('#five-timeline') || document.body.appendChild(document.createElement('dialog'));
     dialog.id='five-timeline';
-    dialog.innerHTML='<h2>'+escape(token.symbol || radar?.symbol || mint.slice(0,8))+' timeline</h2><p class="sub">'+escape(mint)+'</p>'+events.sort((a,b)=>a.ts-b.ts).map(e=>'<p><b>'+escape(e.kind)+'</b> · '+escape(e.displayTime || when(e.ts))+'<br>'+escape(e.why || '')+'</p>'+Object.entries(e.votes||{}).map(([agent,vote])=>empty(agent+' · '+vote)).join('')).join('')+(events.length?'':empty('No decision history in this snapshot.'))+'<button>Close</button>';
+    dialog.innerHTML='<h2>'+escape(token.symbol || radar?.symbol || mint.slice(0,8))+' timeline</h2><p class="sub">'+escape(mint)+'</p>'+events.sort((a,b)=>a.ts-b.ts).map(e=>'<p><b>'+escape(e.kind)+'</b> · '+escape(e.displayTime || when(e.ts))+'<br>'+escape(e.why || '')+'</p>'+voteSplit(e.votes)+Object.entries(e.votes||{}).map(([agent,vote])=>empty(agent+' · '+vote)).join('')).join('')+(events.length?'':empty('No decision history in this snapshot.'))+'<button>Close</button>';
     dialog.querySelector('button').onclick=()=>dialog.close();
     if(!dialog.open) dialog.showModal();
   }
@@ -37,6 +42,27 @@
     const feed=data.desk_five || {}, ready=Array.isArray(feed.stages);
     const wait=empty('Waiting for the upgraded Mac publisher.');
     const pulse=document.querySelector('#sleek-pulse'), review=document.querySelector('#sleek-research-body');
+    const session=data.session_research;
+    const usable=session && !session.error;
+    if(page==='overview' && pulse){
+      const metrics=usable?[['New tokens',session.new],['Rescued',session.rescued],['Paper entries',session.orders],['Net realized','$'+session.pnl],['Top blocker',session.blockers[0]?.[0]||'None recorded']]:[];
+      mount(pulse,'six-recap','<details><summary>Session recap · since 6 PM Pacific</summary>'+
+        (usable? metrics.map(([key,val])=>'<details><summary>'+escape(key)+' · '+escape(val)+'</summary>'+empty((session.evidence[key]||[]).join(' · ')||'No matching records.')+'</details>').join(''):wait)+'</details>',true);
+    }
+    if(page==='research' && research==='session' && review){
+      const rows=(values,fmt)=>values.length?values.map(x=>empty(fmt(x))).join(''):empty('Waiting for qualifying observations.');
+      review.innerHTML=!usable?empty(session?.error?'Session collector unavailable.':'Waiting for the updated Mac publisher.'):
+        '<h3>Skipped-token paper fills</h3>'+empty(session.measured+' of '+session.sample+' sampled skipped tokens (at least 45 minutes old) had two usable quotes on the same pool. $25 simulated entry within 30 minutes of skip; exit 5–15 minutes later. Includes modeled pool impact and 0.3% fees each way.')+
+        rows(session.replays,r=>r.symbol+' · $'+r.net+' net · '+when(r.entry)+' → '+when(r.exit))+
+        '<h3>Lower-volume full-rule replay</h3>'+empty('Candidates between 75% and 100% of the normal volume bar. A recorded failing gate blocks the entry. Missing downstream evidence stays unknown.')+
+        rows(session.rules,r=>r[0]+' · '+r[1]+' decisions')+
+        '<h3>Launch to first usable quote</h3>'+empty('Median seconds from pool creation to the first observed fresh price with positive liquidity. Timing starts with this collector.')+
+        rows(session.timing,r=>r.venue+' · '+(r.median_s??'unknown')+' seconds · '+r.n+' timed · '+r.unknown+' missing launch times')+
+        '<h3>Exit-depth test</h3>'+empty('Pre-entry estimate for the planned paper position. Compares normal with half the quoted liquidity, using a balanced constant-product pool model.')+
+        rows(session.depths,r=>r.symbol+' · estimated proceeds $'+r.expected+' · half depth $'+r.half)+
+        '<h3>Agent disagreement review</h3>'+empty('An objection is a vote below 0.50 while another vote is at least 0.50. Counts are observed outcomes, including modeled skipped trades.')+
+        rows(Object.entries(session.agents),([agent,r])=>agent+' · completed: '+(r.loss||0)+' losses / '+(r.gain||0)+' gains / '+(r.flat||0)+' flat · skipped replays: '+(r.skipped_gain||0)+' gains / '+(r.skipped_nonpositive||0)+' flat or losses');
+    }
     if(page==='overview' && pulse) {
       const stages=feed.stages || [];
       mount(pulse,'five-funnel','<h2>Trade funnel</h2>'+empty('Unique tokens first seen in the last 24 hours. Select a stage for up to 20 examples.')+(ready?'<div class="sleek-subnav">'+stages.map((s,i)=>button('stage',i,s.label+' · '+s.count,stage===i)).join('')+'</div>':wait)+(stages[stage]?.mints.map(m=>button('five-token',m,(feed.tokens[m]?.symbol || m.slice(0,8))+' · '+(feed.tokens[m]?.events?.at(-1)?.why || feed.tokens[m]?.events?.at(-1)?.kind || 'discovered'))).join('')||''),true);

@@ -18,6 +18,11 @@ def connect():
     c.execute('PRAGMA journal_mode=WAL')
     c.executescript('''CREATE TABLE IF NOT EXISTS tokens(mint TEXT PRIMARY KEY,symbol TEXT,source TEXT,dex TEXT,first_ts REAL,last_ts REAL,created REAL,price REAL,liquidity REAL,regime TEXT);
     CREATE TABLE IF NOT EXISTS equity(ts INTEGER PRIMARY KEY,value REAL,scope TEXT);
+    CREATE TABLE IF NOT EXISTS first_usable(mint TEXT PRIMARY KEY,venue TEXT,ts REAL,created REAL);
+    CREATE INDEX IF NOT EXISTS usable_ts ON first_usable(ts);
+    CREATE TABLE IF NOT EXISTS research_quotes(mint TEXT,pool TEXT,bucket INTEGER,ts REAL,price REAL,liq REAL,PRIMARY KEY(mint,pool,bucket));
+    CREATE INDEX IF NOT EXISTS quotes_time ON research_quotes(ts);
+    CREATE INDEX IF NOT EXISTS quotes_mint_time ON research_quotes(mint,ts);
     CREATE INDEX IF NOT EXISTS tokens_last ON tokens(last_ts);''')
     return c
 
@@ -30,6 +35,13 @@ def observe(candidates,market,regime=None,clock=time.time):
             c.execute('''INSERT INTO tokens VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(mint) DO UPDATE SET
               symbol=excluded.symbol,dex=excluded.dex,last_ts=excluded.last_ts,created=COALESCE(excluded.created,tokens.created),price=excluded.price,liquidity=excluded.liquidity,regime=excluded.regime''',
               (cd['mint'],(pair.get('baseToken') or {}).get('symbol') or cd.get('name') or cd['mint'][:8],cd.get('source') or 'Unknown',pair.get('dexId') or cd.get('dex') or 'Unknown',now,now,created/1000 if created else None,finite(pair.get('priceUsd')),finite((pair.get('liquidity') or {}).get('usd')),regime or 'Unknown'))
+            price=finite(pair.get('priceUsd')); liq=finite((pair.get('liquidity') or {}).get('usd'))
+            stamp=finite(pair.get('_ts')); pool=pair.get('pairAddress')
+            if price and price>0 and liq and liq>0 and pool and stamp and 0<=now-stamp<=30:
+                venue=pair.get('dexId') or cd.get('dex') or 'unknown'
+                c.execute('INSERT OR IGNORE INTO first_usable VALUES(?,?,?,?)',(cd['mint'],venue,stamp,created/1000 if created else None))
+                c.execute('INSERT OR IGNORE INTO research_quotes VALUES(?,?,?,?,?,?)',(cd['mint'],pool,int(stamp//60),stamp,price,liq))
+        c.execute('DELETE FROM research_quotes WHERE ts<?',(now-2*86400,))
         c.commit()
 
 def equity(value,scope,clock=time.time):

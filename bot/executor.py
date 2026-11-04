@@ -72,6 +72,7 @@ def buy(mint, symbol, pair, score, ver=None, mult=1.0, stop_pct=None, conf=None,
     # Recheck under the shared-account write lock; do not raise the main trade limit.
     if ver == CFG['VERSION'] and c.execute("SELECT COUNT(*) FROM positions WHERE version=? AND opened>?", (ver, time.time()-3600)).fetchone()[0] >= CFG['MAX_PER_HOUR']:
         c.rollback(); c.close(); log('skip', mint, symbol, reason=f"max {CFG['MAX_PER_HOUR']} trades/hour", fully_gated=True); return
+    extra["exit_depth"] = __import__("session_research").depth(size/price, quote, (pair.get("liquidity") or {}).get("usd"))
     c.execute("INSERT INTO positions(mint,symbol,pair,entry,qty,cost,stop,peak,trailing,opened,status,version) VALUES(?,?,?,?,?,?,?,?,0,?,'open',?)",
               (mint, symbol, pair["pairAddress"], price, size / price, size, stop, price, time.time(), ver))
     c.execute("UPDATE account SET v=v-? WHERE k=?", (size, CK)); c.commit(); c.close()
