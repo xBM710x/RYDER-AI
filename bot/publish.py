@@ -112,6 +112,16 @@ def build():
         d['desk_five'] = five
     except Exception as err:
         d['desk_five'] = dict(error=type(err).__name__)
+    try:
+        import volume_research
+        from contextlib import closing
+        with closing(conn()) as research_db:
+            research = volume_research.evidence(research_db,time.time())
+        research['followups'] = hb.get('volume_followups') or {}
+        research['books'] = volume_research.summary()
+        d['volume_research'] = research
+    except Exception as err:
+        d['volume_research'] = dict(error=type(err).__name__)
     d["agents"].extend(checks)
     return d
 SKIP_BUCKETS = [("Volume too low", ("volume_1h",)), ("Liquidity too low", ("liquidity", "thin_pool")), ("No socials", ("socials",)),

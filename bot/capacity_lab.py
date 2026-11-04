@@ -24,17 +24,17 @@ def offer(mint,symbol,pair,score,source=None,clock=time.time):
     try:QUEUE.put_nowait(dict(mint=mint,symbol=symbol,quote=px,liq=liq,observed=ts,offered=now,score=score,source=source or 'Unknown'));return True
     except queue.Full:STATS['overflow']+=1;return False
 
-def connect():
-    c=sqlite3.connect(str(DB),timeout=1);c.row_factory=sqlite3.Row;c.execute('PRAGMA journal_mode=WAL')
+def connect(db_path=None,limits=None):
+    c=sqlite3.connect(str(db_path or DB),timeout=1);c.row_factory=sqlite3.Row;c.execute('PRAGMA journal_mode=WAL')
     c.executescript('''CREATE TABLE IF NOT EXISTS wallets(book TEXT PRIMARY KEY,cash REAL);
     CREATE TABLE IF NOT EXISTS fills(id INTEGER PRIMARY KEY,book TEXT,mint TEXT,symbol TEXT,source TEXT,opened REAL,entry REAL,qty REAL,cost REAL,peak REAL,mark REAL,mark_ts REAL,closed REAL,exit REAL,pnl REAL,reason TEXT);
     CREATE TABLE IF NOT EXISTS signals(mint TEXT,ts REAL,source TEXT,PRIMARY KEY(mint,ts));''')
-    for book in BOOKS:c.execute('INSERT OR IGNORE INTO wallets VALUES(?,300)',(book,))
+    for book in (limits or BOOKS):c.execute('INSERT OR IGNORE INTO wallets VALUES(?,300)',(book,))
     c.commit();return c
 
 def slip_cost(size,liq):return min(.02,.0015+size/liq)
 
-def enter(c,signal,clock=time.time):
+def enter(c,signal,clock=time.time,limits=None):
     now=clock()
     if not 0<=now-signal['observed']<=30 or not positive(signal.get('quote')) or not positive(signal.get('liq')):return
     # One eligibility observation per mint per minute; neither book gets duplicate signals.
@@ -42,7 +42,7 @@ def enter(c,signal,clock=time.time):
     if c.execute('SELECT 1 FROM signals WHERE mint=? AND ts=?',(signal['mint'],ts)).fetchone():return
     c.execute('INSERT INTO signals VALUES(?,?,?)',(signal['mint'],ts,signal['source']))
     day0=int(now//86400)*86400
-    for book,limit in BOOKS.items():
+    for book,limit in (limits or BOOKS).items():
         if c.execute('SELECT 1 FROM fills WHERE book=? AND mint=? AND closed IS NULL',(book,signal['mint'])).fetchone():continue
         if c.execute('SELECT COUNT(*) FROM fills WHERE book=? AND opened>?',(book,now-3600)).fetchone()[0]>=limit:continue
         if c.execute('SELECT COALESCE(SUM(pnl),0) FROM fills WHERE book=? AND closed>=?',(book,day0)).fetchone()[0]<=-45:continue
@@ -95,12 +95,13 @@ def start():
     if _THREAD and _THREAD.is_alive():return
     _THREAD=threading.Thread(target=run,daemon=True,name='capacity-lab');_THREAD.start()
 
-def summary(clock=time.time):
-    if not DB.exists():return dict(status='collecting fully eligible signals',books=[],stats=dict(STATS))
-    c=sqlite3.connect(DB.as_uri()+'?mode=ro',uri=True,timeout=1);c.row_factory=sqlite3.Row
+def summary(clock=time.time,db_path=None,limits=None):
+    path=db_path or DB
+    if not path.exists():return dict(status='collecting fully eligible signals',books=[],stats=dict(STATS))
+    c=sqlite3.connect(path.as_uri()+'?mode=ro',uri=True,timeout=1);c.row_factory=sqlite3.Row
     try:
         rows=[]
-        for book,limit in BOOKS.items():
+        for book,limit in (limits or BOOKS).items():
             cash=c.execute('SELECT cash FROM wallets WHERE book=?',(book,)).fetchone()[0]
             p=[dict(r) for r in c.execute('SELECT * FROM fills WHERE book=?',(book,))]
             opened=[r for r in p if r['closed'] is None];closed=[r for r in p if r['closed'] is not None]

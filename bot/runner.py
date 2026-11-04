@@ -1,6 +1,7 @@
 """Night Desk runner (PAPER ONLY). v3: scan every 30s + live websocket launches, positions every 1s, delayed entry with recheck."""
 import time, sys, traceback, threading
 from common import CFG, dex_market
+import volume_research as vr
 from logger import conn, log
 import brain19, brain18, brain17, brain16, brain14, brain13, brain12, brain11, brain10, brain9, runner_start, brain8, brain7, brain6, brain5, brain4, brain3, brain2, scout, filters, analyst, executor, risk, detect, feed, json, os, extras, collections, brain, more, alerts, fomo
 REENTRY = {}  # 34: mint -> (exit price, ts, sym)
@@ -19,8 +20,10 @@ INFLIGHT = set()
 def _scan():
     cands, total = scout.scout(); cands = [c for c in cands if c["mint"] not in INFLIGHT and not brain2.rejected(c["mint"])]  # 138
     from scan_scheduler import INSTANCE as scheduler
-    scheduler.offer(cands)
-    cands = scheduler.take(INFLIGHT, brain2.rejected)
+    due = vr.FOLLOW.due(time.time(), lambda m: m in INFLIGHT or m in PENDING or brain2.rejected(m), min(4,max(0,scheduler.max_inflight-len(INFLIGHT))))
+    reserved = {cd["mint"] for cd in due}
+    scheduler.offer([cd for cd in cands if not vr.FOLLOW.contains(cd["mint"]) and cd["mint"] not in reserved])
+    cands = due + scheduler.take(INFLIGHT | reserved, lambda m: brain2.rejected(m) or vr.FOLLOW.contains(m))
     mkt = dex_market([c["mint"] for c in cands]) if cands else {}
     try: __import__('desk_observations').observe(cands, mkt, (extras.STATE.get('regime') or {}).get('mood'))
     except Exception: pass  # display telemetry cannot block trade evaluation
@@ -46,13 +49,21 @@ def kill(m, sym, reason, detail, final=True, pair=None, **kw):
 def evaluate(cd, pair, relax=False):
     t0 = time.time(); m = cd["mint"]; sym = (pair or {}).get("baseToken", {}).get("symbol") or cd["name"]
     if pair and cd["dex"].startswith("unknown"): cd["dex"] = scout.tag(pair.get("dexId", ""), m)
-    if not pair and brain7.dead_skip(m): return  # 335
+    if not pair and not cd.get("volume_retry") and brain7.dead_skip(m): return  # 335
     fr = None if relax else (brain7.fast_reject(m, pair, sym) or brain7.relaunch(sym))  # 293/295/296/313 sub-1s fast path
     if fr: DEC.append(round(time.time() - t0, 3)); return kill(m, sym, fr[0], fr[1], True, pair, dex=cd["dex"], fast=True)
     if pair and CFG["VERSION"] not in ("v1", "v2"):
         pg = brain7.pregrad_guard(pair) or brain7.theme_cooldown(sym)  # 268 / 328
         if pg: return kill(m, sym, "pregrad" if "graduate" in pg else "theme_cooldown", pg, False, pair, dex=cd["dex"])
     res = filters.check(m, pair, relax); ok, why = filters.verdict(res)
+    volume_state = res.get("volume_1h", ("unknown",))[0]
+    if not relax:
+        if cd.get("volume_retry"):
+            log("volume_followup", m, sym, delay=cd["volume_retry"], volume=volume_state, passed_filters=ok, reason=why)
+        if volume_state != "unknown" or not why.startswith("volume_1h"):
+            vr.FOLLOW.finish(m)
+        if pair and volume_state in ("pass","fail") and CFG["VERSION"] not in ("v1","v2"):
+            vr.offer(cd,pair,brain8.projected_vol(pair),brain8.vol_bar(brain4.vol_bar(pair)),time.time())
     brain8.count("seen"); brain8.count("fomo_eval") if isinstance(relax, float) else None
     if res.get("volume_1h", ("",))[0] == "pass": brain8.count("vol_pass")
     brain8.count("kill:" + why.split(":")[0]) if not ok else brain8.count("safety_pass")  # 369
@@ -61,6 +72,8 @@ def evaluate(cd, pair, relax=False):
         c = conn(); r = c.execute("SELECT checks, first_ts FROM seen WHERE mint=?", (m,)).fetchone()
         checks = (r["checks"] if r else 0) + 1; first = (r["first_ts"] if r else t0) or t0
         final = not ((why.startswith("volume_1h") or why.startswith("liquidity")) and checks < brain8.max_checks(cd, pair)) or ok  # 365
+        if why.startswith("volume_1h:unknown") and cd.get("volume_retry") != 900 and vr.FOLLOW.schedule(cd,t0):
+            final = False
         c.execute("UPDATE seen SET checks=?, last_ts=?, done=? WHERE mint=?", (checks, time.time(), int(final), m)); c.commit(); c.close()
     if len(res) > 2: DEEP.append(round(time.time() - t0, 2))
     if not ok:
@@ -431,7 +444,7 @@ def jobs(k):
 def state():
     from common import HEALTH
     now = time.time()
-    return dict(ts=now, pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=__import__("scan_scheduler").INSTANCE.status(), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
+    return dict(ts=now,volume_followups=vr.FOLLOW.status(), pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=__import__("scan_scheduler").INSTANCE.status(), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
         watch=[dict(sym=p["sym"][:14], mint=m, dex=p.get("dex"), source=(p.get("cd") or {}).get("source"), latest=p.get("last_quote"), previous=p.get("previous_quote"), wait_left=max(0, round(CFG["ENTRY_DELAY"] - (now - p["t"]))), price=p["price"], score=p["score"]) for m, p in list(PENDING.items())[:10]],
         reentry=[dict(sym=v[2], exit=v[0], mins_left=round(60 - (now - v[1]) / 60)) for v in REENTRY.values()],
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
@@ -455,6 +468,7 @@ def main(cycles=None):
     except Exception: ST = {}
     if not ST.get("dexscreener", {}).get("ok", True): log("skip", reason="selftest: DexScreener down at startup; brain.paused() will hold buys until it recovers")
     __import__("capacity_lab").start()
+    threading.Thread(target=vr.worker,daemon=True,name="volume-study").start()
     feed.start(); brain3.start(); brain11.start()  # 509
     def pos_loop(gen=0):
         k = 0

@@ -65,6 +65,16 @@
       const rows=watch.map(w=>({...radar.find(t=>t.mint===w.mint),...w})).filter(w=>source==='All'||(String(w.dex)+' '+String(w.source)).toLowerCase().replace(/[^a-z0-9]/g,'').includes(source.toLowerCase()));
       mount(desk,'five-watch','<h2>Fast-mover watchlist</h2>'+empty('Automatically pinned while awaiting entry confirmation.')+'<div class="sleek-subnav">'+['All','PumpFun','StonkFun','Meteora'].map(k=>button('source',k,k,source===k)).join('')+'</div>'+(rows.map(w=>'<p>'+button('five-token',w.mint,w.sym)+' · '+escape(w.wait_left)+'s to recheck · '+(w.previous>0 && w.latest>0?((w.latest/w.previous-1)*100).toFixed(2)+'% since prior quote':'Waiting for two quotes')+'</p>').join('')||(ready?empty('No pending tokens for this source.'):wait))+'<details><summary>Browse token timelines</summary>'+radar.map(t=>button('five-token',t.mint,t.symbol)).join('')+'</details>',true);
     }
+    if(page==='research' && research==='volume' && review){
+      const lab=data.volume_research;
+      if(!lab||lab.error){review.innerHTML=empty(lab?.error?'Volume collector unavailable.':'Waiting for Mac volume collector.');return;}
+      const attempts=lab.attempts||{}, queue=lab.followups||{};
+      review.innerHTML='<h3>Volume coverage by venue</h3>'+empty('Volume-first rejections among the latest 4,000 skip checks over 24 hours. Counts are decisions, including repeat checks.')+
+        (Object.entries(lab.venues||{}).map(([venue,v])=>empty(venue+' · '+(v.missing||0)+' missing · '+(v.low||0)+' below threshold · '+(v.unclassified||0)+' unclassified')).join('')||empty('No volume-first rejection records in sample.'))+
+        '<h3>Second looks</h3>'+empty((queue.pending??'Unknown')+' waiting · '+(attempts.checked||0)+' rechecks in 24h · '+(attempts.observed||0)+' with volume data · '+(attempts.passed||0)+' passed all filter checks.')+
+        '<h3>Volume threshold race</h3>'+empty('Separate $300 paper accounts. Standard uses the current volume bar. Lower uses 75% of it. Both use identical simulated costs, sizing and exit rules on priced candidates with liquidity. This isolates the volume screen; the main strategy has additional gates.')+
+        ((lab.books||[]).map(b=>empty(b.book+' · '+(b.open+b.closed)+' entries · '+b.closed+' closed · $'+b.realized+' realized net · $'+b.realized_drawdown+' worst realized drawdown')).join('')||empty('Waiting for the first worker snapshot.'));
+    }
     if(page==='research' && research==='diagnostics' && review){
       const checks=data.decision_review?.diagnostics;
       if(!checks){review.innerHTML=wait;return;}
