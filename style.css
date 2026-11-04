@@ -103,3 +103,34 @@ body.cal-on #dashboard,body.cal-on .toolbar,body.cal-on #notice,body.cal-on .pil
 .fill-dot { cursor: pointer; }
 
 #hub-guide{display:flex;align-items:start;justify-content:space-between;gap:8px;border-top:1px solid #713144;padding-top:10px;margin-top:10px}.hub-badge,.hub-links a{background:#311a25;color:#ffb9c6;border:1px solid #874256;border-radius:8px;padding:5px 8px;font-size:.8rem}.hub-links{display:grid;gap:6px}.hub-links a{text-decoration:none}.hub-links a:focus-visible{outline:2px solid #fff}#hub-watch,#hub-replay{padding:10px 0}
+
+/* Night Desk: red masthead, paper ledger and chronological decision tape. */
+body{background:#100c0d;color:#fff5ef}
+body::before,body::after,main::before,main::after{display:none}
+header{background:linear-gradient(112deg,#b61d26,#77141c 62%,#491015);border-radius:14px 14px 0 0;padding:12px 16px;border-bottom:2px solid #ff554c}
+header .brand{color:#fff8ee;text-shadow:none;letter-spacing:.12em}
+header .brand span{color:#ffdfcf}
+main .card{background:#201719;border-color:#573338;box-shadow:none;backdrop-filter:none}
+main #balance{background:linear-gradient(115deg,#571c21,#30181a 62%,#211619);border-top:2px solid #ff534a}
+main #sleek-pulse{background:#181314}
+#rd-bigstar{display:none!important}
+.rd-venues{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border-bottom:1px solid #563437;padding-bottom:10px}
+.rd-venues span,.rd-venues a{font:600 .75rem ui-monospace,monospace;padding:4px 7px;color:#ffe9de;background:#352021;border-radius:4px}
+.rd-venues b{color:#ffc8b4}
+.rd-tape{padding:14px 0;margin-bottom:14px;border-bottom:1px solid #563437}
+.rd-tape>div{display:grid;grid-template-columns:5ch 8ch minmax(0,1fr);gap:.7em;align-items:baseline;padding:5px 0;font:500 .76rem/1.45 ui-monospace,monospace}
+.rd-tape time{color:#cbb4ad}.rd-tape strong{color:#ff9989}.rd-tape span{overflow-wrap:anywhere}
+.rd-shift-report{margin-top:12px;border-top:1px solid #573338;padding-top:10px}.rd-shift-report>summary{cursor:pointer;color:#ffb7a7}
+main>nav a.active{color:#ffb3a6;text-shadow:none;border-top:2px solid #ff5a4f}
+@media(max-width:480px){header{padding:9px 10px}.rd-tape>div{font-size:.71rem;gap:.5em}}
+
+main #balance{background:linear-gradient(150deg,#e33439 0%,#bd242d 52%,#8b1d29);color:#fff8ef;border-color:#ed635b}
+#balance .chart path[stroke]{stroke:#fff6ee}#balance .chart stop{stop-color:#fff2e1}
+#balance .sub,#balance .times,#balance small{color:#ffe2d8}
+.rd-skips{margin:12px 0}.rd-skips meter{display:block;width:100%;height:6px;accent-color:#fd636b}.rd-skips meter::-webkit-meter-optimum-value{background:#ed515f}
+#sleek-pulse #six-recap{background:#fff9ef;color:#291f21;border:0;border-radius:16px;padding:16px;margin-top:16px}
+#six-recap h2,#six-recap summary{color:#291f21}#six-recap .sub{color:#604c50}
+.rd-recap-value{display:block;color:#136c52;font-size:clamp(1.45rem,5vw,2.55rem);line-height:1.2}
+.rd-recap-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:10px 0}
+.rd-recap-metrics span{background:#f1e8df;padding:8px;color:#654f51;border-radius:6px;font-size:.72rem}
+.rd-recap-metrics b{display:block;color:#24191b;font-size:1.05rem}

@@ -17,7 +17,58 @@ function replay(t){
  note('Dots are recorded fills. Dashed line is the recorded peak; its time is unknown.')+
  row('Entry',t.entry)+row('Peak',t.peak)+t.fills.map(f=>row(f[2],f[1])).join('')+'</details>';
 }
+function nightDesk(data){
+ const desk=document.getElementById('sleek-pulse');
+ if(!desk)return;
+ const tape=document.createElement('section');
+ tape.className='rd-tape';
+ const decisions=(data.tail||[]).slice(-4).reverse();
+ tape.innerHTML='<h2>Decision tape</h2>'+decisions.map(d=>'<div><time>'+e(d.t)+'</time><strong>'+e(d.ag)+'</strong><span>'+e(d.text)+'</span></div>').join('');
+ if(!decisions.length)tape.innerHTML+=note('Waiting for a recorded decision.');
+ desk.prepend(tape);
+ const markets=document.createElement('div');
+ markets.className='rd-venues';
+ const ranked=(data.by_dex||[]).slice().sort((a,b)=>b[1]-a[1]).slice(0,4);
+ markets.innerHTML=ranked.map(([name,n])=>'<span>'+e(name)+' <b>'+e(n.toLocaleString())+'</b></span>').join('')+'<a href="#radar">All markets →</a>';
+ const heading=desk.querySelector('.row');
+ if(heading)heading.before(markets);else desk.prepend(markets);
+ const agents=[...desk.querySelectorAll('.sleek-agent')];
+ if(agents.length)agents[agents.length-1].after(tape);
+ const tally=data.skip_tally;
+ if(tally?.buckets?.length){
+   const box=document.createElement('section');box.className='rd-skips';
+   const largest=Math.max(1,...tally.buckets.map(([,n])=>n));
+   box.innerHTML='<h2>Why signals got skipped</h2>'+note('Last '+tally.hours+' hours')+
+     tally.buckets.slice(0,4).map(([reason,n])=>row(reason,n.toLocaleString())+'<meter max="'+largest+'" value="'+Number(n)+'"></meter>').join('');
+   tape.after(box);
+ }
+ const session=data.session_research;
+ const recap=desk.querySelector('#six-recap');
+ if(recap && session && !session.error){
+   const points=(data.desk_five?.ranges?.['24H']||[]).filter(([t,v])=>t>=session.start && Number.isFinite(v));
+   let chart='';
+   if(points.length>1 && points.at(-1)[0]>points[0][0]){
+     const values=points.map(p=>p[1]),lo=Math.min(...values),hi=Math.max(...values);
+     const xy=points.map(([t,v])=>((t-points[0][0])/(points.at(-1)[0]-points[0][0])*320)+','+(hi===lo?32:58-(v-lo)/(hi-lo)*52));
+     chart='<svg width="100%" height="68" viewBox="0 0 320 64" preserveAspectRatio="none" role="img" aria-label="Recorded paper equity during this session"><polyline points="'+xy.join(' ')+'" vector-effect="non-scaling-stroke" fill="none" stroke="#168064" stroke-width="2.5"/></svg>';
+   }
+   const face=document.createElement('div');face.innerHTML='<h2>Morning recap</h2>'+
+     note('Session since 6 PM Pacific · main and shared paper books')+
+     (points.length?'<strong class="rd-recap-value">'+e(cash(points[0][1]))+' → '+e(cash(points.at(-1)[1]))+'</strong>'+note('First and latest recorded session equity'):'')+
+     chart+'<div class="rd-recap-metrics">'+[['New tokens',session.new],['Paper entries',session.orders],['Realized',cash(session.pnl)]].map(([k,v])=>'<span>'+e(k)+'<b>'+e(v)+'</b></span>').join('')+'</div>';
+   recap.prepend(face);desk.append(recap);
+ }
+ const report=document.createElement('details');
+ report.className='rd-shift-report';
+ report.innerHTML='<summary>Scan funnel &amp; lab reports</summary>';
+ report.open=shiftReportOpen;
+ report.addEventListener('toggle',()=>{shiftReportOpen=report.open;});
+ const extras=[desk.querySelector('#five-funnel'),desk.querySelector('#work-feed')].filter(Boolean);
+ if(extras.length){report.append(...extras);desk.append(report);}
+}
+let shiftReportOpen=false;
 window.ryderHubDraw=(page,section)=>{
+ if(page==='overview')nightDesk(data);
  const h=data.strategy_hub,ok=h?.release==='strategy-desk-1';
  const rows=data.mission_control?.cards?.find(c=>c.id===24)?.rows||[];
  const state=String(rows.find(r=>r[0]==='Updater')?.[1]||'');
@@ -27,7 +78,7 @@ window.ryderHubDraw=(page,section)=>{
  const badge='<b class="hub-badge">'+e(status)+'</b>';
  if(page==='overview')add(document.getElementById('balance'),'hub-guide',badge+
  '<details'+(location.hash==='#layout'?' open':'')+'><summary>Hub layout</summary>'+note('Overview · shared paper equity, positions and latest decision')+
- '<div class="hub-links"><a href="#radar">Radar · signals & second looks</a><a href="#trades">Trades · position replays</a><a href="#research">Research · strategy results</a><a href="#more">More · logs & system health</a></div>'+
+ '<div class="hub-links"><a href="#radar">Markets · signals & second looks</a><a href="#trades">Trades · position replays</a><a href="#research">Research · strategy results</a><a href="#more">More · logs & system health</a></div>'+
  note('Strategy Desk · Last published '+(data.asof||'unknown')+' · Mac revision '+(sha||'unknown')+(age>300?' · stale snapshot':''))+'</details>');
  if(page==='radar')add(document.querySelector('#mission-desk'),'hub-watch','<details open><summary>Entry watchlist</summary>'+
  ((data.desk_five?.watch||[]).map(w=>row(w.sym,w.strategy||'Entry confirmation')).join('')||note('No candidates awaiting entry confirmation.'))+
