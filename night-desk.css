@@ -99,3 +99,12 @@ footer{color:#d7a8b4}
  #dashboard>div.stats{order:3}
 }
 #dashboard>section#night-agent-rail[hidden],#dashboard>section#night-positions[hidden]{display:none!important}
+
+/* Definitive structural layout: the three cards share one DOM wrapper. */
+#dashboard>#night-overview-layout{grid-column:1 / -1!important;grid-row:auto!important;display:grid!important;grid-template-columns:minmax(0,1.85fr) minmax(260px,1fr);gap:16px;width:100%;min-width:0;align-items:stretch}
+#night-overview-layout>#balance{grid-column:1!important;grid-row:1!important;min-width:0;min-height:480px;margin:0!important}
+#night-overview-right{grid-column:2;grid-row:1;display:flex;flex-direction:column;gap:16px;min-width:0}
+#night-overview-right>#night-positions{display:block!important;min-height:170px;max-height:none;flex:0 0 auto;margin:0!important;overflow:visible}
+#night-overview-right>#night-agent-rail{display:block!important;flex:1 1 auto;margin:0!important;min-width:0}
+#night-overview-layout [hidden]{display:none!important}
+@media(max-width:690px){#dashboard>#night-overview-layout{display:flex!important;flex-direction:column!important}#night-overview-layout>#balance{min-height:300px}#night-overview-right{display:flex!important;flex-direction:column!important}}
