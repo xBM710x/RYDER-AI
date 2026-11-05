@@ -42,3 +42,6 @@ footer{color:#d7a8b4}
 #balance .amount{margin:8px 0 4px}
 #agents .action{overflow-wrap:anywhere}
 @media(max-width:820px){#rd-extra{display:block}#balance .chart{height:115px}}
+
+/* Keep the positions card in the right rail; the extra-card wrapper is populated after render. */
+@media(min-width:821px){#dashboard:has(#rd-extra .rd-pos) #agents{grid-row:2}#dashboard #rd-extra>.rd-card:has(.rd-pos){order:-1}}
