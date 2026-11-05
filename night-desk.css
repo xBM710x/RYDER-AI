@@ -1,0 +1,29 @@
+/* RYDER Night Desk: additive, paper-only presentation layer.
+   Keeps existing publisher data, event handlers, and diagnostics intact. */
+:root{--bg:#120308;--ink:#fff5f7;--muted:#d8aeb8;--line:#742038;--red:#ff3159;--green:#54d977}
+body{background:radial-gradient(circle at 50% 0,#370510 0,#160308 45%,#0e0205 100%);color:var(--ink)}
+main{max-width:1480px;padding:24px 24px 110px}
+header{border-bottom:1px solid #ae2447;padding-bottom:16px}
+.brand{color:#fff;letter-spacing:.5px}.brand span{color:#f4d7de}
+.pills .dark{background:#4c0819;color:white}.pills .paper{background:#850d28;color:white}
+button,.filelabel{background:#350916;color:#fff;border-color:#8e2440}
+.notice{background:#310a17;color:#ffd9e1;border-color:#76203a}
+.notice.connected{background:#13291f;color:#b9f9d6;border-color:#34634a}
+.card,.logs{background:linear-gradient(125deg,#3b0715,#20040d);color:#fff;border:1px solid #a51b3d;box-shadow:none}
+.card .sub,.logs .sub,.label,.mini{color:#e5b7c1}
+#dashboard{display:grid;grid-template-columns:minmax(0,2fr) minmax(310px,1fr);gap:16px;align-items:start}
+#dashboard>*{min-width:0}
+#balance{grid-column:1;grid-row:1;min-height:440px;background:linear-gradient(135deg,#ba002c 0%,#530719 55%,#290510 100%)}
+#agents{grid-column:2;grid-row:1;max-height:440px;overflow:auto}
+#dashboard>.stats{grid-column:1 / -1;grid-row:2}
+#dashboard>.dexes{grid-column:1 / -1}
+#dashboard>section:not(#balance):not(#agents),#dashboard>.logs{grid-column:1 / -1}
+#agents .agent{border-bottom:1px solid #8a2540}
+#agents .agent-icon{color:white}
+.amount,.amount span{color:white}
+.pnl.green,.green{color:#74f0a6}
+.pnl.red,.red{color:#ff8197}
+nav{background:#260711;border-color:#76203a}
+nav a{color:#f0c6d0}nav a.active{color:#fff}
+footer{color:#d7a8b4}
+@media(max-width:820px){main{padding:18px 12px 110px}#dashboard{display:block}#dashboard>*{margin-bottom:14px}#balance{min-height:0}#agents{max-height:none}.brand{font-size:22px}}
