@@ -50,7 +50,7 @@ function nightDesk(data){
    if(points.length>1 && points.at(-1)[0]>points[0][0]){
      const values=points.map(p=>p[1]),lo=Math.min(...values),hi=Math.max(...values);
      const xy=points.map(([t,v])=>((t-points[0][0])/(points.at(-1)[0]-points[0][0])*320)+','+(hi===lo?32:58-(v-lo)/(hi-lo)*52));
-     chart='<svg width="100%" height="68" viewBox="0 0 320 64" preserveAspectRatio="none" role="img" aria-label="Recorded paper equity during this session"><polyline points="'+xy.join(' ')+'" vector-effect="non-scaling-stroke" fill="none" stroke="#168064" stroke-width="2.5"/></svg>';
+     chart='<svg width="100%" height="68" viewBox="0 0 320 64" preserveAspectRatio="none" role="img" aria-label="Recorded paper equity during this session"><polyline points="'+xy.join(' ')+'" vector-effect="non-scaling-stroke" fill="none" stroke="#ffffff" stroke-width="2.5"/></svg>';
    }
    const face=document.createElement('div');face.innerHTML='<h2>Morning recap</h2>'+
      note('Session since 6 PM Pacific · main and shared paper books')+
