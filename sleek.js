@@ -28,7 +28,16 @@ for(const el of [...dash.children]){if(el.id.startsWith('sleek-'))continue;let p
  const sourcePositions=[...dash.querySelectorAll('#rd-extra>.rd-card')].find(el=>el.querySelector('h2')?.textContent.trim()==='Open positions');
  if(sourcePositions){sourcePositions.id='night-positions';sourcePositions.dataset.deskPage='overview';sourcePositions.dataset.more='system';dash.insertBefore(sourcePositions,dash.querySelector('#agents'));}
  else {const fallback=document.createElement('section');fallback.id='night-positions';fallback.className='card rd-card';fallback.dataset.deskPage='overview';fallback.innerHTML='<div class="row"><h2>Open positions</h2><span class="sub">'+e(data.opens?.length||0)+' open</span></div><p class="empty">No open paper positions.</p>';dash.insertBefore(fallback,dash.querySelector('#agents'));}
- for(const el of dash.children){let show=el.dataset.deskPage===page;if(el.id==='sleek-pulse'&&page==='overview')show=false;if(page==='more'&&el.id!=='sleek-more')show=show&&el.dataset.more===more;if(el.id==='mission-desk')show=page==='radar'||page==='research'&&research==='advanced';if(el.id==='source-performance')show=false;el.hidden=!show;}
+ /* Dedicated, publisher-backed overview rail, independent of legacy More routing. */
+ dash.querySelector('#night-agent-rail')?.remove();
+ const rail=document.createElement('section');rail.id='night-agent-rail';rail.className='card';rail.dataset.deskPage='overview';
+ const names=['Scout','Filter','Analyst','Executor','Risk','Logger','Coach','Watchdog'];
+ const reported=Array.isArray(data.agents)?data.agents:[];
+ const all=[...names,...reported.map(a=>a.name).filter(n=>!names.includes(n))];
+ rail.innerHTML='<div class="row"><h2>Your agents</h2><span class="sub">'+reported.length+' reporting</span></div>'+
+ all.map(n=>{const a=reported.find(x=>x.name===n);return '<div class="night-agent-row"><span class="night-agent-dot '+(a?.tone==='green'?'ok':'')+'"></span><b>'+e(n)+'</b><span>'+e(a?.text||'Not reported')+'</span></div>'}).join('');
+ dash.appendChild(rail);
+for(const el of dash.children){let show=el.dataset.deskPage===page;if(el.id==='sleek-pulse'&&page==='overview')show=false;if(el.id==='agents'&&page==='overview')show=false;if(page==='more'&&el.id!=='sleek-more')show=show&&el.dataset.more===more;if(el.id==='mission-desk')show=page==='radar'||page==='research'&&research==='advanced';if(el.id==='source-performance')show=false;el.hidden=!show;}
 const mission=document.getElementById('mission-desk');if(mission&&!mission.hidden){const wanted=page==='radar'?'radar':null;const active=mission.querySelector('[data-mc-view].active');if(wanted&&active?.dataset.mcView!==wanted)mission.querySelector('[data-mc-view="radar"]')?.click();mission.querySelector('.mc-tabs')?.toggleAttribute('hidden',page==='radar');}
 if(window.ryderCalendarShow)window.ryderCalendarShow(page==='more'&&more==='calendar');
 window.ryderFiveDraw?.(page,research);window.ryderHubDraw?.(page,research);
