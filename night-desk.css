@@ -45,3 +45,25 @@ footer{color:#d7a8b4}
 
 /* Keep the positions card in the right rail; the extra-card wrapper is populated after render. */
 @media(min-width:821px){#dashboard:has(#rd-extra .rd-pos) #agents{grid-row:2}#dashboard #rd-extra>.rd-card:has(.rd-pos){order:-1}}
+
+/* Screenshot-aligned live overview: preserve publisher data and all detail panels. */
+@media(min-width:821px){
+ #dashboard{grid-template-columns:minmax(0,2fr) minmax(320px,0.96fr);grid-template-rows:minmax(245px,auto) minmax(230px,auto);gap:18px}
+ #balance{grid-column:1;grid-row:1 / span 2;min-height:510px;padding:28px 30px;display:flex;flex-direction:column}
+ #balance .amount{font-size:clamp(56px,6vw,92px);line-height:1.05}
+ #balance .amount span{font-size:.7em}
+ #balance .chart{height:190px;margin-top:auto}
+ #agents{grid-column:2;grid-row:2;max-height:none;padding:20px 22px}
+ #rd-extra{display:contents}
+ #rd-extra>.rd-card:nth-child(3){grid-column:2;grid-row:1;min-height:245px;padding:20px 22px}
+ #dashboard>.stats{grid-column:1 / -1;grid-row:auto}
+}
+#balance{background:linear-gradient(125deg,#d00030 0%,#81001d 45%,#29030d 100%)}
+#balance .chart polyline{stroke:#fff}
+#agents h2,#rd-extra>.rd-card:nth-child(3) h2{font-size:clamp(18px,2vw,25px);color:#fff}
+#agents .agent{grid-template-columns:25px minmax(0,1fr) auto;padding:8px 0}
+#agents .agent b{color:#fff}
+#agents .agent small{color:#e3b9c3}
+#dashboard .card{border-color:#aa153a}
+#dashboard>.stats .card{background:#2b0711}
+@media(max-width:820px){#balance{padding:20px}#agents{padding:18px}#rd-extra>.rd-card:nth-child(3){border-color:#a51b3d}}
