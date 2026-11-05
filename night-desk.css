@@ -71,3 +71,12 @@ footer{color:#d7a8b4}
 /* The overview router moves publisher-backed positions into this visible panel. */
 @media(min-width:821px){#dashboard>#night-positions{grid-column:2;grid-row:1;min-height:245px;padding:20px 22px}#dashboard>#agents{grid-column:2;grid-row:2;max-height:none}#dashboard>#balance{grid-column:1;grid-row:1 / span 2}}
 @media(max-width:820px){#dashboard>#night-positions{display:block;margin-bottom:14px}#dashboard>#agents{display:block}}
+
+/* Dedicated visible overview roster; no dependence on hidden legacy agent tab. */
+#night-agent-rail{display:block;min-width:0;padding:20px 22px}
+#night-agent-rail h2{font-size:24px;color:#fff}
+.night-agent-row{display:grid;grid-template-columns:12px minmax(75px,0.8fr) minmax(0,1.4fr);gap:10px;align-items:center;padding:9px 2px;border-bottom:1px solid #a51b3d;font-size:13px}
+.night-agent-row b{color:white}.night-agent-row>span:last-child{color:#f4d4dd;overflow-wrap:anywhere}
+.night-agent-dot{width:9px;height:9px;border-radius:50%;background:#b8aeb1}.night-agent-dot.ok{background:#48d46b}
+@media(min-width:821px){#dashboard>#night-agent-rail{grid-column:2;grid-row:2;align-self:stretch}#dashboard>#night-positions{grid-column:2;grid-row:1}#dashboard>#balance{grid-column:1;grid-row:1 / span 2}}
+@media(max-width:820px){#night-agent-rail{margin-bottom:14px}}
