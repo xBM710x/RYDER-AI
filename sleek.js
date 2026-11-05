@@ -12,7 +12,7 @@ if(research==='sources')host.innerHTML=`<h3>Net results by discovery source</h3>
 if(research==='exits')host.innerHTML=`<h3>Entry → exit evidence</h3>${r.replays.map(t=>`<details><summary>${e(t.symbol)} · ${cash(t.pnl)} · ${e(t.net_pct)}% net</summary>${line(t.points)}<p>Recorded peak ${e(t.peak_pct??'Unknown')}% · giveback ${e(t.giveback_pp??'Unknown')} percentage points<br>${e(t.reason)} · ${e(t.fills)} exit fill(s) · ${e(t.book)}</p><small>${e(t.mint)}</small><p class="sub">Line shows cost-adjusted entry to recorded exit fills. Peak timing is unknown; intermediate prices are not inferred.</p></details>`).join('')||'<p class="sub">No completed openings in this window.</p>'}`;
 host.insertAdjacentHTML('beforeend',`<details class="sleek-method"><summary>Scope & method</summary><p class="sub">${e(r.scope)}</p><p class="sub">${e(r.note)}</p></details>`)}
 function organize(){const dash=document.getElementById('dashboard');if(!dash)return;const existingLayout=dash.querySelector('#night-overview-layout');if(existingLayout){const balance=existingLayout.querySelector('#balance');if(balance)dash.prepend(balance);existingLayout.remove();}const count=document.getElementById('agent-count');if(count){
- const available=8, running=data.agents.length;
+ const available=11, running=data.agents.length;
  const rows=data.mission_control?.cards?.find(card=>card.id===24)?.rows||[];
  const update=rows.find(row=>row[0]==='Updater');
  const checked=Number.isFinite(data.mission_control?.generated_at)&&Number.isFinite(update?.[2])?new Date((data.mission_control.generated_at-update[2])*1000).toLocaleString():'unknown';
@@ -31,11 +31,13 @@ for(const el of [...dash.children]){if(el.id.startsWith('sleek-'))continue;let p
  /* Dedicated, publisher-backed overview rail, independent of legacy More routing. */
  dash.querySelector('#night-agent-rail')?.remove();
  const rail=document.createElement('section');rail.id='night-agent-rail';rail.className='card';rail.dataset.deskPage='overview';
- const names=['Scout','Filter','Analyst','Executor','Risk','Logger','Coach','Watchdog'];
+ const names=['Scout','Filter','Analyst','Executor','Risk','Logger','Coach','Watchdog','Hunter','Strategist','Sentinel'];
  const reported=Array.isArray(data.agents)?data.agents:[];
  const all=[...names,...reported.map(a=>a.name).filter(n=>!names.includes(n))];
- rail.innerHTML='<div class="row"><h2>Your agents</h2><span class="sub">'+reported.length+' reporting</span></div>'+
- all.map(n=>{const a=reported.find(x=>x.name===n);return '<div class="night-agent-row"><span class="night-agent-dot '+(a?.tone==='green'?'ok':'')+'"></span><b>'+e(n)+'</b><span>'+e(a?.text||'Not reported')+'</span></div>'}).join('');
+ const ageMs=Date.now()-Date.parse(data.updated_at||'');
+ const fresh=Number.isFinite(ageMs)&&ageMs>=0&&ageMs<5*60*1000;
+ rail.innerHTML='<div class="row"><h2>Your agents</h2><span class="sub">'+reported.length+' reported · '+(fresh?'feed fresh':'feed stale')+'</span></div>'+
+ all.map(n=>{const a=reported.find(x=>x.name===n);return '<div class="night-agent-row"><span class="night-agent-dot '+(a&&fresh?'ok':'')+'"></span><b>'+e(n)+'</b><span>'+e(a?(fresh?a.text:'Last report: '+a.text):'Awaiting Mac agent integration')+'</span></div>'}).join('');
  dash.appendChild(rail);
 for(const el of dash.children){let show=el.dataset.deskPage===page;if(el.id==='sleek-pulse'&&page==='overview')show=false;if(el.id==='agents'&&page==='overview')show=false;if(page==='more'&&el.id!=='sleek-more')show=show&&el.dataset.more===more;if(el.id==='mission-desk')show=page==='radar'||page==='research'&&research==='advanced';if(el.id==='source-performance')show=false;el.hidden=!show;}
 /* Physically group the three overview cards. Avoid fragile CSS grid placement across other cards. */
