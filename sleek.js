@@ -38,6 +38,16 @@ for(const el of [...dash.children]){if(el.id.startsWith('sleek-'))continue;let p
  all.map(n=>{const a=reported.find(x=>x.name===n);return '<div class="night-agent-row"><span class="night-agent-dot '+(a?.tone==='green'?'ok':'')+'"></span><b>'+e(n)+'</b><span>'+e(a?.text||'Not reported')+'</span></div>'}).join('');
  dash.appendChild(rail);
 for(const el of dash.children){let show=el.dataset.deskPage===page;if(el.id==='sleek-pulse'&&page==='overview')show=false;if(el.id==='agents'&&page==='overview')show=false;if(page==='more'&&el.id!=='sleek-more')show=show&&el.dataset.more===more;if(el.id==='mission-desk')show=page==='radar'||page==='research'&&research==='advanced';if(el.id==='source-performance')show=false;el.hidden=!show;}
+/* Physically group the three overview cards. Avoid fragile CSS grid placement across other cards. */
+ if(page==='overview'){
+  const balance=dash.querySelector('#balance'),positions=dash.querySelector('#night-positions'),agents=dash.querySelector('#night-agent-rail');
+  if(balance&&positions&&agents){
+   const layout=document.createElement('div');layout.id='night-overview-layout';layout.dataset.deskPage='overview';
+   const right=document.createElement('div');right.id='night-overview-right';
+   balance.hidden=false;positions.hidden=false;agents.hidden=false;
+   dash.prepend(layout);layout.appendChild(balance);layout.appendChild(right);right.appendChild(positions);right.appendChild(agents);
+  }
+ }
 const mission=document.getElementById('mission-desk');if(mission&&!mission.hidden){const wanted=page==='radar'?'radar':null;const active=mission.querySelector('[data-mc-view].active');if(wanted&&active?.dataset.mcView!==wanted)mission.querySelector('[data-mc-view="radar"]')?.click();mission.querySelector('.mc-tabs')?.toggleAttribute('hidden',page==='radar');}
 if(window.ryderCalendarShow)window.ryderCalendarShow(page==='more'&&more==='calendar');
 window.ryderFiveDraw?.(page,research);window.ryderHubDraw?.(page,research);
