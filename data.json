@@ -48,12 +48,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Nov 05 23:00 PT",
+ "asof": "Nov 05 23:01 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 41569,
- "seen": 127838,
+ "scans": 41577,
+ "seen": 127862,
  "passed": 9,
  "trades": 1,
  "wins": 1,
@@ -91,15 +91,15 @@
  "by_dex": [
   [
    "pumpfun",
-   109042
+   109059
   ],
   [
    "meteora",
-   9203
+   9208
   ],
   [
    "pumpswap",
-   6288
+   6289
   ],
   [
    "other/unknown",
@@ -115,7 +115,7 @@
   ],
   [
    "orca",
-   153
+   154
   ],
   [
    "pump-origin (other)",
@@ -125,23 +125,23 @@
  "kills": [
   [
    "volume_1h",
-   214490
+   214540
   ],
   [
    "liquidity",
-   21923
+   21925
   ],
   [
    "socials",
-   5334
+   5336
   ],
   [
    "copycat",
-   3754
+   3755
   ],
   [
    "thin_pool",
-   1386
+   1387
   ],
   [
    "lp_locked",
@@ -4036,14 +4036,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "127838 pairs",
-   "text": "scan \u00b7 86 pairs, 0 new",
+   "stat": "127862 pairs",
+   "text": "scan \u00b7 77 pairs, 1 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed batonwins \u00b7 1h vol < $40k",
+   "text": "killed SHELFBACK \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -4066,8 +4066,8 @@
   },
   {
    "name": "Logger",
-   "stat": "248764 why",
-   "text": "wrote 248764 reasons",
+   "stat": "248820 why",
+   "text": "wrote 248820 reasons",
    "tone": ""
   },
   {
@@ -4085,161 +4085,181 @@
  ],
  "tail": [
   {
-   "t": "23:00",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 137 pairs, 16 new",
-   "tone": ""
-  },
-  {
-   "t": "23:00",
+   "t": "23:01",
    "ag": "FILTER",
-   "text": "killed NORTHKOREA \u00b7 liq < $25k",
+   "text": "killed USBD \u00b7 thin_pool",
    "tone": "red"
   },
   {
-   "t": "23:00",
+   "t": "23:01",
    "ag": "FILTER",
-   "text": "killed RM \u00b7 liq < $25k",
+   "text": "killed fun \u00b7 copycat",
    "tone": "red"
   },
   {
-   "t": "23:00",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 11 new",
-   "tone": ""
+   "t": "23:01",
+   "ag": "FILTER",
+   "text": "killed RM \u00b7 no/dupe socials",
+   "tone": "red"
   },
   {
-   "t": "23:00",
+   "t": "23:01",
    "ag": "FILTER",
    "text": "killed RM \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "23:00",
+   "t": "23:01",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 0 pairs, 4 new",
+   "tone": ""
+  },
+  {
+   "t": "23:01",
    "ag": "LOGGER",
-   "text": "strategy_block",
+   "text": "volume_followup",
    "tone": ""
   },
   {
-   "t": "23:00",
-   "ag": "FILTER",
-   "text": "killed RM \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "23:00",
-   "ag": "FILTER",
-   "text": "killed RM \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "23:00",
-   "ag": "FILTER",
-   "text": "killed NORTHKOREA \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "23:00",
-   "ag": "FILTER",
-   "text": "killed Bill \u00b7 no/dupe socials",
-   "tone": "red"
-  },
-  {
-   "t": "23:00",
-   "ag": "FILTER",
-   "text": "killed RM \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "23:00",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
+   "t": "23:01",
+   "ag": "LOGGER",
+   "text": "volume_followup",
    "tone": ""
   },
   {
-   "t": "23:00",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 0 new",
+   "t": "23:01",
+   "ag": "LOGGER",
+   "text": "volume_followup",
    "tone": ""
   },
   {
-   "t": "23:00",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 2 pairs, 2 new",
+   "t": "23:01",
+   "ag": "LOGGER",
+   "text": "volume_followup",
    "tone": ""
   },
   {
-   "t": "23:00",
+   "t": "23:01",
    "ag": "SCOUT",
-   "text": "scan \u00b7 86 pairs, 0 new",
+   "text": "scan \u00b7 77 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "23:01",
+   "ag": "LOGGER",
+   "text": "volume_followup",
+   "tone": ""
+  },
+  {
+   "t": "23:01",
+   "ag": "LOGGER",
+   "text": "start",
+   "tone": ""
+  },
+  {
+   "t": "23:01",
+   "ag": "LOGGER",
+   "text": "relax_selftest",
+   "tone": ""
+  },
+  {
+   "t": "23:01",
+   "ag": "LOGGER",
+   "text": "patience",
+   "tone": ""
+  },
+  {
+   "t": "23:01",
+   "ag": "LOGGER",
+   "text": "paper_selftest",
    "tone": ""
   }
  ],
- "nkills": 248764,
+ "nkills": 248820,
  "mood": "sleepy",
  "kills_live": [
   {
-   "t": "23:00:13",
-   "sym": "TRMPN",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "23:00:13",
-   "sym": "TRMPN",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "23:00:13",
-   "sym": "BAD",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "23:00:13",
+   "t": "23:01:27",
    "sym": "RM",
-   "reason": "liquidity"
-  },
-  {
-   "t": "23:00:13",
-   "sym": "trench",
    "reason": "volume_1h"
   },
   {
-   "t": "23:00:13",
+   "t": "23:01:27",
+   "sym": "RM",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "23:01:27",
+   "sym": "Elon",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "23:01:27",
    "sym": "NORTHKOREA",
-   "reason": "liquidity"
-  },
-  {
-   "t": "23:00:13",
-   "sym": "Bill",
-   "reason": "socials"
-  },
-  {
-   "t": "23:00:13",
-   "sym": "RM",
-   "reason": "liquidity"
-  },
-  {
-   "t": "23:00:13",
-   "sym": "EDPCOOKED",
    "reason": "volume_1h"
   },
   {
-   "t": "23:00:13",
-   "sym": "RM",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "23:00:13",
+   "t": "23:01:27",
    "sym": "SXSN",
    "reason": "volume_1h"
   },
   {
-   "t": "23:00:13",
+   "t": "23:01:28",
+   "sym": "USBD",
+   "reason": "thin_pool"
+  },
+  {
+   "t": "23:01:28",
+   "sym": "fun",
+   "reason": "copycat"
+  },
+  {
+   "t": "23:01:28",
+   "sym": "Morden w",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "23:01:28",
+   "sym": "RM",
+   "reason": "socials"
+  },
+  {
+   "t": "23:01:28",
+   "sym": "RM",
+   "reason": "liquidity"
+  },
+  {
+   "t": "23:01:28",
+   "sym": "OMNIIX",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "23:01:28",
    "sym": "RM",
    "reason": "volume_1h"
   }
  ],
  "watchlist": [
+  {
+   "why": "no or reused socials",
+   "sym": "RM",
+   "price": 9.118e-06,
+   "mcap": null,
+   "dex": "meteora",
+   "t": "23:01",
+   "ts": 1793948489,
+   "near_miss": true
+  },
+  {
+   "why": "no or reused socials",
+   "sym": "RM",
+   "price": 1.01e-05,
+   "mcap": null,
+   "dex": "meteora",
+   "t": "23:01",
+   "ts": 1793948488,
+   "near_miss": true
+  },
   {
    "why": "no or reused socials",
    "sym": "Bill",
@@ -4319,26 +4339,6 @@
    "t": "22:55",
    "ts": 1793948135,
    "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "Death",
-   "price": 2.309e-05,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "22:54",
-   "ts": 1793948041,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "TardFi",
-   "price": 8.97e-06,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "22:53",
-   "ts": 1793947994,
-   "near_miss": true
   }
  ],
  "reentry_watch": [],
@@ -4353,7 +4353,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 127838,
+  "scanned": 127862,
   "passed_filters": 9,
   "scored_ok": 7,
   "entry_wait": 9,
@@ -4523,16 +4523,16 @@
   },
   {
    "h": "23",
-   "scans": 1458,
-   "kills": 9647,
+   "scans": 1466,
+   "kills": 9703,
    "trades": 0,
    "pnl": 0.0
   }
  ],
  "agent_activity": {
-  "SCOUT": 510,
-  "FILTER": 3158,
-  "LOGGER": 402
+  "SCOUT": 508,
+  "LOGGER": 402,
+  "FILTER": 3166
  },
  "rug_list": {
   "count": 146,
@@ -4573,15 +4573,15 @@
   "gauge": 17
  },
  "latency": {
-  "scan_s_avg": 0.3,
-  "scan_s_last": 0.0,
+  "scan_s_avg": 0.2,
+  "scan_s_last": 0.3,
   "pos_check_s": 1,
-  "ws_last_event_s": 8
+  "ws_last_event_s": 51
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 236,
+   "ms": 244,
    "err": 0
   },
   "api.geckoterminal.com": {
@@ -4591,12 +4591,12 @@
   },
   "api.rugcheck.xyz": {
    "ok_rate": 1.0,
-   "ms": 1069,
+   "ms": 1108,
    "err": 0
   },
   "api.mainnet-beta.solana.com": {
    "ok_rate": 1.0,
-   "ms": 497,
+   "ms": 450,
    "err": 0
   },
   "lite-api.jup.ag": {
@@ -4606,7 +4606,7 @@
   },
   "www.stonkfun.xyz": {
    "ok_rate": 1.0,
-   "ms": 426,
+   "ms": 405,
    "err": 0
   }
  },
@@ -4676,7 +4676,7 @@
  },
  "speed": {
   "decision_s": {
-   "avg": 12.69,
+   "avg": 12.72,
    "p90": 1.56,
    "n": 200
   },
@@ -4806,11 +4806,11 @@
   "39 Telegram/X alerts"
  ],
  "fomo_wallet": {
-  "total_usd": 22.2,
+  "total_usd": 22.04,
   "top": [
    {
     "sym": "NIO",
-    "usd": 9.54
+    "usd": 9.4
    },
    {
     "sym": "FED",
@@ -4821,17 +4821,17 @@
     "usd": 2.22
    }
   ],
-  "at": "23:00"
+  "at": "23:01"
  },
  "paper": true,
- "updated_at": "2026-11-06T07:00:49+00:00",
+ "updated_at": "2026-11-06T07:01:56+00:00",
  "heartbeat": {
-  "at": "2026-11-06T07:00:49+00:00",
+  "at": "2026-11-06T07:01:56+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 5,
+  "runner_last_beat_s": 7,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 164,
+  "live_feed_events": 166,
   "publish_every_s": 180
  },
  "ryder_events": [
@@ -4847,6 +4847,13 @@
    "t": 1793948354,
    "kind": "rug_dodged",
    "sym": "Diamond",
+   "reason": "copycat"
+  },
+  {
+   "id": 313683,
+   "t": 1793948489,
+   "kind": "rug_dodged",
+   "sym": "fun",
    "reason": "copycat"
   }
  ],
@@ -4899,23 +4906,23 @@
  },
  "skip_tally": {
   "hours": 24,
-  "total": 93352,
+  "total": 93373,
   "buckets": [
    [
     "Volume too low",
-    81359
+    81379
    ],
    [
     "Liquidity too low",
-    8301
+    8299
    ],
    [
     "No socials",
-    1742
+    1744
    ],
    [
     "Copycat / scam name",
-    1443
+    1444
    ],
    [
     "LP not locked",
@@ -5159,7 +5166,7 @@
    "wins": 0,
    "starting_capital": 300.0,
    "current_equity": 302.4,
-   "generated_at": 1793948450.3732102
+   "generated_at": 1793948516.8744938
   },
   "exposure": {
    "cost_usd": 0,
@@ -5278,7 +5285,7 @@
    "note": "Sampled follow-ups, not all skips. Price changes exclude fees, slippage and execution availability; a rise does not prove a safe trade. Partial exits count as closed fills. Unknown attribution stays Unknown."
   },
   "signal_quality": {
-   "scanned": 127838,
+   "scanned": 127862,
    "passed": 9,
    "pass_rate_pct": 0.007,
    "scope": "current version; checks can overlap",
@@ -5291,36 +5298,36 @@
  "stonkfun": {
   "source": "stonkfun",
   "ok": true,
-  "updated_at": 1793948410.412182,
+  "updated_at": 1793948486.212394,
   "candidates": 50,
-  "next_poll_at": 1793948470.412182,
-  "age_s": 40,
+  "next_poll_at": 1793948546.212394,
+  "age_s": 31,
   "stale": false,
   "status": "connected"
  },
  "opportunity_lab": {
   "breadth": {
-   "requests": 17,
+   "requests": 18,
    "errors": 1,
-   "candidates": 301,
-   "next_poll_s": 0,
-   "last_success_age_s": 98,
+   "candidates": 320,
+   "next_poll_s": 30,
+   "last_success_age_s": 60,
    "next_route": "new_pools",
    "scope": "rotating pages 3\u201310 new pools; 2\u20135 trending/top pools; existing safety gates unchanged"
   },
   "scheduler": {
-   "dispatched": 754,
-   "queued": 754,
+   "dispatched": 779,
+   "queued": 779,
    "wait_p90_s": 1.17,
    "pending": 0,
    "max_pending": 1000,
    "max_inflight": 16,
    "ttl_s": 600,
    "rest": {
-    "polls": 142,
+    "polls": 146,
     "errors": 0,
     "polling": false,
-    "last_poll_s": 0.002
+    "last_poll_s": 0.01
    }
   },
   "capacity_worker": true,
@@ -5368,7 +5375,7 @@
  },
  "mission_control": {
   "schema": 1,
-  "generated_at": 1793948450.448846,
+  "generated_at": 1793948516.969009,
   "cards": [
    {
     "id": 1,
@@ -5412,19 +5419,19 @@
     ],
     "rows": [
      [
-      "geckoterminal",
-      61,
-      96.3
+      "pumpportal-ws",
+      17,
+      1.6
      ],
      [
-      "pumpportal-ws",
-      23,
-      1.5
+      "geckoterminal",
+      72,
+      93.0
      ],
      [
       "pumpportal-migration",
-      2,
-      1.4
+      3,
+      1.8
      ],
      [
       "gecko-depth-new_pools",
@@ -5432,7 +5439,7 @@
       150.1
      ]
     ],
-    "note": "Creation-to-first-observation delay in radar sample; 21 unknown or implausible launch times excluded.",
+    "note": "Creation-to-first-observation delay in radar sample; 15 unknown or implausible launch times excluded.",
     "series": [],
     "unit": ""
    },
@@ -5450,49 +5457,49 @@
      [
       "api.dexscreener.com",
       "recent successful request",
-      12,
-      782,
+      18,
+      806,
       0
      ],
      [
       "api.geckoterminal.com",
       "recent successful request",
-      40,
-      79,
+      32,
+      82,
       1
      ],
      [
       "api.rugcheck.xyz",
       "recent successful request",
-      82,
-      116,
+      28,
+      123,
       0
      ],
      [
       "api.mainnet-beta.solana.com",
       "recent successful request",
-      15,
-      297,
+      19,
+      307,
       0
      ],
      [
       "lite-api.jup.ag",
       "no recent success",
-      1775,
+      1842,
       1,
       0
      ],
      [
       "www.stonkfun.xyz",
       "recent successful request",
-      39,
-      50,
+      30,
+      52,
       0
      ],
      [
       "StonkFun",
       "connected",
-      40,
+      31,
       null,
       null
      ]
@@ -5511,103 +5518,103 @@
     ],
     "rows": [
      [
-      "BPCATE",
-      1,
+      "SHELFBACK",
+      7,
       "recent observation"
      ],
      [
-      "batonwins",
-      13,
+      "$NIO",
+      7,
       "recent observation"
      ],
      [
-      "batonwins",
-      13,
+      "RM",
+      7,
       "recent observation"
      ],
      [
-      "TRMPN",
+      "CRAMER",
+      7,
+      "recent observation"
+     ],
+     [
+      "REMARC",
+      7,
+      "recent observation"
+     ],
+     [
+      "RM",
+      28,
+      "recent observation"
+     ],
+     [
+      "Morden w",
+      28,
+      "recent observation"
+     ],
+     [
+      "RM",
+      28,
+      "recent observation"
+     ],
+     [
+      "RM",
+      28,
+      "recent observation"
+     ],
+     [
+      "USBD",
+      28,
+      "recent observation"
+     ],
+     [
+      "fun",
+      28,
+      "recent observation"
+     ],
+     [
+      "OMNIIX",
+      28,
+      "recent observation"
+     ],
+     [
+      "Elon",
       29,
       "recent observation"
      ],
      [
-      "BAD",
-      37,
+      "CVE",
+      29,
+      "recent observation"
+     ],
+     [
+      "IAES",
+      29,
       "recent observation"
      ],
      [
       "RM",
-      37,
+      29,
       "recent observation"
      ],
      [
-      "Bill",
-      37,
-      "recent observation"
-     ],
-     [
-      "RM",
-      37,
+      "CA$H",
+      29,
       "recent observation"
      ],
      [
       "SXSN",
-      37,
+      29,
       "recent observation"
      ],
      [
-      "trench",
-      37,
-      "recent observation"
-     ],
-     [
-      "RM",
-      37,
-      "recent observation"
-     ],
-     [
-      "EDPCOOKED",
-      37,
+      "INCUBOX",
+      29,
       "recent observation"
      ],
      [
       "RM",
-      37,
-      "recent observation"
-     ],
-     [
-      "NORTHKOREA",
-      37,
-      "recent observation"
-     ],
-     [
-      "TRMPN",
-      37,
-      "recent observation"
-     ],
-     [
-      "SHAM",
-      38,
-      "recent observation"
-     ],
-     [
-      "lptp",
-      38,
-      "recent observation"
-     ],
-     [
-      "mmrich",
-      38,
-      "recent observation"
-     ],
-     [
-      "RM",
-      38,
-      "recent observation"
-     ],
-     [
-      "redinu",
-      38,
+      29,
       "recent observation"
      ]
     ],
@@ -5648,6 +5655,336 @@
      "Recorded reason"
     ],
     "rows": [
+     [
+      1793948510.4673128,
+      "SHELFBACK",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948510.463022,
+      "SHELFBACK",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948509.655406,
+      "REMARC",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948509.6357288,
+      "RM",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948509.634639,
+      "RM",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948509.633037,
+      "$NIO",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948509.631694,
+      "$NIO",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948509.62712,
+      "CRAMER",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948488.877718,
+      "RM",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948488.864958,
+      "RM",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948488.869738,
+      "OMNIIX",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948488.867552,
+      "OMNIIX",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948488.8518121,
+      "RM",
+      "kill",
+      "liquidity"
+     ],
+     [
+      1793948488.845196,
+      "RM",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948488.849369,
+      "RM",
+      "kill",
+      "socials"
+     ],
+     [
+      1793948488.848845,
+      "Morden w",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948488.8479161,
+      "Morden w",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948488.84598,
+      "fun",
+      "kill",
+      "copycat"
+     ],
+     [
+      1793948488.842158,
+      "USBD",
+      "kill",
+      "thin_pool"
+     ],
+     [
+      1793948487.77149,
+      "SXSN",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.7690508,
+      "SXSN",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.741791,
+      "CA$H",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.751868,
+      "NORTHKOREA",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.751563,
+      "NORTHKOREA",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.749702,
+      "Elon",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.744926,
+      "Elon",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.747516,
+      "RM",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.747199,
+      "RM",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.741339,
+      "song",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.746919,
+      "RM",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.746762,
+      "RM",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.745954,
+      "RM",
+      "kill",
+      "socials"
+     ],
+     [
+      1793948487.745591,
+      "ELORIAN",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.745267,
+      "IAES",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.745068,
+      "ELORIAN",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.74468,
+      "IAES",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.7424908,
+      "CVE",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.742762,
+      "CHAROC",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.741951,
+      "BLORB",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.736522,
+      "CHAROC",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.740911,
+      "BLORB",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.734956,
+      "CVE",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.740444,
+      "CA$H",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.739899,
+      "song",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.7358952,
+      "RM",
+      "kill",
+      "liquidity"
+     ],
+     [
+      1793948487.736332,
+      "RM",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.735687,
+      "INCUBOX",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.733549,
+      "RM",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.733943,
+      "INCUBOX",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948487.732028,
+      "RM",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948478.974578,
+      "$AURA",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948478.974299,
+      "$AURA",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948458.37362,
+      "NORTHKOREA",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948458.373346,
+      "NORTHKOREA",
+      "kill",
+      "volume_1h"
+     ],
+     [
+      1793948458.372669,
+      "CRUMB",
+      "kill",
+      "volume_1h"
+     ],
      [
       1793948449.383945,
       "BPCATE",
@@ -5915,336 +6252,6 @@
      [
       1793948412.599477,
       "CTO",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948412.595171,
-      "TRMPN",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948412.589948,
-      "CTO",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948412.587614,
-      "TRMPN",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948412.586304,
-      "NORTHKOREA",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793948412.5852191,
-      "AI",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948412.58747,
-      "RM",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793948412.577355,
-      "RM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948412.584964,
-      "\u6765\u90fd\u6765\u4e86 \u4e70\u70b9\u5457",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948412.580075,
-      "NORTHKOREA",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948412.58187,
-      "SHAM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948412.5777621,
-      "\u6765\u90fd\u6765\u4e86 \u4e70\u70b9\u5457",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948412.576499,
-      "AI",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948405.919539,
-      "$SPACEMEOW",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948405.9066482,
-      "$SPACEMEOW",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948405.9092622,
-      "Sexchat",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948403.7533288,
-      "CHAWK",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948403.757449,
-      "RM",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793948403.7556212,
-      "RM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948392.778687,
-      "34%",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948386.592067,
-      "SHELFBACK",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948373.8989902,
-      "Portushi",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948373.897758,
-      "HEDGE",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948373.888839,
-      "Portushi",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948373.8893929,
-      "$NIO",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948373.895423,
-      "HEDGE",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948373.015382,
-      "HEDGE",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948373.010703,
-      "RM",
-      "kill",
-      "socials"
-     ],
-     [
-      1793948373.01507,
-      "EMt",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948373.0136378,
-      "Portushi",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948373.013814,
-      "EMt",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948373.0127501,
-      "HEDGE",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948373.011942,
-      "Portushi",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948373.008519,
-      "RM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948366.814367,
-      "RM",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793948366.809558,
-      "RM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948366.80442,
-      "TYTY",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948366.803165,
-      "BLORB",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948366.8023229,
-      "TYTY",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.349421,
-      "RM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.4120162,
-      "RM",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793948356.4095209,
-      "RM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.356252,
-      "RM",
-      "kill",
-      "liquidity"
-     ],
-     [
-      1793948356.361683,
-      "MOSCOW",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.348991,
-      "MOSCOW",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.3587258,
-      "WAF",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.3530822,
-      "WAF",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.357439,
-      "RM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.357203,
-      "HEDGE",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.356952,
-      "RM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.356647,
-      "HEDGE",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.35565,
-      "RM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.354856,
-      "ASTER",
-      "kill",
-      "socials"
-     ],
-     [
-      1793948356.3414059,
-      "RM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.3550122,
-      "RM",
-      "kill",
-      "volume_1h"
-     ],
-     [
-      1793948356.3434072,
-      "ASTER",
       "kill",
       "volume_1h"
      ]
@@ -10353,25 +10360,25 @@
      [
       "Runner",
       "heartbeat",
-      5
+      8
      ],
      [
       "Publisher",
       "last successful push",
-      185
+      34
      ],
      [
       "Updater",
-      "dashboard refreshed; bot code unchanged",
-      208
+      "background owner started",
+      6
      ],
      [
       "Installed code",
-      "3b643215501e",
+      "a1d2356dff95",
       null
      ]
     ],
-    "note": "Separate process evidence; stale or absent timestamps are not healthy. Snapshot generated at 1793948450.",
+    "note": "Separate process evidence; stale or absent timestamps are not healthy. Snapshot generated at 1793948516.",
     "series": [],
     "unit": ""
    },
@@ -10459,6 +10466,914 @@
   ],
   "tokens": [
    {
+    "mint": "FWB5TWVXkcZ9WrGsV92FCdTuXFYEqFpPw81FL6zf1vfj",
+    "symbol": "SHELFBACK",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793948386.567948,
+    "last_ts": 1793948510.432009,
+    "created": 1793948385.0,
+    "price": null,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 131.9690089225769,
+    "observation_age_s": 6.536999940872192,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948386.592067,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948510.463022,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948510.4673128,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "45DzdcYUMFADiYDt6jfYXqcxoSxhYdvQs4hyXYY7pump",
+    "symbol": "$NIO",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793948373.8646872,
+    "last_ts": 1793948509.5962272,
+    "created": 1793948372.0,
+    "price": 8.694e-08,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 144.9690089225769,
+    "observation_age_s": 7.372781753540039,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948373.8893929,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948509.631694,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948509.633037,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "BA7eYqtjdXwhtKjH2ARHpan7Djgs1XnUQutGXZ6Npump",
+    "symbol": "RM",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793948372.977451,
+    "last_ts": 1793948509.5962272,
+    "created": 1793948372.0,
+    "price": 3.784e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 144.9690089225769,
+    "observation_age_s": 7.372781753540039,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948373.008519,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948509.634639,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948509.6357288,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "DyMDVVdAQfQ7GrMm5exo59MRu8WzVGGBJMxQbaWgaJBm",
+    "symbol": "CRAMER",
+    "source": "stonkfun",
+    "dex": "stonkfun",
+    "first_ts": 1793948188.850528,
+    "last_ts": 1793948509.5962272,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": null,
+    "observation_age_s": 7.372781753540039,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948188.901144,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948328.2690141,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948509.62712,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "EvchFcMXPy2NVFaJwnnHvdSR1pz9FAjC2AHsDyzyfiCZ",
+    "symbol": "REMARC",
+    "source": "stonkfun",
+    "dex": "stonkfun",
+    "first_ts": 1793948188.850528,
+    "last_ts": 1793948509.5962272,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": null,
+    "observation_age_s": 7.372781753540039,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948188.9074528,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948328.277388,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948509.655406,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "96oFSTXN72qn2JBFUoB6jU5RGpctEh2DPbPCpPYCi6fA",
+    "symbol": "RM",
+    "source": "geckoterminal",
+    "dex": "meteora",
+    "first_ts": 1793948488.826541,
+    "last_ts": 1793948488.826541,
+    "created": 1793948368.0,
+    "price": 9.118e-06,
+    "liquidity": 15897.89,
+    "regime": "risk-off",
+    "age_s": 148.9690089225769,
+    "observation_age_s": 28.142467975616455,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948488.849369,
+      "kind": "kill",
+      "reason": "socials"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "ED77JbFJtb1BSK5JjRTmN92yhmDiMoKSdsaRZjfopump",
+    "symbol": "Morden w",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948488.826541,
+    "last_ts": 1793948488.826541,
+    "created": 1793948371.0,
+    "price": 2.506e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 145.9690089225769,
+    "observation_age_s": 28.142467975616455,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948488.8479161,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948488.848845,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "5WFCFk6sghY3fwCwvejPDip1qsgSAwAaHAP5KFJDaV9k",
+    "symbol": "RM",
+    "source": "geckoterminal",
+    "dex": "meteoradbc",
+    "first_ts": 1793948488.826541,
+    "last_ts": 1793948488.826541,
+    "created": 1793948373.0,
+    "price": 3.413e-05,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 143.9690089225769,
+    "observation_age_s": 28.142467975616455,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948488.845196,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948488.8518121,
+      "kind": "kill",
+      "reason": "liquidity"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "8xBX15jGEbv3DUkuqq5N53KumEZdF4gy5vo5BJHDpump",
+    "symbol": "RM",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948488.826541,
+    "last_ts": 1793948488.826541,
+    "created": 1793948373.0,
+    "price": 3.234e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 143.9690089225769,
+    "observation_age_s": 28.142467975616455,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948488.864958,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948488.877718,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "6b4mZEJHkpRVKkBoi3vQfMHYikVtWaWTgvRTWMDEpeoR",
+    "symbol": "USBD",
+    "source": "geckoterminal",
+    "dex": "orca",
+    "first_ts": 1793948488.826541,
+    "last_ts": 1793948488.826541,
+    "created": 1793948455.0,
+    "price": 1.00013,
+    "liquidity": 361655.68,
+    "regime": "risk-off",
+    "age_s": 61.969008922576904,
+    "observation_age_s": 28.142467975616455,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948488.842158,
+      "kind": "kill",
+      "reason": "thin_pool"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "G7K2sLVrqRvGLnHL3e7oCD628QZ72KVQp64xBwS1pump",
+    "symbol": "fun",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948488.826541,
+    "last_ts": 1793948488.826541,
+    "created": 1793948375.0,
+    "price": 4.166e-09,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 141.9690089225769,
+    "observation_age_s": 28.142467975616455,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948488.84598,
+      "kind": "kill",
+      "reason": "copycat"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "HxHhzkHg6QYHkv8xWokAMmKruVXBftp5MFTQNsWiK6TU",
+    "symbol": "OMNIIX",
+    "source": "geckoterminal",
+    "dex": "meteoradbc",
+    "first_ts": 1793948488.826541,
+    "last_ts": 1793948488.826541,
+    "created": 1793948376.0,
+    "price": 2.422e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 140.9690089225769,
+    "observation_age_s": 28.142467975616455,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948488.867552,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948488.869738,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "Q4BGYJeNvSk8ddku1ik9BAbr523E4VFeL7fkE7hpump",
+    "symbol": "Elon",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948378.0,
+    "price": 2.587e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 138.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.744926,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.749702,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "6GbPV58CdYGS9ABSiefMH5CLAPm4xaSR1wQfYC8xpump",
+    "symbol": "CVE",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948384.0,
+    "price": 2.683e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 132.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.734956,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.7424908,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "3Cx3zVdfsAUYmP1JJE5wdqJR8h1bTjAnKv2LDnChpump",
+    "symbol": "IAES",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948396.0,
+    "price": 2.605e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 120.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.74468,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.745267,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "4P1EAo8SzkqRUgiZLERwPUsgXzTHigdeCTMM1cKMpump",
+    "symbol": "RM",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948397.0,
+    "price": 2.504e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 119.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.733549,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.736332,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "4pG49udYaE1q7BNEYDSSYPCSs5nmaiyHeUocvR8Npump",
+    "symbol": "CA$H",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948399.0,
+    "price": 2.981e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 117.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.740444,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.741791,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "39N2KqFM6QYfURjiJa8QNaFtVf9ShMNrrVRU3FScpump",
+    "symbol": "SXSN",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948399.0,
+    "price": 2.292e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 117.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.7690508,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.77149,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "F5sPt9GLVYwb3qj4uHt7745Wqmye7uJYgPcDwWyWpump",
+    "symbol": "INCUBOX",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948400.0,
+    "price": 3.279e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 116.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.733943,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.735687,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "FGNHrm44G2rvgzREqxoGx8y9w8ivfzEmEgjka5qVpump",
+    "symbol": "RM",
+    "source": "geckoterminal",
+    "dex": "meteoradbc",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948374.0,
+    "price": 4.46e-12,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 142.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.746919,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.747516,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "J7pLCEFApqto5hiyNovc6cmTqtnueiYV31BA3Wyupump",
+    "symbol": "ELORIAN",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948408.0,
+    "price": 2.672e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 108.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.745068,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.745591,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "82nM817gGNZrE4axFUL3eUfUM3VUczq1vfTDLpHgUWdJ",
+    "symbol": "RM",
+    "source": "geckoterminal",
+    "dex": "meteoradbc",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948309.0,
+    "price": 3.578e-05,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 207.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.732028,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.7358952,
+      "kind": "kill",
+      "reason": "liquidity"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "F8qHxeo54v6hBmAZ8Gyf6R8Ct3ZV3mPaHz6BXB6mpump",
+    "symbol": "song",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948411.0,
+    "price": 9.9e-07,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 105.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.739899,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.741339,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "Dqbs8Z2NUPTMtP1E6y5c97cExLbX3QxBeYHVKfcZjcAn",
+    "symbol": "RM",
+    "source": "geckoterminal",
+    "dex": "meteora",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948412.0,
+    "price": 1.01e-05,
+    "liquidity": 17550.15,
+    "regime": "risk-off",
+    "age_s": 104.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.745954,
+      "kind": "kill",
+      "reason": "socials"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "7enZx4bFSrp8jG6uzuWGokheGCF9sf4CxeAmymkapump",
+    "symbol": "CHAROC",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948421.0,
+    "price": 3.766e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 95.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.736522,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.742762,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "DaX9ermzEhcskYePm61JYAJy4fkUJK8hey7LqFbopump",
+    "symbol": "RM",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1745242260.0,
+    "price": 2.542e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 48706256.96900892,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.746762,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.747199,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "CAZeajCeX4azM89bMqtKC9dHrjer9mRHtnQd425apump",
+    "symbol": "NORTHKOREA",
+    "source": "geckoterminal",
+    "dex": "pumpfun",
+    "first_ts": 1793948487.704886,
+    "last_ts": 1793948487.704886,
+    "created": 1793948425.0,
+    "price": 3.836e-07,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 91.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948487.751563,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.751868,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "VL8We5qoWTqFm6imq3zUMJzeAmrZJ3a572PeyPxpump",
+    "symbol": "BLORB",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793948366.776705,
+    "last_ts": 1793948487.704886,
+    "created": 1793948365.0,
+    "price": 1.493e-06,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 151.9690089225769,
+    "observation_age_s": 29.26412296295166,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948366.803165,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.740911,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948487.741951,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "CzmPwnVVvnbDmJ2RqZNdUspouzM8Rz124KAVi1wWpump",
+    "symbol": "$AURA",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793948352.812236,
+    "last_ts": 1793948478.967492,
+    "created": 1793948351.0,
+    "price": 1.224e-07,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": 165.9690089225769,
+    "observation_age_s": 38.001516819000244,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948352.829994,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948478.974299,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948478.974578,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "BPnG4osCLrWo3hMxaa2UGAf2K6J4JB7DdFmNZP18pump",
+    "symbol": "CRUMB",
+    "source": "pumpportal-ws",
+    "dex": "pumpfun",
+    "first_ts": 1793948458.36545,
+    "last_ts": 1793948458.36545,
+    "created": null,
+    "price": null,
+    "liquidity": null,
+    "regime": "risk-off",
+    "age_s": null,
+    "observation_age_s": 58.6035590171814,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948458.372669,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
+    "mint": "73sTf2mwMtjc2Mn7QpCi2PpzvVMhumLP5FbzJcbTpump",
+    "symbol": "NORTHKOREA",
+    "source": "pumpportal-migration",
+    "dex": "pumpswap",
+    "first_ts": 1793948097.981514,
+    "last_ts": 1793948458.36545,
+    "created": 1793948096.0,
+    "price": 7.509e-09,
+    "liquidity": 15.82,
+    "regime": "risk-off",
+    "age_s": 420.9690089225769,
+    "observation_age_s": 58.6035590171814,
+    "freshness": "recent observation",
+    "events": [
+     {
+      "t": 1793948098.006399,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948098.011662,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948219.475612,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948219.4801128,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948222.731642,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948222.7442172,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948458.373346,
+      "kind": "kill",
+      "reason": "volume_1h"
+     },
+     {
+      "t": 1793948458.37362,
+      "kind": "kill",
+      "reason": "volume_1h"
+     }
+    ],
+    "score": null
+   },
+   {
     "mint": "DwCYGHDWQehexwRVGrwo6WKm5iwJCYL4K61V5wkRpump",
     "symbol": "BPCATE",
     "source": "pumpportal-ws",
@@ -10470,7 +11385,7 @@
     "liquidity": null,
     "regime": "risk-off",
     "age_s": null,
-    "observation_age_s": 1.0732421875,
+    "observation_age_s": 67.59340500831604,
     "freshness": "recent observation",
     "events": [
      {
@@ -10493,7 +11408,7 @@
     "liquidity": null,
     "regime": "risk-off",
     "age_s": null,
-    "observation_age_s": 12.661803960800171,
+    "observation_age_s": 79.18196678161621,
     "freshness": "recent observation",
     "events": [
      {
@@ -10516,7 +11431,7 @@
     "liquidity": null,
     "regime": "risk-off",
     "age_s": null,
-    "observation_age_s": 12.661803960800171,
+    "observation_age_s": 79.18196678161621,
     "freshness": "recent observation",
     "events": [
      {
@@ -10539,7 +11454,7 @@
     "liquidity": null,
     "regime": "risk-off",
     "age_s": null,
-    "observation_age_s": 29.087589025497437,
+    "observation_age_s": 95.60775184631348,
     "freshness": "recent observation",
     "events": [
      {
@@ -10561,8 +11476,8 @@
     "price": 2.529e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 188.44884610176086,
-    "observation_age_s": 36.77247405052185,
+    "age_s": 254.9690089225769,
+    "observation_age_s": 103.29263687133789,
     "freshness": "recent observation",
     "events": [
      {
@@ -10589,8 +11504,8 @@
     "price": 4.049e-11,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 188.44884610176086,
-    "observation_age_s": 36.77247405052185,
+    "age_s": 254.9690089225769,
+    "observation_age_s": 103.29263687133789,
     "freshness": "recent observation",
     "events": [
      {
@@ -10617,8 +11532,8 @@
     "price": 2.188e-05,
     "liquidity": 39622.0,
     "regime": "risk-off",
-    "age_s": 188.44884610176086,
-    "observation_age_s": 36.77247405052185,
+    "age_s": 254.9690089225769,
+    "observation_age_s": 103.29263687133789,
     "freshness": "recent observation",
     "events": [
      {
@@ -10640,8 +11555,8 @@
     "price": 2.504e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 187.44884610176086,
-    "observation_age_s": 36.77247405052185,
+    "age_s": 253.9690089225769,
+    "observation_age_s": 103.29263687133789,
     "freshness": "recent observation",
     "events": [
      {
@@ -10668,8 +11583,8 @@
     "price": 5.435e-07,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 187.44884610176086,
-    "observation_age_s": 36.77247405052185,
+    "age_s": 253.9690089225769,
+    "observation_age_s": 103.29263687133789,
     "freshness": "recent observation",
     "events": [
      {
@@ -10696,8 +11611,8 @@
     "price": 5.909e-09,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 181.44884610176086,
-    "observation_age_s": 36.77247405052185,
+    "age_s": 247.9690089225769,
+    "observation_age_s": 103.29263687133789,
     "freshness": "recent observation",
     "events": [
      {
@@ -10724,8 +11639,8 @@
     "price": 2.533e-05,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 180.44884610176086,
-    "observation_age_s": 36.77247405052185,
+    "age_s": 246.9690089225769,
+    "observation_age_s": 103.29263687133789,
     "freshness": "recent observation",
     "events": [
      {
@@ -10752,8 +11667,8 @@
     "price": 2.523e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 178.44884610176086,
-    "observation_age_s": 36.77247405052185,
+    "age_s": 244.9690089225769,
+    "observation_age_s": 103.29263687133789,
     "freshness": "recent observation",
     "events": [
      {
@@ -10780,8 +11695,8 @@
     "price": 3.147e-05,
     "liquidity": 4.99,
     "regime": "risk-off",
-    "age_s": 177.44884610176086,
-    "observation_age_s": 36.77247405052185,
+    "age_s": 243.9690089225769,
+    "observation_age_s": 103.29263687133789,
     "freshness": "recent observation",
     "events": [
      {
@@ -10808,8 +11723,8 @@
     "price": 4.147e-07,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 174.44884610176086,
-    "observation_age_s": 36.77247405052185,
+    "age_s": 240.9690089225769,
+    "observation_age_s": 103.29263687133789,
     "freshness": "recent observation",
     "events": [
      {
@@ -10836,8 +11751,8 @@
     "price": 1.419e-08,
     "liquidity": 12.9,
     "regime": "risk-off",
-    "age_s": 165.44884610176086,
-    "observation_age_s": 36.77247405052185,
+    "age_s": 231.9690089225769,
+    "observation_age_s": 103.29263687133789,
     "freshness": "recent observation",
     "events": [
      {
@@ -10899,8 +11814,8 @@
     "price": 3.884e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 136.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 202.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -10927,8 +11842,8 @@
     "price": 2.07e-07,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 131.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 197.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -10955,8 +11870,8 @@
     "price": 6.845e-07,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 131.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 197.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -10983,8 +11898,8 @@
     "price": 2.586e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 130.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 196.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -11011,8 +11926,8 @@
     "price": 3.06e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 126.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 192.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -11039,8 +11954,8 @@
     "price": 2.138e-07,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 111.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 177.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -11067,8 +11982,8 @@
     "price": 4.044e-11,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 105.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 171.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -11095,8 +12010,8 @@
     "price": 2.923e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 100.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 166.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -11123,8 +12038,8 @@
     "price": 5.092e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 97.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 163.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -11151,8 +12066,8 @@
     "price": 3.944e-05,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 174.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 240.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -11179,8 +12094,8 @@
     "price": 3.762e-07,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 88.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 154.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -11207,8 +12122,8 @@
     "price": null,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 86.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 152.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -11235,8 +12150,8 @@
     "price": 3.397e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 84.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 150.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -11263,8 +12178,8 @@
     "price": 1.434e-05,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 84.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 150.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -11291,8 +12206,8 @@
     "price": 2.551e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 84.44884610176086,
-    "observation_age_s": 37.91123032569885,
+    "age_s": 150.9690089225769,
+    "observation_age_s": 104.43139314651489,
     "freshness": "recent observation",
     "events": [
      {
@@ -11320,7 +12235,7 @@
     "liquidity": null,
     "regime": "risk-off",
     "age_s": null,
-    "observation_age_s": 44.56868600845337,
+    "observation_age_s": 111.08884882926941,
     "freshness": "recent observation",
     "events": [
      {
@@ -11342,8 +12257,8 @@
     "price": 2.887e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 167.44884610176086,
-    "observation_age_s": 44.56868600845337,
+    "age_s": 233.9690089225769,
+    "observation_age_s": 111.08884882926941,
     "freshness": "recent observation",
     "events": [
      {
@@ -11376,7 +12291,7 @@
     "liquidity": null,
     "regime": "risk-off",
     "age_s": null,
-    "observation_age_s": 46.72383403778076,
+    "observation_age_s": 113.2439968585968,
     "freshness": "recent observation",
     "events": [
      {
@@ -11398,8 +12313,8 @@
     "price": 2.793e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 172.44884610176086,
-    "observation_age_s": 46.72383403778076,
+    "age_s": 238.9690089225769,
+    "observation_age_s": 113.2439968585968,
     "freshness": "recent observation",
     "events": [
      {
@@ -11432,57 +12347,11 @@
     "liquidity": null,
     "regime": "risk-off",
     "age_s": null,
-    "observation_age_s": 57.69767713546753,
-    "freshness": "recent observation",
+    "observation_age_s": 124.21783995628357,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948392.778687,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "FWB5TWVXkcZ9WrGsV92FCdTuXFYEqFpPw81FL6zf1vfj",
-    "symbol": "SHELFBACK",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948386.567948,
-    "last_ts": 1793948386.567948,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": null,
-    "observation_age_s": 63.880897998809814,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793948386.592067,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "45DzdcYUMFADiYDt6jfYXqcxoSxhYdvQs4hyXYY7pump",
-    "symbol": "$NIO",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948373.8646872,
-    "last_ts": 1793948373.8646872,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": null,
-    "observation_age_s": 76.5841588973999,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793948373.8893929,
       "kind": "kill",
       "reason": "volume_1h"
      }
@@ -11500,9 +12369,9 @@
     "price": null,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 203.44884610176086,
-    "observation_age_s": 76.5841588973999,
-    "freshness": "recent observation",
+    "age_s": 269.9690089225769,
+    "observation_age_s": 143.10432171821594,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793947575.170149,
@@ -11558,9 +12427,9 @@
     "price": 5.84e-10,
     "liquidity": 3.79,
     "regime": "risk-off",
-    "age_s": 203.44884610176086,
-    "observation_age_s": 76.5841588973999,
-    "freshness": "recent observation",
+    "age_s": 269.9690089225769,
+    "observation_age_s": 143.10432171821594,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793946861.7805471,
@@ -11611,29 +12480,6 @@
     "score": null
    },
    {
-    "mint": "BA7eYqtjdXwhtKjH2ARHpan7Djgs1XnUQutGXZ6Npump",
-    "symbol": "RM",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948372.977451,
-    "last_ts": 1793948372.977451,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": null,
-    "observation_age_s": 77.47139501571655,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793948373.008519,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
     "mint": "R6Y7g7an4GCH9LSm5hsPdnkxUtd6mMeXJdj2517pump",
     "symbol": "RM",
     "source": "pumpportal-migration",
@@ -11644,9 +12490,9 @@
     "price": 5.27e-05,
     "liquidity": 17107.9,
     "regime": "risk-off",
-    "age_s": 186.44884610176086,
-    "observation_age_s": 77.47139501571655,
-    "freshness": "recent observation",
+    "age_s": 252.9690089225769,
+    "observation_age_s": 143.9915578365326,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948265.8016372,
@@ -11677,9 +12523,9 @@
     "price": 2.502e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 200.44884610176086,
-    "observation_age_s": 77.47139501571655,
-    "freshness": "recent observation",
+    "age_s": 266.9690089225769,
+    "observation_age_s": 143.9915578365326,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948251.789228,
@@ -11700,29 +12546,6 @@
     "score": null
    },
    {
-    "mint": "VL8We5qoWTqFm6imq3zUMJzeAmrZJ3a572PeyPxpump",
-    "symbol": "BLORB",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948366.776705,
-    "last_ts": 1793948366.776705,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": null,
-    "observation_age_s": 83.67214107513428,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793948366.803165,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
     "mint": "8ZE2jt8kyocYErALfSEryhoXcpweGCL4BfYbqeNypump",
     "symbol": "TYTY",
     "source": "pumpportal-migration",
@@ -11733,9 +12556,9 @@
     "price": 4.217e-07,
     "liquidity": 84.13,
     "regime": "risk-off",
-    "age_s": 214.44884610176086,
-    "observation_age_s": 83.67214107513428,
-    "freshness": "recent observation",
+    "age_s": 280.9690089225769,
+    "observation_age_s": 150.19230389595032,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948237.031872,
@@ -11771,9 +12594,9 @@
     "price": 2.745e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 215.44884610176086,
-    "observation_age_s": 83.67214107513428,
-    "freshness": "recent observation",
+    "age_s": 281.9690089225769,
+    "observation_age_s": 150.19230389595032,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948237.031111,
@@ -11804,9 +12627,9 @@
     "price": 2.122e-05,
     "liquidity": 24512.06,
     "regime": "risk-off",
-    "age_s": 216.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 282.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.348554,
@@ -11827,9 +12650,9 @@
     "price": 2.502e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 212.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 278.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.342144,
@@ -11855,9 +12678,9 @@
     "price": null,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 212.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 278.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.356952,
@@ -11883,9 +12706,9 @@
     "price": 2.933e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 210.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 276.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.3414059,
@@ -11911,9 +12734,9 @@
     "price": 2.87e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 210.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 276.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.4095209,
@@ -11939,9 +12762,9 @@
     "price": 2.582e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 210.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 276.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.351447,
@@ -11967,9 +12790,9 @@
     "price": 4.464e-12,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 233.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 299.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.356647,
@@ -11995,9 +12818,9 @@
     "price": 2.801e-07,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 206.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 272.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.348991,
@@ -12023,9 +12846,9 @@
     "price": 3.963e-07,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 205.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 271.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.3496919,
@@ -12051,9 +12874,9 @@
     "price": 4.049e-11,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 201.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 267.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.3550122,
@@ -12079,9 +12902,9 @@
     "price": 4.08e-12,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 201.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 267.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.353608,
@@ -12107,9 +12930,9 @@
     "price": null,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 192.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 258.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.3530822,
@@ -12135,9 +12958,9 @@
     "price": 3.231e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 174.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 240.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.336724,
@@ -12163,9 +12986,9 @@
     "price": 3.077e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 252.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 318.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.348386,
@@ -12191,9 +13014,9 @@
     "price": 2.513e-05,
     "liquidity": 48217.55,
     "regime": "risk-off",
-    "age_s": 170.44884610176086,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "age_s": 236.9690089225769,
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.3434072,
@@ -12220,8 +13043,8 @@
     "liquidity": null,
     "regime": "risk-off",
     "age_s": null,
-    "observation_age_s": 94.14570999145508,
-    "freshness": "recent observation",
+    "observation_age_s": 160.66587281227112,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948356.3354182,
@@ -12247,9 +13070,9 @@
     "price": null,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 169.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 235.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948355.1060932,
@@ -12275,9 +13098,9 @@
     "price": 4.788e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 251.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 317.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948355.087106,
@@ -12303,9 +13126,9 @@
     "price": 3.837e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 166.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 232.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948355.093078,
@@ -12331,9 +13154,9 @@
     "price": null,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 250.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 316.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948355.105887,
@@ -12359,9 +13182,9 @@
     "price": 2.852e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 161.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 227.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948355.107751,
@@ -12387,9 +13210,9 @@
     "price": 3.077e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 250.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 316.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948355.089566,
@@ -12415,9 +13238,9 @@
     "price": 5e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 159.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 225.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948355.103544,
@@ -12443,9 +13266,9 @@
     "price": 2.857e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 247.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 313.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948355.089068,
@@ -12471,9 +13294,9 @@
     "price": 2.511e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 159.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 225.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948355.08847,
@@ -12499,9 +13322,9 @@
     "price": null,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 246.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 312.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948355.104605,
@@ -12527,9 +13350,9 @@
     "price": 4.14e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 158.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 224.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948355.084894,
@@ -12555,9 +13378,9 @@
     "price": 2.793e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 245.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 311.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948355.1235049,
@@ -12583,9 +13406,9 @@
     "price": 2.505e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 218.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 284.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948233.038062,
@@ -12616,9 +13439,9 @@
     "price": 2.247e-07,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 218.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 284.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948233.0436668,
@@ -12649,9 +13472,9 @@
     "price": 2.502e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 228.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 294.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948222.729412,
@@ -12682,9 +13505,9 @@
     "price": null,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 229.44884610176086,
-    "observation_age_s": 95.39784216880798,
-    "freshness": "recent observation",
+    "age_s": 295.9690089225769,
+    "observation_age_s": 161.91800498962402,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948222.7321851,
@@ -12715,9 +13538,9 @@
     "price": 2.497e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 158.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 224.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948353.9897778,
@@ -12743,9 +13566,9 @@
     "price": 4.29e-08,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 244.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 310.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948353.952037,
@@ -12771,9 +13594,9 @@
     "price": 8.936e-08,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 165.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 231.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948353.965875,
@@ -12799,9 +13622,9 @@
     "price": 2.968e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 244.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 310.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948353.94957,
@@ -12827,9 +13650,9 @@
     "price": 4.018e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 154.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 220.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948353.963826,
@@ -12855,9 +13678,9 @@
     "price": 2.502e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 239.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 305.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948353.966065,
@@ -12883,9 +13706,9 @@
     "price": 2.646e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 154.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 220.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948353.951643,
@@ -12911,9 +13734,9 @@
     "price": 1.287e-05,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 234.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 300.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948353.972965,
@@ -12939,9 +13762,9 @@
     "price": 1.407e-05,
     "liquidity": 25526.88,
     "regime": "risk-off",
-    "age_s": 152.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 218.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948353.9552069,
@@ -12967,9 +13790,9 @@
     "price": 1.837e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 234.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 300.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948353.9566238,
@@ -12995,9 +13818,9 @@
     "price": 4.463e-12,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 150.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 216.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948353.9674938,
@@ -13018,9 +13841,9 @@
     "price": 2.502e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 234.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 300.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948353.955625,
@@ -13046,9 +13869,9 @@
     "price": 2.67e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 232.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 298.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948219.460565,
@@ -13079,9 +13902,9 @@
     "price": 2.512e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 236.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 302.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948215.315687,
@@ -13112,9 +13935,9 @@
     "price": 2.502e-06,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 246.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 312.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948205.9007459,
@@ -13145,9 +13968,9 @@
     "price": null,
     "liquidity": null,
     "regime": "risk-off",
-    "age_s": 248.44884610176086,
-    "observation_age_s": 96.5343701839447,
-    "freshness": "recent observation",
+    "age_s": 314.9690089225769,
+    "observation_age_s": 163.05453300476074,
+    "freshness": "delayed observation",
     "events": [
      {
       "t": 1793948203.654558,
@@ -13166,827 +13989,6 @@
      }
     ],
     "score": null
-   },
-   {
-    "mint": "CzmPwnVVvnbDmJ2RqZNdUspouzM8Rz124KAVi1wWpump",
-    "symbol": "$AURA",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948352.812236,
-    "last_ts": 1793948352.812236,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": null,
-    "observation_age_s": 97.63661003112793,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793948352.829994,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "DmsRwNm89DSSNB63QYRnwtyfa6QqeAEzAJUfoRjPuPYJ",
-    "symbol": "RLT",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948202.594104,
-    "last_ts": 1793948352.812236,
-    "created": 1793948201.0,
-    "price": 2.502e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 249.44884610176086,
-    "observation_age_s": 97.63661003112793,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793948202.616989,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948352.8351429,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948352.836836,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "yR9eJX1dKHXaC4dsa1XQ6JiEtv52TMtCbGEyGX1RAe3",
-    "symbol": "RED",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948201.8584378,
-    "last_ts": 1793948352.812236,
-    "created": 1793948200.0,
-    "price": null,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 250.44884610176086,
-    "observation_age_s": 97.63661003112793,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793948201.882231,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948352.852467,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948352.857454,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "AfR8yZ5kF7CJ5Wq91hE3HM7bnUvepZidH5YZi3jKpump",
-    "symbol": "$SPACEMEOW",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948200.773685,
-    "last_ts": 1793948352.812236,
-    "created": 1793948199.0,
-    "price": 8.05e-07,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 251.44884610176086,
-    "observation_age_s": 97.63661003112793,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793948200.80363,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948352.840236,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948352.8414552,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "HjnvmkvAHnQ5Y7Mvd9BiNPwAqmf5YEXcTvoVnHSXNx5z",
-    "symbol": "RED",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948199.412066,
-    "last_ts": 1793948352.812236,
-    "created": 1793948198.0,
-    "price": 2.657e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 252.44884610176086,
-    "observation_age_s": 97.63661003112793,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793948199.4452229,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948352.8325372,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948352.834354,
-      "kind": "kill",
-      "reason": "liquidity"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "32zcwxLRe3a5yw3yiF418XbT3SWY1p6PkiEqNWFYHtRQ",
-    "symbol": "RMT",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948199.412066,
-    "last_ts": 1793948348.969712,
-    "created": 1793948198.0,
-    "price": 2.502e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 252.44884610176086,
-    "observation_age_s": 101.47913408279419,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793948199.432873,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948349.005273,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948349.0065348,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "BEaQtJkycCUWU6rdCzQACYPVgAiVS8xfnbi2e8Q3pump",
-    "symbol": "Grandhpa",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948197.46068,
-    "last_ts": 1793948348.969712,
-    "created": 1793948196.0,
-    "price": 2.638e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 254.44884610176086,
-    "observation_age_s": 101.47913408279419,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793948197.480351,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948349.017449,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948349.021868,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "GpkJgzLhLQdDk68Yjzr759VeuNxmFkV4qLb2uYNJTZSZ",
-    "symbol": "MORNING",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948196.714916,
-    "last_ts": 1793948348.969712,
-    "created": 1793948195.0,
-    "price": 3.077e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 255.44884610176086,
-    "observation_age_s": 101.47913408279419,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793948196.740711,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948349.004547,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948349.0062048,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "4GsqN1SwBqsdoKqkEvUaU2aezeeLhfmxWycZqG6fLoat",
-    "symbol": "Hedgefund / SQQQ",
-    "source": "geckoterminal",
-    "dex": "letsbonk/launchlab",
-    "first_ts": 1793947442.5644958,
-    "last_ts": 1793948348.969712,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": null,
-    "observation_age_s": 101.47913408279419,
-    "freshness": "recent observation",
-    "events": [
-     {
-      "t": 1793947442.6159081,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793947567.732415,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793947750.5301728,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948349.004825,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "Fw1eJpi6g6DPwkzQ2kb8h4ammwUR5j8cEh3VRfSoH1F3",
-    "symbol": "redmorning",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948196.714916,
-    "last_ts": 1793948328.234913,
-    "created": 1793948196.0,
-    "price": 2.642e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 254.44884610176086,
-    "observation_age_s": 122.21393299102783,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948196.7356522,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948328.289802,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948328.294893,
-      "kind": "kill",
-      "reason": "liquidity"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "DyMDVVdAQfQ7GrMm5exo59MRu8WzVGGBJMxQbaWgaJBm",
-    "symbol": "CRAMER",
-    "source": "stonkfun",
-    "dex": "stonkfun",
-    "first_ts": 1793948188.850528,
-    "last_ts": 1793948328.234913,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": null,
-    "observation_age_s": 122.21393299102783,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948188.901144,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948328.2690141,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "EvchFcMXPy2NVFaJwnnHvdSR1pz9FAjC2AHsDyzyfiCZ",
-    "symbol": "REMARC",
-    "source": "stonkfun",
-    "dex": "stonkfun",
-    "first_ts": 1793948188.850528,
-    "last_ts": 1793948328.234913,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": null,
-    "observation_age_s": 122.21393299102783,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948188.9074528,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948328.277388,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "129xJfgneavgyERZaiDKSHtVxKwMxpYqQNfjDzfAw1fk",
-    "symbol": "REMARC / SQQQ",
-    "source": "geckoterminal",
-    "dex": "stonkfun",
-    "first_ts": 1793948008.152493,
-    "last_ts": 1793948328.234913,
-    "created": null,
-    "price": null,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": null,
-    "observation_age_s": 122.21393299102783,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948008.215206,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948130.948603,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948328.266585,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "3Na147gVLu2T1Gkh6KMjjPe1pvjiYvkVVv3qcSKjpump",
-    "symbol": "RICK",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948180.154616,
-    "last_ts": 1793948308.0078359,
-    "created": 1793948178.0,
-    "price": 2.686e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 272.44884610176086,
-    "observation_age_s": 142.4410102367401,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948180.1799529,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948308.0452778,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948308.0525298,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "933fTiDrVaWueKzBoo9KusQCaFsJcJuNG6gZ45Dopump",
-    "symbol": "Capiboo",
-    "source": "geckoterminal",
-    "dex": "pumpswap",
-    "first_ts": 1793948008.152493,
-    "last_ts": 1793948308.0078359,
-    "created": 1793948182.0,
-    "price": 3.935e-05,
-    "liquidity": 14172.85,
-    "regime": "risk-off",
-    "age_s": 268.44884610176086,
-    "observation_age_s": 142.4410102367401,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948008.20251,
-      "kind": "kill",
-      "reason": "liquidity"
-     },
-     {
-      "t": 1793948008.221416,
-      "kind": "kill",
-      "reason": "liquidity"
-     },
-     {
-      "t": 1793948308.044241,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948308.04796,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "43VJE2bBkANvsQdTv82fihBwMGAbb2jbGDbo1b9wpump",
-    "symbol": "MOCTRES",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948156.310459,
-    "last_ts": 1793948279.426413,
-    "created": 1793948155.0,
-    "price": 2.507e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 295.44884610176086,
-    "observation_age_s": 171.02243304252625,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948156.3326778,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948279.471594,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948279.472651,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "HmpeYFUmFZhKVqNjG14mcWZ15yt211Q2bnZPzRKrpump",
-    "symbol": "$YTH",
-    "source": "pumpportal-ws",
-    "dex": "pumpfun",
-    "first_ts": 1793948151.4315908,
-    "last_ts": 1793948279.426413,
-    "created": 1793948150.0,
-    "price": 2.548e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 300.44884610176086,
-    "observation_age_s": 171.02243304252625,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948151.457122,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948279.476052,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948279.480648,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "4qe8YzpHf77593JARVS3ZZAzRHET4pJ4bckidMcjpump",
-    "symbol": "AirPointer",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793948263.4912481,
-    "last_ts": 1793948263.4912481,
-    "created": 1793948149.0,
-    "price": 3.139e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 301.44884610176086,
-    "observation_age_s": 186.95759797096252,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948263.520996,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948263.526516,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "G3DJ2gHeW3SGLikdiJjtMRwdQiPYLgCuZGfcFpZ7pump",
-    "symbol": "fg",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793948263.4912481,
-    "last_ts": 1793948263.4912481,
-    "created": 1793948150.0,
-    "price": 2.307e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 300.44884610176086,
-    "observation_age_s": 186.95759797096252,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948263.51391,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948263.5149188,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "Bfx6uiXAfJfQBDrjsiqH9DUYwBPHZ5gXrEnxK4bspump",
-    "symbol": "F*CK",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793948262.336606,
-    "last_ts": 1793948262.336606,
-    "created": 1793948159.0,
-    "price": 7.874e-07,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 291.44884610176086,
-    "observation_age_s": 188.11224007606506,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948262.388302,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948262.3885398,
-      "kind": "kill",
-      "reason": "liquidity"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "5HE1dXJbo1v6Qn9GHLLGo2FtsbSRABURr3zMZMZSmbNK",
-    "symbol": "AMDT",
-    "source": "geckoterminal",
-    "dex": "orca",
-    "first_ts": 1793948262.336606,
-    "last_ts": 1793948262.336606,
-    "created": 1793948176.0,
-    "price": 1.01,
-    "liquidity": 130907.16,
-    "regime": "risk-off",
-    "age_s": 274.44884610176086,
-    "observation_age_s": 188.11224007606506,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948262.350417,
-      "kind": "kill",
-      "reason": "thin_pool"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "4Wnd1rFGmZpw3tPo3raNaHPqsftbmZr86wMX6GvWGiMZ",
-    "symbol": "ZEC",
-    "source": "geckoterminal",
-    "dex": "orca",
-    "first_ts": 1793948262.336606,
-    "last_ts": 1793948262.336606,
-    "created": 1793948151.0,
-    "price": 1301.18,
-    "liquidity": 500470.24,
-    "regime": "risk-off",
-    "age_s": 299.44884610176086,
-    "observation_age_s": 188.11224007606506,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948262.350345,
-      "kind": "kill",
-      "reason": "thin_pool"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "3hRGFX9KoAbHnBxNeXjBCSDMiGWnduqwZwJusbT7pump",
-    "symbol": "$JIMO",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793948262.336606,
-    "last_ts": 1793948262.336606,
-    "created": 1793948163.0,
-    "price": 2.504e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 287.44884610176086,
-    "observation_age_s": 188.11224007606506,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948262.3555598,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948262.356649,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "AyBav2ZcEYbizLJW42NSatwY1os9h3VvRV8mUtjKpump",
-    "symbol": "_P_",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793948262.336606,
-    "last_ts": 1793948262.336606,
-    "created": 1793948165.0,
-    "price": 5.731e-07,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 285.44884610176086,
-    "observation_age_s": 188.11224007606506,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948262.353704,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948262.355047,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "AXbWoqDriojUhGe4x9QGFfjJHnqdMqJtwVhMyVmG4VgX",
-    "symbol": "VUTOMI",
-    "source": "geckoterminal",
-    "dex": "meteoradbc",
-    "first_ts": 1793948262.336606,
-    "last_ts": 1793948262.336606,
-    "created": 1793948166.0,
-    "price": 4.047e-11,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 284.44884610176086,
-    "observation_age_s": 188.11224007606506,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948262.3595781,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948262.359806,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "J4z4yc5L7a887wNMWX97sC1KAhxq9FHSPjiAdVWkpump",
-    "symbol": "mmrich",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793948262.336606,
-    "last_ts": 1793948262.336606,
-    "created": 1793948170.0,
-    "price": 3.12e-06,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 280.44884610176086,
-    "observation_age_s": 188.11224007606506,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948262.3938072,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948262.394193,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
-   },
-   {
-    "mint": "2eUxQuZmnHWCXN5J9QmLVdWHMU297oX5mKL3GFS9pump",
-    "symbol": "DREAM",
-    "source": "geckoterminal",
-    "dex": "pumpfun",
-    "first_ts": 1793948262.336606,
-    "last_ts": 1793948262.336606,
-    "created": 1793948170.0,
-    "price": null,
-    "liquidity": null,
-    "regime": "risk-off",
-    "age_s": 280.44884610176086,
-    "observation_age_s": 188.11224007606506,
-    "freshness": "delayed observation",
-    "events": [
-     {
-      "t": 1793948262.358193,
-      "kind": "kill",
-      "reason": "volume_1h"
-     },
-     {
-      "t": 1793948262.3586419,
-      "kind": "kill",
-      "reason": "volume_1h"
-     }
-    ],
-    "score": null
    }
   ],
   "scope": "24h realized fills; latest 120 radar observations; up to 4000 recent logger events",
@@ -13994,19 +13996,19 @@
  },
  "decision_review": {
   "diagnostics": {
-   "skip_count": 1817,
+   "skip_count": 1814,
    "reasons": [
     [
      "volume_1h",
-     1335
+     1333
     ],
     [
      "liquidity",
-     282
+     281
     ],
     [
      "socials",
-     92
+     91
     ],
     [
      "copycat",
@@ -14014,7 +14016,7 @@
     ],
     [
      "thin_pool",
-     31
+     32
     ],
     [
      "lp_locked",
@@ -14042,7 +14044,7 @@
    "scored": 0
   },
   "schema": 1,
-  "generated_at": 1793948450.482678,
+  "generated_at": 1793948517.004003,
   "sources": [
    {
     "source": "Unknown",
@@ -14062,9 +14064,9 @@
    }
   ],
   "missed": {
-   "universe": 2662,
+   "universe": 2658,
    "measured": 998,
-   "unknown": 1664,
+   "unknown": 1660,
    "rows": [
     {
      "mint": "9x82wPwHD4rynYfCx5hZtM4rknCZhBXpzM91sSVdShfU",
@@ -14370,28 +14372,28 @@
   "stages": [
    {
     "label": "Discovered",
-    "count": 37782,
+    "count": 37800,
     "mints": [
-     "73sTf2mwMtjc2Mn7QpCi2PpzvVMhumLP5FbzJcbTpump",
-     "BPnG4osCLrWo3hMxaa2UGAf2K6J4JB7DdFmNZP18pump",
-     "DwCYGHDWQehexwRVGrwo6WKm5iwJCYL4K61V5wkRpump",
-     "BaUwAGq1SmhdyejyWnEFmtktmgurQ6tA4ZVUbKMjTbBm",
-     "HQxXRSPGvig4J2pxfya9irNbgtnPWQExtWhRLPQkpump",
-     "FfrqNf3RNF7wXHjRd2S6LuphFQqdWtZULUWz4HCZpump",
-     "J2MWXefxMbsE7WAvqnwT447VUz5RbP95h56iGdzkpump",
-     "3hKNSXk4qLngF4AmiMa6kDHhrvLMCAjVbPhf1pNDpump",
-     "HH3EtZuLzT6uGeRw2JkaRoVDJNjaWu5D8AY3VrwUrooD",
-     "2qwE5kcMYat2rjnYTHMFkoiUQCA7pTjEodAv5cfcpump",
-     "7u22gSLJpbRbTHM29sqTKzgv37eHz6qVaGj8i6jxkGKP",
-     "GnMQcENxrvjREGaExsWoapHwvDrxPvqwDgJG9Xtme3ew",
-     "FmfSnAptt5hpHuFfDo4fJ1bEvC973P36ojyq878dpump",
-     "9zbqQdDtZcYXjfd9ndcHKBXHWAo4EMndXrgtkmbSpump",
-     "EW1b9rcLAJe634mgxb5r4bVYxDoGU37o7YazBzjTpump",
-     "GDgDFYTLFpoec333D7vs1hhFrS9YruybcsgsnSwzpump",
-     "GDLPyjuygbDdEt5GRGnsBj8vNV77qtw9J8i7mBNMpump",
-     "28Eg5hbQsWTuSGCaGZVVBtZS8ropLgj7YqAjccZJpump",
-     "DBnnZTD6GGtUKN2xhk7qpTMBLNWAvp3zU45ZjpJ9pump",
-     "ChiLLHSmrSxiZwXJWEdns2JYBnA6HtMeki3sfg5kBQif"
+     "Au7Jy16NvvdgYA8H6EQqF4tGZyVVsdB1DDd8fePtpump",
+     "579kaZNNUhNWXL7xgXXvbZ5o9fW3DoCtD3b3Me6epump",
+     "W3GzTaRxMgsFYXN4MkP7dcfgyAs9wT57XKnDRaspump",
+     "3NugfuNQrFpZWDmmJMJF4bg47Msd1qtT3z54hfNvpump",
+     "8tZCQvu6UN5inWeVvr5uiYNfe516RrMvdVtGYeoDpump",
+     "HbkTUFZdENFrpjVZqS1mN5ZFgCeqUfwuRdHDtvPU2ahL",
+     "Xw9taXYcyDMsbqJjjrrN9HVwxUQJmjER8c2abPMQoJL",
+     "G7K2sLVrqRvGLnHL3e7oCD628QZ72KVQp64xBwS1pump",
+     "6b4mZEJHkpRVKkBoi3vQfMHYikVtWaWTgvRTWMDEpeoR",
+     "GNNhU2SEArd5RGN49Yjo4YHTipRA3E5gMJeUPE4Gpump",
+     "27cFBSVjBmtC9AJMnJXRP2MdzdajJmj9e6YjxXfCpump",
+     "27cETPYJbWw6pWN63pJ5K1Vm6Xp1wVo8M4G5u6FNpump",
+     "9YdpBxv7Cog766MCzvcMN5yysvHAhf1sEpotwz5xpump",
+     "7kRs1S7sTfwuE8c9YECVsEuY1K5dPHNA7rMunrdfpump",
+     "DEuonDWJgsreJQF7o5yQXMuLSXUyQWnQPrnaeBtrWsJ3",
+     "EhiGLoNdvTsQdSMYMSNAwwwGojHz9KULV7d1i4ccpump",
+     "poASXRrsA6fZ6yqJ3dRd8QW2NqdUFi3AhSU3a5vpump",
+     "27cF2KiN3Zc6fhHWWimrPrZKdP9a1PGThTAmwu84pump",
+     "48mdzRTtKeKHiEmG9VD91REX3BU1U1ZAaP8FbFy2pump",
+     "GaL6PqD45e39JYfHXCLHpkX4S5YSMkpWiMC3eMnpump"
     ]
    },
    {
@@ -14415,853 +14417,78 @@
    }
   ],
   "tokens": {
-   "EW1b9rcLAJe634mgxb5r4bVYxDoGU37o7YazBzjTpump": {
+   "FGNHrm44G2rvgzREqxoGx8y9w8ivfzEmEgjka5qVpump": {
     "symbol": "RM",
     "events": [
      {
-      "ts": 1793948413.721355,
-      "kind": "kill",
-      "why": "liquidity:fail ($5,067)"
-     },
-     {
-      "ts": 1793948413.7274399,
-      "kind": "kill",
-      "why": "liquidity:fail ($5,067)"
-     }
-    ]
-   },
-   "ChiLLHSmrSxiZwXJWEdns2JYBnA6HtMeki3sfg5kBQif": {
-    "symbol": "Chill",
-    "events": [
-     {
-      "ts": 1793948412.606014,
+      "ts": 1793948487.746919,
       "kind": "kill",
       "why": "volume_1h:fail ($0)"
      },
      {
-      "ts": 1793948412.6064792,
+      "ts": 1793948487.747516,
       "kind": "kill",
       "why": "volume_1h:fail ($0)"
      }
     ]
    },
-   "3hKNSXk4qLngF4AmiMa6kDHhrvLMCAjVbPhf1pNDpump": {
-    "symbol": "SXSN",
-    "events": [
-     {
-      "ts": 1793948413.737271,
-      "kind": "kill",
-      "why": "volume_1h:fail ($2,448)"
-     },
-     {
-      "ts": 1793948413.738791,
-      "kind": "kill",
-      "why": "volume_1h:fail ($2,448)"
-     }
-    ]
-   },
-   "GDgDFYTLFpoec333D7vs1hhFrS9YruybcsgsnSwzpump": {
-    "symbol": "BAD",
-    "events": [
-     {
-      "ts": 1793948413.724273,
-      "kind": "kill",
-      "why": "volume_1h:fail ($1,436)"
-     },
-     {
-      "ts": 1793948413.726354,
-      "kind": "kill",
-      "why": "volume_1h:fail ($1,436)"
-     }
-    ]
-   },
-   "2UARPWBN8FiBkhtrEj8p5D8WqKRCYtrNCqv5yYfhpump": {
-    "symbol": "redinu",
-    "events": [
-     {
-      "ts": 1793948412.60304,
-      "kind": "kill",
-      "why": "volume_1h:fail ($770)"
-     },
-     {
-      "ts": 1793948412.603671,
-      "kind": "kill",
-      "why": "volume_1h:fail ($770)"
-     }
-    ]
-   },
-   "45DzdcYUMFADiYDt6jfYXqcxoSxhYdvQs4hyXYY7pump": {
-    "symbol": "$NIO",
-    "events": [
-     {
-      "ts": 1793948373.8893929,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     }
-    ]
-   },
-   "CKE1bPfauc9qKug3hfRWcuwWGBXCkfDvxTNAs5LVVeUg": {
-    "symbol": "RM",
-    "events": [
-     {
-      "ts": 1793948356.3550122,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793948356.35565,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     }
-    ]
-   },
-   "FmfSnAptt5hpHuFfDo4fJ1bEvC973P36ojyq878dpump": {
-    "symbol": "NORTHKOREA",
-    "events": [
-     {
-      "ts": 1793948413.72684,
-      "kind": "kill",
-      "why": "volume_1h:fail ($5,977)"
-     },
-     {
-      "ts": 1793948413.7284591,
-      "kind": "kill",
-      "why": "liquidity:fail ($83)"
-     }
-    ]
-   },
-   "EUS1Rmja9jjqRvoxvTjtnWpz5KehdcpbqbqsffAopump": {
-    "symbol": "MOSCOW",
-    "events": [
-     {
-      "ts": 1793948356.348991,
-      "kind": "kill",
-      "why": "volume_1h:fail ($4,186)"
-     },
-     {
-      "ts": 1793948356.361683,
-      "kind": "kill",
-      "why": "volume_1h:fail ($4,186)"
-     }
-    ]
-   },
-   "5km5mtEweywmn8rBwUPKzwa6TKRFZmSKq7ZyqDSopump": {
-    "symbol": "Troll",
-    "events": [
-     {
-      "ts": 1793948356.351447,
-      "kind": "kill",
-      "why": "volume_1h:fail ($124)"
-     },
-     {
-      "ts": 1793948356.351841,
-      "kind": "kill",
-      "why": "volume_1h:fail ($124)"
-     }
-    ]
-   },
-   "FEa5ToT7ZZn6feiibfdQnePsMhanTAuWHrb8WcEMpump": {
-    "symbol": "MONY",
-    "events": [
-     {
-      "ts": 1793948356.3496919,
-      "kind": "kill",
-      "why": "volume_1h:fail ($158)"
-     },
-     {
-      "ts": 1793948356.350166,
-      "kind": "kill",
-      "why": "volume_1h:fail ($158)"
-     }
-    ]
-   },
-   "R6Y7g7an4GCH9LSm5hsPdnkxUtd6mMeXJdj2517pump": {
-    "symbol": "RM",
-    "events": [
-     {
-      "ts": 1793948265.8016372,
-      "kind": "kill",
-      "why": "liquidity:fail ($5,186)"
-     },
-     {
-      "ts": 1793948265.8055449,
-      "kind": "kill",
-      "why": "liquidity:fail ($5,186)"
-     },
-     {
-      "ts": 1793948373.010703,
-      "kind": "kill",
-      "why": "socials:fail (no X/Telegram listed)"
-     }
-    ]
-   },
-   "AsLvb6WGYnhZmz56L2EKxa8AHSabhVPEHQTDvx7FYf7r": {
-    "symbol": "HEDGE",
-    "events": [
-     {
-      "ts": 1793948356.356647,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793948356.357203,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     }
-    ]
-   },
-   "43TAbjc4GfpobeF1WnYUdjRjcF7ASXN3f2qmfs8hpump": {
-    "symbol": "Knight ",
-    "events": [
-     {
-      "ts": 1793948412.6021938,
-      "kind": "kill",
-      "why": "volume_1h:fail ($125)"
-     },
-     {
-      "ts": 1793948412.602955,
-      "kind": "kill",
-      "why": "volume_1h:fail ($125)"
-     }
-    ]
-   },
-   "FfrqNf3RNF7wXHjRd2S6LuphFQqdWtZULUWz4HCZpump": {
-    "symbol": "TRMPN",
-    "events": [
-     {
-      "ts": 1793948421.3839529,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     }
-    ]
-   },
-   "HQxXRSPGvig4J2pxfya9irNbgtnPWQExtWhRLPQkpump": {
-    "symbol": "batonwins",
-    "events": [
-     {
-      "ts": 1793948437.8143182,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     }
-    ]
-   },
-   "8ZE2jt8kyocYErALfSEryhoXcpweGCL4BfYbqeNypump": {
-    "symbol": "TYTY",
-    "events": [
-     {
-      "ts": 1793948237.031872,
-      "kind": "kill",
-      "why": "volume_1h:fail ($3,891)"
-     },
-     {
-      "ts": 1793948237.032352,
-      "kind": "kill",
-      "why": "volume_1h:fail ($3,891)"
-     },
-     {
-      "ts": 1793948366.8023229,
-      "kind": "kill",
-      "why": "volume_1h:fail ($272)"
-     },
-     {
-      "ts": 1793948366.80442,
-      "kind": "kill",
-      "why": "volume_1h:fail ($272)"
-     }
-    ]
-   },
-   "9zbqQdDtZcYXjfd9ndcHKBXHWAo4EMndXrgtkmbSpump": {
-    "symbol": "trench",
-    "events": [
-     {
-      "ts": 1793948413.7250502,
-      "kind": "kill",
-      "why": "volume_1h:fail ($3,094)"
-     },
-     {
-      "ts": 1793948413.7275689,
-      "kind": "kill",
-      "why": "volume_1h:fail ($3,094)"
-     }
-    ]
-   },
-   "E2wJBjrpDdZdEWrhmv5xTdriMohc28m98noMLMzmpump": {
-    "symbol": "RM",
-    "events": [
-     {
-      "ts": 1793948356.3414059,
-      "kind": "kill",
-      "why": "volume_1h:fail ($18,072)"
-     },
-     {
-      "ts": 1793948356.356252,
-      "kind": "kill",
-      "why": "liquidity:fail ($587)"
-     }
-    ]
-   },
-   "GMd2jJZ4qDYdNrt2NiWFq4cvWAcSRspQnufr8ZV2pump": {
-    "symbol": "RM",
-    "events": [
-     {
-      "ts": 1793948356.348386,
-      "kind": "kill",
-      "why": "volume_1h:fail ($2,047)"
-     },
-     {
-      "ts": 1793948356.349421,
-      "kind": "kill",
-      "why": "volume_1h:fail ($2,047)"
-     }
-    ]
-   },
-   "J6azV1sYxPWMFqtTmXyi4Jfe73wSjqxSygK4M8Sipump": {
-    "symbol": "34%",
-    "events": [
-     {
-      "ts": 1793948392.778687,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     }
-    ]
-   },
-   "GDLPyjuygbDdEt5GRGnsBj8vNV77qtw9J8i7mBNMpump": {
-    "symbol": "TRMPN",
-    "events": [
-     {
-      "ts": 1793948130.9426188,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     },
-     {
-      "ts": 1793948251.789969,
-      "kind": "kill",
-      "why": "volume_1h:fail ($3,047)"
-     },
-     {
-      "ts": 1793948251.790596,
-      "kind": "kill",
-      "why": "volume_1h:fail ($3,047)"
-     },
-     {
-      "ts": 1793948286.781069,
-      "kind": "kill",
-      "why": "volume_1h:fail ($4,196)"
-     },
-     {
-      "ts": 1793948286.785032,
-      "kind": "kill",
-      "why": "volume_1h:fail ($4,196)"
-     },
-     {
-      "ts": 1793948412.587614,
-      "kind": "kill",
-      "why": "volume_1h:fail ($541)"
-     },
-     {
-      "ts": 1793948412.595171,
-      "kind": "kill",
-      "why": "volume_1h:fail ($541)"
-     },
-     {
-      "ts": 1793948413.722163,
-      "kind": "kill",
-      "why": "volume_1h:fail ($542)"
-     },
-     {
-      "ts": 1793948413.7254589,
-      "kind": "kill",
-      "why": "volume_1h:fail ($542)"
-     }
-    ]
-   },
-   "GnMQcENxrvjREGaExsWoapHwvDrxPvqwDgJG9Xtme3ew": {
-    "symbol": "Bill",
-    "events": [
-     {
-      "ts": 1793948413.7294662,
-      "kind": "kill",
-      "why": "socials:fail (no X/Telegram listed)"
-     }
-    ]
-   },
-   "FWB5TWVXkcZ9WrGsV92FCdTuXFYEqFpPw81FL6zf1vfj": {
-    "symbol": "SHELFBACK",
-    "events": [
-     {
-      "ts": 1793948386.592067,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     }
-    ]
-   },
-   "FeVBVupbn1oXe2Jq1cJrQchBdrVAjdchpgknfcUEL77Q": {
-    "symbol": "RM",
-    "events": [
-     {
-      "ts": 1793948237.031111,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     },
-     {
-      "ts": 1793948366.809558,
-      "kind": "kill",
-      "why": "volume_1h:fail ($8,212)"
-     },
-     {
-      "ts": 1793948366.814367,
-      "kind": "kill",
-      "why": "liquidity:fail ($549)"
-     }
-    ]
-   },
-   "BaUwAGq1SmhdyejyWnEFmtktmgurQ6tA4ZVUbKMjTbBm": {
-    "symbol": "batonwins",
-    "events": [
-     {
-      "ts": 1793948437.8219829,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     }
-    ]
-   },
-   "DBnnZTD6GGtUKN2xhk7qpTMBLNWAvp3zU45ZjpJ9pump": {
-    "symbol": "SHAM",
-    "events": [
-     {
-      "ts": 1793948412.623692,
-      "kind": "kill",
-      "why": "volume_1h:fail ($2,302)"
-     },
-     {
-      "ts": 1793948412.624127,
-      "kind": "kill",
-      "why": "volume_1h:fail ($2,302)"
-     }
-    ]
-   },
-   "CqcYLBWUgreV5KZa8mp84tq9NV3rZ8CdmcTeZ3LZpump": {
-    "symbol": "lptp",
-    "events": [
-     {
-      "ts": 1793948412.602583,
-      "kind": "kill",
-      "why": "volume_1h:fail ($39)"
-     },
-     {
-      "ts": 1793948412.6032891,
-      "kind": "kill",
-      "why": "volume_1h:fail ($39)"
-     }
-    ]
-   },
-   "BA7eYqtjdXwhtKjH2ARHpan7Djgs1XnUQutGXZ6Npump": {
-    "symbol": "RM",
-    "events": [
-     {
-      "ts": 1793948373.008519,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     }
-    ]
-   },
-   "BjYPwtmdpaPM5vjdUAL61jdajrtiqUVaw1SSVZx6gSgz": {
-    "symbol": "\u6765\u90fd\u6765\u4e86 \u4e70\u70b9\u5457",
-    "events": [
-     {
-      "ts": 1793948412.5777621,
-      "kind": "kill",
-      "why": "volume_1h:fail ($3,444)"
-     },
-     {
-      "ts": 1793948412.584964,
-      "kind": "kill",
-      "why": "volume_1h:fail ($3,444)"
-     }
-    ]
-   },
-   "Bfcx5YC24N7W4oSp3kEHGDF4bybqFwm7sgCXfZtFpump": {
-    "symbol": "AI",
-    "events": [
-     {
-      "ts": 1793948412.576499,
-      "kind": "kill",
-      "why": "volume_1h:fail ($1,078)"
-     },
-     {
-      "ts": 1793948412.5852191,
-      "kind": "kill",
-      "why": "volume_1h:fail ($1,078)"
-     }
-    ]
-   },
-   "TAba2xm8sqVHHgzumHkDbpaka92vsFWY7Ef1YND2dbj": {
-    "symbol": "Sexchat",
-    "events": [
-     {
-      "ts": 1793948405.9092622,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     }
-    ]
-   },
-   "AoqwTNkhVQqhCPGxApovYepiEGoXmu91quPpVQ4zpump": {
-    "symbol": "RM",
-    "events": [
-     {
-      "ts": 1793948356.356952,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793948356.357439,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     }
-    ]
-   },
-   "2WA1EgErnu4N3maqnoQVhsGQYHC72u2Vn1ZhwuQtpump": {
-    "symbol": "WAF",
-    "events": [
-     {
-      "ts": 1793948356.3530822,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793948356.3587258,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     }
-    ]
-   },
-   "5CHuPqABBTU2aaJJ53VyomNJiYazfGi8ss7w7Nt7pump": {
-    "symbol": "RM",
-    "events": [
-     {
-      "ts": 1793948279.447532,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     },
-     {
-      "ts": 1793948403.7556212,
-      "kind": "kill",
-      "why": "volume_1h:fail ($20,922)"
-     },
-     {
-      "ts": 1793948403.757449,
-      "kind": "kill",
-      "why": "liquidity:fail ($559)"
-     }
-    ]
-   },
-   "BXLjVzXVhzQjMAz6VVHrzrPfdTMH5x9Wrh8zopBopump": {
-    "symbol": "$SPACEMEOW",
-    "events": [
-     {
-      "ts": 1793948284.4864361,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     },
-     {
-      "ts": 1793948405.9066482,
-      "kind": "kill",
-      "why": "volume_1h:fail ($2,126)"
-     },
-     {
-      "ts": 1793948405.919539,
-      "kind": "kill",
-      "why": "volume_1h:fail ($2,126)"
-     }
-    ]
-   },
-   "Eibq19YcDEULF5pDaR4gXUZYQt8NRURaCwmjsdzapump": {
-    "symbol": "RM",
-    "events": [
-     {
-      "ts": 1793948412.577355,
-      "kind": "kill",
-      "why": "volume_1h:fail ($9,706)"
-     },
-     {
-      "ts": 1793948412.58747,
-      "kind": "kill",
-      "why": "liquidity:fail ($517)"
-     }
-    ]
-   },
-   "EtFKgaNvfw3FESrWT7yxQ4CDJkBuoWRVi9ff6Dt9pump": {
+   "9YdpBxv7Cog766MCzvcMN5yysvHAhf1sEpotwz5xpump": {
     "symbol": "CA$H",
     "events": [
      {
-      "ts": 1793948412.601053,
+      "ts": 1793948536.986319,
       "kind": "kill",
-      "why": "volume_1h:fail ($142)"
+      "why": "volume_1h:fail ($12)"
      },
      {
-      "ts": 1793948412.6018481,
+      "ts": 1793948536.9871528,
       "kind": "kill",
-      "why": "volume_1h:fail ($142)"
+      "why": "volume_1h:fail ($12)"
      }
     ]
    },
-   "9PtBwoMpt6rP1XGdxcr7QkcSa9XByXETxqbHbDmNBTnE": {
-    "symbol": "CHAWK",
+   "6b4mZEJHkpRVKkBoi3vQfMHYikVtWaWTgvRTWMDEpeoR": {
+    "symbol": "USBD",
     "events": [
      {
-      "ts": 1793948403.7533288,
+      "ts": 1793948488.842158,
       "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
+      "why": "mcap/liq 2765x"
+     },
+     {
+      "ts": 1793948537.820857,
+      "kind": "kill",
+      "why": "mcap/liq 2765x"
      }
     ]
    },
-   "2LU5eAQ6qcJ4bfvAvG7toXcJcfxfbko75qzb3Soqpump": {
-    "symbol": "CTO",
+   "G7K2sLVrqRvGLnHL3e7oCD628QZ72KVQp64xBwS1pump": {
+    "symbol": "fun",
     "events": [
      {
-      "ts": 1793948412.589948,
+      "ts": 1793948488.84598,
       "kind": "kill",
-      "why": "volume_1h:fail ($2,059)"
+      "why": "fun copies fun (5BWHo2) launched this hour with more liquidity"
      },
      {
-      "ts": 1793948412.599477,
+      "ts": 1793948537.8218482,
       "kind": "kill",
-      "why": "volume_1h:fail ($2,059)"
+      "why": "fun copies fun (5BWHo2) launched this hour with more liquidity"
      }
     ]
    },
-   "6HViSovbD81hRTGX5ku88NwNETPMdn2fQLrSEkZ9pump": {
-    "symbol": "SHAM",
+   "HxHhzkHg6QYHkv8xWokAMmKruVXBftp5MFTQNsWiK6TU": {
+    "symbol": "OMNIIX",
     "events": [
      {
-      "ts": 1793948412.58187,
+      "ts": 1793948488.867552,
       "kind": "kill",
-      "why": "volume_1h:fail ($3,743)"
+      "why": "volume_1h:fail ($91)"
      },
      {
-      "ts": 1793948412.5858471,
+      "ts": 1793948488.869738,
       "kind": "kill",
-      "why": "volume_1h:fail ($3,743)"
-     }
-    ]
-   },
-   "A7dHSQ3zADWt7ftg145eu75L1BfgxuPAbJK4YuUj5Abi": {
-    "symbol": "EMt",
-    "events": [
-     {
-      "ts": 1793948251.789228,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     },
-     {
-      "ts": 1793948373.013814,
-      "kind": "kill",
-      "why": "volume_1h:fail ($2,684)"
-     },
-     {
-      "ts": 1793948373.01507,
-      "kind": "kill",
-      "why": "volume_1h:fail ($2,684)"
-     }
-    ]
-   },
-   "HW6WZPeiX7r6iMY8LvVd8Xc4fooTym2GikH1farspump": {
-    "symbol": "HEDGE",
-    "events": [
-     {
-      "ts": 1793947575.170149,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793947575.170679,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793948188.9017868,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793948188.9035132,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793948373.0127501,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793948373.015382,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793948373.895423,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793948373.897758,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     }
-    ]
-   },
-   "3vmtizHogPqZqzzMznk9rkaH4JD84pBFgsn5rQyfLoat": {
-    "symbol": "iMeme",
-    "events": [
-     {
-      "ts": 1793916964.6495948,
-      "kind": "entry_wait",
-      "why": ""
-     },
-     {
-      "ts": 1793917055.1431072,
-      "kind": "kill",
-      "why": "pumped +29.7% during wait (chasing)"
-     }
-    ]
-   },
-   "3B54zL5Q2V8BgtUYkowgf77kz97vvi8Cu1E7oLjtUZGL": {
-    "symbol": "RM",
-    "events": [
-     {
-      "ts": 1793948412.604865,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793948412.605808,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     }
-    ]
-   },
-   "4fQMACMsNBuPk9NXJQbYLhpWKTBvT54QKb7VUyzRpump": {
-    "symbol": "NORTHKOREA",
-    "events": [
-     {
-      "ts": 1793948412.580075,
-      "kind": "kill",
-      "why": "volume_1h:fail ($11,525)"
-     },
-     {
-      "ts": 1793948412.586304,
-      "kind": "kill",
-      "why": "liquidity:fail ($43)"
-     }
-    ]
-   },
-   "SivBpeYowiW8LyKyhoZGoh67qCc2ZV4jpWy6btPpump": {
-    "symbol": "VETO",
-    "events": [
-     {
-      "ts": 1793863405.203624,
-      "kind": "entry_wait",
-      "why": ""
-     },
-     {
-      "ts": 1793863457.450731,
-      "kind": "kill",
-      "why": "pumped +13.1% during wait (chasing)"
-     }
-    ]
-   },
-   "HH3EtZuLzT6uGeRw2JkaRoVDJNjaWu5D8AY3VrwUrooD": {
-    "symbol": "RM",
-    "events": [
-     {
-      "ts": 1793948413.731859,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     },
-     {
-      "ts": 1793948413.736187,
-      "kind": "kill",
-      "why": "volume_1h:fail ($0)"
-     }
-    ]
-   },
-   "3MDvsLqGZkVkWrG3vepSXmDf2tCDzc7zS8jg4Ga4pump": {
-    "symbol": "DICE",
-    "events": [
-     {
-      "ts": 1793948412.604317,
-      "kind": "kill",
-      "why": "volume_1h:fail ($115)"
-     },
-     {
-      "ts": 1793948412.605115,
-      "kind": "kill",
-      "why": "volume_1h:fail ($115)"
-     }
-    ]
-   },
-   "BPnG4osCLrWo3hMxaa2UGAf2K6J4JB7DdFmNZP18pump": {
-    "symbol": "CRUMB",
-    "events": [
-     {
-      "ts": 1793948458.372669,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     }
-    ]
-   },
-   "7u22gSLJpbRbTHM29sqTKzgv37eHz6qVaGj8i6jxkGKP": {
-    "symbol": "RM",
-    "events": [
-     {
-      "ts": 1793948413.723825,
-      "kind": "kill",
-      "why": "liquidity:fail ($5)"
-     },
-     {
-      "ts": 1793948413.731501,
-      "kind": "kill",
-      "why": "liquidity:fail ($5)"
-     }
-    ]
-   },
-   "28Eg5hbQsWTuSGCaGZVVBtZS8ropLgj7YqAjccZJpump": {
-    "symbol": "mmrich",
-    "events": [
-     {
-      "ts": 1793948412.67777,
-      "kind": "kill",
-      "why": "volume_1h:fail ($102)"
-     },
-     {
-      "ts": 1793948412.683685,
-      "kind": "kill",
-      "why": "volume_1h:fail ($102)"
-     }
-    ]
-   },
-   "DwCYGHDWQehexwRVGrwo6WKm5iwJCYL4K61V5wkRpump": {
-    "symbol": "BPCATE",
-    "events": [
-     {
-      "ts": 1793948449.383945,
-      "kind": "kill",
-      "why": "volume_1h:unknown (no DexScreener pair)"
-     }
-    ]
-   },
-   "2qwE5kcMYat2rjnYTHMFkoiUQCA7pTjEodAv5cfcpump": {
-    "symbol": "EDPCOOKED",
-    "events": [
-     {
-      "ts": 1793948413.732506,
-      "kind": "kill",
-      "why": "volume_1h:fail ($30)"
-     },
-     {
-      "ts": 1793948413.7330718,
-      "kind": "kill",
-      "why": "volume_1h:fail ($30)"
+      "why": "volume_1h:fail ($91)"
      }
     ]
    },
@@ -15310,83 +14537,373 @@
      }
     ]
    },
-   "CnZixBfzEwsQkKPwABiK6P2ycbwyBaBmyQs2iCicpump": {
-    "symbol": "Portushi",
+   "7enZx4bFSrp8jG6uzuWGokheGCF9sf4CxeAmymkapump": {
+    "symbol": "CHAROC",
     "events": [
      {
-      "ts": 1793946861.7805471,
+      "ts": 1793948487.736522,
+      "kind": "kill",
+      "why": "volume_1h:fail ($900)"
+     },
+     {
+      "ts": 1793948487.742762,
+      "kind": "kill",
+      "why": "volume_1h:fail ($900)"
+     }
+    ]
+   },
+   "CzmPwnVVvnbDmJ2RqZNdUspouzM8Rz124KAVi1wWpump": {
+    "symbol": "$AURA",
+    "events": [
+     {
+      "ts": 1793948352.829994,
       "kind": "kill",
       "why": "volume_1h:unknown (no DexScreener pair)"
      },
      {
-      "ts": 1793946983.400934,
+      "ts": 1793948478.974299,
       "kind": "kill",
-      "why": "volume_1h:fail ($1,225)"
+      "why": "volume_1h:fail ($88)"
      },
      {
-      "ts": 1793946983.4022558,
+      "ts": 1793948478.974578,
       "kind": "kill",
-      "why": "volume_1h:fail ($1,225)"
-     },
-     {
-      "ts": 1793948249.426046,
-      "kind": "kill",
-      "why": "volume_1h:fail ($1,665)"
-     },
-     {
-      "ts": 1793948249.42673,
-      "kind": "kill",
-      "why": "volume_1h:fail ($1,665)"
-     },
-     {
-      "ts": 1793948373.011942,
-      "kind": "kill",
-      "why": "volume_1h:fail ($538)"
-     },
-     {
-      "ts": 1793948373.0136378,
-      "kind": "kill",
-      "why": "volume_1h:fail ($538)"
-     },
-     {
-      "ts": 1793948373.888839,
-      "kind": "kill",
-      "why": "volume_1h:fail ($539)"
-     },
-     {
-      "ts": 1793948373.8989902,
-      "kind": "kill",
-      "why": "volume_1h:fail ($539)"
+      "why": "volume_1h:fail ($88)"
      }
     ]
    },
-   "8ShJnVZ1PTz1gdvS81idDybTtX9asodycwVMC7Ttpump": {
+   "27cF2KiN3Zc6fhHWWimrPrZKdP9a1PGThTAmwu84pump": {
+    "symbol": "DJT",
+    "events": [
+     {
+      "ts": 1793948536.9733891,
+      "kind": "kill",
+      "why": "volume_1h:fail ($181)"
+     },
+     {
+      "ts": 1793948536.974526,
+      "kind": "kill",
+      "why": "volume_1h:fail ($181)"
+     }
+    ]
+   },
+   "FfrqNf3RNF7wXHjRd2S6LuphFQqdWtZULUWz4HCZpump": {
+    "symbol": "TRMPN",
+    "events": [
+     {
+      "ts": 1793948421.3839529,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     }
+    ]
+   },
+   "Xw9taXYcyDMsbqJjjrrN9HVwxUQJmjER8c2abPMQoJL": {
+    "symbol": "COIN",
+    "events": [
+     {
+      "ts": 1793948537.8226829,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     }
+    ]
+   },
+   "pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn": {
+    "symbol": "PUMP",
+    "events": [
+     {
+      "ts": 1793924816.8822248,
+      "kind": "kill",
+      "why": "mcap/liq 758x"
+     },
+     {
+      "ts": 1793928452.099138,
+      "kind": "kill",
+      "why": "mcap/liq 761x"
+     },
+     {
+      "ts": 1793932109.9902349,
+      "kind": "kill",
+      "why": "mcap/liq 761x"
+     },
+     {
+      "ts": 1793935056.848586,
+      "kind": "kill",
+      "why": "mcap/liq 763x"
+     },
+     {
+      "ts": 1793939503.9534988,
+      "kind": "kill",
+      "why": "mcap/liq 764x"
+     },
+     {
+      "ts": 1793943182.757948,
+      "kind": "kill",
+      "why": "mcap/liq 765x"
+     },
+     {
+      "ts": 1793946253.958527,
+      "kind": "kill",
+      "why": "mcap/liq 766x"
+     },
+     {
+      "ts": 1793946508.323949,
+      "kind": "kill",
+      "why": "mcap/liq 766x"
+     },
+     {
+      "ts": 1793946699.331721,
+      "kind": "kill",
+      "why": "mcap/liq 767x"
+     },
+     {
+      "ts": 1793948536.963742,
+      "kind": "kill",
+      "why": "mcap/liq 765x"
+     }
+    ]
+   },
+   "J7pLCEFApqto5hiyNovc6cmTqtnueiYV31BA3Wyupump": {
+    "symbol": "ELORIAN",
+    "events": [
+     {
+      "ts": 1793948487.745068,
+      "kind": "kill",
+      "why": "volume_1h:fail ($235)"
+     },
+     {
+      "ts": 1793948487.745591,
+      "kind": "kill",
+      "why": "volume_1h:fail ($235)"
+     }
+    ]
+   },
+   "6GbPV58CdYGS9ABSiefMH5CLAPm4xaSR1wQfYC8xpump": {
+    "symbol": "CVE",
+    "events": [
+     {
+      "ts": 1793948487.734956,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,742)"
+     },
+     {
+      "ts": 1793948487.7424908,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,742)"
+     }
+    ]
+   },
+   "DyMDVVdAQfQ7GrMm5exo59MRu8WzVGGBJMxQbaWgaJBm": {
+    "symbol": "CRAMER",
+    "events": [
+     {
+      "ts": 1793948188.901144,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     },
+     {
+      "ts": 1793948328.2690141,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     },
+     {
+      "ts": 1793948509.62712,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     }
+    ]
+   },
+   "82nM817gGNZrE4axFUL3eUfUM3VUczq1vfTDLpHgUWdJ": {
     "symbol": "RM",
     "events": [
      {
-      "ts": 1793948356.4095209,
+      "ts": 1793948487.732028,
       "kind": "kill",
-      "why": "volume_1h:fail ($11,069)"
+      "why": "volume_1h:fail ($6,224)"
      },
      {
-      "ts": 1793948356.4120162,
+      "ts": 1793948487.7358952,
       "kind": "kill",
-      "why": "liquidity:fail ($574)"
+      "why": "liquidity:unknown (no liquidity data)"
      }
     ]
    },
-   "VkU8kky8d5hUyMXo6Wi5KWXujg2owTGEfuG87LZ5py1": {
-    "symbol": "ASTER",
+   "CAZeajCeX4azM89bMqtKC9dHrjer9mRHtnQd425apump": {
+    "symbol": "NORTHKOREA",
     "events": [
      {
-      "ts": 1793948356.3434072,
+      "ts": 1793948487.751563,
       "kind": "kill",
-      "why": "volume_1h:fail ($4,654)"
+      "why": "volume_1h:fail ($191)"
      },
      {
-      "ts": 1793948356.354856,
+      "ts": 1793948487.751868,
+      "kind": "kill",
+      "why": "volume_1h:fail ($191)"
+     }
+    ]
+   },
+   "BaUwAGq1SmhdyejyWnEFmtktmgurQ6tA4ZVUbKMjTbBm": {
+    "symbol": "batonwins",
+    "events": [
+     {
+      "ts": 1793948437.8219829,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     }
+    ]
+   },
+   "27cFBSVjBmtC9AJMnJXRP2MdzdajJmj9e6YjxXfCpump": {
+    "symbol": "CTO",
+    "events": [
+     {
+      "ts": 1793948536.979558,
+      "kind": "kill",
+      "why": "volume_1h:fail ($18)"
+     },
+     {
+      "ts": 1793948536.9964201,
+      "kind": "kill",
+      "why": "volume_1h:fail ($18)"
+     }
+    ]
+   },
+   "7kRs1S7sTfwuE8c9YECVsEuY1K5dPHNA7rMunrdfpump": {
+    "symbol": "NIO",
+    "events": [
+     {
+      "ts": 1793948536.98405,
+      "kind": "kill",
+      "why": "volume_1h:fail ($0)"
+     },
+     {
+      "ts": 1793948536.984877,
+      "kind": "kill",
+      "why": "volume_1h:fail ($0)"
+     }
+    ]
+   },
+   "4P1EAo8SzkqRUgiZLERwPUsgXzTHigdeCTMM1cKMpump": {
+    "symbol": "RM",
+    "events": [
+     {
+      "ts": 1793948487.733549,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,276)"
+     },
+     {
+      "ts": 1793948487.736332,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,276)"
+     }
+    ]
+   },
+   "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN": {
+    "symbol": "TRUMP",
+    "events": [
+     {
+      "ts": 1793926338.411942,
+      "kind": "kill",
+      "why": "mcap/liq 2231x"
+     },
+     {
+      "ts": 1793929985.922977,
+      "kind": "kill",
+      "why": "mcap/liq 2238x"
+     },
+     {
+      "ts": 1793933616.8592541,
+      "kind": "kill",
+      "why": "mcap/liq 2231x"
+     },
+     {
+      "ts": 1793935056.849634,
+      "kind": "kill",
+      "why": "mcap/liq 2222x"
+     },
+     {
+      "ts": 1793939503.953772,
+      "kind": "kill",
+      "why": "mcap/liq 2215x"
+     },
+     {
+      "ts": 1793943182.758075,
+      "kind": "kill",
+      "why": "mcap/liq 2208x"
+     },
+     {
+      "ts": 1793946253.9586549,
+      "kind": "kill",
+      "why": "mcap/liq 2192x"
+     },
+     {
+      "ts": 1793946508.3239932,
+      "kind": "kill",
+      "why": "mcap/liq 2191x"
+     },
+     {
+      "ts": 1793946699.334016,
+      "kind": "kill",
+      "why": "mcap/liq 2191x"
+     },
+     {
+      "ts": 1793948536.964407,
+      "kind": "kill",
+      "why": "mcap/liq 2178x"
+     }
+    ]
+   },
+   "96oFSTXN72qn2JBFUoB6jU5RGpctEh2DPbPCpPYCi6fA": {
+    "symbol": "RM",
+    "events": [
+     {
+      "ts": 1793948488.849369,
       "kind": "kill",
       "why": "socials:fail (no X/Telegram listed)"
+     }
+    ]
+   },
+   "39N2KqFM6QYfURjiJa8QNaFtVf9ShMNrrVRU3FScpump": {
+    "symbol": "SXSN",
+    "events": [
+     {
+      "ts": 1793948487.7690508,
+      "kind": "kill",
+      "why": "volume_1h:fail ($337)"
+     },
+     {
+      "ts": 1793948487.77149,
+      "kind": "kill",
+      "why": "volume_1h:fail ($337)"
+     }
+    ]
+   },
+   "F5sPt9GLVYwb3qj4uHt7745Wqmye7uJYgPcDwWyWpump": {
+    "symbol": "INCUBOX",
+    "events": [
+     {
+      "ts": 1793948487.733943,
+      "kind": "kill",
+      "why": "volume_1h:fail ($2,325)"
+     },
+     {
+      "ts": 1793948487.735687,
+      "kind": "kill",
+      "why": "volume_1h:fail ($2,325)"
+     }
+    ]
+   },
+   "27cETPYJbWw6pWN63pJ5K1Vm6Xp1wVo8M4G5u6FNpump": {
+    "symbol": "VETO",
+    "events": [
+     {
+      "ts": 1793948536.981159,
+      "kind": "kill",
+      "why": "volume_1h:fail ($221)"
+     },
+     {
+      "ts": 1793948536.988402,
+      "kind": "kill",
+      "why": "volume_1h:fail ($221)"
      }
     ]
    },
@@ -15435,23 +14952,123 @@
      }
     ]
    },
-   "VL8We5qoWTqFm6imq3zUMJzeAmrZJ3a572PeyPxpump": {
-    "symbol": "BLORB",
+   "BPnG4osCLrWo3hMxaa2UGAf2K6J4JB7DdFmNZP18pump": {
+    "symbol": "CRUMB",
     "events": [
      {
-      "ts": 1793948366.803165,
+      "ts": 1793948458.372669,
       "kind": "kill",
       "why": "volume_1h:unknown (no DexScreener pair)"
      }
     ]
    },
-   "AjKVUQHDRwGnd9sqyPm9Uizn8RmKggMFfZrD9HuwjTy8": {
+   "3vmtizHogPqZqzzMznk9rkaH4JD84pBFgsn5rQyfLoat": {
+    "symbol": "iMeme",
+    "events": [
+     {
+      "ts": 1793916964.6495948,
+      "kind": "entry_wait",
+      "why": ""
+     },
+     {
+      "ts": 1793917055.1431072,
+      "kind": "kill",
+      "why": "pumped +29.7% during wait (chasing)"
+     }
+    ]
+   },
+   "Dqbs8Z2NUPTMtP1E6y5c97cExLbX3QxBeYHVKfcZjcAn": {
     "symbol": "RM",
     "events": [
      {
-      "ts": 1793948356.348554,
+      "ts": 1793948487.745954,
       "kind": "kill",
       "why": "socials:fail (no X/Telegram listed)"
+     }
+    ]
+   },
+   "GNNhU2SEArd5RGN49Yjo4YHTipRA3E5gMJeUPE4Gpump": {
+    "symbol": "BP",
+    "events": [
+     {
+      "ts": 1793942573.776047,
+      "kind": "kill",
+      "why": "volume_1h:fail ($174)"
+     },
+     {
+      "ts": 1793942573.781617,
+      "kind": "kill",
+      "why": "volume_1h:fail ($174)"
+     },
+     {
+      "ts": 1793947269.85038,
+      "kind": "kill",
+      "why": "liquidity:fail ($13,362)"
+     },
+     {
+      "ts": 1793947272.19757,
+      "kind": "kill",
+      "why": "sniper_wallets:fail (15 sniper-sized wallets in top 20)"
+     },
+     {
+      "ts": 1793948536.9775512,
+      "kind": "kill",
+      "why": "liquidity:fail ($12,356)"
+     },
+     {
+      "ts": 1793948536.999487,
+      "kind": "kill",
+      "why": "socials:fail (links reused by other token Da2NSqk9)"
+     }
+    ]
+   },
+   "45DzdcYUMFADiYDt6jfYXqcxoSxhYdvQs4hyXYY7pump": {
+    "symbol": "$NIO",
+    "events": [
+     {
+      "ts": 1793948373.8893929,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     },
+     {
+      "ts": 1793948509.631694,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,077)"
+     },
+     {
+      "ts": 1793948509.633037,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,077)"
+     }
+    ]
+   },
+   "EhiGLoNdvTsQdSMYMSNAwwwGojHz9KULV7d1i4ccpump": {
+    "symbol": "$GOAT",
+    "events": [
+     {
+      "ts": 1793948536.977383,
+      "kind": "kill",
+      "why": "volume_1h:fail ($78)"
+     },
+     {
+      "ts": 1793948536.981647,
+      "kind": "kill",
+      "why": "volume_1h:fail ($78)"
+     }
+    ]
+   },
+   "Q4BGYJeNvSk8ddku1ik9BAbr523E4VFeL7fkE7hpump": {
+    "symbol": "Elon",
+    "events": [
+     {
+      "ts": 1793948487.744926,
+      "kind": "kill",
+      "why": "volume_1h:fail ($133)"
+     },
+     {
+      "ts": 1793948487.749702,
+      "kind": "kill",
+      "why": "volume_1h:fail ($133)"
      }
     ]
    },
@@ -15470,18 +15087,453 @@
      }
     ]
    },
-   "2NB86wMWLiEGGsJeN5H8XXk3MoSpPSETzTaiQGAJXyp9": {
+   "poASXRrsA6fZ6yqJ3dRd8QW2NqdUFi3AhSU3a5vpump": {
+    "symbol": "INUX",
+    "events": [
+     {
+      "ts": 1793948536.974858,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,400)"
+     },
+     {
+      "ts": 1793948536.97606,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,400)"
+     }
+    ]
+   },
+   "8xBX15jGEbv3DUkuqq5N53KumEZdF4gy5vo5BJHDpump": {
     "symbol": "RM",
     "events": [
      {
-      "ts": 1793948356.353608,
+      "ts": 1793948488.864958,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,791)"
+     },
+     {
+      "ts": 1793948488.877718,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,791)"
+     }
+    ]
+   },
+   "5WFCFk6sghY3fwCwvejPDip1qsgSAwAaHAP5KFJDaV9k": {
+    "symbol": "RM",
+    "events": [
+     {
+      "ts": 1793948488.845196,
+      "kind": "kill",
+      "why": "volume_1h:fail ($11,440)"
+     },
+     {
+      "ts": 1793948488.8518121,
+      "kind": "kill",
+      "why": "liquidity:unknown (no liquidity data)"
+     }
+    ]
+   },
+   "DwCYGHDWQehexwRVGrwo6WKm5iwJCYL4K61V5wkRpump": {
+    "symbol": "BPCATE",
+    "events": [
+     {
+      "ts": 1793948449.383945,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     }
+    ]
+   },
+   "48mdzRTtKeKHiEmG9VD91REX3BU1U1ZAaP8FbFy2pump": {
+    "symbol": "A.I.",
+    "events": [
+     {
+      "ts": 1793948536.9729831,
+      "kind": "kill",
+      "why": "volume_1h:fail ($404)"
+     },
+     {
+      "ts": 1793948536.9742022,
+      "kind": "kill",
+      "why": "volume_1h:fail ($404)"
+     }
+    ]
+   },
+   "HbkTUFZdENFrpjVZqS1mN5ZFgCeqUfwuRdHDtvPU2ahL": {
+    "symbol": "TrollGivin",
+    "events": [
+     {
+      "ts": 1793948537.823649,
+      "kind": "kill",
+      "why": "socials:fail (no X/Telegram listed)"
+     }
+    ]
+   },
+   "HQxXRSPGvig4J2pxfya9irNbgtnPWQExtWhRLPQkpump": {
+    "symbol": "batonwins",
+    "events": [
+     {
+      "ts": 1793948437.8143182,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     }
+    ]
+   },
+   "G1dPxV39DGrnAxxr3DPHoZpJRqamdpQPNtPiieKGpump": {
+    "symbol": "Fun",
+    "events": [
+     {
+      "ts": 1793947199.60169,
+      "kind": "kill",
+      "why": "Fun copies fun (5BWHo2) launched this hour with more liquidity"
+     },
+     {
+      "ts": 1793948536.970043,
+      "kind": "kill",
+      "why": "Fun copies fun (5BWHo2) launched this hour with more liquidity"
+     }
+    ]
+   },
+   "Au7Jy16NvvdgYA8H6EQqF4tGZyVVsdB1DDd8fePtpump": {
+    "symbol": "sol",
+    "events": [
+     {
+      "ts": 1793948545.0686872,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     }
+    ]
+   },
+   "W3GzTaRxMgsFYXN4MkP7dcfgyAs9wT57XKnDRaspump": {
+    "symbol": "TAKE2",
+    "events": [
+     {
+      "ts": 1793948537.8293529,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,879)"
+     },
+     {
+      "ts": 1793948537.829649,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,879)"
+     }
+    ]
+   },
+   "EupNwYbY9f2gmb82EQQ6REmL9zpQuyV8usdd8ysjpump": {
+    "symbol": "$SPACEMEOW",
+    "events": [
+     {
+      "ts": 1793948522.589889,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     }
+    ]
+   },
+   "GaL6PqD45e39JYfHXCLHpkX4S5YSMkpWiMC3eMnpump": {
+    "symbol": "NORTHKOREA",
+    "events": [
+     {
+      "ts": 1793948536.972639,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,080)"
+     },
+     {
+      "ts": 1793948536.973751,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,080)"
+     }
+    ]
+   },
+   "DEuonDWJgsreJQF7o5yQXMuLSXUyQWnQPrnaeBtrWsJ3": {
+    "symbol": "RM",
+    "events": [
+     {
+      "ts": 1793948536.9800289,
+      "kind": "kill",
+      "why": "volume_1h:fail ($7,550)"
+     },
+     {
+      "ts": 1793948536.982046,
+      "kind": "kill",
+      "why": "liquidity:unknown (no liquidity data)"
+     }
+    ]
+   },
+   "ED77JbFJtb1BSK5JjRTmN92yhmDiMoKSdsaRZjfopump": {
+    "symbol": "Morden w",
+    "events": [
+     {
+      "ts": 1793948488.8479161,
+      "kind": "kill",
+      "why": "volume_1h:fail ($2)"
+     },
+     {
+      "ts": 1793948488.848845,
+      "kind": "kill",
+      "why": "volume_1h:fail ($2)"
+     }
+    ]
+   },
+   "CDNvcCHPVkiHP5wusYyiYCYpo36VYDoaj5gJWyLrmoon": {
+    "symbol": "Zlock",
+    "events": [
+     {
+      "ts": 1793948536.965525,
+      "kind": "kill",
+      "why": "mcap/liq 539x"
+     }
+    ]
+   },
+   "SivBpeYowiW8LyKyhoZGoh67qCc2ZV4jpWy6btPpump": {
+    "symbol": "VETO",
+    "events": [
+     {
+      "ts": 1793863405.203624,
+      "kind": "entry_wait",
+      "why": ""
+     },
+     {
+      "ts": 1793863457.450731,
+      "kind": "kill",
+      "why": "pumped +13.1% during wait (chasing)"
+     }
+    ]
+   },
+   "BA7eYqtjdXwhtKjH2ARHpan7Djgs1XnUQutGXZ6Npump": {
+    "symbol": "RM",
+    "events": [
+     {
+      "ts": 1793948373.008519,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     },
+     {
+      "ts": 1793948509.634639,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,427)"
+     },
+     {
+      "ts": 1793948509.6357288,
+      "kind": "kill",
+      "why": "volume_1h:fail ($1,427)"
+     }
+    ]
+   },
+   "2zMMhcVQEXDtdE6vsFS7S7D5oUodfJHE8vd1gnBouauv": {
+    "symbol": "PENGU",
+    "events": [
+     {
+      "ts": 1793926036.143195,
+      "kind": "kill",
+      "why": "mcap/liq 138x"
+     },
+     {
+      "ts": 1793929726.0631151,
+      "kind": "kill",
+      "why": "mcap/liq 138x"
+     },
+     {
+      "ts": 1793933418.206809,
+      "kind": "kill",
+      "why": "mcap/liq 138x"
+     },
+     {
+      "ts": 1793935056.8500228,
+      "kind": "kill",
+      "why": "mcap/liq 138x"
+     },
+     {
+      "ts": 1793939503.9536269,
+      "kind": "kill",
+      "why": "mcap/liq 139x"
+     },
+     {
+      "ts": 1793943182.758008,
+      "kind": "kill",
+      "why": "mcap/liq 138x"
+     },
+     {
+      "ts": 1793946253.958954,
+      "kind": "kill",
+      "why": "mcap/liq 138x"
+     },
+     {
+      "ts": 1793946508.3242161,
+      "kind": "kill",
+      "why": "mcap/liq 138x"
+     },
+     {
+      "ts": 1793946699.334362,
+      "kind": "kill",
+      "why": "mcap/liq 138x"
+     },
+     {
+      "ts": 1793948536.9661329,
+      "kind": "kill",
+      "why": "mcap/liq 138x"
+     }
+    ]
+   },
+   "FWB5TWVXkcZ9WrGsV92FCdTuXFYEqFpPw81FL6zf1vfj": {
+    "symbol": "SHELFBACK",
+    "events": [
+     {
+      "ts": 1793948386.592067,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     },
+     {
+      "ts": 1793948510.463022,
       "kind": "kill",
       "why": "volume_1h:fail ($0)"
      },
      {
-      "ts": 1793948356.354002,
+      "ts": 1793948510.4673128,
       "kind": "kill",
       "why": "volume_1h:fail ($0)"
+     }
+    ]
+   },
+   "EvchFcMXPy2NVFaJwnnHvdSR1pz9FAjC2AHsDyzyfiCZ": {
+    "symbol": "REMARC",
+    "events": [
+     {
+      "ts": 1793948188.9074528,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     },
+     {
+      "ts": 1793948328.277388,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     },
+     {
+      "ts": 1793948509.655406,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     }
+    ]
+   },
+   "579kaZNNUhNWXL7xgXXvbZ5o9fW3DoCtD3b3Me6epump": {
+    "symbol": "NORTHKOREA",
+    "events": [
+     {
+      "ts": 1793948537.861994,
+      "kind": "kill",
+      "why": "volume_1h:fail ($165)"
+     },
+     {
+      "ts": 1793948537.86256,
+      "kind": "kill",
+      "why": "volume_1h:fail ($165)"
+     }
+    ]
+   },
+   "3NugfuNQrFpZWDmmJMJF4bg47Msd1qtT3z54hfNvpump": {
+    "symbol": "BCHAN",
+    "events": [
+     {
+      "ts": 1793948537.824495,
+      "kind": "kill",
+      "why": "volume_1h:fail ($0)"
+     },
+     {
+      "ts": 1793948537.82537,
+      "kind": "kill",
+      "why": "volume_1h:fail ($0)"
+     }
+    ]
+   },
+   "DaX9ermzEhcskYePm61JYAJy4fkUJK8hey7LqFbopump": {
+    "symbol": "RM",
+    "events": [
+     {
+      "ts": 1793948487.746762,
+      "kind": "kill",
+      "why": "volume_1h:fail ($20)"
+     },
+     {
+      "ts": 1793948487.747199,
+      "kind": "kill",
+      "why": "volume_1h:fail ($20)"
+     }
+    ]
+   },
+   "8tZCQvu6UN5inWeVvr5uiYNfe516RrMvdVtGYeoDpump": {
+    "symbol": "CHIMP",
+    "events": [
+     {
+      "ts": 1793948537.821959,
+      "kind": "kill",
+      "why": "volume_1h:fail ($5,820)"
+     },
+     {
+      "ts": 1793948537.82465,
+      "kind": "kill",
+      "why": "liquidity:fail ($171)"
+     }
+    ]
+   },
+   "4pG49udYaE1q7BNEYDSSYPCSs5nmaiyHeUocvR8Npump": {
+    "symbol": "CA$H",
+    "events": [
+     {
+      "ts": 1793948487.740444,
+      "kind": "kill",
+      "why": "volume_1h:fail ($471)"
+     },
+     {
+      "ts": 1793948487.741791,
+      "kind": "kill",
+      "why": "volume_1h:fail ($471)"
+     }
+    ]
+   },
+   "F8qHxeo54v6hBmAZ8Gyf6R8Ct3ZV3mPaHz6BXB6mpump": {
+    "symbol": "song",
+    "events": [
+     {
+      "ts": 1793948487.739899,
+      "kind": "kill",
+      "why": "volume_1h:fail ($222)"
+     },
+     {
+      "ts": 1793948487.741339,
+      "kind": "kill",
+      "why": "volume_1h:fail ($222)"
+     }
+    ]
+   },
+   "3Cx3zVdfsAUYmP1JJE5wdqJR8h1bTjAnKv2LDnChpump": {
+    "symbol": "IAES",
+    "events": [
+     {
+      "ts": 1793948487.74468,
+      "kind": "kill",
+      "why": "volume_1h:fail ($270)"
+     },
+     {
+      "ts": 1793948487.745267,
+      "kind": "kill",
+      "why": "volume_1h:fail ($270)"
+     }
+    ]
+   },
+   "VL8We5qoWTqFm6imq3zUMJzeAmrZJ3a572PeyPxpump": {
+    "symbol": "BLORB",
+    "events": [
+     {
+      "ts": 1793948366.803165,
+      "kind": "kill",
+      "why": "volume_1h:unknown (no DexScreener pair)"
+     },
+     {
+      "ts": 1793948487.740911,
+      "kind": "kill",
+      "why": "volume_1h:fail ($375)"
+     },
+     {
+      "ts": 1793948487.741951,
+      "kind": "kill",
+      "why": "volume_1h:fail ($375)"
      }
     ]
    }
@@ -17797,24 +17849,24 @@
  "volume_research": {
   "venues": {
    "pumpfun": {
-    "low": 2553,
-    "missing": 460
-   },
-   "pumpswap": {
-    "low": 180,
-    "missing": 9
+    "missing": 457,
+    "low": 2546
    },
    "meteora": {
-    "low": 76
+    "low": 80
+   },
+   "stonkfun": {
+    "missing": 45
+   },
+   "pumpswap": {
+    "low": 179,
+    "missing": 9
    },
    "moonshot": {
     "low": 2
    },
    "letsbonk/launchlab": {
     "missing": 9
-   },
-   "stonkfun": {
-    "missing": 43
    },
    "pumpswap(bonk)": {
     "low": 2
@@ -17840,12 +17892,12 @@
   },
   "attempts": {
    "checked": 16257,
-   "observed": 12612,
+   "observed": 12611,
    "passed": 2
   },
   "followups": {
-   "scheduled": 172,
-   "checked": 170,
+   "scheduled": 174,
+   "checked": 172,
    "expired": 2,
    "pending": 16
   },
@@ -17929,54 +17981,54 @@
  "session_research": {
   "evidence": {
    "New tokens": [
-    "BPnG4osCLrWo3hMxaa2UGAf2K6J4JB7DdFmNZP18pump",
-    "DwCYGHDWQehexwRVGrwo6WKm5iwJCYL4K61V5wkRpump",
-    "HQxXRSPGvig4J2pxfya9irNbgtnPWQExtWhRLPQkpump",
-    "BaUwAGq1SmhdyejyWnEFmtktmgurQ6tA4ZVUbKMjTbBm",
-    "FfrqNf3RNF7wXHjRd2S6LuphFQqdWtZULUWz4HCZpump",
-    "43TAbjc4GfpobeF1WnYUdjRjcF7ASXN3f2qmfs8hpump",
-    "6HViSovbD81hRTGX5ku88NwNETPMdn2fQLrSEkZ9pump",
-    "Bfcx5YC24N7W4oSp3kEHGDF4bybqFwm7sgCXfZtFpump"
+    "Au7Jy16NvvdgYA8H6EQqF4tGZyVVsdB1DDd8fePtpump",
+    "Xw9taXYcyDMsbqJjjrrN9HVwxUQJmjER8c2abPMQoJL",
+    "48mdzRTtKeKHiEmG9VD91REX3BU1U1ZAaP8FbFy2pump",
+    "27cFBSVjBmtC9AJMnJXRP2MdzdajJmj9e6YjxXfCpump",
+    "poASXRrsA6fZ6yqJ3dRd8QW2NqdUFi3AhSU3a5vpump",
+    "GaL6PqD45e39JYfHXCLHpkX4S5YSMkpWiMC3eMnpump",
+    "9YdpBxv7Cog766MCzvcMN5yysvHAhf1sEpotwz5xpump",
+    "27cF2KiN3Zc6fhHWWimrPrZKdP9a1PGThTAmwu84pump"
    ],
    "Rescued": [],
    "Paper entries": [],
    "Net realized": [],
    "Top blocker": [
-    "volume_1h: 11217 decisions",
-    "liquidity: 1164 decisions",
-    "socials: 352 decisions",
-    "copycat: 209 decisions",
-    "thin_pool: 117 decisions",
+    "volume_1h: 11290 decisions",
+    "liquidity: 1169 decisions",
+    "socials: 356 decisions",
+    "copycat: 212 decisions",
+    "thin_pool: 123 decisions",
     "lp_locked: 41 decisions",
     "top10: 12 decisions",
     "honeypot_shape: 5 decisions"
    ]
   },
   "start": 1793930400.0,
-  "new": 5663,
+  "new": 5704,
   "orders": 0,
   "pnl": 0,
   "rescued": 0,
   "blockers": [
    [
     "volume_1h",
-    11217
+    11290
    ],
    [
     "liquidity",
-    1164
+    1169
    ],
    [
     "socials",
-    352
+    356
    ],
    [
     "copycat",
-    209
+    212
    ],
    [
     "thin_pool",
-    117
+    123
    ],
    [
     "lp_locked",
@@ -18017,13 +18069,13 @@
   "timing": [
    {
     "venue": "pumpswap",
-    "n": 324,
+    "n": 325,
     "unknown": 0,
     "median_s": 123
    },
    {
     "venue": "meteora",
-    "n": 256,
+    "n": 259,
     "unknown": 0,
     "median_s": 102
    },
@@ -18035,9 +18087,9 @@
    },
    {
     "venue": "orca",
-    "n": 14,
+    "n": 15,
     "unknown": 0,
-    "median_s": 130
+    "median_s": 123
    }
   ]
  },
@@ -18197,18 +18249,6 @@
     "reason": "volume_1h:unknown (no DexScreener pair)"
    },
    {
-    "mint": "CzmPwnVVvnbDmJ2RqZNdUspouzM8Rz124KAVi1wWpump",
-    "symbol": "$AURA",
-    "due": 1793948472.8279622,
-    "reason": "volume_1h:unknown (no DexScreener pair)"
-   },
-   {
-    "mint": "VL8We5qoWTqFm6imq3zUMJzeAmrZJ3a572PeyPxpump",
-    "symbol": "BLORB",
-    "due": 1793948486.7960289,
-    "reason": "volume_1h:unknown (no DexScreener pair)"
-   },
-   {
     "mint": "EvchFcMXPy2NVFaJwnnHvdSR1pz9FAjC2AHsDyzyfiCZ",
     "symbol": "REMARC",
     "due": 1793948488.896561,
@@ -18255,27 +18295,39 @@
     "symbol": "Sexchat",
     "due": 1793948525.8986602,
     "reason": "volume_1h:unknown (no DexScreener pair)"
+   },
+   {
+    "mint": "FfrqNf3RNF7wXHjRd2S6LuphFQqdWtZULUWz4HCZpump",
+    "symbol": "TRMPN",
+    "due": 1793948541.377216,
+    "reason": "volume_1h:unknown (no DexScreener pair)"
+   },
+   {
+    "mint": "HQxXRSPGvig4J2pxfya9irNbgtnPWQExtWhRLPQkpump",
+    "symbol": "batonwins",
+    "due": 1793948557.809441,
+    "reason": "volume_1h:unknown (no DexScreener pair)"
    }
   ],
   "updater": [
    [
     "Runner",
     "heartbeat",
-    5
+    8
    ],
    [
     "Publisher",
     "last successful push",
-    185
+    34
    ],
    [
     "Updater",
-    "dashboard refreshed; bot code unchanged",
-    208
+    "background owner started",
+    6
    ],
    [
     "Installed code",
-    "3b643215501e",
+    "a1d2356dff95",
     null
    ]
   ],
@@ -18284,7 +18336,7 @@
  "intelligence": {
   "release": "intelligence-1",
   "runner_release": "intelligence-1",
-  "at": 1793948479.855247,
+  "at": 1793948554.6428668,
   "mode": "advisory; execution and exits unchanged",
   "memory_cases": 0,
   "watch": [],
@@ -18351,8 +18403,8 @@
   },
   {
    "name": "Sentinel",
-   "stat": "7 flags",
-   "text": "7 risk flag(s): RM: low liquidity",
+   "stat": "9 flags",
+   "text": "9 risk flag(s): RM: low liquidity",
    "tone": "red"
   }
  ],
