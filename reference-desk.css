@@ -423,3 +423,43 @@ body.nd-overview-active #nd-reference .nd-bottom .nd-panel{overflow:hidden!impor
  body.nd-overview-active #nd-reference .nd-footnote{font-size:11px!important}
  body.nd-overview-active main>footer{margin-top:24px!important;padding-bottom:18px!important}
 }
+
+
+/* v19: One navigation system on EVERY Night Desk page.
+   Reset the legacy fixed bottom bar and translateX(-50%) unconditionally. */
+body main>nav{
+ position:relative!important;
+ inset:auto!important;
+ top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;
+ transform:none!important;
+ width:100%!important;max-width:100%!important;
+ box-sizing:border-box!important;
+ display:flex!important;align-items:stretch!important;justify-content:stretch!important;
+ flex-wrap:nowrap!important;gap:3px!important;
+ margin:12px 0 16px!important;padding:5px!important;
+ border:1px solid #7f1934!important;border-radius:8px!important;
+ background:linear-gradient(180deg,#1d070f,#0d050a)!important;
+ box-shadow:0 0 14px #e31d4130!important;
+ overflow-x:auto!important;overflow-y:hidden!important;
+ -webkit-overflow-scrolling:touch;scrollbar-width:none;z-index:3!important;
+}
+body main>nav::-webkit-scrollbar{display:none}
+body main>nav a{
+ display:flex!important;flex:1 0 auto!important;align-items:center!important;justify-content:center!important;
+ min-width:max-content!important;gap:7px!important;
+ padding:11px 12px!important;margin:0!important;
+ color:#f4c6d2!important;font-size:13px!important;font-weight:750!important;
+ line-height:1.3!important;text-decoration:none!important;white-space:nowrap!important;
+ border:1px solid transparent!important;border-radius:6px!important;
+ clip-path:none!important;text-shadow:none!important;
+}
+body main>nav a span{display:inline!important;font-size:inherit!important;line-height:inherit!important;white-space:nowrap!important}
+body main>nav a.active,body main>nav a[aria-current="page"]{
+ color:#fff!important;background:linear-gradient(180deg,#fa2953,#a9002b)!important;
+ border-color:#ff6583!important;box-shadow:0 0 12px #f71c496b!important;
+}
+body main>nav a:focus-visible{outline:2px solid #ffd4e0!important;outline-offset:-2px!important}
+@media(max-width:760px){
+ body main>nav{margin:9px 0 13px!important;padding:4px!important;gap:2px!important}
+ body main>nav a{font-size:12px!important;padding:11px 10px!important}
+}
