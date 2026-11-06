@@ -185,3 +185,23 @@ body.nd-overview-active #nd-reference .nd-time-filters button.selected{backgroun
  body.nd-overview-active #nd-reference .nd-curve{min-height:340px}
  body.nd-overview-active #nd-reference .nd-r-watermark{font-size:180px}
 }
+
+/* Keep Overview isolated from Markets, Trades, Research, and More. */
+body:not(.nd-overview-active) #nd-reference{display:none!important}
+#nd-reference[hidden]{display:none!important}
+body:not(.nd-overview-active) #dashboard>[data-desk-page="overview"]{display:none!important}
+body.nd-overview-active #nd-reference{display:block!important}
+@media(min-width:761px){
+ body.nd-overview-active #nd-reference .nd-kpis{
+  grid-template-columns:repeat(5,minmax(0,1fr)) minmax(220px,1.65fr)!important;
+  gap:8px!important
+ }
+ body.nd-overview-active #nd-reference .nd-kpi{padding:9px!important;gap:5px!important;overflow:hidden}
+ body.nd-overview-active #nd-reference .nd-kpi strong{font-size:clamp(12px,1.7vw,27px)!important;white-space:nowrap!important}
+ body.nd-overview-active #nd-reference .nd-kpi small{font-size:clamp(9px,.95vw,12px)!important;overflow-wrap:anywhere}
+ body.nd-overview-active #nd-reference .nd-kpi-icon{font-size:clamp(15px,1.8vw,30px)!important;flex-shrink:0}
+}
+@media(min-width:761px) and (max-width:1150px){
+ body.nd-overview-active #nd-reference .nd-kpis{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+ body.nd-overview-active #nd-reference .nd-kpis .nd-positions{grid-column:1/-1!important}
+}
