@@ -140,6 +140,32 @@ def build():
         with closing(conn()) as db, closing(desk_observations.connect()) as obs:
             d['intelligence']=intelligence.build(db,obs,d,hb,time.time())
     except Exception as err: d['intelligence']=dict(error=type(err).__name__)
+    # Read-only advisory agents: derive evidence from this publisher snapshot.
+    # Never let advisory failures interrupt the paper desk or publishing.
+    try:
+        import importlib.util
+        agent_path = os.path.join(os.path.dirname(D), "ryder_agents.py")
+        spec = importlib.util.spec_from_file_location("ryder_advisory_agents", agent_path)
+        if spec is None or spec.loader is None:
+            raise ImportError("RYDER advisory module unavailable")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        radar = (d.get("mission_control") or {}).get("tokens") or []
+        candidates = []
+        for token in radar if isinstance(radar, list) else []:
+            if not isinstance(token, dict):
+                continue
+            candidates.append(dict(symbol=token.get("symbol"),
+                                   volume_24h=token.get("volume_24h"),
+                                   liquidity_usd=token.get("liquidity"),
+                                   price_change_1h=token.get("price_change_1h"),
+                                   mint_authority_enabled=token.get("mint_authority_enabled"),
+                                   freeze_authority_enabled=token.get("freeze_authority_enabled")))
+        d["advisory_agents"] = module.evaluate_agents(dict(candidates=candidates, closed=d.get("closed") or []))
+        d["advisory_source"] = "mac_publisher_snapshot"
+    except Exception as err:
+        d["advisory_agents"] = []
+        d["advisory_error"] = type(err).__name__
     d["agents"].extend(checks)
     return d
 SKIP_BUCKETS = [("Volume too low", ("volume_1h",)), ("Liquidity too low", ("liquidity", "thin_pool")), ("No socials", ("socials",)),
