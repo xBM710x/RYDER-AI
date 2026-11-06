@@ -76,7 +76,20 @@ function build(){
  if(svg)svg.insertAdjacentHTML('afterbegin','<text x="410" y="196" fill="#d20b32" opacity=".13" font-size="270" font-weight="900" font-style="italic">R</text>');
  const pos=document.querySelector('#nd-reference .nd-positions');
  const kpis=document.querySelector('#nd-reference .nd-kpis');
- if(pos&&kpis)kpis.appendChild(pos);
+ if(pos&&kpis){
+  const sidebar=el.querySelector('.nd-sidebar');
+  const placePositions=()=>{
+    if(window.matchMedia('(max-width: 1199px)').matches){
+      if(sidebar&&pos.parentElement!==sidebar)sidebar.prepend(pos);
+    }else if(pos.parentElement!==kpis){kpis.appendChild(pos);}
+  };
+  placePositions();
+  window.removeEventListener('resize',window.ryderPositionLayout);
+  window.ryderPositionLayout=placePositions;
+  window.addEventListener('resize',placePositions,{passive:true});
+ }
+ const toolbar=document.querySelector('main>.toolbar');
+ if(header&&toolbar&&toolbar.parentElement!==header)header.appendChild(toolbar);
  const mainNav=document.querySelector('main>nav');
  if(mainNav&&mainNav.children.length===5&&!mainNav.querySelector('[href="#agents"]')){const agentsLink=document.createElement('a');agentsLink.href='#more';agentsLink.innerHTML='⌘<span>Agents</span>';agentsLink.addEventListener('click',ev=>{ev.preventDefault();mainNav.querySelector('[href="#more"]')?.click()});mainNav.insertBefore(agentsLink,mainNav.children[3]);}
  
