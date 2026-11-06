@@ -55,7 +55,8 @@ function build(){
  
  const brand=document.querySelector('main>header .brand>div');
  if(brand)brand.innerHTML='<strong>RYDER AI</strong><span>NIGHT DESK</span>';
- document.querySelector('main>header .brand .rd-mascot')?.remove();\n document.getElementById('rd-bigstar')?.remove();
+ document.querySelector('main>header .brand .rd-mascot')?.remove();
+ document.getElementById('rd-bigstar')?.remove();
  const pill=document.querySelector('main>.pills .paper');if(pill)pill.textContent='PAPER MODE';
  const label=document.getElementById('sourceLabel');if(label)label.textContent=fresh?'● Mac Publisher LIVE':'● Publisher STALE';
  const heading=document.querySelector('#nd-reference .nd-curve .nd-panel-heading h2');
