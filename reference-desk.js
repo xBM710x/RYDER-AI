@@ -42,7 +42,7 @@ function build(){
  if(scansCard){const note=document.createElement('small');note.className='nd-scan-note';note.textContent=Number.isFinite(d.scans)?'TOTAL SCANS · '+count(d.scans):'TOTAL SCANS · NOT REPORTED';scansCard.appendChild(note)}
  const header=document.querySelector('main>header');
  if(header){
-  const img=header.querySelector('.brand img');if(img)img.src='ryder-rider-helmet.svg';
+  const img=header.querySelector('.brand img');if(img)img.src='ryder-r-emblem.svg?v=21';
   header.querySelectorAll('.brand .rd-mascot').forEach(n=>n.remove());
   document.getElementById('rd-bigstar')?.remove();
  }
