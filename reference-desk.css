@@ -185,3 +185,71 @@ body.nd-overview-active #nd-reference .nd-time-filters button.selected{backgroun
  body.nd-overview-active #nd-reference .nd-curve{min-height:340px}
  body.nd-overview-active #nd-reference .nd-r-watermark{font-size:180px}
 }
+
+/* Header repair: separate brand, status and navigation instead of overlaying them. */
+body.nd-overview-active main{position:relative}
+body.nd-overview-active main>header{
+ position:relative!important;display:flex!important;align-items:center!important;
+ height:132px!important;min-height:132px!important;padding:12px 18px!important;
+ overflow:hidden!important;border-bottom:2px solid #fa1b49!important;
+ background:linear-gradient(100deg,#34000a,#140207 55%,#090307)!important;
+}
+body.nd-overview-active main>header .brand{
+ display:flex!important;align-items:center!important;gap:18px!important;
+ min-width:0!important;max-width:calc(100% - 270px)!important;
+ height:100%!important;overflow:visible!important;
+}
+body.nd-overview-active main>header .brand img{
+ display:block!important;flex:0 0 auto!important;width:125px!important;
+ height:118px!important;object-fit:contain!important;
+ filter:drop-shadow(0 0 10px #fa144a)!important;
+}
+body.nd-overview-active main>header .brand>div{
+ display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+ justify-content:center!important;min-width:0!important;gap:6px!important;
+}
+body.nd-overview-active main>header .brand strong{
+ display:block!important;font-size:clamp(38px,4.5vw,72px)!important;
+ font-style:italic!important;font-weight:950!important;letter-spacing:-1.5px!important;
+ line-height:1!important;white-space:nowrap!important;
+}
+body.nd-overview-active main>header .brand span{
+ display:block!important;font-size:clamp(13px,1.7vw,24px)!important;
+ font-weight:900!important;font-style:italic!important;letter-spacing:4px!important;
+ white-space:nowrap!important;color:#ff345b!important;
+}
+body.nd-overview-active main>nav{
+ position:relative!important;top:auto!important;left:auto!important;right:auto!important;
+ width:100%!important;margin:0 0 12px!important;min-height:44px!important;
+ border:1px solid #a31433!important;z-index:2!important;
+ background:linear-gradient(#180309,#090306)!important;
+}
+body.nd-overview-active main>nav a{font-size:14px!important;min-height:43px!important}
+body.nd-overview-active main>.pills{
+ position:absolute!important;top:13px!important;right:14px!important;left:auto!important;
+ display:flex!important;gap:8px!important;z-index:6!important;
+}
+body.nd-overview-active main>.pills .dark,
+body.nd-overview-active main>.pills #agent-count{display:none!important}
+body.nd-overview-active main>.toolbar{
+ position:absolute!important;top:60px!important;right:14px!important;z-index:7!important;
+ opacity:1!important;background:#12070c!important;
+}
+body.nd-overview-active main>header #settings{
+ position:absolute!important;right:112px!important;top:65px!important;z-index:7!important;
+ background:#16060c!important;border:1px solid #ac2a48!important;opacity:1!important;
+}
+@media(max-width:760px){
+ body.nd-overview-active main>header{height:110px!important;min-height:110px!important;padding:8px!important}
+ body.nd-overview-active main>header .brand{gap:8px!important;max-width:calc(100% - 112px)!important}
+ body.nd-overview-active main>header .brand img{width:65px!important;height:90px!important}
+ body.nd-overview-active main>header .brand strong{font-size:clamp(24px,6.5vw,39px)!important;letter-spacing:-.5px!important}
+ body.nd-overview-active main>header .brand span{font-size:clamp(9px,2.6vw,14px)!important;letter-spacing:1.5px!important}
+ body.nd-overview-active main>.pills{top:5px!important;right:6px!important;gap:4px!important}
+ body.nd-overview-active main>.pills .paper,
+ body.nd-overview-active main>.pills #sourceLabel{font-size:9px!important;padding:3px 5px!important}
+ body.nd-overview-active main>.toolbar{top:47px!important;right:6px!important;max-width:88px!important}
+ body.nd-overview-active main>header #settings{top:54px!important;right:100px!important}
+ body.nd-overview-active main>nav{overflow-x:auto!important;margin:0 0 10px!important}
+ body.nd-overview-active main>nav a{font-size:12px!important;padding:8px 5px!important;min-width:67px!important}
+}
