@@ -126,6 +126,12 @@ for e in ev:
     elif k == "paper_buy": _hr[h]["trades"] += 1
 for p in cl: _hr[time.strftime("%H", time.localtime(p["closed"]))]["pnl"] += p["pnl"]
 out["hourly"] = [dict(h=h, **{k: (round(v, 2) if isinstance(v, float) else v) for k, v in d.items()}) for h, d in sorted(_hr.items())][-24:]
+# Rolling 24-hour scan events, unlike the legacy hourly chart grouped by clock hour.
+# These counts come from recorded scan events only, never estimated from lifetime totals.
+_scan_cutoff = time.time() - 24 * 3600
+out["scans_24h"] = sum(1 for e in ev if e["kind"] == "scan" and isinstance(e.get("ts"), (int, float)) and _scan_cutoff <= e["ts"] <= time.time())
+out["scans_24h_source"] = "recorded_scan_events"
+
 _act = collections.Counter(AG.get(e["kind"], "LOGGER") for e in ev if e["ts"] > time.time() - 3600)
 out["agent_activity"] = dict(_act)
 try:
