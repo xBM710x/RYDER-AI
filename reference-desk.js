@@ -80,7 +80,9 @@ function build(){
  const mainNav=document.querySelector('main>nav');
  if(mainNav&&mainNav.children.length===5&&!mainNav.querySelector('[href="#agents"]')){const agentsLink=document.createElement('a');agentsLink.href='#more';agentsLink.innerHTML='⌘<span>Agents</span>';agentsLink.addEventListener('click',ev=>{ev.preventDefault();mainNav.querySelector('[href="#more"]')?.click()});mainNav.insertBefore(agentsLink,mainNav.children[3]);}
  
- document.body.classList.toggle('nd-overview-active',location.hash===''||location.hash==='#overview');
+ const onOverview=location.hash===''||location.hash==='#overview';
+ document.body.classList.toggle('nd-overview-active',onOverview);
+ el.hidden=!onOverview;
 }
 window.ryderNightDeskDraw=build;
 if(typeof data!=='undefined'&&data)build();
