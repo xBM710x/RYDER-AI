@@ -23,11 +23,19 @@ function draw(){
  let panel=document.getElementById('ryder-advisory-agents');
  if(!panel){panel=document.createElement('div');panel.id='ryder-advisory-agents';panel.style.cssText='border-top:1px solid #ffffff20;margin-top:12px;padding-top:10px';rail.appendChild(panel)}
  const stamp=data.updated_at?Date.parse(data.updated_at):NaN;
- const stale=!Number.isFinite(stamp)||Date.now()-stamp>300000;
- panel.innerHTML='<div style="font-size:11px;letter-spacing:.08em;color:#ff7892;margin-bottom:8px">ADVISORY AGENTS · SNAPSHOT ANALYSIS'+(stale?' · STALE DATA':' · PAPER ONLY')+'</div>'+report(data).map(a=>'<div style="padding:7px 0;border-bottom:1px solid #ffffff12"><strong style="color:#fff">'+esc(a.name)+'</strong> <small style="color:#ff7892">'+esc(a.stat)+'</small><div style="font-size:12px;color:#bbb">'+esc(a.text)+'</div></div>').join('');
+ const age=Date.now()-stamp;
+ const stale=!Number.isFinite(stamp)||age<0||age>300000;
+ const published=Array.isArray(data.advisory_agents)?data.advisory_agents.filter(a=>a&&typeof a.name==='string'&&typeof a.text==='string'&&typeof a.stat==='string'):[];
+ const hasPublished=published.length===3&&['Hunter','Strategist','Sentinel'].every(n=>published.some(a=>a.name===n));
+ // Older snapshots still work, but never describe browser estimates as Mac agents.
+ const agents=hasPublished?published:report(data);
+ const source=hasPublished?'MAC PUBLISHER':'BROWSER ESTIMATE · NOT MAC-VERIFIED';
+ const freshness=stale?'STALE SNAPSHOT':hasPublished?'PAPER ONLY':'AWAITING MAC AGENT DATA';
+ panel.innerHTML='<div style="font-size:11px;letter-spacing:.08em;color:#ff7892;margin-bottom:8px">ADVISORY AGENTS · '+source+' · '+freshness+'</div>'+agents.map(a=>'<div style="padding:7px 0;border-bottom:1px solid #ffffff12"><strong style="color:#fff">'+esc(a.name)+'</strong> <small style="color:#ff7892">'+esc(a.stat)+'</small><div style="font-size:12px;color:#bbb">'+esc(a.text)+'</div></div>').join('');
  const count=document.getElementById('agent-count');
- if(count&&!count.dataset.ryderAdvisory){count.dataset.ryderAdvisory='true';count.title='Three additional advisory agents run in the browser on published snapshots, not as independent backend workers.'}
+ if(count)count.title=hasPublished?'Three read-only advisory agents evaluated by the Mac publisher; not independent workers.':'Advisory estimates use browser snapshot analysis until Mac publisher data is available.';
 }
+
 const previous=render;
 render=function(){previous.apply(this,arguments);draw()};
 if(typeof data!=='undefined'&&data)draw();
