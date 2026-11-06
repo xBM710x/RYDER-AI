@@ -39,7 +39,8 @@ function build(){
  '<div class="nd-bottom"><section class="nd-panel"><h2>MARKET INTEL</h2>'+intel+'</section><section class="nd-panel"><h2>RECENT ACTIVITY</h2>'+recent+'</section><section class="nd-panel"><h2>RYDER INTEL FEED</h2><div class="nd-info"><span>PUBLISHER</span><b>'+h(d.advisory_source||'Snapshot')+'</b></div><div class="nd-info"><span>LAST UPDATE</span><b>'+h(d.updated_at?time(d.updated_at):d.asof)+'</b></div><div class="nd-info"><span>SNAPSHOT</span><b>'+(fresh?'Fresh':'Stale / unverified')+'</b></div><p class="nd-footnote">No inferred market events or agent decisions.</p></section></div>';
  dash.prepend(el);
  const brand=document.querySelector('main>header .brand>div');
- if(brand)brand.innerHTML='<strong>RYDER AI</strong><span>NIGHT DESK</span>';\n document.querySelector('main>header .brand .rd-mascot')?.remove();\n document.getElementById('rd-bigstar')?.remove();
+ if(brand)brand.innerHTML='<strong>RYDER AI</strong><span>NIGHT DESK</span>';
+ document.querySelector('main>header .brand .rd-mascot')?.remove();\n document.getElementById('rd-bigstar')?.remove();
  const pill=document.querySelector('main>.pills .paper');if(pill)pill.textContent='PAPER MODE';
  const label=document.getElementById('sourceLabel');if(label)label.textContent=fresh?'● Mac Publisher LIVE':'● Publisher STALE';
  const heading=document.querySelector('#nd-reference .nd-curve .nd-panel-heading h2');
