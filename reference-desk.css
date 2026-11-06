@@ -205,3 +205,32 @@ body.nd-overview-active #nd-reference{display:block!important}
  body.nd-overview-active #nd-reference .nd-kpis{grid-template-columns:repeat(5,minmax(0,1fr))!important}
  body.nd-overview-active #nd-reference .nd-kpis .nd-positions{grid-column:1/-1!important}
 }
+
+/* Reference polish 15: header status controls must never occupy the same coordinates. */
+@media(min-width:761px){
+ body.nd-overview-active main{position:relative!important}
+ body.nd-overview-active main>header{height:136px!important;min-height:136px!important;padding:12px 360px 12px 14px!important;overflow:hidden!important}
+ body.nd-overview-active main>header .brand{min-width:0!important;max-width:100%!important}
+ body.nd-overview-active main>header .brand img{width:120px!important;height:112px!important;object-fit:contain!important}
+ body.nd-overview-active main>header .brand>div{font-size:clamp(28px,3.5vw,57px)!important;line-height:1!important;white-space:nowrap!important;font-weight:950!important;font-style:italic!important}
+ body.nd-overview-active main>header .brand span{display:block!important;margin-top:7px!important;font-size:clamp(11px,1.2vw,19px)!important;letter-spacing:3px!important;color:#ff3659!important}
+ body.nd-overview-active main>.pills{position:absolute!important;top:14px!important;right:14px!important;left:auto!important;display:flex!important;gap:8px!important;align-items:center!important;flex-wrap:nowrap!important;z-index:8!important}
+ body.nd-overview-active main>.pills .dark,body.nd-overview-active main>.pills #agent-count{display:none!important}
+ body.nd-overview-active main>.pills .paper,body.nd-overview-active main>.pills #sourceLabel{position:static!important;white-space:nowrap!important;font-size:11px!important;padding:5px 9px!important;max-width:180px!important;overflow:hidden!important;text-overflow:ellipsis!important}
+ body.nd-overview-active main>header #settings{position:absolute!important;top:67px!important;right:133px!important;left:auto!important;width:48px!important;height:42px!important;margin:0!important;z-index:9!important;opacity:1!important;background:#190811!important}
+ body.nd-overview-active main>.toolbar{position:absolute!important;top:67px!important;right:14px!important;left:auto!important;width:108px!important;height:42px!important;max-width:108px!important;margin:0!important;z-index:9!important;opacity:1!important;display:flex!important;align-items:center!important;justify-content:center!important;background:#190811!important}
+ body.nd-overview-active main>.toolbar #refresh{white-space:nowrap!important;font-size:12px!important}
+ body.nd-overview-active main>nav{position:relative!important;top:auto!important;right:auto!important;left:auto!important;width:100%!important;margin:0 0 12px!important}
+}
+@media(max-width:760px){
+ body.nd-overview-active main>header{min-height:110px!important;height:110px!important;padding:8px 112px 8px 8px!important;overflow:hidden!important}
+ body.nd-overview-active main>header .brand{min-width:0!important;max-width:100%!important}
+ body.nd-overview-active main>header .brand img{width:62px!important;height:84px!important}
+ body.nd-overview-active main>header .brand>div{font-size:clamp(23px,6vw,37px)!important;white-space:nowrap!important}
+ body.nd-overview-active main>header .brand span{display:block!important;font-size:10px!important;letter-spacing:1.2px!important}
+ body.nd-overview-active main>.pills{position:relative!important;top:auto!important;right:auto!important;display:flex!important;gap:6px!important;flex-wrap:wrap!important}
+ body.nd-overview-active main>header #settings{position:absolute!important;top:59px!important;right:65px!important;width:40px!important;height:39px!important;z-index:9!important}
+ body.nd-overview-active main>.toolbar{position:absolute!important;top:59px!important;right:8px!important;width:50px!important;max-width:50px!important;z-index:9!important;opacity:1!important}
+ body.nd-overview-active main>.toolbar #refresh{font-size:0!important}
+ body.nd-overview-active main>.toolbar #refresh::first-letter{font-size:19px!important}
+}
