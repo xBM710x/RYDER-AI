@@ -205,3 +205,44 @@ body.nd-overview-active #nd-reference{display:block!important}
  body.nd-overview-active #nd-reference .nd-kpis{grid-template-columns:repeat(5,minmax(0,1fr))!important}
  body.nd-overview-active #nd-reference .nd-kpis .nd-positions{grid-column:1/-1!important}
 }
+
+/* Header control lanes: badges above, settings/refresh below; no collisions. */
+@media (min-width:761px){
+ body.nd-overview-active main{position:relative!important}
+ body.nd-overview-active main>header{height:136px!important;min-height:136px!important;padding-right:370px!important;overflow:hidden!important}
+ body.nd-overview-active main>header .brand{max-width:100%!important;overflow:hidden!important}
+ body.nd-overview-active main>.pills{
+  position:absolute!important;top:14px!important;right:16px!important;left:auto!important;
+  display:flex!important;align-items:center!important;justify-content:flex-end!important;
+  width:340px!important;max-width:340px!important;gap:8px!important;flex-wrap:nowrap!important;
+  z-index:12!important;pointer-events:none!important;
+ }
+ body.nd-overview-active main>.pills .paper,
+ body.nd-overview-active main>.pills #sourceLabel{
+  position:static!important;display:inline-flex!important;align-items:center!important;
+  max-width:190px!important;white-space:nowrap!important;overflow:hidden!important;
+  text-overflow:ellipsis!important;font-size:11px!important;line-height:18px!important;
+  padding:5px 9px!important;pointer-events:auto!important;
+ }
+ body.nd-overview-active main>header #settings{
+  position:absolute!important;top:64px!important;right:132px!important;left:auto!important;
+  width:48px!important;height:42px!important;margin:0!important;z-index:13!important;
+  background:#16070e!important;color:#fff!important;opacity:1!important;
+ }
+ body.nd-overview-active main>.toolbar{
+  position:absolute!important;top:64px!important;right:16px!important;left:auto!important;
+  width:106px!important;max-width:106px!important;height:42px!important;margin:0!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:0!important;z-index:13!important;background:#16070e!important;opacity:1!important;
+ }
+ body.nd-overview-active main>.toolbar #refresh{width:100%!important;white-space:nowrap!important;font-size:12px!important;padding:8px 5px!important}
+ body.nd-overview-active main>nav{position:relative!important;top:auto!important;right:auto!important;left:auto!important;width:100%!important;margin:0 0 12px!important}
+}
+@media (max-width:760px){
+ body.nd-overview-active main>header{height:112px!important;min-height:112px!important;padding-right:112px!important}
+ body.nd-overview-active main>.pills{position:relative!important;display:flex!important;gap:7px!important;flex-wrap:wrap!important;z-index:2!important}
+ body.nd-overview-active main>header #settings{position:absolute!important;top:58px!important;right:66px!important;width:40px!important;height:40px!important;z-index:13!important}
+ body.nd-overview-active main>.toolbar{position:absolute!important;top:58px!important;right:8px!important;width:52px!important;max-width:52px!important;z-index:13!important}
+ body.nd-overview-active main>.toolbar #refresh{font-size:0!important;padding:9px!important}
+ body.nd-overview-active main>.toolbar #refresh::first-letter{font-size:18px!important}
+}
