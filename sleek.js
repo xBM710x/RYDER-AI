@@ -32,7 +32,9 @@ for(const el of [...dash.children]){if(el.id.startsWith('sleek-'))continue;let p
  dash.querySelector('#night-agent-rail')?.remove();
  const rail=document.createElement('section');rail.id='night-agent-rail';rail.className='card';rail.dataset.deskPage='overview';
  const names=['Scout','Filter','Analyst','Executor','Risk','Logger','Coach','Watchdog','Hunter','Strategist','Sentinel'];
- const reported=Array.isArray(data.agents)?data.agents:[];
+ const base=Array.isArray(data.agents)?data.agents:[];
+ const advisory=Array.isArray(data.advisory_agents)&&data.advisory_source==='mac_publisher_snapshot'?data.advisory_agents.filter(a=>a&&['Hunter','Strategist','Sentinel'].includes(a.name)&&typeof a.text==='string'):[];
+ const reported=[...base,...advisory.filter(a=>!base.some(b=>b.name===a.name))];
  const all=[...names,...reported.map(a=>a.name).filter(n=>!names.includes(n))];
  const ageMs=Date.now()-Date.parse(data.updated_at||'');
  const fresh=Number.isFinite(ageMs)&&ageMs>=0&&ageMs<5*60*1000;
