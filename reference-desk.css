@@ -105,3 +105,22 @@ body.nd-overview-active main>header #settings{margin-left:auto}
 @media(max-width:1300px){#nd-reference .nd-kpis{grid-template-columns:repeat(5,1fr)}#nd-reference .nd-kpis .nd-positions{grid-column:1/-1}#nd-reference .nd-workspace{grid-template-columns:1.5fr 1fr}body.nd-overview-active main>nav{width:58%}}
 @media(max-width:900px){body.nd-overview-active main>header{height:auto;min-height:95px}body.nd-overview-active .brand img{width:90px!important;height:90px!important}body.nd-overview-active main>nav{position:relative;top:auto;right:auto;width:100%;overflow-x:auto}body.nd-overview-active main>.pills{position:relative;top:auto;right:auto;margin:8px 0}#nd-reference .nd-workspace{grid-template-columns:1fr}#nd-reference .nd-kpis{grid-template-columns:repeat(3,1fr)}#nd-reference .nd-kpis .nd-positions{grid-column:1/-1}}
 @media(max-width:590px){#nd-reference .nd-kpis{grid-template-columns:repeat(2,1fr)}#nd-reference .nd-kpi{min-height:100px}#nd-reference .nd-kpi strong{font-size:21px}#nd-reference .nd-kpis .nd-positions{grid-column:1/-1}body.nd-overview-active .brand strong{font-size:37px}body.nd-overview-active .brand span{font-size:12px;letter-spacing:2px}#nd-reference .nd-agent{grid-template-columns:26px 65px minmax(0,1fr) 50px}}
+
+/* Header mobile repair: star removed on Night Desk, controls in an opaque dock. */
+body.nd-overview-active .brand .rd-mascot,body.nd-overview-active #rd-bigstar{display:none!important}
+body.nd-overview-active main>header{position:relative;overflow:hidden}
+body.nd-overview-active main>header .brand{max-width:calc(100% - 104px);min-width:0;gap:8px}
+body.nd-overview-active main>header .brand>div{min-width:0}
+body.nd-overview-active main>.toolbar{position:absolute;top:12px;right:12px;width:auto;max-width:100px;opacity:1;z-index:9;overflow:visible;background:#11070d!important;border:1px solid #ff3557;border-radius:12px;padding:5px;box-shadow:0 0 9px #f02b4c}
+body.nd-overview-active main>.toolbar button{background:#210811!important;border:0!important;opacity:1!important;color:#fff!important;font-size:12px;padding:8px 6px}
+body.nd-overview-active main>header #settings{position:absolute;top:15px;right:118px;z-index:10;background:#14060c!important;border:1px solid #9c2540!important;border-radius:12px;color:white!important;opacity:1!important}
+body.nd-overview-active main>.toolbar #asof{display:none!important}
+@media(max-width:900px){
+ body.nd-overview-active main>header{height:128px;min-height:128px;padding:8px 12px}
+ body.nd-overview-active main>header .brand{max-width:calc(100% - 112px);height:100%;align-items:center;gap:7px}
+ body.nd-overview-active .brand img{width:clamp(65px,20vw,100px)!important;height:100px!important;flex-shrink:0}
+ body.nd-overview-active .brand strong{font-size:clamp(25px,7vw,45px);letter-spacing:-1px;line-height:1.08}
+ body.nd-overview-active .brand span{font-size:clamp(10px,3vw,16px);letter-spacing:1.5px}
+ body.nd-overview-active main>header #settings{top:70px;right:12px}
+ body.nd-overview-active main>.toolbar{top:15px;right:12px}
+}

@@ -40,7 +40,7 @@ function ryderFace(m){const E=(ry,dy)=>`<ellipse cx="43" cy="${54+dy}" rx="3.8" 
   sad:E(6.4,1.5)+'<path class="rd-mouth" d="M45 67 Q50 63.2 55 67" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>',
   sleepy:'<path d="M39.5 55 Q43 57.2 46.5 55 M53.5 55 Q57 57.2 60.5 55" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/>',
   alert:E(8,-1)+'<circle class="rd-mouth" cx="50" cy="65" r="1.8" fill="#fff"/>'}[m]||E(7.2,0)}
-function ryderMascot(mood){const b=document.querySelector('.brand');if(!b)return;const m=['happy','sad','sleepy','alert'].includes(mood)?mood:'';let el=b.querySelector('.rd-mascot');
+function ryderMascot(mood){const b=document.querySelector('.brand');if(!b||document.body.classList.contains('nd-overview-active')||b.querySelector('img[alt="RYDER cyber rider helmet"]'))return;const m=['happy','sad','sleepy','alert'].includes(mood)?mood:'';let el=b.querySelector('.rd-mascot');
  if(el&&el.dataset.mood===m)return;const html=`<svg class="rd-mascot rd-${m||'neutral'}" data-mood="${m}" viewBox="0 0 100 100" width="48" height="48" role="img" aria-label="RYDER red star${m?' · '+m:''}" style="overflow:visible"><defs><linearGradient id="rdb" x1="0.2" y1="0" x2="0.8" y2="1"><stop offset="0" stop-color="#F25C5C"/><stop offset="1" stop-color="#E03A3E"/></linearGradient></defs><g class="rd-body"><path fill="url(#rdb)" stroke="url(#rdb)" stroke-width="11" stroke-linejoin="round" d="M50.0 16.0 L60.0 40.2 L86.1 42.3 L66.2 59.3 L72.3 84.7 L50.0 71.0 L27.7 84.7 L33.8 59.3 L13.9 42.3 L40.0 40.2 Z"/><g class="rd-face">${ryderFace(m)}</g></g></svg>`;
  const old=el||b.querySelector('img');if(old)old.outerHTML=html;else b.insertAdjacentHTML('afterbegin',html)}
 {const _r=render;render=function(){_r.apply(this,arguments);try{ryderMascot(data&&data.mood)}catch{}}}
@@ -59,7 +59,7 @@ setInterval(()=>document.querySelectorAll('#rd-extra [data-left]').forEach(s=>{l
 {const _r2=render;render=function(){_r2.apply(this,arguments);try{ryderExtras(data)}catch(err){console.warn(err)}}}
 
 /* Desktop ring star: live mood copy of the header mascot, brighter + bigger (wide view only via CSS). */
-function ryderBigStar(){const s=document.querySelector('.brand .rd-mascot');if(!s)return;let b=document.getElementById('rd-bigstar');if(!b){b=document.createElement('div');b.id='rd-bigstar';b.setAttribute('aria-hidden','true');document.body.appendChild(b)}
+function ryderBigStar(){if(document.body.classList.contains('nd-overview-active')||document.querySelector('.brand img[alt="RYDER cyber rider helmet"]'))return;const s=document.querySelector('.brand .rd-mascot');if(!s)return;let b=document.getElementById('rd-bigstar');if(!b){b=document.createElement('div');b.id='rd-bigstar';b.setAttribute('aria-hidden','true');document.body.appendChild(b)}
  if(b.dataset.mood===s.dataset.mood)return;b.dataset.mood=s.dataset.mood;b.innerHTML=s.outerHTML.replace('id="rdb"','id="rdbB"').replace(/url\(#rdb\)/g,'url(#rdbB)').replace('<stop offset="0" stop-color="#F25C5C"/><stop offset="1" stop-color="#E03A3E"/>','<stop offset="0" stop-color="#FF8A9A"/><stop offset="1" stop-color="#FF3B4F"/>')}
 {const _r3=render;render=function(){_r3.apply(this,arguments);try{ryderBigStar()}catch{}}}
 
@@ -80,7 +80,7 @@ const FX={excited:E(7.5,-2)+'<path class="rd-mouth" d="M43.5 62 Q50 71 56.5 62 Z
  shades:'<path d="M36 50 h28 v3 h-2 q-1 6 -7 6 q-5 0 -6 -5 h-2 q-1 5 -6 5 q-6 0 -7 -6 h-2Z" fill="#111"/><path d="M40 52 l4 0" stroke="#fff6" stroke-width="1.2"/><path class="rd-mouth" d="M45 65 Q51 68.5 56 64" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>',
  angry:E(5.5,1)+'<path d="M38 46.5 L47 50 M62 46.5 L53 50" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><path class="rd-mouth" d="M45 67.5 Q50 63.5 55 67.5" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/>'};
 const baseFace=ryderFace;ryderFace=m=>FX[m]||baseFace(m);
-ryderMascot=function(mood){const b=document.querySelector('.brand');if(!b)return;let m=mood;
+ryderMascot=function(mood){const b=document.querySelector('.brand');if(!b||document.body.classList.contains('nd-overview-active')||b.querySelector('img[alt="RYDER cyber rider helmet"]'))return;let m=mood;
  if(emote&&Date.now()<emoteUntil)m=emote;else{emote=null;const o=(data&&data.opens)||[];if(o.some(p=>p.now<p.entry*0.97))m='nervous'}
  const ok=['happy','sad','sleepy','alert','excited','nervous','shades','angry'];m=ok.includes(m)?m:'';let el=b.querySelector('.rd-mascot');if(el&&el.dataset.mood===m)return;
  const html=`<svg class="rd-mascot rd-${m||'neutral'}" data-mood="${m}" viewBox="0 0 100 100" width="48" height="48" role="img" aria-label="RYDER red star${m?' · '+m:''}" style="overflow:visible"><defs><linearGradient id="rdb" x1="0.2" y1="0" x2="0.8" y2="1"><stop offset="0" stop-color="#F25C5C"/><stop offset="1" stop-color="#E03A3E"/></linearGradient></defs><g class="rd-body"><path fill="url(#rdb)" stroke="url(#rdb)" stroke-width="11" stroke-linejoin="round" d="M50.0 16.0 L60.0 40.2 L86.1 42.3 L66.2 59.3 L72.3 84.7 L50.0 71.0 L27.7 84.7 L33.8 59.3 L13.9 42.3 L40.0 40.2 Z"/><g class="rd-face">${ryderFace(m)}</g></g></svg>`;
