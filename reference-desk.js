@@ -26,19 +26,19 @@ function build(){
  const base=Array.isArray(d.agents)?d.agents:[];
  const advisory=Array.isArray(d.advisory_agents)&&d.advisory_source==='mac_publisher_snapshot'?d.advisory_agents:[];
  const agents=[...base,...advisory.filter(a=>!base.some(b=>b.name===a.name))];
- const stats=[['PAPER EQUITY',usd(d.equity),'◈'],['REALIZED PNL',money(d.realized),'↗'],['WIN RATE',win?pct(100*d.wins/win):'—','◎'],['TOTAL TRADES',count(d.trades),'⇄'],['SCANS (24H)',Number.isFinite(d.scans_24h)&&d.scans_24h_source==='recorded_scan_events'?count(d.scans_24h):'—','◎']];
+ const stats=[['REALIZED PNL',money(d.realized),'↗'],['WIN RATE',win?pct(100*d.wins/win):'—','◎'],['TOTAL TRADES',count(d.trades),'⇄'],['SCANS (24H)',Number.isFinite(d.scans_24h)&&d.scans_24h_source==='recorded_scan_events'?count(d.scans_24h):'—','◎']];
  const el=document.createElement('div');el.id='nd-reference';el.dataset.deskPage='overview';
  const events=Array.isArray(d.tail)?d.tail.slice(-5).reverse():[];
  const opens=Array.isArray(d.opens)?d.opens:[];
  const recent=events.map(x=>'<div class="nd-event"><b>'+h(x.ag)+'</b><span>'+h(x.text)+'</span></div>').join('')||'<p class="nd-empty">No recent activity recorded</p>';
  const intel=[['MARKET SOURCE',d.market_mood?.mood||'Not reported'],['TOKENS SCANNED',count(d.seen)],['FILTER PASSED',count(d.passed)],['PAPER POSITIONS',count(opens.length)]].map(([a,b])=>'<div class="nd-info"><span>'+h(a)+'</span><b>'+h(b)+'</b></div>').join('');
  el.innerHTML='<div class="nd-kpis">'+stats.map(([k,v,icon])=>'<section class="nd-panel nd-kpi"><span class="nd-kpi-icon">'+icon+'</span><div><small>'+k+'</small><strong>'+v+'</strong></div></section>').join('')+'</div>'+
- '<div class="nd-workspace"><section class="nd-panel nd-curve"><div class="nd-panel-heading"><div><small>LIVE PERFORMANCE · PAPER ONLY</small><h2>EQUITY CURVE</h2></div><div class="nd-equity-value">'+usd(d.equity)+'<small>'+money(delta)+' since start</small></div></div><div class="nd-chart">'+curve(d)+'</div><div class="nd-chart-footer"><span>● EQUITY</span><span>Volume bars unavailable unless recorded</span></div></section>'+
+ '<div class="nd-workspace"><section class="nd-panel nd-curve"><div class="nd-panel-heading"><div><small>RECORDED PERFORMANCE · PAPER ONLY</small><h2>EQUITY CURVE</h2></div><div class="nd-equity-value">'+usd(d.equity)+'<small>'+money(delta)+' since start</small></div></div><div class="nd-chart">'+curve(d)+'</div><div class="nd-chart-footer"><span>● EQUITY</span><span>Volume bars unavailable unless recorded</span></div></section>'+
  '<aside class="nd-sidebar"><section class="nd-panel nd-positions"><div class="nd-panel-heading"><h2>OPEN POSITIONS</h2><span class="nd-counter">'+opens.length+' OPEN</span></div>'+(opens.length?opens.slice(0,5).map(p=>'<div class="nd-pos"><b>'+h(p.sym)+'</b><span>'+usd(p.usd)+' allocated</span><strong>'+money(p.pnl)+'</strong></div>').join(''):'<p class="nd-empty">No open paper positions</p>')+'</section>'+
  '<section class="nd-panel nd-agents"><div class="nd-panel-heading"><h2>RYDER’S AGENTS</h2><span class="nd-counter">'+(fresh?'FEED FRESH':'FEED STALE')+'</span></div>'+names.map((name,i)=>{const a=agents.find(x=>x.name===name);return '<div class="nd-agent"><span class="nd-agent-symbol">'+['⌕','◇','◈','ϟ','⬡','≡','◎','✧','⬢'][i]+'</span><b>'+name+'</b><span class="nd-agent-note">'+h(a?.text||'Awaiting Mac report')+'</span><span class="nd-agent-state '+(a&&fresh?'nd-reported':'')+'">'+(a?(fresh?'REPORTED':'STALE'):'WAITING')+'</span></div>'}).join('')+'<p class="nd-footnote">Reported means present in the latest Mac snapshot, not independently verified as executing.</p></section></aside></div>'+
  '<div class="nd-bottom"><section class="nd-panel"><h2>MARKET INTEL</h2>'+intel+'</section><section class="nd-panel"><h2>RECENT ACTIVITY</h2>'+recent+'</section><section class="nd-panel"><h2>RYDER INTEL FEED</h2><div class="nd-info"><span>PUBLISHER</span><b>'+h(d.advisory_source||'Snapshot')+'</b></div><div class="nd-info"><span>LAST UPDATE</span><b>'+h(d.updated_at?time(d.updated_at):d.asof)+'</b></div><div class="nd-info"><span>SNAPSHOT</span><b>'+(fresh?'Fresh':'Stale / unverified')+'</b></div><p class="nd-footnote">No inferred market events or agent decisions.</p></section></div>';
  dash.prepend(el);
- const scansCard=el.querySelector('.nd-kpi:nth-child(5) div');
+ const scansCard=el.querySelector('.nd-kpi:last-child div');
  if(scansCard){const note=document.createElement('small');note.className='nd-scan-note';note.textContent=Number.isFinite(d.scans)?'TOTAL SCANS · '+count(d.scans):'TOTAL SCANS · NOT REPORTED';scansCard.appendChild(note)}
  const header=document.querySelector('main>header');
  if(header){
@@ -58,7 +58,7 @@ function build(){
  document.querySelector('main>header .brand .rd-mascot')?.remove();
  document.getElementById('rd-bigstar')?.remove();
  const pill=document.querySelector('main>.pills .paper');if(pill)pill.textContent='PAPER MODE';
- const label=document.getElementById('sourceLabel');if(label)label.textContent=fresh?'● Mac Publisher LIVE':'● Publisher STALE';
+ const label=document.getElementById('sourceLabel');if(label){label.textContent=fresh?'● Snapshot fresh':'● Snapshot stale';label.dataset.fresh=String(fresh);label.title='Last bot update: '+(d.updated_at||'Unknown');}
  const heading=document.querySelector('#nd-reference .nd-curve .nd-panel-heading h2');
  if(heading)heading.insertAdjacentHTML('afterbegin','<span class="nd-red-bar"></span>');
  const info=document.querySelector('#nd-reference .nd-chart-footer');
@@ -74,20 +74,22 @@ function build(){
  }));
  const svg=document.querySelector('#nd-reference .nd-chart svg');
  if(svg)svg.insertAdjacentHTML('afterbegin','<text x="410" y="196" fill="#d20b32" opacity=".13" font-size="270" font-weight="900" font-style="italic">R</text>');
- const pos=document.querySelector('#nd-reference .nd-positions');
- const kpis=document.querySelector('#nd-reference .nd-kpis');
- if(pos&&kpis){
-  const sidebar=el.querySelector('.nd-sidebar');
-  const placePositions=()=>{
-    if(window.matchMedia('(max-width: 1199px)').matches){
-      if(sidebar&&pos.parentElement!==sidebar)sidebar.prepend(pos);
-    }else if(pos.parentElement!==kpis){kpis.appendChild(pos);}
-  };
-  placePositions();
-  window.removeEventListener('resize',window.ryderPositionLayout);
-  window.ryderPositionLayout=placePositions;
-  window.addEventListener('resize',placePositions,{passive:true});
+ // The chart is first in the DOM, including on narrow screens and with CSS disabled.
+ const curvePanel=el.querySelector('.nd-curve');
+ if(curvePanel)el.prepend(curvePanel);
+ const roster=el.querySelector('.nd-agents');
+ const secondary=roster?[...roster.querySelectorAll('.nd-agent')].slice(6):[];
+ if(roster&&secondary.length){
+  const extra=document.createElement('details');extra.className='nd-more-agents';
+  extra.innerHTML='<summary>More agents</summary>';secondary.forEach(row=>extra.appendChild(row));
+  roster.insertBefore(extra,roster.querySelector('.nd-footnote'));
  }
+ const winCard=el.querySelector('.nd-kpi:nth-child(2)>div');
+ if(winCard){const note=document.createElement('small');note.textContent=d.wins+' wins / '+win+' closed trades';winCard.appendChild(note);}
+ const status=document.createElement('p');status.className='nd-snapshot-time';
+ status.textContent='Last bot update: '+(d.updated_at?new Date(d.updated_at).toLocaleString():d.asof||'Unknown')+' · '+(fresh?'Snapshot fresh':'Snapshot stale — values are last reported');
+ curvePanel?.appendChild(status);
+ const sidebar=el.querySelector('.nd-sidebar');if(sidebar&&roster)sidebar.prepend(roster);
  const toolbar=document.querySelector('main>.toolbar');
  if(header&&toolbar&&toolbar.parentElement!==header)header.appendChild(toolbar);
  const mainNav=document.querySelector('main>nav');
