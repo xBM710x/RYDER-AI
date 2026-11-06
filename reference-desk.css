@@ -1,0 +1,55 @@
+/* Approved reference layout — scoped so existing Markets/Trades/Research/More survive. */
+body.nd-overview-active{background:radial-gradient(ellipse at 50% -20%,#3b0614,#08070b 58%,#050508)!important;color:#f6f1f4}
+body.nd-overview-active main{max-width:1640px;padding:18px 24px 85px}
+body.nd-overview-active main>header{min-height:90px;border-bottom:1px solid #7e1930;background:linear-gradient(90deg,#180710,#09070b);padding:10px 18px;border-radius:8px}
+body.nd-overview-active .brand{font-size:30px;font-weight:900;letter-spacing:3px;text-shadow:0 0 12px #ed204d}
+body.nd-overview-active .brand span{font-size:11px;letter-spacing:2.5px;color:#e1cbd3}
+body.nd-overview-active main>nav{position:relative;bottom:auto;left:auto;right:auto;display:flex;justify-content:flex-start;gap:5px;background:#10090f;border:1px solid #632035;border-radius:5px;padding:6px;margin:8px 0 14px;z-index:1}
+body.nd-overview-active main>nav a{display:flex;flex-direction:row;gap:8px;flex:0 0 auto;padding:9px 20px;font-size:13px}
+body.nd-overview-active main>nav a.active{background:linear-gradient(90deg,#a6082f,#5d0821);box-shadow:0 0 18px #e71e4d55;border:1px solid #fa2d57}
+body.nd-overview-active main>.pills{position:absolute;right:95px;top:42px;z-index:2}
+body.nd-overview-active main>.toolbar{font-size:11px;opacity:.8}
+body.nd-overview-active #dashboard{display:block!important}
+body.nd-overview-active #dashboard>#night-overview-layout,body.nd-overview-active #dashboard>.stats,body.nd-overview-active #dashboard>#sleek-pulse,body.nd-overview-active #dashboard>#night-positions,body.nd-overview-active #dashboard>#night-agent-rail{display:none!important}
+body.nd-overview-active #dashboard>[data-desk-page="overview"]:not(#nd-reference){display:none!important}
+#nd-reference{display:block!important;width:100%;font-family:inherit}
+#nd-reference *{box-sizing:border-box}
+#nd-reference .nd-panel{background:linear-gradient(140deg,#190c16,#090a10 70%);border:1px solid #b11b3e;box-shadow:inset 0 0 18px #c4113514,0 0 12px #df19442b;border-radius:7px;padding:18px;min-width:0}
+#nd-reference h2{margin:0;color:#fff;font-size:15px;letter-spacing:1.6px;font-weight:850;text-shadow:0 0 8px #fa295744}
+#nd-reference small{font-size:10px;letter-spacing:1.4px;color:#ca9daa}
+#nd-reference .nd-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px;margin-bottom:14px}
+#nd-reference .nd-kpi{display:flex;gap:14px;align-items:center;min-height:94px;background:linear-gradient(125deg,#240b19,#110a12)}
+#nd-reference .nd-kpi-icon{font-size:28px;color:#ff365e;text-shadow:0 0 15px #ff2555}
+#nd-reference .nd-kpi strong{display:block;font-size:clamp(18px,2vw,29px);font-weight:850;white-space:nowrap;color:#fff;margin-top:8px}
+#nd-reference .nd-workspace{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(320px,.95fr);gap:14px}
+#nd-reference .nd-curve{min-height:510px;display:flex;flex-direction:column}
+#nd-reference .nd-panel-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+#nd-reference .nd-panel-heading h2{font-size:17px}
+#nd-reference .nd-equity-value{text-align:right;font-size:25px;font-weight:850}
+#nd-reference .nd-equity-value small{display:block;color:#ff5874}
+#nd-reference .nd-chart{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:260px}
+#nd-reference .nd-chart svg{width:100%;height:100%;min-height:260px;overflow:visible}
+#nd-reference .nd-chart-times,#nd-reference .nd-chart-footer{display:flex;justify-content:space-between;color:#c99cab;font-size:10px;gap:10px}
+#nd-reference .nd-chart-footer{border-top:1px solid #5e1a2c;padding-top:14px}
+#nd-reference .nd-chart-footer span:first-child{color:#ff4065}
+#nd-reference .nd-sidebar{display:flex;flex-direction:column;gap:14px}
+#nd-reference .nd-positions{min-height:130px}
+#nd-reference .nd-counter{font-size:10px;color:#ff6380;border:1px solid #7f2940;border-radius:3px;padding:5px 7px}
+#nd-reference .nd-pos{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;padding:8px 0;border-bottom:1px solid #481725;font-size:12px}
+#nd-reference .nd-agents{flex:1}
+#nd-reference .nd-agent{display:grid;grid-template-columns:24px 74px minmax(0,1fr) 68px;align-items:center;gap:7px;border-bottom:1px solid #481c2c;padding:8px 0;font-size:11px}
+#nd-reference .nd-agent-symbol{color:#ff3b62;font-size:17px}
+#nd-reference .nd-agent b{color:#fff}
+#nd-reference .nd-agent-note{color:#d1a9b7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#nd-reference .nd-agent-state{text-align:right;font-size:9px;color:#bca4ad}
+#nd-reference .nd-agent-state.nd-reported{color:#6ee0a2}
+#nd-reference .nd-bottom{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+#nd-reference .nd-bottom .nd-panel{min-height:190px}
+#nd-reference .nd-info,.nd-event{display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #471625;padding:10px 0;font-size:12px}
+#nd-reference .nd-info span,.nd-event span{color:#c8a7b1}
+#nd-reference .nd-info b,.nd-event b{color:#fff;overflow-wrap:anywhere}
+#nd-reference .nd-empty{color:#bb9ba6;font-size:12px;padding:25px 0;text-align:center}
+#nd-reference .nd-footnote{color:#ac8a96;font-size:10px;margin:12px 0 0;line-height:1.5}
+#nd-reference[hidden]{display:none!important}
+@media(max-width:1050px){#nd-reference .nd-kpis{grid-template-columns:repeat(3,1fr)}#nd-reference .nd-workspace{grid-template-columns:1fr}#nd-reference .nd-sidebar{display:grid;grid-template-columns:1fr 1.5fr}#nd-reference .nd-bottom{grid-template-columns:1fr 1fr}}
+@media(max-width:690px){body.nd-overview-active main{padding:12px 10px 85px}body.nd-overview-active main>.pills{position:static}body.nd-overview-active main>nav{overflow-x:auto}body.nd-overview-active main>nav a{padding:8px 10px}#nd-reference .nd-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}#nd-reference .nd-workspace,#nd-reference .nd-sidebar,#nd-reference .nd-bottom{display:flex;flex-direction:column}#nd-reference .nd-curve{min-height:340px}#nd-reference .nd-chart svg{min-height:200px}#nd-reference .nd-agent{grid-template-columns:20px 65px minmax(0,1fr) 53px}}
