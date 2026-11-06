@@ -2,6 +2,7 @@
 import time, sys, traceback, threading
 from common import CFG, dex_market
 import strategy_desk as sd
+import intelligence
 import volume_research as vr
 from scan_scheduler import INSTANCE as scan_queue
 from logger import conn, log
@@ -159,7 +160,7 @@ def evaluate(cd, pair, relax=False):
     if not ok_q: return kill(m, sym, "queue_full", f"score {sc2} below every waiting coin", False, pair)
     if drop: dp_ = PENDING.pop(drop, None); dp_ and log("kill", drop, dp_["sym"], reason="swapped", detail=f"swapped for better coin {sym} ({sc2})", final=False)
     brain6.want([m])  # 222 stream trades while it waits
-    PENDING[m] = dict(entry_strategy=sd.setup(pair,t0) if not relax else "standard", signal_pool=pair.get("pairAddress"), signal_ts=pair.get("_ts"), h0f=brain3.POOL.submit(brain6.gecko_holders, m), exp=bool(relax), fomo=isinstance(relax, float), fomo_f=relax if isinstance(relax, float) else None, t=time.time(), sym=sym, price=float(pair["priceUsd"]), score=sc2, creator=cr, res=res, rate=float(hr or 0), holders=int(hn or 0),
+    PENDING[m] = dict(intelligence_features=intelligence.features(pair,t0),entry_strategy=sd.setup(pair,t0) if not relax else "standard", signal_pool=pair.get("pairAddress"), signal_ts=pair.get("_ts"), h0f=brain3.POOL.submit(brain6.gecko_holders, m), exp=bool(relax), fomo=isinstance(relax, float), fomo_f=relax if isinstance(relax, float) else None, t=time.time(), sym=sym, price=float(pair["priceUsd"]), score=sc2, creator=cr, res=res, rate=float(hr or 0), holders=int(hn or 0),
                       owners=[], dex=cd["dex"], cd=dict(source=cd.get("source"), t=cd.get("t")), feats=f, bucket=bk, why_adj=why_adj, struct=locals().get("d", ""), dev=locals().get("dd", ""), impact=locals().get("imp"),
                       b7=b7, t0=time.time(), devbal=detect.dev_balance(cr, m) if cr else None, tx5=(pair.get("txns") or {}).get("m5"), liq0=(pair.get("liquidity") or {}).get("usd"))
     brain8.count("entry_wait"); log("entry_wait", m, sym, price=float(pair["priceUsd"]), delay=CFG["ENTRY_DELAY"], score=sc2, experimental=bool(relax))
@@ -324,6 +325,7 @@ def pending():
                 log("strategy_block",m,p["sym"],strategy=strategy,reason=detail if route!="pass" else "price, pool, pressure or quote age failed at confirmation")
                 continue
         ex["entry_strategy"]=strategy
+        ex["intelligence_features"]=intelligence.features(pair,time.time())
         ex["_runner_eligible"] = True  # display-only capacity lab receives only this fully gated handoff
         log("entry_confirmed", m, p["sym"], experimental=bool(p.get("exp")), why=ex.get("why"))
         ok = executor.buy(m, p["sym"], pair, p["score"], mult=mult, stop_pct=brain3.strength_stop(extras.vol_stop(pair), (council or {}).get("consensus")), conf=conf, extra=ex)
@@ -466,8 +468,8 @@ def jobs(k):
 def state():
     from common import HEALTH
     now = time.time()
-    return dict(ts=now,strategy_release="strategy-desk-1",volume_followups=vr.FOLLOW.status(), strategy_watch=vr.FOLLOW.watch(time.time()), pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=dict(scan_queue.status(),rest=scout.WORKER.status()), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
-        watch=[dict(sym=p["sym"][:14], strategy=p.get("entry_strategy","standard"), mint=m, dex=p.get("dex"), source=(p.get("cd") or {}).get("source"), latest=p.get("last_quote"), previous=p.get("previous_quote"), wait_left=max(0, round(CFG["ENTRY_DELAY"] - (now - p["t"]))), price=p["price"], score=p["score"]) for m, p in list(PENDING.items())[:10]],
+    return dict(ts=now,intelligence_release=intelligence.RELEASE,strategy_release="strategy-desk-1",volume_followups=vr.FOLLOW.status(), strategy_watch=vr.FOLLOW.watch(time.time()), pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=dict(scan_queue.status(),rest=scout.WORKER.status()), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
+        watch=[dict(intelligence_features=p.get("intelligence_features",{}),sym=p["sym"][:14], strategy=p.get("entry_strategy","standard"), mint=m, dex=p.get("dex"), source=(p.get("cd") or {}).get("source"), latest=p.get("last_quote"), previous=p.get("previous_quote"), wait_left=max(0, round(CFG["ENTRY_DELAY"] - (now - p["t"]))), price=p["price"], score=p["score"]) for m, p in list(PENDING.items())[:10]],
         reentry=[dict(sym=v[2], exit=v[0], mins_left=round(60 - (now - v[1]) / 60)) for v in REENTRY.values()],
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
         decision_s=dict(avg=round(sum(DEC) / len(DEC), 2) if DEC else None, p90=sorted(DEC)[int(len(DEC) * 0.9)] if DEC else None, n=len(DEC)),

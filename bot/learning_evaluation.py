@@ -26,7 +26,7 @@ def evaluate(samples,min_train=40,test_size=10):
         folds.append(dict(train_n=len(train),test_start=cutoff,threshold=threshold,baseline=metrics(test),challenger=metrics(chosen)))
     return dict(status='walk-forward replay available' if folds else 'insufficient completed, matched history',sample_n=len(samples),minimum_train=min_train,test_size=test_size,folds=folds[-20:],promotion_allowed=False,note='Threshold selected on earlier completed trades; overlapping outcomes and repeated test mints purged from training. Replay only covers executed paper trades, not untraded opportunities. Net recorded P&L includes the existing fill model. Wilson win-rate intervals are descriptive and assume independent outcomes; market dependence may make uncertainty larger. No parameter changes or profitability claims.')
 
-def build(c):
+def build(c,min_train=40,test_size=10,now=None):
     samples=[];unmatched=0
     rows=c.execute("""SELECT mint,version,opened,MAX(closed) AS closed,SUM(cost) AS cost,SUM(pnl) AS pnl FROM positions
       WHERE status='closed' AND version IN ('v3','vC') GROUP BY mint,version,opened ORDER BY opened DESC LIMIT 5000""").fetchall()
@@ -34,6 +34,7 @@ def build(c):
         p=dict(row);k=(p['mint'],p['version'],p['opened'])
         if c.execute("SELECT 1 FROM positions WHERE mint=? AND version=? AND opened=? AND status='open'",k).fetchone():continue
         if any(not isinstance(p.get(k),(int,float)) or not math.isfinite(p[k]) for k in ('cost','pnl','opened','closed')) or p['cost']<=0 or p['closed']<p['opened']:continue
+        if now is not None and p['closed']>now:continue
         ev=c.execute("SELECT data FROM events WHERE mint=? AND kind='paper_buy' AND ts BETWEEN ? AND ? ORDER BY ts LIMIT 20",(p['mint'],p['opened']-1,p['opened']+5))
         entry=None
         for r in ev:
@@ -46,4 +47,4 @@ def build(c):
         roi=p['pnl']/p['cost']
         if not math.isfinite(roi):continue
         samples.append(dict(mint=p['mint'],opened=p['opened'],closed=p['closed'],score=score,pnl=p['pnl'],roi=roi))
-    out=evaluate(samples);out['unmatched_openings']=unmatched;return out
+    out=evaluate(samples,min_train,test_size);out['unmatched_openings']=unmatched;return out

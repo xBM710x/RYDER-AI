@@ -135,6 +135,11 @@ def build():
             d['strategy_hub']=strategy_desk.evidence(db,hb.get('strategy_watch',[]),rows,time.time())
             d['strategy_hub']['runner_release']=hb.get('strategy_release')
     except Exception as err: d['strategy_hub']=dict(error=type(err).__name__)
+    try:
+        import intelligence
+        with closing(conn()) as db, closing(desk_observations.connect()) as obs:
+            d['intelligence']=intelligence.build(db,obs,d,hb,time.time())
+    except Exception as err: d['intelligence']=dict(error=type(err).__name__)
     d["agents"].extend(checks)
     return d
 SKIP_BUCKETS = [("Volume too low", ("volume_1h",)), ("Liquidity too low", ("liquidity", "thin_pool")), ("No socials", ("socials",)),
