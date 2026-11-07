@@ -5,7 +5,7 @@ const p=v=>'<p class="sub">'+e(v)+'</p>',details=(t,b)=>'<details style="border-
 const rows=(xs,f)=>xs?.length?xs.map(f).join(''):p('Waiting for qualifying recorded evidence.');
 window.ryderIntelligenceDraw=(page,section,more)=>{
  document.getElementById('intelligence-detail')?.remove();
- const host=page==='research'?document.getElementById('sleek-research-body'):page==='more'&&more==='agents'?document.getElementById('agents'):null;
+ const host=page==='research'?document.getElementById('sleek-research-body'):page==='more'&&['agents','system'].includes(more)?(more==='system'?document.getElementById('sleek-more'):document.getElementById('agents')):null;
  if(!host)return;const a=data.intelligence;let html='';
  if(!a||a.error)html=details('Brain intelligence · awaiting report',p(a?.error?'Collection error: '+a.error:'Waiting for the Mac publisher to install intelligence-1.'));
  else{
@@ -18,6 +18,6 @@ window.ryderIntelligenceDraw=(page,section,more)=>{
  if(section==='race'||section==='strategies')html+=details('Challenger / walk-forward evaluation',p(a.walk_forward.status)+p(a.walk_forward.note)+rows(a.walk_forward.folds,f=>p('Threshold '+f.threshold+' · train '+f.train_n+' · later baseline n='+f.baseline.n+' net $'+f.baseline.realized+' · challenger n='+f.challenger.n+' net $'+f.challenger.realized)));
  html+=details('Research version history',p('Active '+a.version+' · research settings only; no execution parameter changes')+rows(a.versions,v=>p(v.id+' · '+new Date(v.created*1000).toLocaleString()))+rows(a.history,h=>p(h.previous+' → '+h.version+' · '+h.reason)))+details('Scope and limitations',p(a.scope));
  }
- const box=document.createElement('div');box.id='intelligence-detail';box.innerHTML=html;host.append(box);
+ const box=document.createElement('div');box.id='intelligence-detail';box.innerHTML=html;host.append(box);window.ryderDecisionOpsDraw?.(host,page,section,more);
 };
 })();

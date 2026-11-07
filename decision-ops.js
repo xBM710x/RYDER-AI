@@ -1,0 +1,19 @@
+/* Evidence stays inside existing Research and More views. */
+(()=>{
+const e=v=>String(v??'Not recorded').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const p=v=>'<p class="sub">'+e(v)+'</p>';const panel=(name,body)=>'<details style="padding:12px 0;border-top:1px solid #893345"><summary>'+e(name)+'</summary>'+body+'</details>';
+const list=(rs,fn)=>rs?.length?rs.map(fn).join(''):p('No qualifying evidence reported yet.');
+const money=v=>Number.isFinite(v)?'$'+v.toFixed(2):'Unmeasured';
+window.ryderDecisionOpsDraw=(host,page,section,more)=>{
+ document.getElementById('decision-ops-detail')?.remove();const x=data.decision_ops;const el=document.createElement('section');el.id='decision-ops-detail';
+ if(!x||x.error){el.innerHTML=panel('Decision operations · awaiting Mac report',p(x?.error||'Waiting for decision-ops-1.'));host.append(el);return;}
+ const stale=!Number.isFinite(x.at)||Date.now()/1000-x.at>300||Date.now()/1000<x.at;
+ let body=p('Decision operations · '+(stale?'STALE SNAPSHOT':'snapshot fresh')+' · '+(x.runner_release===x.release?'runner release confirmed':'awaiting upgraded runner'));
+ const all=page==='more';
+ if(all||section==='diagnostics')body+=panel('Why no trade?',list(x.blockers,r=>panel(r.symbol+' · '+r.category,p(r.reason)+p('Missing: '+(r.missing.join(', ')||'none recorded'))+p('Failed: '+(r.failed.join(', ')||'none recorded'))+list(Object.entries(r.checks),([k,v])=>p(k+': '+v)))))+panel('Recovery monitor',p('Runner heartbeat age: '+(x.health.heartbeat_age_s??'unknown')+' seconds')+p('Last scan age: '+(x.health.scan_age_s??'unknown')+' seconds')+p('Timing worker: '+(x.health.timing_worker?.alive?'reported running':'not confirmed'))+list(x.health.errors,r=>p(new Date(r.at*1000).toLocaleString()+' · '+r.where)))+panel('Live-readiness report · NOT READY',list(x.readiness,r=>panel(r.check+' · '+r.status,p(r.detail))));
+ if(all||section==='strategies'||section==='race')body+=panel('Ranked opportunities · evaluation priority',list(x.ranked,r=>p(r.symbol+' · '+r.score+'/100 · '+r.status)))+panel('Entry-timing experiments',p('Separate $25 paper trials: breakout +2%; pullback −2% then +1% bounce; continuation after 30 seconds. Next distinct quote at least 5 seconds later models entry delay. Exit after 5 minutes; unresolved marks are not profits.')+list(x.timing.rows,r=>p(r.strategy+' · '+r.status+' · '+r.n+' trials · net '+money(r.net))))+panel('Agent accountability',p('Vote/outcome association on completed main/shared trades; not proof an agent caused the result.')+list(Object.entries(x.accountability),([name,r])=>p(name+' · approved '+r.approve_gain+' gains / '+r.approve_loss+' losses · opposed '+r.oppose_gain+' gains / '+r.oppose_loss+' losses · flat '+r.flat)));
+ if(all||section==='missed')body+=panel('Near-miss recheck queue',list(x.rechecks,r=>p((r.symbol||r.mint)+' · '+r.reason+' · due '+new Date(r.due*1000).toLocaleString())));
+ if(all||section==='exits')body+=panel('Trade decision replay',list(x.replays,r=>panel(r.symbol+' · '+r.book+' · net '+money(r.net),p('Entry inputs: '+(r.entry_features?JSON.stringify(r.entry_features):'not recorded'))+list(r.events,event=>panel(new Date(event.at*1000).toLocaleString()+' · '+event.kind,p(event.reason)+p('Votes: '+(event.votes?JSON.stringify(event.votes):'not recorded'))))+list(r.fills,f=>p('Exit fill · '+new Date(f.at*1000).toLocaleString()+' · '+f.reason+' · net '+money(f.net))))))+panel('Fill realism',p('Timing trials include 0.3% fee per side, 1% slippage allowance per side and modeled pool impact. Reject modeled size above 1% of liquidity. Fresh, increasing-timestamp, same-pool quotes required. This is not a route quote or a guarantee of an exit.'));
+ body+=panel('Evidence scope',p(x.scope));el.innerHTML=body;host.append(el);
+};
+})();

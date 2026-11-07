@@ -3,6 +3,8 @@ import time, sys, traceback, threading
 from common import CFG, dex_market
 import strategy_desk as sd
 import intelligence
+import decision_ops as ops
+RANKED_OPPORTUNITIES = []
 import volume_research as vr
 from scan_scheduler import INSTANCE as scan_queue
 from logger import conn, log
@@ -31,10 +33,11 @@ def _scan():
     try: __import__('desk_observations').observe(cands, mkt, (extras.STATE.get('regime') or {}).get('mood'))
     except Exception: pass  # display telemetry cannot block trade evaluation
     if total or cands: log("scan", n_raw=total, n_new_or_due=len(cands))
-    def _pri(cd):  # strongest first: 1h volume (capped at 3x the bar) + liquidity, re-checks and Fomo-wallet hints ahead; ordering only
-        p = mkt.get(cd["mint"]) or {}; v = float((p.get("volume") or {}).get("h1") or 0); l = float((p.get("liquidity") or {}).get("usd") or 0)
-        return -(min(v / CFG["MIN_VOL_H1"], 3) + min(l / CFG["MIN_LIQ"], 3) + (1 if cd.get("recheck") or cd.get("source") == "fomo-wallet" else 0))
-    for cd in sorted(cands, key=_pri):
+    global RANKED_OPPORTUNITIES
+    t0 = time.time()
+    ranked = sorted(cands, key=lambda cd: -ops.rank(mkt.get(cd['mint']),t0)['score'])
+    RANKED_OPPORTUNITIES = [dict(mint=cd['mint'],symbol=cd.get('name') or cd['mint'][:8],at=t0,**ops.rank(mkt.get(cd['mint']),t0)) for cd in ranked[:12]]
+    for cd in ranked:
         INFLIGHT.add(cd["mint"]); POOL.submit(_eval_safe, cd, mkt.get(cd["mint"]))
 def _eval_safe(cd, pair):
     try: evaluate(cd, pair)
@@ -63,7 +66,7 @@ def evaluate(cd, pair, relax=False):
     if not relax:
         if cd.get("volume_retry"):
             log("volume_followup", m, sym, delay=cd["volume_retry"], volume=volume_state, passed_filters=ok, reason=why)
-        retryable = why.startswith(("volume_1h:unknown",)) or (why.startswith(("volume_1h:fail","liquidity:fail")) and sd.near(pair,t0))
+        retryable = ops.retryable(why,pair,t0)
         if not retryable:
             vr.FOLLOW.finish(m)
         if pair and volume_state in ("pass","fail") and CFG["VERSION"] not in ("v1","v2"):
@@ -99,6 +102,7 @@ def evaluate(cd, pair, relax=False):
                 and sum(1 for q in PENDING.values() if q.get("fomo")) < 2 and fomo.factor():
             return evaluate(cd, pair, relax=fomo.factor())  # FOMO (v3x only): idle desk -> soft bars relaxed, ALL hard safety checks still run
         return
+    if not relax: ops.offer(cd,pair,time.time())  # isolated timing research, never shared equity
     if CFG["VERSION"] not in ("v1", "v2"):
         st, rs, d = brain.structure(pair)
         if st == "fail": DEC.append(round(time.time() - first, 2)); return kill(m, sym, rs, d, True, pair, dex=cd["dex"])
@@ -468,7 +472,7 @@ def jobs(k):
 def state():
     from common import HEALTH
     now = time.time()
-    return dict(ts=now,intelligence_release=intelligence.RELEASE,strategy_release="strategy-desk-1",volume_followups=vr.FOLLOW.status(), strategy_watch=vr.FOLLOW.watch(time.time()), pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=dict(scan_queue.status(),rest=scout.WORKER.status()), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
+    return dict(ts=now,decision_ops_release=ops.RELEASE,ranked_opportunities=list(RANKED_OPPORTUNITIES),decision_ops_worker=dict(ops.STATS,alive=bool(ops.THREAD and ops.THREAD.is_alive())),intelligence_release=intelligence.RELEASE,strategy_release="strategy-desk-1",volume_followups=vr.FOLLOW.status(), strategy_watch=vr.FOLLOW.watch(time.time()), pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=dict(scan_queue.status(),rest=scout.WORKER.status()), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
         watch=[dict(intelligence_features=p.get("intelligence_features",{}),sym=p["sym"][:14], strategy=p.get("entry_strategy","standard"), mint=m, dex=p.get("dex"), source=(p.get("cd") or {}).get("source"), latest=p.get("last_quote"), previous=p.get("previous_quote"), wait_left=max(0, round(CFG["ENTRY_DELAY"] - (now - p["t"]))), price=p["price"], score=p["score"]) for m, p in list(PENDING.items())[:10]],
         reentry=[dict(sym=v[2], exit=v[0], mins_left=round(60 - (now - v[1]) / 60)) for v in REENTRY.values()],
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
@@ -526,6 +530,7 @@ def main(cycles=None):
         PL[0] = threading.Thread(target=pos_loop, args=(brain14.GEN[0],), daemon=True); PL[0].start()
     brain14.start(_restart_pos)
     threading.Thread(target=brain17.selftest, daemon=True, name="b17-selftest0").start()  # breaker self-tests at startup
+    ops.start()  # separate read-only-market timing experiment
     brain16.start()  # paper copy-trade desk vC (read-only wallet polling)  # freeze watchdog: restarts only the positions thread
     def scan_loop(gen=0, cycles=None):
         n = 0
