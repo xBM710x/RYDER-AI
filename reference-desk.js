@@ -18,7 +18,9 @@ function curve(d){
 function build(){
  const dash=document.getElementById('dashboard');
  if(!dash||typeof data==='undefined'||!data)return;
- const old=document.getElementById('nd-reference');old?.remove();
+ const old=document.getElementById('nd-reference');
+ const skipped=document.getElementById('skiptally');if(skipped&&old?.contains(skipped))dash.appendChild(skipped);
+ old?.remove();
  const d=data,delta=d.equity-d.start,win=d.wins+d.losses;
  const age=Date.now()-Date.parse(d.updated_at||'');
  const fresh=Number.isFinite(age)&&age>=0&&age<300000;
@@ -77,6 +79,8 @@ function build(){
  // The chart is first in the DOM, including on narrow screens and with CSS disabled.
  const curvePanel=el.querySelector('.nd-curve');
  if(curvePanel)el.prepend(curvePanel);
+ // Move the existing publisher-backed breakdown; do not duplicate the Logger card.
+ if(skipped&&curvePanel){skipped.hidden=false;skipped.classList.add('nd-panel','nd-skipped');skipped.dataset.deskPage='overview';curvePanel.after(skipped);}
  const roster=el.querySelector('.nd-agents');
  const secondary=roster?[...roster.querySelectorAll('.nd-agent')].slice(6):[];
  if(roster&&secondary.length){
@@ -92,9 +96,6 @@ function build(){
  const sidebar=el.querySelector('.nd-sidebar');if(sidebar&&roster)sidebar.prepend(roster);
  const toolbar=document.querySelector('main>.toolbar');
  if(header&&toolbar&&toolbar.parentElement!==header)header.appendChild(toolbar);
- const mainNav=document.querySelector('main>nav');
- if(mainNav&&mainNav.children.length===5&&!mainNav.querySelector('[href="#agents"]')){const agentsLink=document.createElement('a');agentsLink.href='#more';agentsLink.innerHTML='⌘<span>Agents</span>';agentsLink.addEventListener('click',ev=>{ev.preventDefault();mainNav.querySelector('[href="#more"]')?.click()});mainNav.insertBefore(agentsLink,mainNav.children[3]);}
- 
  const onOverview=location.hash===''||location.hash==='#overview';
  document.body.classList.toggle('nd-overview-active',onOverview);
  el.hidden=!onOverview;

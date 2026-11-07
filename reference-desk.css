@@ -557,3 +557,10 @@ body.nd-overview-active main>header #rclock{position:static!important;inset:auto
  body.nd-overview-active #nd-reference .nd-chart-times span:nth-child(2){display:none}
  body.nd-overview-active #nd-reference .nd-chart-times span{max-width:48%;overflow-wrap:anywhere}
 }
+
+/* Skip reasons live directly beneath equity, before the compact metrics. */
+body.nd-overview-active #nd-reference>.nd-skipped{order:0!important;margin:0!important;min-width:0}
+#nd-reference .nd-skipped .row{flex-wrap:wrap;gap:8px}
+#nd-reference .nd-skipped h2{color:#fff}
+#nd-reference .nd-skipped .st-grid{gap:12px 20px}
+@media(max-width:590px){#nd-reference .nd-skipped .st-grid{grid-template-columns:1fr!important}}
