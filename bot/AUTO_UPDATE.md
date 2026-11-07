@@ -9,3 +9,16 @@ Every five minutes the updater fetches main from the exact RYDER-AI origin. A da
 After checks pass, the updater stops its private process group, saves an integrity-checked SQLite backup under `bot/update-backups`, fast-forwards, and reloads itself and the bot. It never resets the working tree, copies .env, restores a ledger, or removes memory. Startup errors after passing tests are handled by existing restart supervision; this is not an automatic runtime-health rollback. Dependency updates need separate setup. Update backups are retained until you choose to remove them.
 
 `bot/auto-update.log` shows applied or held updates. `bash bot/uninstall_mac.sh` stops the service and removes login startup without removing state. Only one machine should publish. The installer replaces the earlier com.ryder.bot login job.
+
+### Candidate test coverage
+
+The updater reads the incoming `bot/auto_update.py` TESTS list as a literal
+Python list, without importing candidate code to discover tests. Validation runs
+the union of the running updater's tests and the candidate's tests. Missing test
+modules, duplicate or malformed declarations, nonliteral lists, and failed tests
+hold the update while the current runner remains in place. Removing a retained
+test requires an explicit updater migration rather than silently dropping coverage.
+
+Regression coverage includes actual isolated subprocess runs where an added test
+fails, an existing test fails, and both pass. This changes installation validation
+only; it does not modify trading parameters, exits, or the dashboard.

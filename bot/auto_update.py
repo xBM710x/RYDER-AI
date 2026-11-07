@@ -1,4 +1,6 @@
 """Mac background owner: staged, offline-tested fast-forward updates. Paper only."""
+import ast
+import re
 import fcntl
 import os
 from pathlib import Path
@@ -48,8 +50,37 @@ def allowed(paths):
     return True
 
 
+def candidate_tests(bot):
+    """Read the candidate test manifest without importing its updater or runner.
+
+    Retain the running version's checks as well as new candidate checks. A broken
+    manifest is a failed update, never permission to silently skip validation.
+    """
+    source = Path(bot)/'auto_update.py'
+    tree = ast.parse(source.read_text(encoding='utf-8'))
+    manifests = [node.value for node in tree.body if isinstance(node, ast.Assign)
+                 and any(isinstance(target, ast.Name) and target.id == 'TESTS'
+                         for target in node.targets)]
+    if len(manifests) != 1:
+        raise ValueError('candidate must declare one literal TESTS list')
+    names = ast.literal_eval(manifests[0])
+    if not isinstance(names, list) or not names or len(names) > 128:
+        raise ValueError('invalid candidate test manifest')
+    if any(not isinstance(name, str) or not re.fullmatch(r'test_[A-Za-z0-9_]+', name)
+           for name in names) or len(set(names)) != len(names):
+        raise ValueError('invalid or duplicate candidate test module')
+    combined = list(dict.fromkeys([*TESTS, *names]))
+    if any(not (Path(bot)/(name+'.py')).is_file() for name in combined):
+        raise ValueError('required test module missing from candidate')
+    return combined
+
+
 def validate(stage, python=PY):
     bot = Path(stage)/'bot'
+    try:
+        tests = candidate_tests(bot)
+    except (OSError, SyntaxError, ValueError, TypeError, RecursionError):
+        return False
     # Compile without executing the trading runner; never use the real state directory.
     result = subprocess.run([python, '-m', 'compileall', '-q', str(bot)], timeout=60, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if result.returncode: return False
@@ -58,7 +89,7 @@ def validate(stage, python=PY):
     for name in list(env):
         if 'TOKEN' in name or 'SECRET' in name: env.pop(name, None)
     env['RYDER_SHARED_PAPER_ACCOUNT'] = '1'
-    result = subprocess.run([python, '-m', 'unittest', *TESTS], cwd=bot, env=env, timeout=120, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    result = subprocess.run([python, '-m', 'unittest', *tests], cwd=bot, env=env, timeout=120, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return result.returncode == 0
 
 
