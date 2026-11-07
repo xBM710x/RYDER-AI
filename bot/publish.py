@@ -145,6 +145,11 @@ def build():
         with closing(conn()) as db:
             d['decision_ops']=decision_ops.report(db,hb,d,time.time())
     except Exception as err: d['decision_ops']=dict(error=type(err).__name__)
+    try:
+        import desk_insights
+        with closing(conn()) as db:
+            d['desk_insights']=desk_insights.build(db,hb,d,time.time())
+    except Exception as err: d['desk_insights']=dict(error=type(err).__name__)
     # Read-only advisory agents: derive evidence from this publisher snapshot.
     # Never let advisory failures interrupt the paper desk or publishing.
     try:

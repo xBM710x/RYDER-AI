@@ -54,7 +54,7 @@ for(const el of dash.children){let show=el.dataset.deskPage===page;if(el.id==='s
  }
 const mission=document.getElementById('mission-desk');if(mission&&!mission.hidden){const wanted=page==='radar'?'radar':null;const active=mission.querySelector('[data-mc-view].active');if(wanted&&active?.dataset.mcView!==wanted)mission.querySelector('[data-mc-view="radar"]')?.click();mission.querySelector('.mc-tabs')?.toggleAttribute('hidden',page==='radar');}
 if(window.ryderCalendarShow)window.ryderCalendarShow(page==='more'&&more==='calendar');
-window.ryderFiveDraw?.(page,research);window.ryderHubDraw?.(page,research);window.ryderIntelligenceDraw?.(page,research,more);window.ryderNightDeskDraw?.();
+window.ryderFiveDraw?.(page,research);window.ryderHubDraw?.(page,research);window.ryderIntelligenceDraw?.(page,research,more);window.ryderNightDeskDraw?.();window.ryderInsightsDraw?.(page,research,more);
 const nav=document.querySelector('main>nav');nav.innerHTML=pages.map((p,i)=>`<a href="#${p}" class="${page===p?'active':''}" ${page===p?'aria-current="page"':''}>${['◈','◎','⇄','⌁','•••'][i]}<span>${label[p]}</span></a>`).join('');nav.querySelectorAll('a').forEach(a=>a.onclick=ev=>{ev.preventDefault();page=a.hash.slice(1);history.replaceState(null,'','#'+page);organize();window.scrollTo({top:0,behavior:'smooth'})});
 }
 window.ryderFiveRefresh=organize;

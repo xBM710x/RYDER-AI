@@ -180,6 +180,7 @@ def pending():
             if p and q:
                 p["previous_quote"] = p.get("last_quote", p["price"])
                 p["last_quote"] = q
+                p["last_quote_ts"] = pr.get("_ts")
             if p and q and q / p["price"] - 1 < CFG["MAX_DUMP"]: PENDING.pop(m, None); log("kill", m, p["sym"], reason="recheck", detail=f"dumped {(q/p['price']-1)*100:+.1f}% mid-wait (early abort)", final=True)
             elif p and p["score"] >= 0.75 and time.time() - p["t"] >= 45 and brain2.pressure(pr) > 0.6: p["t"] -= CFG["ENTRY_DELAY"]
             elif p and p["score"] >= 0.65 and time.time() - p["t"] >= 60 and brain7.holds_level(m)[0] != "spike_fade": p["t"] -= CFG["ENTRY_DELAY"]  # 368
@@ -473,7 +474,7 @@ def state():
     from common import HEALTH
     now = time.time()
     return dict(ts=now,decision_ops_release=ops.RELEASE,ranked_opportunities=list(RANKED_OPPORTUNITIES),decision_ops_worker=dict(ops.STATS,alive=bool(ops.THREAD and ops.THREAD.is_alive())),intelligence_release=intelligence.RELEASE,strategy_release="strategy-desk-1",volume_followups=vr.FOLLOW.status(), strategy_watch=vr.FOLLOW.watch(time.time()), pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=dict(scan_queue.status(),rest=scout.WORKER.status()), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
-        watch=[dict(intelligence_features=p.get("intelligence_features",{}),sym=p["sym"][:14], strategy=p.get("entry_strategy","standard"), mint=m, dex=p.get("dex"), source=(p.get("cd") or {}).get("source"), latest=p.get("last_quote"), previous=p.get("previous_quote"), wait_left=max(0, round(CFG["ENTRY_DELAY"] - (now - p["t"]))), price=p["price"], score=p["score"]) for m, p in list(PENDING.items())[:10]],
+        watch=[dict(intelligence_features=p.get("intelligence_features",{}),sym=p["sym"][:14], strategy=p.get("entry_strategy","standard"), mint=m, dex=p.get("dex"), source=(p.get("cd") or {}).get("source"), quote_ts=p.get("last_quote_ts"),latest=p.get("last_quote"), previous=p.get("previous_quote"), wait_left=max(0, round(CFG["ENTRY_DELAY"] - (now - p["t"]))), price=p["price"], score=p["score"]) for m, p in list(PENDING.items())[:10]],
         reentry=[dict(sym=v[2], exit=v[0], mins_left=round(60 - (now - v[1]) / 60)) for v in REENTRY.values()],
         kills_live=list(KILLS), risk=executor.RISK, regime=extras.STATE.get("regime"),
         decision_s=dict(avg=round(sum(DEC) / len(DEC), 2) if DEC else None, p90=sorted(DEC)[int(len(DEC) * 0.9)] if DEC else None, n=len(DEC)),
