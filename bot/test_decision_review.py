@@ -1,5 +1,5 @@
 import json,sqlite3,unittest
-from decision_review import build
+from decision_review import build, openings
 class ReviewTests(unittest.TestCase):
  def setUp(self):
   self.c=sqlite3.connect(':memory:');self.c.row_factory=sqlite3.Row
@@ -30,4 +30,37 @@ class ReviewTests(unittest.TestCase):
   self.assertEqual(d['reasons'],[('volume',1)])
   self.assertEqual((d['scored'],d['completed'],d['measured']),(1,2,2))
   self.assertEqual(d['calibration'],[dict(band=4,count=1,predicted=100,actual=100)])
+ def test_future_trade_excluded_until_report_time(self):
+  self.trade(closed=100001)
+  self.assertEqual(build(self.c,clock=lambda:100000)['sources'],[])
+  self.assertEqual(len(openings(self.c,100001)),1)
+ def test_future_records_do_not_crowd_out_valid_history(self):
+  self.trade()
+  for i in range(501):self.trade(m='future'+str(i),closed=100100+i)
+  self.assertEqual([t['mint'] for t in openings(self.c,100000)],['A'])
+ def test_invalid_partial_times_reject_whole_opening(self):
+  for closed in [None,98999,float('inf'),'broken']:
+   with self.subTest(closed=closed):
+    self.c.execute('DELETE FROM positions');self.trade();self.trade(closed=closed)
+    self.assertEqual(openings(self.c,100000),[])
+ def test_invalid_entry_time_rejected(self):
+  for opened in [None,'broken',-1,100001]:
+   with self.subTest(opened=opened):
+    self.c.execute('DELETE FROM positions');self.trade(opened=opened)
+    self.assertEqual(openings(self.c,100000),[])
+ def test_buy_evidence_cannot_come_after_report_or_exit(self):
+  self.trade(opened=99999,closed=100000)
+  self.c.execute('INSERT INTO events VALUES(?,?,?,?,?)',(100001,'paper_buy','A','A','{"source":"future"}'))
+  self.assertEqual(openings(self.c,100000)[0]['entry'],{})
+  self.assertEqual(openings(self.c,100005)[0]['entry'],{})
+ def test_future_skips_do_not_inflate_missed_universe(self):
+  self.c.executemany('INSERT INTO events VALUES(?,?,?,?,?)',[(99999,'kill','A','A','{}'),(100001,'kill','B','B','{}')])
+  self.assertEqual(build(self.c,clock=lambda:100000)['missed']['universe'],1)
+ def test_exact_cutoff_and_valid_partial_fills_preserved(self):
+  self.trade(closed=99999,pnl=1);self.trade(closed=100000,pnl=-.5)
+  self.c.execute('PRAGMA query_only=ON');t=openings(self.c,100000)[0]
+  self.assertEqual(t['pnl'],.5);self.assertEqual(len(t['parts']),2)
+ def test_invalid_report_clock_rejected(self):
+  for now in [None,True,float('nan'),float('inf')]:
+   with self.assertRaises(ValueError):openings(self.c,now)
 if __name__=='__main__':unittest.main()

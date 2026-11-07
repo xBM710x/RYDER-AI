@@ -12,13 +12,16 @@ def obj(v):
         x=json.loads(v or '{}');return x if isinstance(x,dict) else {}
     except (TypeError,ValueError):return {}
 def openings(c,now):
+    if not num(now):raise ValueError('research time must be finite')
     out=[]
-    groups=c.execute("SELECT mint,version,opened,MAX(closed) ended FROM positions WHERE version IN ('v3','vC') GROUP BY mint,version,opened HAVING ended>=? ORDER BY ended DESC LIMIT 500",(now-7*86400,)).fetchall()
+    groups=c.execute("SELECT mint,version,opened,MAX(closed) ended FROM positions WHERE version IN ('v3','vC') GROUP BY mint,version,opened HAVING ended BETWEEN ? AND ? ORDER BY ended DESC LIMIT 500",(now-7*86400,now)).fetchall()
     for g in groups:
+        if not num(g['opened']) or not num(g['ended']) or not 0<=g['opened']<=g['ended']<=now:continue
         ps=[dict(r) for r in c.execute('SELECT * FROM positions WHERE mint=? AND version=? AND opened=?',tuple(g)[:3])]
-        if any(p['status']!='closed' for p in ps):continue
+        if any(p['status']!='closed' or not num(p.get('closed'))
+               or not g['opened']<=p['closed']<=now for p in ps):continue
         if any(not num(p.get('pnl')) or not num(p.get('cost')) or p['cost']<=0 for p in ps):continue
-        ev=[(r[0],obj(r[1])) for r in c.execute("SELECT ts,data FROM events WHERE mint=? AND kind='paper_buy' AND ts BETWEEN ? AND ? ORDER BY ABS(ts-?) LIMIT 30",(g['mint'],g['opened']-1,g['opened']+5,g['opened']))]
+        ev=[(r[0],obj(r[1])) for r in c.execute("SELECT ts,data FROM events WHERE mint=? AND kind='paper_buy' AND ts BETWEEN ? AND ? ORDER BY ABS(ts-?) LIMIT 30",(g['mint'],g['opened']-1,min(g['opened']+5,g['ended'],now),g['opened']))]
         e=next((d for t,d in ev if d.get('book','v3')==g['version']),{})
         pnl=sum(p['pnl'] for p in ps);cost=sum(p['cost'] for p in ps)
         out.append(dict(mint=g['mint'],book=g['version'],opened=g['opened'],closed=g['ended'],symbol=ps[-1].get('symbol') or g['mint'][:8],pnl=round(pnl,6),cost=cost,net_pct=pnl/cost*100,entry=e,parts=ps))
@@ -76,5 +79,5 @@ def build(c,hb=None,clock=time.time):
             skip=c.execute("SELECT ts,symbol FROM events WHERE mint=? AND kind IN ('kill','skip') AND ts<=? ORDER BY ts DESC LIMIT 1",(m,ts)).fetchone()
             follow[m]=dict(mint=m,symbol=skip['symbol'] if skip else m[:8],reason=r,change_pct=round(change,2) if change is not None else None,checked_at=ts,horizon_s=round(ts-skip['ts']) if skip else None,evidence=table)
     rows=list(follow.values());measured=[x for x in rows if x['change_pct'] is not None]
-    skips={r[0] for r in c.execute("SELECT mint FROM events WHERE kind IN ('kill','skip') AND ts>=? ORDER BY ts DESC LIMIT 4000",(now-86400,)) if r[0]};universe=skips|set(follow)
+    skips={r[0] for r in c.execute("SELECT mint FROM events WHERE kind IN ('kill','skip') AND ts BETWEEN ? AND ? ORDER BY ts DESC LIMIT 4000",(now-86400,now)) if r[0]};universe=skips|set(follow)
     return dict(diagnostics=diagnostics(c,now,trades,replays),schema=1,generated_at=now,sources=sorted(sources.values(),key=lambda s:-s['realized']),missed=dict(universe=len(universe),measured=len(measured),unknown=len(universe)-len(measured),rows=rows[:30]),replays=replays[:30],scope='Last 7 days completed main/shared openings (maximum 500); last 24h sampled skipped-token follow-ups. Residual open positions excluded. Source means discovery origin; DEX shown separately.',note='Raw follow-up price changes are not executable returns. Unknown baseline timing stays unknown. Exit lines connect recorded fills only; peaks have no recorded timestamp and are not plotted at invented times. Paper results include ledger modeled costs; no strategy is promoted.')

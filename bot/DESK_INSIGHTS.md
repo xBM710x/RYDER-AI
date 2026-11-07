@@ -14,3 +14,14 @@ Eight read-only extensions use recorded events and completed paper openings:
 No new Overview cards, wallet integration, live orders, altered entry/exit gates or automatic parameter promotion. Snapshot scope: up to 4000 events/24h and 500 completed main/shared openings/7d. Mac installation must be confirmed by a published desk_insights report; upload alone does not prove installation.
 
 Validation: test_desk_insights plus the updater test suite; JavaScript syntax and full-app DOM navigation/countdown/escaping checks. Device screenshot appearance is not verified by DOM tests.
+
+## Report-time evidence cutoff
+
+Shared completed-opening research now excludes future-dated final closes before
+applying its 500-opening limit. Every partial fill must have a finite close time
+at or after its entry and at or before the report time. Invalid timestamps reject
+the entire opening; valid partial fills remain aggregated. Associated buy events
+cannot occur after the completed opening or report cutoff. The missed-token
+universe likewise excludes future skips. This prevents clock errors or imported
+future records from contaminating historical reports; it does not edit ledgers,
+entry rules, protective exits, or execution settings.
