@@ -48,12 +48,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Nov 07 05:18 PT",
+ "asof": "Nov 07 05:22 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 15981,
- "seen": 61609,
+ "scans": 15986,
+ "seen": 61614,
  "passed": 9,
  "trades": 1,
  "wins": 1,
@@ -91,7 +91,7 @@
  "by_dex": [
   [
    "pumpfun",
-   52419
+   52424
   ],
   [
    "meteora",
@@ -125,7 +125,7 @@
  "kills": [
   [
    "volume_1h",
-   88211
+   88217
   ],
   [
    "liquidity",
@@ -133,7 +133,7 @@
   ],
   [
    "socials",
-   2201
+   2202
   ],
   [
    "copycat",
@@ -254,7 +254,7 @@
    "v": 302.4
   },
   {
-   "t": "05:18",
+   "t": "05:22",
    "v": 302.4
   }
  ],
@@ -276,14 +276,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "61609 pairs",
+   "stat": "61614 pairs",
    "text": "scan \u00b7 1 pairs, 1 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed cash \u00b7 1h vol < $40k",
+   "text": "killed TINYHATS \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -306,54 +306,12 @@
   },
   {
    "name": "Logger",
-   "stat": "103168 why",
-   "text": "wrote 103168 reasons",
+   "stat": "103175 why",
+   "text": "wrote 103175 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "05:18",
-   "ag": "FILTER",
-   "text": "killed KEYFO \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "05:18",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "05:18",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 78 pairs, 37 new",
-   "tone": ""
-  },
-  {
-   "t": "05:18",
-   "ag": "FILTER",
-   "text": "killed USBC \u00b7 thin_pool",
-   "tone": "red"
-  },
-  {
-   "t": "05:18",
-   "ag": "FILTER",
-   "text": "killed GW \u00b7 no/dupe socials",
-   "tone": "red"
-  },
-  {
-   "t": "05:18",
-   "ag": "FILTER",
-   "text": "killed cig \u00b7 copycat",
-   "tone": "red"
-  },
-  {
-   "t": "05:18",
-   "ag": "FILTER",
-   "text": "killed DIP \u00b7 liq < $25k",
-   "tone": "red"
-  },
   {
    "t": "05:18",
    "ag": "FILTER",
@@ -401,16 +359,53 @@
    "ag": "SCOUT",
    "text": "scan \u00b7 1 pairs, 1 new",
    "tone": ""
+  },
+  {
+   "t": "05:19",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 3 pairs, 2 new",
+   "tone": ""
+  },
+  {
+   "t": "05:19",
+   "ag": "FILTER",
+   "text": "killed BTC \u00b7 no/dupe socials",
+   "tone": "red"
+  },
+  {
+   "t": "05:19",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 78 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "05:19",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 1 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "05:19",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 1 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "05:19",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 1 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "05:22",
+   "ag": "LOGGER",
+   "text": "process_pause",
+   "tone": ""
   }
  ],
- "nkills": 103168,
+ "nkills": 103175,
  "mood": "happy",
  "kills_live": [
-  {
-   "t": "05:18:41",
-   "sym": "ead",
-   "reason": "volume_1h"
-  },
   {
    "t": "05:18:41",
    "sym": "LAZARUS",
@@ -465,9 +460,24 @@
    "t": "05:18:41",
    "sym": "CRYINGCAT",
    "reason": "liquidity"
+  },
+  {
+   "t": "05:19:03",
+   "sym": "BTC",
+   "reason": "socials"
   }
  ],
  "watchlist": [
+  {
+   "why": "no or reused socials",
+   "sym": "BTC",
+   "price": 0.000109,
+   "mcap": null,
+   "dex": "pumpswap",
+   "t": "05:19",
+   "ts": 1794057544,
+   "near_miss": true
+  },
   {
    "why": "no or reused socials",
    "sym": "GW",
@@ -557,16 +567,6 @@
    "t": "05:15",
    "ts": 1794057312,
    "near_miss": true
-  },
-  {
-   "why": "sniper wallets",
-   "sym": "Seatbelt",
-   "price": 3.672e-05,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "05:14",
-   "ts": 1794057287,
-   "near_miss": true
   }
  ],
  "reentry_watch": [],
@@ -581,7 +581,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 61609,
+  "scanned": 61614,
   "passed_filters": 9,
   "scored_ok": 7,
   "entry_wait": 9,
@@ -625,8 +625,8 @@
   },
   {
    "h": "05",
-   "scans": 307,
-   "kills": 1931,
+   "scans": 312,
+   "kills": 1938,
    "trades": 0,
    "pnl": 0.0
   },
@@ -758,9 +758,9 @@
   }
  ],
  "agent_activity": {
-  "SCOUT": 107,
-  "FILTER": 767,
-  "LOGGER": 8,
+  "LOGGER": 9,
+  "SCOUT": 98,
+  "FILTER": 717,
   "ANALYST": 1,
   "EXECUTOR": 1
  },
@@ -803,15 +803,15 @@
   "gauge": 48
  },
  "latency": {
-  "scan_s_avg": 15.8,
-  "scan_s_last": 0.1,
+  "scan_s_avg": 0.4,
+  "scan_s_last": 0.0,
   "pos_check_s": 1,
-  "ws_last_event_s": 6
+  "ws_last_event_s": 0
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 62,
+   "ms": 72,
    "err": 0
   },
   "api.geckoterminal.com": {
@@ -826,7 +826,7 @@
   },
   "api.mainnet-beta.solana.com": {
    "ok_rate": 1.0,
-   "ms": 721,
+   "ms": 677,
    "err": 3
   },
   "lite-api.jup.ag": {
@@ -906,8 +906,8 @@
  },
  "speed": {
   "decision_s": {
-   "avg": 7.66,
-   "p90": 0.64,
+   "avg": 7.64,
+   "p90": 0.63,
    "n": 200
   },
   "deep_check_s": {
@@ -924,7 +924,7 @@
    "trained": 0,
    "src": "rules"
   },
-  "paused": null,
+  "paused": "data outage: no DexScreener success in 90s",
   "drift": {
    "alarm": false,
    "note": "needs 20 trades (1)"
@@ -1023,32 +1023,32 @@
   "39 Telegram/X alerts"
  ],
  "fomo_wallet": {
-  "total_usd": 12.31,
+  "total_usd": 12.23,
   "top": [
    {
     "sym": "NIO",
-    "usd": 6.19
+    "usd": 6.14
    },
    {
     "sym": "Alice",
-    "usd": 2.73
+    "usd": 2.69
    },
    {
     "sym": ":3",
     "usd": 2.0
    }
   ],
-  "at": "05:18"
+  "at": "05:19"
  },
  "paper": true,
- "updated_at": "2026-11-07T13:18:58+00:00",
+ "updated_at": "2026-11-07T13:22:32+00:00",
  "heartbeat": {
-  "at": "2026-11-07T13:18:58+00:00",
+  "at": "2026-11-07T13:22:32+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 3,
+  "runner_last_beat_s": 2,
   "pending_entries": 0,
   "live_feed": true,
-  "live_feed_events": 716,
+  "live_feed_events": 724,
   "publish_every_s": 180
  },
  "ryder_events": [
@@ -1193,11 +1193,11 @@
  },
  "skip_tally": {
   "hours": 24,
-  "total": 14206,
+  "total": 14213,
   "buckets": [
    [
     "Volume too low",
-    12236
+    12242
    ],
    [
     "Liquidity too low",
@@ -1205,7 +1205,7 @@
    ],
    [
     "No socials",
-    317
+    318
    ],
    [
     "Copycat / scam name",
