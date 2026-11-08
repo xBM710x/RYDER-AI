@@ -1,0 +1,31 @@
+/* Mac Night Desk: preserve real snapshot data and current working mobile layout. */
+@media(min-width:1200px){
+ body.rv-reference-active main{max-width:1800px!important;padding:12px 18px 36px!important}
+ body.rv-reference-active main>header{min-height:76px!important;padding:9px 14px!important}
+ body.rv-reference-active main>nav{margin:5px 0 10px!important}
+ body.rv-reference-active #rv-reference .rv-top{min-height:64px;margin:3px 0 10px;padding:7px 12px;border:1px solid #a91b39;border-radius:12px;background:linear-gradient(105deg,#1b0710,#090609)}
+ body.rv-reference-active #rv-reference .rv-top h1{font-size:28px;line-height:1.1}
+ body.rv-reference-active #rv-reference .rv-top p{font-size:12px}
+ body.rv-reference-active #rv-reference .rv-kpis{gap:10px;margin-bottom:10px}
+ body.rv-reference-active #rv-reference .rv-kpi{min-height:60px;padding:9px 13px}
+ body.rv-reference-active #rv-reference .rv-kpi strong{font-size:clamp(17px,1.7vw,25px)}
+ body.rv-reference-active #rv-reference .rv-main{grid-template-columns:minmax(0,2.08fr) minmax(320px,.99fr);gap:10px}
+ body.rv-reference-active #rv-reference .rv-left{grid-template-columns:minmax(0,1.88fr) minmax(240px,.88fr);gap:10px}
+ body.rv-reference-active #rv-reference .rv-right,body.rv-reference-active #rv-reference .rv-market{gap:10px}
+ body.rv-reference-active #rv-reference .rv-panel{padding:12px;border-radius:10px}
+ body.rv-reference-active #rv-reference .rv-panel h2{font-size:16px;margin-bottom:9px}
+ body.rv-reference-active #rv-reference .rv-chart{min-height:340px}
+ body.rv-reference-active #rv-reference .rv-chart svg{height:250px;margin-top:9px}
+ body.rv-reference-active #rv-reference .rv-equity{font-size:29px}
+ body.rv-reference-active #rv-reference .rv-bottom{gap:10px;margin-top:10px;grid-template-columns:1.15fr 1fr 1fr}
+ body.rv-reference-active #rv-reference .rv-bottom .rv-panel{min-height:170px}
+ body.rv-reference-active #rv-reference .rv-agent{padding:6px 0;grid-template-columns:10px 65px minmax(0,1fr) auto}
+ body.rv-reference-active #rv-reference .rv-position,body.rv-reference-active #rv-reference .rv-log,body.rv-reference-active #rv-reference .rv-decision{padding:6px 0}
+ body.rv-reference-active #rv-reference .rv-footer{margin-top:10px;padding:10px 12px}
+}
+@media(min-width:1200px) and (max-width:1380px){
+ body.rv-reference-active #rv-reference .rv-main{grid-template-columns:minmax(0,1.9fr) minmax(290px,.9fr)}
+ body.rv-reference-active #rv-reference .rv-left{grid-template-columns:minmax(0,1.5fr) minmax(205px,.9fr)}
+ body.rv-reference-active #rv-reference .rv-agent{grid-template-columns:9px 54px minmax(0,1fr)}
+ body.rv-reference-active #rv-reference .rv-agent small{grid-column:3}
+}
