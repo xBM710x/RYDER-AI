@@ -19,7 +19,7 @@ function draw(){
  const active=!location.hash||location.hash==='#overview'||location.hash==='#balance';
  document.body.classList.toggle('rv-reference-active',active);
  let root=document.getElementById('rv-reference');
- if(!active){if(root)root.hidden=true;return;}
+ if(!active){if(root){root.hidden=true;root.classList.remove('rv-ready');}return;}
  if(!root){root=document.createElement('div');root.id='rv-reference';root.dataset.deskPage='overview';host.prepend(root);}
  root.hidden=false;
  const fresh=age(d)<300000;
@@ -46,9 +46,10 @@ function draw(){
  '<div class="rv-right">'+panel('▱ Open Positions ('+opens.length+')','<div class="rv-position rv-muted"><span>Token</span><span>Entry</span><span>Current</span><span>P&L</span></div>'+positions)+panel('♟ Major Agents',roster,'rv-agents')+'</div></div>'+
  '<div class="rv-bottom">'+panel('⌁ Agent Activity Feed',activity)+panel('◎ Latest Decisions',decisionRows)+panel('≡ System Logger',logs)+'</div>'+
  '<div class="rv-footer"><span>● '+(fresh?'Snapshot fresh':'Snapshot stale')+' · '+esc(d.asof||'Unknown time')+'</span><span>FOMO: '+(fomo?'Verified feed':'Not connected')+' · Paper only · No real orders</span></div>';
+ if(root.querySelector('.rv-chart')&&root.querySelector('.rv-right'))root.classList.add('rv-ready');
 }
 const original=window.ryderNightDeskDraw;
-window.ryderNightDeskDraw=function(){if(typeof original==='function')original();draw();};
+window.ryderNightDeskDraw=function(){try{if(typeof original==='function')original();}finally{try{draw()}catch(e){console.error('RYDER overview fallback:',e);document.getElementById('rv-reference')?.classList.remove('rv-ready');}}};
 document.addEventListener('DOMContentLoaded',()=>{draw();const dash=document.getElementById('dashboard');if(dash){let pending=false;new MutationObserver(()=>{if(pending)return;pending=true;queueMicrotask(()=>{pending=false;const r=document.getElementById('rv-reference');if(!r||!r.isConnected)draw()})}).observe(dash,{childList:true});}window.addEventListener('hashchange',draw);});
-if(document.readyState!=='loading')draw();
+if(document.readyState!=='loading'){try{draw()}catch(e){console.error('RYDER overview initial draw:',e)}}
 })();
