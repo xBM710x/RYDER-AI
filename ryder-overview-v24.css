@@ -1,0 +1,44 @@
+/* RYDER Night Desk screenshot target — overview-only, never changes other tabs */
+body.rv-reference-active{background:#080306!important;color:#f9f1f3}
+body.rv-reference-active main{max-width:1660px!important}
+body.rv-reference-active #dashboard>#rv-reference{display:block!important}
+body.rv-reference-active #dashboard>*:not(#rv-reference){display:none!important}
+#rv-reference{font-family:inherit;color:#f8eff2;line-height:1.4}
+#rv-reference *{box-sizing:border-box}
+#rv-reference .rv-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:8px 0 14px}
+#rv-reference h1{font-size:clamp(24px,3vw,34px);margin:0;color:#fff}
+#rv-reference .rv-top p{color:#b9a6ad;margin:2px 0}
+#rv-reference .rv-fresh{color:#20dd74}#rv-reference .rv-stale{color:#ffbc63}
+#rv-reference .rv-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:12px}
+#rv-reference .rv-kpi,#rv-reference .rv-panel,#rv-reference .rv-footer{border:1px solid #b71b37;border-radius:12px;background:linear-gradient(130deg,#1a070e,#080609 70%);box-shadow:0 0 13px #b7183433,inset 0 0 12px #bb14300c}
+#rv-reference .rv-kpi{padding:11px 16px;min-width:0}
+#rv-reference .rv-kpi span{display:block;color:#a9a1a5;font-size:12px}
+#rv-reference .rv-kpi strong{display:block;font-size:clamp(17px,2.3vw,26px);color:#fff;overflow-wrap:anywhere}
+#rv-reference .rv-main{display:grid;grid-template-columns:minmax(0,2fr) minmax(310px,1fr);gap:12px}
+#rv-reference .rv-left{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(230px,.85fr);gap:12px}
+#rv-reference .rv-right,#rv-reference .rv-market{display:flex;flex-direction:column;gap:12px;min-width:0}
+#rv-reference .rv-panel{padding:16px;min-width:0}
+#rv-reference .rv-panel h2{font-size:clamp(15px,1.5vw,19px);color:#fff;margin:0 0 13px;font-weight:800}
+#rv-reference .rv-chart{min-height:370px}
+#rv-reference .rv-chart svg{width:100%;height:250px;display:block;margin-top:14px}
+#rv-reference .rv-equity{font-size:clamp(23px,3vw,35px);font-weight:850}
+#rv-reference .rv-axis{display:flex;justify-content:space-between;font-size:10px;color:#ad9ba1;gap:5px}
+#rv-reference .rv-line,#rv-reference .rv-position,#rv-reference .rv-agent,#rv-reference .rv-log,#rv-reference .rv-decision{display:grid;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #662033;font-size:12px}
+#rv-reference .rv-line{grid-template-columns:minmax(0,1fr) auto}
+#rv-reference .rv-line b{color:#21d87a}
+#rv-reference .rv-position{grid-template-columns:1fr 1fr 1fr 1fr}
+#rv-reference .rv-position>*{min-width:0;overflow-wrap:anywhere}
+#rv-reference .rv-muted{color:#a89ca1}
+#rv-reference .rv-agent{grid-template-columns:10px 65px minmax(0,1fr) auto}
+#rv-reference .rv-agent small{font-size:9px;color:#26d16f}
+#rv-reference .rv-dot{width:9px;height:9px;background:#13cb5a;border-radius:50%;box-shadow:0 0 8px #13cb5a}
+#rv-reference .rv-green{color:#16e777}#rv-reference .rv-red{color:#ff4e6a}
+#rv-reference .rv-bottom{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:12px;margin-top:12px}
+#rv-reference .rv-log{grid-template-columns:65px minmax(0,1fr)}
+#rv-reference .rv-log b{color:#ff5475}
+#rv-reference .rv-decision{grid-template-columns:1fr 65px 1.5fr}
+#rv-reference .rv-decision b{color:#24d977}
+#rv-reference .rv-empty{font-size:12px;color:#a89ca4;line-height:1.6}
+#rv-reference .rv-footer{margin-top:12px;padding:12px 16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11px;color:#bdb0b5}
+@media(max-width:1150px){#rv-reference .rv-main{grid-template-columns:1fr}#rv-reference .rv-right{display:grid;grid-template-columns:1fr 1fr}#rv-reference .rv-bottom{grid-template-columns:1fr 1fr}#rv-reference .rv-bottom>.rv-panel:last-child{grid-column:1/-1}}
+@media(max-width:720px){#rv-reference .rv-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}#rv-reference .rv-left,#rv-reference .rv-right,#rv-reference .rv-bottom{display:grid;grid-template-columns:1fr}#rv-reference .rv-bottom>.rv-panel:last-child{grid-column:auto}#rv-reference .rv-chart{min-height:300px}#rv-reference .rv-chart svg{height:200px}#rv-reference .rv-top{align-items:flex-start;flex-direction:column}#rv-reference .rv-agent{grid-template-columns:10px 60px minmax(0,1fr)}#rv-reference .rv-agent small{grid-column:3}}
