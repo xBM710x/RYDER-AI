@@ -1,0 +1,51 @@
+/* PR26: target screenshot proportions and iPhone safe-area repair. */
+body.rv-reference-active main{padding-top:max(16px,env(safe-area-inset-top))!important}
+body.rv-reference-active #dashboard{overflow:visible}
+body.rv-reference-active #rv-reference .rv-top{position:relative;z-index:1;min-height:58px}
+body.rv-reference-active #rv-reference .rv-main{grid-template-columns:minmax(0,2.08fr) minmax(310px,1fr);align-items:stretch}
+body.rv-reference-active #rv-reference .rv-left{grid-template-columns:minmax(0,1.85fr) minmax(220px,.85fr)}
+body.rv-reference-active #rv-reference .rv-chart{min-height:340px}
+body.rv-reference-active #rv-reference .rv-chart svg{height:250px}
+body.rv-reference-active #rv-reference .rv-panel{padding:14px}
+body.rv-reference-active #rv-reference .rv-bottom{grid-template-columns:1.15fr 1fr 1fr}
+body.rv-reference-active #rv-reference .rv-agent{grid-template-columns:10px 65px minmax(0,1fr) auto}
+body.rv-reference-active #rv-reference .rv-position{font-variant-numeric:tabular-nums}
+body.rv-reference-active #rv-reference .rv-kpi{min-height:74px}
+body.rv-reference-active #rv-reference .rv-fresh,body.rv-reference-active #rv-reference .rv-stale{font-size:12px;white-space:nowrap}
+@media(min-width:1200px){
+ body.rv-reference-active #rv-reference .rv-market .rv-panel{flex:1}
+ body.rv-reference-active #rv-reference .rv-right .rv-agents{flex:1}
+}
+@media(max-width:1199px){
+ body.rv-reference-active #rv-reference .rv-main{grid-template-columns:1fr}
+ body.rv-reference-active #rv-reference .rv-left{grid-template-columns:minmax(0,1.7fr) minmax(220px,.9fr)}
+ body.rv-reference-active #rv-reference .rv-right{display:grid;grid-template-columns:1fr 1fr}
+}
+@media(max-width:720px){
+ body.rv-reference-active main{padding-left:12px!important;padding-right:12px!important;padding-top:max(22px,env(safe-area-inset-top))!important}
+ body.rv-reference-active #rv-reference .rv-top{padding:4px 0;min-height:0;display:flex;flex-direction:row;align-items:center;flex-wrap:wrap;gap:6px}
+ body.rv-reference-active #rv-reference .rv-top h1{font-size:22px}
+ body.rv-reference-active #rv-reference .rv-top p{font-size:11px}
+ body.rv-reference-active #rv-reference .rv-fresh,body.rv-reference-active #rv-reference .rv-stale{font-size:10px;margin-left:auto}
+ body.rv-reference-active #rv-reference .rv-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ body.rv-reference-active #rv-reference .rv-kpi{min-height:65px;padding:10px}
+ body.rv-reference-active #rv-reference .rv-kpi span{font-size:10px;letter-spacing:.2px}
+ body.rv-reference-active #rv-reference .rv-kpi strong{font-size:19px}
+ body.rv-reference-active #rv-reference .rv-main,
+ body.rv-reference-active #rv-reference .rv-left,
+ body.rv-reference-active #rv-reference .rv-right,
+ body.rv-reference-active #rv-reference .rv-bottom{display:grid;grid-template-columns:minmax(0,1fr);gap:9px}
+ body.rv-reference-active #rv-reference .rv-chart{min-height:0}
+ body.rv-reference-active #rv-reference .rv-chart svg{height:165px;margin-top:7px}
+ body.rv-reference-active #rv-reference .rv-panel{padding:12px}
+ body.rv-reference-active #rv-reference .rv-panel h2{font-size:16px;margin-bottom:7px}
+ body.rv-reference-active #rv-reference .rv-equity{font-size:25px}
+ body.rv-reference-active #rv-reference .rv-bottom{margin-top:9px}
+ body.rv-reference-active #rv-reference .rv-line,
+ body.rv-reference-active #rv-reference .rv-position,
+ body.rv-reference-active #rv-reference .rv-agent,
+ body.rv-reference-active #rv-reference .rv-log,
+ body.rv-reference-active #rv-reference .rv-decision{font-size:11px;padding:6px 0}
+ body.rv-reference-active #rv-reference .rv-axis{font-size:9px}
+ body.rv-reference-active #rv-reference .rv-footer{font-size:10px}
+}
