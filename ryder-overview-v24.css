@@ -1,8 +1,8 @@
 /* RYDER Night Desk screenshot target — overview-only, never changes other tabs */
 body.rv-reference-active{background:#080306!important;color:#f9f1f3}
 body.rv-reference-active main{max-width:1660px!important}
-body.rv-reference-active #dashboard>#rv-reference{display:block!important}
-body.rv-reference-active #dashboard>*:not(#rv-reference){display:none!important}
+body.rv-reference-active #dashboard>#rv-reference.rv-ready:not([hidden]){display:block!important}
+body.rv-reference-active #dashboard:has(#rv-reference.rv-ready:not([hidden]))>*:not(#rv-reference){display:none!important}
 #rv-reference{font-family:inherit;color:#f8eff2;line-height:1.4}
 #rv-reference *{box-sizing:border-box}
 #rv-reference .rv-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:8px 0 14px}
@@ -42,3 +42,7 @@ body.rv-reference-active #dashboard>*:not(#rv-reference){display:none!important}
 #rv-reference .rv-footer{margin-top:12px;padding:12px 16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11px;color:#bdb0b5}
 @media(max-width:1150px){#rv-reference .rv-main{grid-template-columns:1fr}#rv-reference .rv-right{display:grid;grid-template-columns:1fr 1fr}#rv-reference .rv-bottom{grid-template-columns:1fr 1fr}#rv-reference .rv-bottom>.rv-panel:last-child{grid-column:1/-1}}
 @media(max-width:720px){#rv-reference .rv-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}#rv-reference .rv-left,#rv-reference .rv-right,#rv-reference .rv-bottom{display:grid;grid-template-columns:1fr}#rv-reference .rv-bottom>.rv-panel:last-child{grid-column:auto}#rv-reference .rv-chart{min-height:300px}#rv-reference .rv-chart svg{height:200px}#rv-reference .rv-top{align-items:flex-start;flex-direction:column}#rv-reference .rv-agent{grid-template-columns:10px 60px minmax(0,1fr)}#rv-reference .rv-agent small{grid-column:3}}
+
+/* Fail-safe: when v24 has not rendered, show the preexisting Overview. */
+body.rv-reference-active #dashboard:not(:has(#rv-reference.rv-ready:not([hidden])))>#nd-reference{display:block!important}
+#rv-reference[hidden]{display:none!important}
