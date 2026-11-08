@@ -1,0 +1,23 @@
+name: RYDER dual intelligence tests
+on:
+  push:
+    branches: [feature/ryder-dual-intelligence]
+  pull_request:
+    paths:
+      - 'bot/dual_intelligence.py'
+      - 'bot/copy_intelligence.py'
+      - 'bot/test_dual_intelligence.py'
+      - 'bot/test_copy_intelligence.py'
+      - '.github/workflows/dual-intelligence.yml'
+jobs:
+  paper-safety:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run offline dual-intelligence tests
+        run: |
+          cd bot
+          python -m unittest -v test_dual_intelligence test_copy_intelligence
