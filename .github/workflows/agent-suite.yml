@@ -1,0 +1,19 @@
+name: RYDER specialist agents
+on:
+  push:
+    branches: [feature/ryder-agent-suite-28]
+  pull_request:
+    paths:
+      - 'bot/agent_suite.py'
+      - 'bot/test_agent_suite.py'
+      - '.github/workflows/agent-suite.yml'
+jobs:
+  offline-paper-safety:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Specialist-agent unit tests
+        run: cd bot && python -m unittest -v test_agent_suite test_dual_intelligence test_copy_intelligence test_dual_telemetry
