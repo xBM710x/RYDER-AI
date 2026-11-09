@@ -1,0 +1,17 @@
+name: RYDER agent coordination
+on:
+  pull_request:
+    paths:
+      - 'bot/agent_coordination.py'
+      - 'bot/test_agent_coordination.py'
+      - 'bot/agent_suite.py'
+      - '.github/workflows/agent-coordination.yml'
+jobs:
+  paper-only:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: cd bot && python -m unittest -v test_agent_coordination test_agent_suite
