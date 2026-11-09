@@ -1,0 +1,19 @@
+name: RYDER coordination runtime
+on:
+  pull_request:
+    paths:
+      - 'bot/coordination_runtime.py'
+      - 'bot/test_coordination_runtime.py'
+      - 'bot/runner.py'
+      - 'bot/publish.py'
+      - '.github/workflows/coordination-runtime.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m py_compile bot/runner.py bot/publish.py bot/coordination_runtime.py
+      - run: cd bot && python -m unittest -v test_coordination_runtime test_agent_coordination test_agent_publish
