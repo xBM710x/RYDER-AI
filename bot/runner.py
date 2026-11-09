@@ -490,6 +490,8 @@ def state():
         from agent_runtime import runtime_agents, policy_status
         payload["specialist_agents"] = runtime_agents(payload)
         payload["specialist_policy"] = policy_status()
+        from coordination_runtime import coordination_from_runtime
+        payload["coordination"] = coordination_from_runtime(payload, payload.get("ts", 0))
     except Exception as exc:
         payload["specialist_agents"] = {"paper_only": True, "status": "unavailable",
                                         "error": type(exc).__name__}

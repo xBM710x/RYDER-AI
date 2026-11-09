@@ -31,6 +31,23 @@ def build():
     except Exception:
         d["specialist_agents"] = {"paper_only": True, "status": "unavailable",
                                    "agents": [], "activity": []}
+    # Coordinator output is read-only and only published with a fresh heartbeat.
+    try:
+        if age is not None and 0 <= age < 120:
+            raw = hb.get("coordination") or {}
+            rows = raw.get("decisions") or []
+            d["coordination"] = {"paper_only": True, "status": raw.get("status", "unavailable"),
+                                  "decisions": [
+                                      {"token": str(x.get("token") or "")[:48],
+                                       "action": "SKIP",
+                                       "reason": str(x.get("reason") or "")[:160],
+                                       "paper_only": True}
+                                      for x in rows[:12] if isinstance(x, dict)
+                                      and x.get("paper_only") is True and x.get("action") == "SKIP"]}
+        else:
+            d["coordination"] = {"paper_only": True, "status": "heartbeat_stale", "decisions": []}
+    except Exception:
+        d["coordination"] = {"paper_only": True, "status": "unavailable", "decisions": []}
     try: d["ryder_events"] = ryder_events()
     except Exception: d["ryder_events"] = []
     try: d["trade_quality"] = __import__("brain15").quality()  # data only (no panel): expectancy, profit factor, drawdown per desk
