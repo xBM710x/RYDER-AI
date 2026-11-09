@@ -1,0 +1,43 @@
+name: RYDER Night Desk integration checks
+on:
+  pull_request:
+    paths:
+      - 'bot/publish.py'
+      - 'bot/agent_publish.py'
+      - 'bot/agent_runtime.py'
+      - 'bot/runner.py'
+      - 'bot/test_agent_publish.py'
+      - 'ryder-overview-v24.js'
+      - 'app.js'
+      - 'index.html'
+      - '.github/workflows/night-desk-integration.yml'
+jobs:
+  python-safety:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Python syntax
+        run: python -m py_compile bot/runner.py bot/publish.py bot/agent_runtime.py bot/agent_suite.py
+      - name: Available agent tests
+        run: |
+          cd bot
+          python -m unittest -v test_agent_runtime test_agent_suite
+          if [ -f test_agent_publish.py ]; then python -m unittest -v test_agent_publish; fi
+  browser-syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: |
+          node --check app.js
+          node --check ryder-overview-v24.js
+      - name: Snapshot event contract
+        run: |
+          grep -q 'ryder:snapshot' app.js
+          grep -q 'ryder:snapshot' ryder-overview-v24.js
