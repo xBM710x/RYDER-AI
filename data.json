@@ -48,12 +48,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Nov 07 06:59 PT",
+ "asof": "Nov 08 22:43 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 16171,
- "seen": 62336,
+ "scans": 16172,
+ "seen": 62372,
  "passed": 10,
  "trades": 1,
  "wins": 1,
@@ -91,15 +91,15 @@
  "by_dex": [
   [
    "pumpfun",
-   53004
+   53034
   ],
   [
    "meteora",
-   4331
+   4334
   ],
   [
    "pumpswap",
-   3456
+   3457
   ],
   [
    "other/unknown",
@@ -107,7 +107,7 @@
   ],
   [
    "letsbonk",
-   485
+   487
   ],
   [
    "raydium",
@@ -125,7 +125,7 @@
  "kills": [
   [
    "volume_1h",
-   89267
+   89305
   ],
   [
    "liquidity",
@@ -254,7 +254,7 @@
    "v": 302.4
   },
   {
-   "t": "06:59",
+   "t": "22:43",
    "v": 302.4
   }
  ],
@@ -276,14 +276,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "62336 pairs",
-   "text": "scan \u00b7 2 pairs, 2 new",
+   "stat": "62372 pairs",
+   "text": "scan \u00b7 82 pairs, 36 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed debtdog \u00b7 1h vol < $40k",
+   "text": "killed Duge / SOL \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -306,18 +306,12 @@
   },
   {
    "name": "Logger",
-   "stat": "104436 why",
-   "text": "wrote 104436 reasons",
+   "stat": "104474 why",
+   "text": "wrote 104474 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "06:56",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
   {
    "t": "06:56",
    "ag": "SCOUT",
@@ -401,9 +395,15 @@
    "ag": "LOGGER",
    "text": "process_pause",
    "tone": ""
+  },
+  {
+   "t": "22:43",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 82 pairs, 36 new",
+   "tone": ""
   }
  ],
- "nkills": 104436,
+ "nkills": 104474,
  "mood": "sleepy",
  "kills_live": [
   {
@@ -467,108 +467,7 @@
    "reason": "lp_locked"
   }
  ],
- "watchlist": [
-  {
-   "why": "no or reused socials",
-   "sym": "TRUMPCOIN",
-   "price": 8.513e-06,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "06:59",
-   "ts": 1794063556,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "Koop",
-   "price": 2.019e-05,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "06:59",
-   "ts": 1794063556,
-   "near_miss": true
-  },
-  {
-   "why": "LP not locked",
-   "sym": "DUGE",
-   "price": 0.0002289,
-   "mcap": null,
-   "dex": "raydium",
-   "t": "06:57",
-   "ts": 1794063442,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "TRUMPCOIN",
-   "price": 5.687e-05,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "06:57",
-   "ts": 1794063440,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "Koop",
-   "price": 2.025e-05,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "06:57",
-   "ts": 1794063440,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "Cocada",
-   "price": 1.247e-05,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "06:57",
-   "ts": 1794063440,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "SN",
-   "price": 1.38e-05,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "06:56",
-   "ts": 1794063373,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "Plexnin",
-   "price": 0.1195,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "06:56",
-   "ts": 1794063373,
-   "near_miss": true
-  },
-  {
-   "why": "LP not locked",
-   "sym": "SAFU",
-   "price": 2.332e-05,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "06:55",
-   "ts": 1794063331,
-   "near_miss": true
-  },
-  {
-   "why": "liquidity too low / unknown",
-   "sym": "loot",
-   "price": 1.069e-05,
-   "mcap": null,
-   "dex": "pumpfun",
-   "t": "06:55",
-   "ts": 1794063316,
-   "near_miss": true
-  }
- ],
+ "watchlist": [],
  "reentry_watch": [],
  "risk_state": {
   "day_pnl": 0,
@@ -581,7 +480,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 62336,
+  "scanned": 62372,
   "passed_filters": 10,
   "scored_ok": 8,
   "entry_wait": 10,
@@ -744,8 +643,8 @@
   },
   {
    "h": "22",
-   "scans": 533,
-   "kills": 4211,
+   "scans": 534,
+   "kills": 4249,
    "trades": 0,
    "pnl": 0.0
   },
@@ -758,9 +657,8 @@
   }
  ],
  "agent_activity": {
-  "LOGGER": 17,
-  "SCOUT": 132,
-  "FILTER": 854
+  "SCOUT": 1,
+  "FILTER": 38
  },
  "rug_list": {
   "count": 88,
@@ -1016,106 +914,27 @@
   "39 Telegram/X alerts"
  ],
  "fomo_wallet": {
-  "total_usd": 10.21,
+  "total_usd": 58.45,
   "top": [
    {
-    "sym": "NIO",
-    "usd": 5.6
-   },
-   {
-    "sym": "Alice",
-    "usd": 1.88
-   },
-   {
-    "sym": ":3",
-    "usd": 1.37
+    "sym": "KATE",
+    "usd": 57.23
    }
   ],
-  "at": "06:59"
+  "at": "22:43"
  },
  "paper": true,
- "updated_at": "2026-11-07T14:59:17+00:00",
+ "updated_at": "2026-11-09T06:43:24+00:00",
  "heartbeat": {
-  "at": "2026-11-07T14:59:17+00:00",
-  "runner_alive": true,
-  "runner_last_beat_s": 13,
+  "at": "2026-11-09T06:43:24+00:00",
+  "runner_alive": false,
+  "runner_last_beat_s": 143060,
   "pending_entries": 0,
   "live_feed": false,
   "live_feed_events": 74,
   "publish_every_s": 180
  },
- "ryder_events": [
-  {
-   "id": 122907,
-   "t": 1794063051,
-   "kind": "rug_dodged",
-   "sym": "debtdog",
-   "reason": "bundle_sizes"
-  },
-  {
-   "id": 122908,
-   "t": 1794063052,
-   "kind": "rug_dodged",
-   "sym": "SHANE",
-   "reason": "sniper_wallets"
-  },
-  {
-   "id": 122912,
-   "t": 1794063057,
-   "kind": "rug_dodged",
-   "sym": "scamsem",
-   "reason": "bundle_sizes"
-  },
-  {
-   "id": 123016,
-   "t": 1794063183,
-   "kind": "rug_dodged",
-   "sym": "SN",
-   "reason": "lp_locked"
-  },
-  {
-   "id": 123119,
-   "t": 1794063331,
-   "kind": "rug_dodged",
-   "sym": "SAFU",
-   "reason": "lp_locked"
-  },
-  {
-   "id": 123132,
-   "t": 1794063373,
-   "kind": "rug_dodged",
-   "sym": "debtdog",
-   "reason": "copycat"
-  },
-  {
-   "id": 123181,
-   "t": 1794063375,
-   "kind": "rug_dodged",
-   "sym": "GM",
-   "reason": "lp_locked"
-  },
-  {
-   "id": 123202,
-   "t": 1794063440,
-   "kind": "rug_dodged",
-   "sym": "SHANE",
-   "reason": "copycat"
-  },
-  {
-   "id": 123252,
-   "t": 1794063442,
-   "kind": "rug_dodged",
-   "sym": "DUGE",
-   "reason": "lp_locked"
-  },
-  {
-   "id": 123270,
-   "t": 1794063556,
-   "kind": "rug_dodged",
-   "sym": "Duge",
-   "reason": "copycat"
-  }
- ],
+ "ryder_events": [],
  "trade_quality": {
   "v1": {
    "n": 3,
@@ -1165,35 +984,35 @@
  },
  "skip_tally": {
   "hours": 24,
-  "total": 14310,
+  "total": 38,
   "buckets": [
    [
     "Volume too low",
-    12263
+    38
    ],
    [
     "Liquidity too low",
-    1420
+    0
    ],
    [
     "No socials",
-    334
+    0
    ],
    [
     "Copycat / scam name",
-    135
+    0
    ],
    [
     "LP not locked",
-    71
+    0
    ],
    [
     "Bundled / top holders",
-    65
+    0
    ],
    [
     "Dev / contract risk",
-    6
+    0
    ],
    [
     "Wallet sold early",
@@ -1201,7 +1020,7 @@
    ],
    [
     "Other checks",
-    16
+    0
    ]
   ],
   "best": null,
@@ -1296,7 +1115,7 @@
   "trades": 5,
   "wins": 1,
   "open": 0,
-  "today": "2026-11-07",
+  "today": "2026-11-08",
   "days": {
    "2026-10-29": {
     "pnl": -11.1,
