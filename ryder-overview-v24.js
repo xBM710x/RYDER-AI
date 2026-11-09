@@ -30,7 +30,8 @@ function draw(){
  const agents=liveAgents.length?liveAgents.map(a=>({name:a.name,text:(a.detail||'')+' · '+(a.evidence?'evidence present':a.status||'unavailable'),state:a.status||'unknown'})):(Array.isArray(d.agents)?d.agents:[]);
  const specialistEvents=Array.isArray(d.specialist_agents?.activity)?d.specialist_agents.activity:[];
  const events=specialistEvents.length?specialistEvents.map(e=>({ag:e.agent,text:e.token+' '+e.decision+' · '+e.reason})):(Array.isArray(d.tail)?d.tail:[]);
- const decisions=Array.isArray(d.dual_intelligence?.decisions)?d.dual_intelligence.decisions:[];
+ const observedCoordination=Array.isArray(d.coordination?.decisions)?d.coordination.decisions:[];
+ const decisions=observedCoordination.length?observedCoordination.map(e=>({mint:e.token,decision:e.action,reason:e.reason})):(Array.isArray(d.dual_intelligence?.decisions)?d.dual_intelligence.decisions:[]);
  const fomo=d.fomo_intelligence&&d.fomo_intelligence.source_verified===true?d.fomo_intelligence:null;
  const kpi=(name,value)=>'<div class="rv-kpi"><span>'+name+'</span><strong>'+esc(value)+'</strong></div>';
  const equity=fmt(d.equity),pnl=Number.isFinite(d.realized)?(d.realized>=0?'+':'−')+fmt(Math.abs(d.realized)):'—';
@@ -40,7 +41,7 @@ function draw(){
  const positions=opens.length?opens.slice(0,6).map(p=>'<div class="rv-position"><b>'+esc(p.sym)+'</b><span>'+esc(fmt(p.entry))+'</span><span>'+esc(fmt(p.now))+'</span><b class="'+(p.pnl>=0?'rv-green':'rv-red')+'">'+esc((p.pnl>=0?'+':'')+fmt(p.pnl))+'</b></div>').join(''):'<p class="rv-empty">No open paper positions</p>';
  const roster=agents.length?agents.slice(0,8).map(a=>'<div class="rv-agent"><span class="rv-dot"></span><b>'+esc(a.name)+'</b><span>'+esc(a.text||a.stat||'No recent report')+'</span><small>'+esc(!fresh?'STALE':(a.state||'SNAPSHOT'))+'</small></div>').join('') :'<p class="rv-empty">No agent reports in snapshot</p>';
  const activity=events.length?events.slice(-8).reverse().map(e=>'<div class="rv-log"><b>'+esc(e.ag||'BOT')+'</b><span>'+esc(e.text||'Event recorded')+'</span></div>').join(''):'<p class="rv-empty">No recorded agent events</p>';
- const decisionRows=decisions.length?decisions.slice(-7).reverse().map(e=>'<div class="rv-decision"><span>'+esc(e.mint?.slice(0,12)||'—')+'</span><b>'+esc(e.decision)+'</b><span>'+esc(e.reason||'—')+'</span></div>').join(''):'<p class="rv-empty">Dual-intelligence decisions not published yet</p>';
+ const decisionRows=decisions.length?decisions.slice(-7).reverse().map(e=>'<div class="rv-decision"><span>'+esc(e.mint?.slice(0,12)||'—')+'</span><b>'+esc(e.decision)+'</b><span>'+esc(e.reason||'—')+'</span></div>').join('') :'<p class="rv-empty">No verified coordination decisions published yet</p>';
  const kills=Array.isArray(d.kills)?d.kills.slice(0,5):[];
  const logs=kills.length?kills.map(k=>'<div class="rv-log"><b>SKIP</b><span>'+esc(k[0])+': '+esc(val(k[1]))+' filtered</span></div>').join(''):'<p class="rv-empty">No skip summary available</p>';
  root.innerHTML='<div class="rv-top"><div><h1>⊕ Overview</h1><p>Market Intelligence · FOMO · Agents · Paper Trading</p></div><span class="'+(fresh?'rv-fresh':'rv-stale')+'">'+status+'</span></div>'+
