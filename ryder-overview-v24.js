@@ -13,8 +13,9 @@ function chart(d){
  let line=pts.map((q,i)=>(i?'L':'M')+q.join(',')).join(' ');
  return '<svg viewBox="0 0 600 220" preserveAspectRatio="none" role="img" aria-label="Recorded paper equity chart"><defs><linearGradient id="rvFill" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#f52a4b" stop-opacity=".45"/><stop offset="1" stop-color="#f52a4b" stop-opacity=".02"/></linearGradient></defs>'+[0,1,2,3,4].map(i=>'<line x1="0" x2="600" y1="'+(i*50+5)+'" y2="'+(i*50+5)+'" stroke="#722332" stroke-opacity=".45"/>').join('')+'<path d="'+line+' L600 220 L0 220Z" fill="url(#rvFill)"/><path d="'+line+'" stroke="#ff3556" stroke-width="3" fill="none"/></svg><div class="rv-axis"><span>'+esc(p[0].t)+'</span><span>RECORDED PAPER EQUITY</span><span>'+esc(p.at(-1).t)+'</span></div>';
 }
+let latestSnapshot=null;
 function draw(){
- const d=typeof data==='undefined'?null:data, host=document.getElementById('dashboard');
+ const d=latestSnapshot, host=document.getElementById('dashboard');
  if(!d||!host)return;
  const active=!location.hash||location.hash==='#overview'||location.hash==='#balance';
  document.body.classList.toggle('rv-reference-active',active);
@@ -24,8 +25,10 @@ function draw(){
  root.hidden=false;
  const fresh=age(d)<300000;
  const opens=Array.isArray(d.opens)?d.opens:[];
- const agents=Array.isArray(d.agents)?d.agents:[];
- const events=Array.isArray(d.tail)?d.tail:[];
+ const liveAgents=Array.isArray(d.specialist_agents?.agents)?d.specialist_agents.agents:[];
+ const agents=liveAgents.length?liveAgents.map(a=>({name:a.name,text:a.detail+' · '+(a.evidence?'reported':a.status)})):(Array.isArray(d.agents)?d.agents:[]);
+ const specialistEvents=Array.isArray(d.specialist_agents?.activity)?d.specialist_agents.activity:[];
+ const events=specialistEvents.length?specialistEvents.map(e=>({ag:e.agent,text:e.token+' '+e.decision+' · '+e.reason})):(Array.isArray(d.tail)?d.tail:[]);
  const decisions=Array.isArray(d.dual_intelligence?.decisions)?d.dual_intelligence.decisions:[];
  const fomo=d.fomo_intelligence&&d.fomo_intelligence.source_verified===true?d.fomo_intelligence:null;
  const kpi=(name,value)=>'<div class="rv-kpi"><span>'+name+'</span><strong>'+esc(value)+'</strong></div>';
@@ -50,6 +53,7 @@ function draw(){
 }
 const original=window.ryderNightDeskDraw;
 window.ryderNightDeskDraw=function(){try{if(typeof original==='function')original();}finally{try{draw()}catch(e){console.error('RYDER overview fallback:',e);document.getElementById('rv-reference')?.classList.remove('rv-ready');}}};
+window.addEventListener('ryder:snapshot',event=>{if(event.detail&&typeof event.detail==='object'){latestSnapshot=event.detail;try{draw()}catch(e){console.error('RYDER snapshot render failed',e);document.getElementById('rv-reference')?.classList.remove('rv-ready');}}});
 document.addEventListener('DOMContentLoaded',()=>{draw();const dash=document.getElementById('dashboard');if(dash){let pending=false;new MutationObserver(()=>{if(pending)return;pending=true;queueMicrotask(()=>{pending=false;const r=document.getElementById('rv-reference');if(!r||!r.isConnected)draw()})}).observe(dash,{childList:true});}window.addEventListener('hashchange',draw);});
 if(document.readyState!=='loading'){try{draw()}catch(e){console.error('RYDER overview initial draw:',e)}}
 })();
