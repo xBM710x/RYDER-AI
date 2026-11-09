@@ -470,7 +470,7 @@ def jobs(k):
     lt = time.localtime()
     if lt.tm_hour == 3 and lt.tm_min == 0 and k % 60 == 0: brain.nightly()
     if lt.tm_wday == 6 and lt.tm_hour == 8 and lt.tm_min == 0 and k % 60 == 0: brain.weekly_report()
-def state():
+def _base_state():
     from common import HEALTH
     now = time.time()
     return dict(ts=now,decision_ops_release=ops.RELEASE,ranked_opportunities=list(RANKED_OPPORTUNITIES),decision_ops_worker=dict(ops.STATS,alive=bool(ops.THREAD and ops.THREAD.is_alive())),intelligence_release=intelligence.RELEASE,strategy_release="strategy-desk-1",volume_followups=vr.FOLLOW.status(), strategy_watch=vr.FOLLOW.watch(time.time()), pending=len(PENDING), ws=feed.STATS, market_breadth=__import__("market_breadth").INSTANCE.status(), scan_scheduler=dict(scan_queue.status(),rest=scout.WORKER.status()), capacity_worker=bool(__import__("capacity_lab")._THREAD and __import__("capacity_lab")._THREAD.is_alive()), capacity_stats=dict(__import__("capacity_lab").STATS),
@@ -483,6 +483,18 @@ def state():
         latency=dict(scan_s_avg=round(sum(LAT) / len(LAT), 1) if LAT else None, scan_s_last=LAT[-1] if LAT else None, pos_check_s=CFG["POS_SEC"],
                      ws_last_event_s=round(now - feed.STATS["last"]) if feed.STATS.get("last") else None),
         sources={h: dict(v, ok_rate=round(v["ok"] / max(1, v["ok"] + v["err"]), 2)) for h, v in HEALTH.items()})
+def state():
+    """Existing runner heartbeat plus optional read-only specialist telemetry."""
+    payload = _base_state()
+    try:
+        from agent_runtime import runtime_agents, policy_status
+        payload["specialist_agents"] = runtime_agents(payload)
+        payload["specialist_policy"] = policy_status()
+    except Exception as exc:
+        payload["specialist_agents"] = {"paper_only": True, "status": "unavailable",
+                                        "error": type(exc).__name__}
+    return payload
+
 def main(cycles=None):
     if CFG["VERSION"] not in ("v1", "v2"): CFG["MIN_LIQ"] = brain2.BRAIN["thresholds"]["min_liq"]  # 145 self-tuned Filter threshold
     if CFG["VERSION"] not in ("v1", "v2"): CFG["MIN_VOL_H1"] = brain2.BRAIN["thresholds"].get("min_vol_h1", CFG["MIN_VOL_H1"])  # 181
