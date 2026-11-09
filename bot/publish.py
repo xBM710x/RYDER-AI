@@ -23,6 +23,14 @@ def build():
     d["heartbeat"] = dict(at=d["updated_at"], runner_alive=age is not None and age < 120, runner_last_beat_s=age,
                           pending_entries=hb.get("pending"), live_feed=bool((hb.get("ws") or {}).get("connected")),
                           live_feed_events=(hb.get("ws") or {}).get("events"), publish_every_s=INTERVAL)
+    # Publish only fresh, paper-only, already-observed runner evidence.
+    # Never mark X/FOMO/notification integrations connected by inference.
+    try:
+        from agent_publish import sanitize_heartbeat_agents
+        d["specialist_agents"] = sanitize_heartbeat_agents(hb, now=time.time())
+    except Exception:
+        d["specialist_agents"] = {"paper_only": True, "status": "unavailable",
+                                   "agents": [], "activity": []}
     try: d["ryder_events"] = ryder_events()
     except Exception: d["ryder_events"] = []
     try: d["trade_quality"] = __import__("brain15").quality()  # data only (no panel): expectancy, profit factor, drawdown per desk
