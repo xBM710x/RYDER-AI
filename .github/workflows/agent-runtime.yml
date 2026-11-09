@@ -1,0 +1,23 @@
+name: RYDER agent runtime integration
+on:
+  push:
+    branches: [feature/ryder-agent-runtime-29]
+  pull_request:
+    paths:
+      - 'bot/agent_runtime.py'
+      - 'bot/runner.py'
+      - 'bot/test_agent_runtime.py'
+      - '.github/workflows/agent-runtime.yml'
+jobs:
+  offline-paper:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile integration and run isolated tests
+        run: |
+          python -m py_compile bot/runner.py bot/agent_runtime.py
+          cd bot
+          python -m unittest -v test_agent_runtime test_agent_suite test_dual_intelligence test_copy_intelligence test_dual_telemetry
