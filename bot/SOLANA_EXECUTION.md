@@ -51,3 +51,32 @@ recipient/spend/fee checks and simulation balance-delta checks are still missing
 `authorized_to_sign` and `live_ready` remain false, including after simulation
 success. Routes using sponsored fee payers, extra signers, or v1 are currently
 unsupported. This does not add Phantom auto-approval or unattended trading.
+
+## Persistent budget reservations
+
+`execution_budget.Budget` is a standalone SQLite ledger for a single explicitly
+configured wallet and input mint. It requires total and per-request caps in
+atomic units; there are no defaults and no inferred live budget. Use a separate
+local database, never the paper ledger or a public feed.
+
+Reservations use BEGIN IMMEDIATE so competing processes cannot overspend.
+A stable intent ID is persisted; replay returns `new_reservation=False`, which
+must never authorize another submission. Conflicting reuse is rejected.
+Persist `mark_submitted` with the signed transaction signature BEFORE any network
+submission. Ambiguous submission retains its reservation after restart. This
+module cannot release submitted reservations; a future independently verified
+reconciler must handle failed/expired transactions and actual costs.
+
+Confirmed spending stays charged against the lifetime allocation. Sale proceeds
+do not automatically replenish it. Fee allowances in the input currency must be
+included in the reserved amount; other fee currencies, actual wallet balance
+checks, positions, daily loss accounting and policy-authorized renewal remain
+unimplemented. `confirm` is an internal state transition, not an RPC verifier.
+The persisted halt blocks reservations and submission transitions; it is not
+an on-chain cancellation and cannot stop transactions already sent.
+
+This ledger is not connected to runner decisions, signing, or submissions.
+Do not apply an entry-only budget halt to protective exits without a separately
+validated exit policy. Existing paper exits are unchanged. No real budget has
+been configured. Run `python -m unittest test_execution_budget` for restart,
+concurrency, idempotency and halt tests.
