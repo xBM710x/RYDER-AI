@@ -30,8 +30,24 @@ Before live execution, remaining implementation gates are:
 - Integrate approved agent decisions while retaining independent protective exits.
 - Verify with fault-injection tests and dry runs before enabling execution.
 
-Offline checks: `python -m unittest test_solana_preflight` from `bot/`.
+Offline checks: `python -m unittest test_solana_message test_solana_preflight` from `bot/`.
 Tests use fabricated transactions and mocked responses; they do not test live
 provider credentials, valid transaction decoding, or actual swaps.
 
 Provider reference: https://developers.jup.ag/docs/swap/order-and-execute
+
+## Transaction envelope validation
+
+Before simulation, `solana_message.py` parses the provider bytes as legacy or v0.
+It checks canonical compact lengths, full consumption, bounded account indices,
+unique static accounts, readonly static program references, and the configured
+wallet as the writable fee payer and sole required signer. Signed inputs, extra
+signers, unsupported versions, and malformed or truncated messages are rejected.
+
+The report lists program IDs and the number of unresolved lookup accounts.
+This is structural inspection only: a malicious but well-formed instruction
+can pass it. Lookup resolution, program allowlisting, instruction decoding,
+recipient/spend/fee checks and simulation balance-delta checks are still missing.
+`authorized_to_sign` and `live_ready` remain false, including after simulation
+success. Routes using sponsored fee payers, extra signers, or v1 are currently
+unsupported. This does not add Phantom auto-approval or unattended trading.

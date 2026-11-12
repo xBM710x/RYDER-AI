@@ -2,9 +2,9 @@ name: Solana unsigned preflight
 on:
   push:
     branches: [main]
-    paths: ['bot/solana_preflight.py', 'bot/test_solana_preflight.py', '.github/workflows/solana-preflight.yml']
+    paths: ['bot/solana_preflight.py', 'bot/solana_message.py', 'bot/test_solana_message.py', 'bot/test_solana_preflight.py', '.github/workflows/solana-preflight.yml']
   pull_request:
-    paths: ['bot/solana_preflight.py', 'bot/test_solana_preflight.py', '.github/workflows/solana-preflight.yml']
+    paths: ['bot/solana_preflight.py', 'bot/solana_message.py', 'bot/test_solana_message.py', 'bot/test_solana_preflight.py', '.github/workflows/solana-preflight.yml']
 jobs:
   offline:
     runs-on: ubuntu-latest
@@ -16,4 +16,4 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
-      - run: cd bot && python -m unittest test_solana_preflight
+      - run: cd bot && python -m unittest test_solana_message test_solana_preflight

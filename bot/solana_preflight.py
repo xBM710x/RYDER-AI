@@ -13,6 +13,7 @@ import urllib.parse
 import urllib.request
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
+from solana_message import inspect_unsigned, InvalidMessage
 
 JUPITER = 'https://api.jup.ag/swap/v2/order'
 RPC = 'https://api.mainnet-beta.solana.com'
@@ -129,6 +130,10 @@ def prepare(intent, api_key, transport=request_json, clock=time.monotonic):
         raise Blocked('Missing valid unsigned transaction') from None
     if not 65 <= len(decoded) <= 1232:
         raise Blocked('Transaction size outside Solana limits')
+    try:
+        message = inspect_unsigned(decoded, intent.wallet)
+    except InvalidMessage as exc:
+        raise Blocked(str(exc)) from None
     if not isinstance(order.get('requestId'), str) or not order['requestId']:
         raise Blocked('Missing provider request ID')
     if clock() - started > 15:
@@ -152,6 +157,7 @@ def prepare(intent, api_key, transport=request_json, clock=time.monotonic):
         output_mint=intent.output_mint, input_atomic=intent.amount,
         expected_output_atomic=out, minimum_output_atomic=minimum,
         units_consumed=value.get('unitsConsumed'),
+        message_inspection=message,
         blockers=['instruction_and_account_validation', 'secure_signer',
                   'persistent_budget_and_duplicate_guard', 'confirmation_reconciliation'])
 

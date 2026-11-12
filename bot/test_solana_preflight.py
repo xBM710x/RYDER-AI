@@ -2,6 +2,7 @@ import base64
 import unittest
 from urllib.parse import parse_qs, urlparse
 from solana_preflight import Blocked, Intent, prepare, address, request_json
+from test_solana_message import fixture
 
 SOL = 'So11111111111111111111111111111111111111112'
 USDC = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
@@ -14,7 +15,7 @@ class PreflightTests(unittest.TestCase):
         self.order = dict(inputMint=SOL, outputMint=USDC, inAmount='1000',
             outAmount='2000', otherAmountThreshold='1990', slippageBps=50,
             priceImpactPct='0.1', requestId='test-only',
-            transaction=base64.b64encode(bytes(100)).decode())
+            transaction=base64.b64encode(fixture()).decode())
         self.sim = {'result': {'value': {'err': None, 'unitsConsumed': 15000}}}
         self.calls = []
 
@@ -41,6 +42,12 @@ class PreflightTests(unittest.TestCase):
         with self.assertRaises(Blocked):
             prepare(self.intent, '', self.transport)
         self.assertEqual(self.calls, [])
+
+    def test_tampered_wallet_blocked_before_rpc(self):
+        self.order['transaction'] = base64.b64encode(fixture(wallet=SOL)).decode()
+        with self.assertRaisesRegex(Blocked, 'fee payer'):
+            self.run_prepare()
+        self.assertEqual(len(self.calls), 1)
 
     def test_amount_cap_and_invalid_slippage(self):
         for overrides in ({'amount': 1001}, {'amount': -1}, {'amount': True},
