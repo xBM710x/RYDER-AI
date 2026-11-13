@@ -48,12 +48,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Nov 13 04:49 PT",
+ "asof": "Nov 13 04:55 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 22959,
- "seen": 93109,
+ "scans": 22960,
+ "seen": 93126,
  "passed": 19,
  "trades": 1,
  "wins": 1,
@@ -91,11 +91,11 @@
  "by_dex": [
   [
    "pumpfun",
-   78646
+   78659
   ],
   [
    "meteora",
-   6501
+   6504
   ],
   [
    "pumpswap",
@@ -107,7 +107,7 @@
   ],
   [
    "letsbonk",
-   939
+   940
   ],
   [
    "raydium",
@@ -125,15 +125,15 @@
  "kills": [
   [
    "volume_1h",
-   136205
+   136233
   ],
   [
    "liquidity",
-   15743
+   15745
   ],
   [
    "socials",
-   3421
+   3422
   ],
   [
    "copycat",
@@ -145,7 +145,7 @@
   ],
   [
    "lp_locked",
-   726
+   727
   ],
   [
    "top10",
@@ -266,7 +266,7 @@
    "v": 302.4
   },
   {
-   "t": "04:49",
+   "t": "04:55",
    "v": 302.4
   }
  ],
@@ -288,14 +288,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "93109 pairs",
-   "text": "scan \u00b7 1 pairs, 1 new",
+   "stat": "93126 pairs",
+   "text": "scan \u00b7 80 pairs, 17 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed KETTLE \u00b7 1h vol < $40k",
+   "text": "killed PaperCats \u00b7 LP not locked",
    "tone": "red"
   },
   {
@@ -318,48 +318,12 @@
   },
   {
    "name": "Logger",
-   "stat": "160046 why",
-   "text": "wrote 160046 reasons",
+   "stat": "160078 why",
+   "text": "wrote 160078 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "04:48",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "04:48",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 82 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "04:48",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "04:48",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "04:48",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 2 pairs, 2 new",
-   "tone": ""
-  },
-  {
-   "t": "04:48",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 112 pairs, 28 new",
-   "tone": ""
-  },
   {
    "t": "04:48",
    "ag": "FILTER",
@@ -413,73 +377,119 @@
    "ag": "SCOUT",
    "text": "scan \u00b7 1 pairs, 1 new",
    "tone": ""
+  },
+  {
+   "t": "04:49",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 80 pairs, 17 new",
+   "tone": ""
+  },
+  {
+   "t": "04:49",
+   "ag": "FILTER",
+   "text": "killed papercat \u00b7 no/dupe socials",
+   "tone": "red"
+  },
+  {
+   "t": "04:49",
+   "ag": "FILTER",
+   "text": "killed Pea \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "04:49",
+   "ag": "FILTER",
+   "text": "killed Pea \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "04:49",
+   "ag": "FILTER",
+   "text": "killed PaperCats \u00b7 LP not locked",
+   "tone": "red"
+  },
+  {
+   "t": "04:55",
+   "ag": "LOGGER",
+   "text": "process_pause",
+   "tone": ""
   }
  ],
- "nkills": 160046,
+ "nkills": 160078,
  "mood": "sleepy",
  "kills_live": [
   {
-   "t": "04:48:48",
-   "sym": "uinhim",
+   "t": "04:49:55",
+   "sym": "GNB",
    "reason": "volume_1h"
   },
   {
-   "t": "04:48:48",
-   "sym": "SOOTS",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "04:48:48",
-   "sym": "SOOTS",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "04:48:48",
-   "sym": "PUS",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "04:48:48",
-   "sym": "PaperCats",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "04:48:48",
+   "t": "04:49:55",
    "sym": "dca",
    "reason": "volume_1h"
   },
   {
-   "t": "04:48:48",
-   "sym": "Xvidia",
+   "t": "04:49:55",
+   "sym": "dca",
    "reason": "volume_1h"
   },
   {
-   "t": "04:48:48",
-   "sym": "62",
+   "t": "04:49:55",
+   "sym": "$NOKAM",
    "reason": "volume_1h"
   },
   {
-   "t": "04:48:48",
+   "t": "04:49:55",
+   "sym": "CHAROC",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "04:49:55",
+   "sym": "vrl",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "04:49:55",
+   "sym": "KABOOM",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "04:49:55",
+   "sym": "papercat",
+   "reason": "socials"
+  },
+  {
+   "t": "04:49:55",
+   "sym": "STONKPAIR",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "04:49:55",
+   "sym": "WEIRDCAT",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "04:49:55",
+   "sym": "Pea",
+   "reason": "liquidity"
+  },
+  {
+   "t": "04:49:56",
    "sym": "PaperCats",
-   "reason": "liquidity"
-  },
-  {
-   "t": "04:48:48",
-   "sym": "62",
-   "reason": "liquidity"
-  },
-  {
-   "t": "04:48:48",
-   "sym": "Memebrain",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "04:48:48",
-   "sym": "MYRON",
-   "reason": "liquidity"
+   "reason": "lp_locked"
   }
  ],
  "watchlist": [
+  {
+   "why": "no or reused socials",
+   "sym": "papercat",
+   "price": 8.329e-06,
+   "mcap": null,
+   "dex": "meteora",
+   "t": "04:49",
+   "ts": 1794574196,
+   "near_miss": true
+  },
   {
    "why": "liquidity too low / unknown",
    "sym": "MYRON",
@@ -569,16 +579,6 @@
    "t": "04:42",
    "ts": 1794573763,
    "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "PEM",
-   "price": 8.713e-06,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "04:42",
-   "ts": 1794573763,
-   "near_miss": true
   }
  ],
  "reentry_watch": [],
@@ -593,7 +593,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 93109,
+  "scanned": 93126,
   "passed_filters": 19,
   "scored_ok": 14,
   "entry_wait": 17,
@@ -630,8 +630,8 @@
   },
   {
    "h": "04",
-   "scans": 662,
-   "kills": 4771,
+   "scans": 663,
+   "kills": 4803,
    "trades": 0,
    "pnl": 0.0
   },
@@ -770,9 +770,9 @@
   }
  ],
  "agent_activity": {
-  "SCOUT": 224,
-  "FILTER": 1706,
-  "LOGGER": 10
+  "LOGGER": 11,
+  "SCOUT": 223,
+  "FILTER": 1676
  },
  "rug_list": {
   "count": 171,
@@ -813,30 +813,30 @@
   "gauge": 41
  },
  "latency": {
-  "scan_s_avg": 0.6,
-  "scan_s_last": 0.0,
+  "scan_s_avg": 0.7,
+  "scan_s_last": 2.4,
   "pos_check_s": 1,
-  "ws_last_event_s": 1
+  "ws_last_event_s": 31
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 83,
+   "ms": 89,
    "err": 0
   },
   "api.geckoterminal.com": {
    "ok_rate": 0.97,
-   "ms": 54,
+   "ms": 56,
    "err": 3
   },
   "api.rugcheck.xyz": {
    "ok_rate": 1.0,
-   "ms": 476,
+   "ms": 455,
    "err": 0
   },
   "api.mainnet-beta.solana.com": {
    "ok_rate": 1.0,
-   "ms": 430,
+   "ms": 348,
    "err": 2
   },
   "lite-api.jup.ag": {
@@ -916,7 +916,7 @@
  },
  "speed": {
   "decision_s": {
-   "avg": 0.22,
+   "avg": 0.21,
    "p90": 0.44,
    "n": 200
   },
@@ -1067,38 +1067,17 @@
   "at": "04:49"
  },
  "paper": true,
- "updated_at": "2026-11-13T12:49:35+00:00",
+ "updated_at": "2026-11-13T12:55:06+00:00",
  "heartbeat": {
-  "at": "2026-11-13T12:49:35+00:00",
-  "runner_alive": true,
-  "runner_last_beat_s": 3,
+  "at": "2026-11-13T12:55:06+00:00",
+  "runner_alive": false,
+  "runner_last_beat_s": 304,
   "pending_entries": 0,
   "live_feed": true,
   "live_feed_events": 330,
   "publish_every_s": 180
  },
  "ryder_events": [
-  {
-   "id": 186149,
-   "t": 1794573691,
-   "kind": "rug_dodged",
-   "sym": "PAPER",
-   "reason": "copycat"
-  },
-  {
-   "id": 186150,
-   "t": 1794573691,
-   "kind": "rug_dodged",
-   "sym": "papercat",
-   "reason": "copycat"
-  },
-  {
-   "id": 186151,
-   "t": 1794573691,
-   "kind": "rug_dodged",
-   "sym": "papercat",
-   "reason": "copycat"
-  },
   {
    "id": 186238,
    "t": 1794573763,
@@ -1161,6 +1140,13 @@
    "kind": "rug_dodged",
    "sym": "PaperCat",
    "reason": "copycat"
+  },
+  {
+   "id": 186609,
+   "t": 1794574196,
+   "kind": "rug_dodged",
+   "sym": "PaperCats",
+   "reason": "lp_locked"
   }
  ],
  "trade_quality": {
@@ -1212,19 +1198,19 @@
  },
  "skip_tally": {
   "hours": 24,
-  "total": 17100,
+  "total": 17132,
   "buckets": [
    [
     "Volume too low",
-    14343
+    14371
    ],
    [
     "Liquidity too low",
-    1836
+    1838
    ],
    [
     "No socials",
-    326
+    327
    ],
    [
     "Copycat / scam name",
@@ -1232,7 +1218,7 @@
    ],
    [
     "LP not locked",
-    95
+    96
    ],
    [
     "Bundled / top holders",
