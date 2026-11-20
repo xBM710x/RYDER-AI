@@ -48,12 +48,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Nov 20 05:10 PT",
+ "asof": "Nov 20 05:13 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 28369,
- "seen": 122519,
+ "scans": 28376,
+ "seen": 122572,
  "passed": 38,
  "trades": 1,
  "wins": 1,
@@ -91,15 +91,15 @@
  "by_dex": [
   [
    "pumpfun",
-   102427
+   102471
   ],
   [
    "meteora",
-   9320
+   9325
   ],
   [
    "pumpswap",
-   7787
+   7791
   ],
   [
    "other/unknown",
@@ -125,11 +125,11 @@
  "kills": [
   [
    "volume_1h",
-   182219
+   182307
   ],
   [
    "liquidity",
-   21665
+   21674
   ],
   [
    "socials",
@@ -137,11 +137,11 @@
   ],
   [
    "copycat",
-   3019
+   3022
   ],
   [
    "lp_locked",
-   1119
+   1121
   ],
   [
    "thin_pool",
@@ -282,7 +282,7 @@
    "v": 302.4
   },
   {
-   "t": "05:10",
+   "t": "05:13",
    "v": 302.4
   }
  ],
@@ -304,14 +304,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "122519 pairs",
-   "text": "scan \u00b7 85 pairs, 0 new",
+   "stat": "122572 pairs",
+   "text": "scan \u00b7 74 pairs, 0 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed Catnomics \u00b7 no/dupe socials",
+   "text": "killed C&C \u00b7 liq < $25k",
    "tone": "red"
   },
   {
@@ -334,168 +334,178 @@
   },
   {
    "name": "Logger",
-   "stat": "215347 why",
-   "text": "wrote 215347 reasons",
+   "stat": "215449 why",
+   "text": "wrote 215449 reasons",
    "tone": ""
   }
  ],
  "tail": [
   {
-   "t": "05:08",
+   "t": "05:11",
    "ag": "FILTER",
-   "text": "killed DCTY \u00b7 liq < $25k",
+   "text": "killed 60906379.60382 \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "05:08",
+   "t": "05:11",
    "ag": "FILTER",
-   "text": "killed LOAF \u00b7 liq < $25k",
+   "text": "killed ROLANA \u00b7 copycat",
    "tone": "red"
   },
   {
-   "t": "05:08",
+   "t": "05:11",
    "ag": "FILTER",
-   "text": "killed FORM \u00b7 liq < $25k",
+   "text": "killed DEEZ \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "05:08",
+   "t": "05:11",
+   "ag": "FILTER",
+   "text": "killed DEEZ \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "05:11",
+   "ag": "FILTER",
+   "text": "killed DEEZ \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "05:11",
+   "ag": "FILTER",
+   "text": "killed SBF \u00b7 LP not locked",
+   "tone": "red"
+  },
+  {
+   "t": "05:11",
    "ag": "LOGGER",
-   "text": "error",
+   "text": "watch_requeue",
    "tone": ""
   },
   {
-   "t": "05:08",
+   "t": "05:11",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 1 pairs, 1 new",
+   "tone": ""
+  },
+  {
+   "t": "05:11",
+   "ag": "FILTER",
+   "text": "killed DCTY \u00b7 LP not locked",
+   "tone": "red"
+  },
+  {
+   "t": "05:11",
    "ag": "SCOUT",
    "text": "scan \u00b7 84 pairs, 0 new",
    "tone": ""
   },
   {
-   "t": "05:09",
+   "t": "05:12",
    "ag": "SCOUT",
-   "text": "scan \u00b7 111 pairs, 36 new",
+   "text": "scan \u00b7 74 pairs, 10 new",
    "tone": ""
   },
   {
-   "t": "05:09",
+   "t": "05:12",
    "ag": "FILTER",
-   "text": "killed Rudy \u00b7 copycat",
+   "text": "killed Horace \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "05:09",
+   "t": "05:12",
    "ag": "FILTER",
-   "text": "killed FIONA \u00b7 no/dupe socials",
+   "text": "killed CRIME \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "05:09",
+   "t": "05:12",
    "ag": "FILTER",
-   "text": "killed DCTY \u00b7 no/dupe socials",
+   "text": "killed C&C \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "05:09",
-   "ag": "FILTER",
-   "text": "killed Kevin \u00b7 copycat",
-   "tone": "red"
-  },
-  {
-   "t": "05:09",
-   "ag": "FILTER",
-   "text": "killed MEOW \u00b7 copycat",
-   "tone": "red"
-  },
-  {
-   "t": "05:09",
-   "ag": "FILTER",
-   "text": "killed Catnomics \u00b7 no/dupe socials",
-   "tone": "red"
-  },
-  {
-   "t": "05:09",
+   "t": "05:13",
    "ag": "SCOUT",
-   "text": "scan \u00b7 85 pairs, 0 new",
-   "tone": ""
-  },
-  {
-   "t": "05:10",
-   "ag": "FILTER",
-   "text": "rug wallet listed 4sx8t8",
-   "tone": "red"
-  },
-  {
-   "t": "05:10",
-   "ag": "LOGGER",
-   "text": "best_skipped",
+   "text": "scan \u00b7 74 pairs, 0 new",
    "tone": ""
   }
  ],
- "nkills": 215347,
- "mood": "happy",
+ "nkills": 215449,
+ "mood": "sleepy",
  "kills_live": [
   {
-   "t": "05:09:25",
-   "sym": "REACHY",
+   "t": "05:11:33",
+   "sym": "SBF",
+   "reason": "lp_locked"
+  },
+  {
+   "t": "05:11:42",
+   "sym": "DCTY",
+   "reason": "lp_locked"
+  },
+  {
+   "t": "05:12:32",
+   "sym": "Horace",
+   "reason": "liquidity"
+  },
+  {
+   "t": "05:12:32",
+   "sym": "Params",
    "reason": "volume_1h"
   },
   {
-   "t": "05:09:25",
+   "t": "05:12:32",
    "sym": "Jenson 6",
    "reason": "volume_1h"
   },
   {
-   "t": "05:09:25",
-   "sym": "BRAINROT",
+   "t": "05:12:32",
+   "sym": "leavip",
    "reason": "volume_1h"
   },
   {
-   "t": "05:09:25",
+   "t": "05:12:32",
    "sym": "FIONA",
    "reason": "volume_1h"
   },
   {
-   "t": "05:09:25",
-   "sym": "SBF",
+   "t": "05:12:32",
+   "sym": "Horace",
    "reason": "volume_1h"
   },
   {
-   "t": "05:09:25",
-   "sym": "PYTHON",
+   "t": "05:12:32",
+   "sym": "Moonnomic",
    "reason": "volume_1h"
   },
   {
-   "t": "05:09:25",
-   "sym": "what",
+   "t": "05:12:32",
+   "sym": "DOOYET",
    "reason": "volume_1h"
   },
   {
-   "t": "05:09:25",
-   "sym": "HRSI",
-   "reason": "volume_1h"
+   "t": "05:12:32",
+   "sym": "CRIME",
+   "reason": "liquidity"
   },
   {
-   "t": "05:09:25",
-   "sym": "TRADER",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "05:09:25",
-   "sym": "Jenson 6",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "05:09:25",
-   "sym": "WSB",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "05:09:25",
-   "sym": "Catnomics",
-   "reason": "socials"
+   "t": "05:12:32",
+   "sym": "C&C",
+   "reason": "liquidity"
   }
  ],
  "watchlist": [
+  {
+   "why": "LP not locked",
+   "sym": "SBF",
+   "price": 1.58e-05,
+   "mcap": null,
+   "dex": "meteora",
+   "t": "05:11",
+   "ts": 1795180294,
+   "near_miss": true
+  },
   {
    "why": "no or reused socials",
    "sym": "FIONA",
@@ -585,16 +595,6 @@
    "t": "04:46",
    "ts": 1795178796,
    "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "Rolana",
-   "price": 1.265e-05,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "04:46",
-   "ts": 1795178796,
-   "near_miss": true
   }
  ],
  "reentry_watch": [],
@@ -609,7 +609,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 122519,
+  "scanned": 122572,
   "passed_filters": 38,
   "scored_ok": 25,
   "entry_wait": 29,
@@ -653,8 +653,8 @@
   },
   {
    "h": "05",
-   "scans": 847,
-   "kills": 6818,
+   "scans": 854,
+   "kills": 6920,
    "trades": 0,
    "pnl": 0.0
   },
@@ -786,9 +786,9 @@
   }
  ],
  "agent_activity": {
-  "LOGGER": 21,
-  "SCOUT": 25,
-  "FILTER": 635,
+  "SCOUT": 29,
+  "FILTER": 627,
+  "LOGGER": 18,
   "ANALYST": 1,
   "EXECUTOR": 1
  },
@@ -824,10 +824,10 @@
   }
  },
  "market_mood": {
-  "mood": "neutral",
-  "sol_h1": 0.15,
-  "sol_h24": -4.98,
-  "size_mult": 1.0,
+  "mood": "risk-off",
+  "sol_h1": -0.03,
+  "sol_h24": -5.07,
+  "size_mult": 0.5,
   "gauge": 25
  },
  "latency": {
@@ -839,23 +839,23 @@
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 87,
+   "ms": 65,
    "err": 0
   },
   "api.geckoterminal.com": {
-   "ok_rate": 0.96,
-   "ms": 51,
+   "ok_rate": 0.97,
+   "ms": 49,
    "err": 1
   },
   "api.rugcheck.xyz": {
    "ok_rate": 1.0,
-   "ms": 782,
+   "ms": 631,
    "err": 0
   },
   "api.mainnet-beta.solana.com": {
-   "ok_rate": 0.68,
-   "ms": 1002,
-   "err": 7
+   "ok_rate": 0.67,
+   "ms": 1225,
+   "err": 8
   },
   "lite-api.jup.ag": {
    "ok_rate": 0.8,
@@ -864,7 +864,7 @@
   },
   "solana-rpc.publicnode.com": {
    "ok_rate": 0.94,
-   "ms": 81,
+   "ms": 79,
    "err": 5
   }
  },
@@ -934,13 +934,13 @@
  },
  "speed": {
   "decision_s": {
-   "avg": 0.46,
+   "avg": 0.42,
    "p90": 0.7,
    "n": 200
   },
   "deep_check_s": {
    "avg": 0.0,
-   "max": 0.24,
+   "max": 0.4,
    "n": 100
   },
   "inflight": 0,
@@ -1089,73 +1089,17 @@
   "at": "04:44"
  },
  "paper": true,
- "updated_at": "2026-11-20T13:10:14+00:00",
+ "updated_at": "2026-11-20T13:13:19+00:00",
  "heartbeat": {
-  "at": "2026-11-20T13:10:14+00:00",
+  "at": "2026-11-20T13:13:19+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 5,
+  "runner_last_beat_s": 4,
   "pending_entries": 0,
   "live_feed": false,
   "live_feed_events": 0,
   "publish_every_s": 180
  },
  "ryder_events": [
-  {
-   "id": 248221,
-   "t": 1795178466,
-   "kind": "rug_dodged",
-   "sym": "MEOW",
-   "reason": "lp_locked"
-  },
-  {
-   "id": 248255,
-   "t": 1795178665,
-   "kind": "rug_dodged",
-   "sym": "MEOWINU",
-   "reason": "copycat"
-  },
-  {
-   "id": 248274,
-   "t": 1795178665,
-   "kind": "rug_dodged",
-   "sym": "MEOWINU",
-   "reason": "copycat"
-  },
-  {
-   "id": 248281,
-   "t": 1795178665,
-   "kind": "rug_dodged",
-   "sym": "MEOWINU",
-   "reason": "copycat"
-  },
-  {
-   "id": 248291,
-   "t": 1795178666,
-   "kind": "rug_dodged",
-   "sym": "Rolana",
-   "reason": "lp_locked"
-  },
-  {
-   "id": 248292,
-   "t": 1795178667,
-   "kind": "rug_dodged",
-   "sym": "Rolana",
-   "reason": "lp_locked"
-  },
-  {
-   "id": 248296,
-   "t": 1795178731,
-   "kind": "rug_dodged",
-   "sym": "Rolana",
-   "reason": "copycat"
-  },
-  {
-   "id": 248308,
-   "t": 1795178731,
-   "kind": "rug_dodged",
-   "sym": "MEOWINU",
-   "reason": "copycat"
-  },
   {
    "id": 248329,
    "t": 1795178731,
@@ -1274,6 +1218,41 @@
    "kind": "rug_dodged",
    "sym": "MEOW",
    "reason": "copycat"
+  },
+  {
+   "id": 248693,
+   "t": 1795180293,
+   "kind": "rug_dodged",
+   "sym": "MEOW",
+   "reason": "copycat"
+  },
+  {
+   "id": 248707,
+   "t": 1795180293,
+   "kind": "rug_dodged",
+   "sym": "ROLANA",
+   "reason": "copycat"
+  },
+  {
+   "id": 248709,
+   "t": 1795180293,
+   "kind": "rug_dodged",
+   "sym": "Kevin",
+   "reason": "copycat"
+  },
+  {
+   "id": 248719,
+   "t": 1795180294,
+   "kind": "rug_dodged",
+   "sym": "SBF",
+   "reason": "lp_locked"
+  },
+  {
+   "id": 248722,
+   "t": 1795180303,
+   "kind": "rug_dodged",
+   "sym": "DCTY",
+   "reason": "lp_locked"
   }
  ],
  "trade_quality": {
@@ -1325,15 +1304,15 @@
  },
  "skip_tally": {
   "hours": 24,
-  "total": 2958,
+  "total": 3060,
   "buckets": [
    [
     "Volume too low",
-    2404
+    2492
    ],
    [
     "Liquidity too low",
-    311
+    320
    ],
    [
     "No socials",
@@ -1341,11 +1320,11 @@
    ],
    [
     "Copycat / scam name",
-    64
+    67
    ],
    [
     "LP not locked",
-    44
+    46
    ],
    [
     "Bundled / top holders",
