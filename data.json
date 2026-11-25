@@ -48,12 +48,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Nov 25 13:09 PT",
+ "asof": "Nov 25 13:13 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 36284,
- "seen": 170277,
+ "scans": 36289,
+ "seen": 170352,
  "passed": 48,
  "trades": 1,
  "wins": 1,
@@ -91,15 +91,15 @@
  "by_dex": [
   [
    "pumpfun",
-   141219
+   141281
   ],
   [
    "meteora",
-   14289
+   14297
   ],
   [
    "pumpswap",
-   10521
+   10525
   ],
   [
    "other/unknown",
@@ -107,7 +107,7 @@
   ],
   [
    "letsbonk",
-   1760
+   1761
   ],
   [
    "raydium",
@@ -125,27 +125,27 @@
  "kills": [
   [
    "volume_1h",
-   252498
+   252614
   ],
   [
    "liquidity",
-   31386
+   31404
   ],
   [
    "socials",
-   6747
+   6748
   ],
   [
    "copycat",
-   5021
+   5022
   ],
   [
    "lp_locked",
-   2102
+   2104
   ],
   [
    "thin_pool",
-   1355
+   1357
   ],
   [
    "top10",
@@ -153,7 +153,7 @@
   ],
   [
    "sniper_wallets",
-   386
+   387
   ],
   [
    "bundle_sizes",
@@ -161,7 +161,7 @@
   ],
   [
    "pressure",
-   216
+   218
   ],
   [
    "bundled",
@@ -290,7 +290,7 @@
    "v": 302.4
   },
   {
-   "t": "13:09",
+   "t": "13:13",
    "v": 302.4
   }
  ],
@@ -312,14 +312,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "170277 pairs",
-   "text": "scan \u00b7 129 pairs, 39 new",
+   "stat": "170352 pairs",
+   "text": "scan \u00b7 127 pairs, 38 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed UBI \u00b7 wash trading",
+   "text": "killed Linkdog \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -342,168 +342,188 @@
   },
   {
    "name": "Logger",
-   "stat": "301218 why",
-   "text": "wrote 301218 reasons",
+   "stat": "301361 why",
+   "text": "wrote 301361 reasons",
    "tone": ""
   }
  ],
  "tail": [
   {
-   "t": "12:54",
-   "ag": "LOGGER",
-   "text": "process_pause",
-   "tone": ""
+   "t": "13:09",
+   "ag": "FILTER",
+   "text": "killed $ABU \u00b7 liq < $25k",
+   "tone": "red"
   },
   {
-   "t": "12:55",
+   "t": "13:09",
+   "ag": "FILTER",
+   "text": "killed POOP3 \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "13:09",
+   "ag": "FILTER",
+   "text": "killed Investor \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "13:09",
+   "ag": "FILTER",
+   "text": "killed N1 \u00b7 LP not locked",
+   "tone": "red"
+  },
+  {
+   "t": "13:09",
+   "ag": "FILTER",
+   "text": "killed Investor \u00b7 sniper_wallets",
+   "tone": "red"
+  },
+  {
+   "t": "13:09",
+   "ag": "FILTER",
+   "text": "killed JUSTICE \u00b7 LP not locked",
+   "tone": "red"
+  },
+  {
+   "t": "13:09",
    "ag": "SCOUT",
-   "text": "scan \u00b7 129 pairs, 39 new",
+   "text": "scan \u00b7 92 pairs, 0 new",
    "tone": ""
   },
   {
-   "t": "12:55",
+   "t": "13:10",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 91 pairs, 0 new",
+   "tone": ""
+  },
+  {
+   "t": "13:10",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 91 pairs, 0 new",
+   "tone": ""
+  },
+  {
+   "t": "13:11",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 127 pairs, 38 new",
+   "tone": ""
+  },
+  {
+   "t": "13:11",
    "ag": "FILTER",
-   "text": "killed Pnut \u00b7 copycat",
+   "text": "killed ATX \u00b7 thin_pool",
    "tone": "red"
   },
   {
-   "t": "12:55",
+   "t": "13:11",
    "ag": "FILTER",
-   "text": "killed Pnut \u00b7 copycat",
+   "text": "killed sent \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "12:55",
+   "t": "13:11",
    "ag": "FILTER",
-   "text": "killed PNUT \u00b7 copycat",
+   "text": "killed Updog \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "12:55",
+   "t": "13:11",
    "ag": "FILTER",
-   "text": "killed UHI \u00b7 liq < $25k",
+   "text": "killed 1NU \u00b7 no/dupe socials",
    "tone": "red"
   },
   {
-   "t": "12:55",
-   "ag": "FILTER",
-   "text": "killed UHI \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "12:55",
-   "ag": "FILTER",
-   "text": "killed POOP \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "12:55",
-   "ag": "FILTER",
-   "text": "killed PNUT \u00b7 copycat",
-   "tone": "red"
-  },
-  {
-   "t": "12:55",
-   "ag": "FILTER",
-   "text": "killed CATUNA \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "12:55",
-   "ag": "FILTER",
-   "text": "killed Pnut \u00b7 copycat",
-   "tone": "red"
-  },
-  {
-   "t": "12:55",
-   "ag": "FILTER",
-   "text": "killed JUSTICE \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "12:55",
-   "ag": "FILTER",
-   "text": "killed Pnut \u00b7 no/dupe socials",
-   "tone": "red"
-  },
-  {
-   "t": "13:09",
-   "ag": "FILTER",
-   "text": "killed UBI \u00b7 wash trading",
-   "tone": "red"
-  },
-  {
-   "t": "13:09",
+   "t": "13:13",
    "ag": "LOGGER",
    "text": "process_pause",
    "tone": ""
   }
  ],
- "nkills": 301218,
+ "nkills": 301361,
  "mood": "sleepy",
  "kills_live": [
   {
-   "t": "12:55:05",
-   "sym": "FHC",
+   "t": "13:11:21",
+   "sym": "sent",
+   "reason": "liquidity"
+  },
+  {
+   "t": "13:11:21",
+   "sym": "wind",
    "reason": "volume_1h"
   },
   {
-   "t": "12:55:05",
-   "sym": "Peanut the",
+   "t": "13:11:21",
+   "sym": "kitty",
    "reason": "volume_1h"
   },
   {
-   "t": "12:55:05",
-   "sym": "JUSTICE",
+   "t": "13:11:21",
+   "sym": "ET",
    "reason": "volume_1h"
   },
   {
-   "t": "12:55:05",
-   "sym": "$SELL",
+   "t": "13:11:21",
+   "sym": "WEIRDCAT",
    "reason": "volume_1h"
   },
   {
-   "t": "12:55:05",
-   "sym": "INUX",
+   "t": "13:11:21",
+   "sym": "Updog",
+   "reason": "liquidity"
+  },
+  {
+   "t": "13:11:21",
+   "sym": "DUDE",
    "reason": "volume_1h"
   },
   {
-   "t": "12:55:05",
-   "sym": "JUSTICE",
+   "t": "13:11:21",
+   "sym": "TG",
    "reason": "volume_1h"
   },
   {
-   "t": "12:55:05",
-   "sym": "plainTX",
+   "t": "13:11:21",
+   "sym": "NUT",
    "reason": "volume_1h"
   },
   {
-   "t": "12:55:05",
-   "sym": "Maggie Pum",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "12:55:05",
-   "sym": "SHROUD",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "12:55:05",
-   "sym": "TGC",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "12:55:05",
-   "sym": "Pnut",
+   "t": "13:11:21",
+   "sym": "1NU",
    "reason": "socials"
   },
   {
-   "t": "13:09:13",
-   "sym": "UBI",
-   "reason": "wash"
+   "t": "13:11:21",
+   "sym": "$ABU",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "13:11:21",
+   "sym": "RUM",
+   "reason": "volume_1h"
   }
  ],
  "watchlist": [
+  {
+   "why": "no or reused socials",
+   "sym": "1NU",
+   "price": 7.695e-06,
+   "mcap": null,
+   "dex": "meteora",
+   "t": "13:11",
+   "ts": 1795641081,
+   "near_miss": true
+  },
+  {
+   "why": "LP not locked",
+   "sym": "JUSTICE",
+   "price": 7.977e-05,
+   "mcap": null,
+   "dex": "meteora",
+   "t": "13:09",
+   "ts": 1795640963,
+   "near_miss": true
+  },
   {
    "why": "sniper wallets",
    "sym": "Investor",
@@ -583,26 +603,6 @@
    "t": "13:09",
    "ts": 1795640960,
    "near_miss": true
-  },
-  {
-   "why": "more sells than buys",
-   "sym": "PTO",
-   "price": 9.205e-05,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "13:09",
-   "ts": 1795640960,
-   "near_miss": true
-  },
-  {
-   "why": "1h volume too low",
-   "sym": "TRIPWIRE",
-   "price": 3.949e-05,
-   "mcap": null,
-   "dex": "raydium",
-   "t": "13:09",
-   "ts": 1795640960,
-   "near_miss": true
   }
  ],
  "reentry_watch": [],
@@ -617,7 +617,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 170277,
+  "scanned": 170352,
   "passed_filters": 48,
   "scored_ok": 29,
   "entry_wait": 35,
@@ -717,8 +717,8 @@
   },
   {
    "h": "13",
-   "scans": 1318,
-   "kills": 9927,
+   "scans": 1323,
+   "kills": 10070,
    "trades": 0,
    "pnl": 0.0
   },
@@ -794,9 +794,9 @@
   }
  ],
  "agent_activity": {
-  "SCOUT": 37,
-  "FILTER": 652,
-  "LOGGER": 10
+  "LOGGER": 10,
+  "FILTER": 702,
+  "SCOUT": 38
  },
  "rug_list": {
   "count": 409,
@@ -831,16 +831,16 @@
  },
  "market_mood": {
   "mood": "neutral",
-  "sol_h1": 0.32,
-  "sol_h24": 1.69,
+  "sol_h1": 0.27,
+  "sol_h24": 1.66,
   "size_mult": 1.0,
   "gauge": 58
  },
  "latency": {
-  "scan_s_avg": 1.0,
-  "scan_s_last": 7.0,
+  "scan_s_avg": 1.1,
+  "scan_s_last": 0.0,
   "pos_check_s": 1,
-  "ws_last_event_s": 1420
+  "ws_last_event_s": 1679
  },
  "sources": {
   "api.dexscreener.com": {
@@ -849,24 +849,24 @@
    "err": 0
   },
   "api.geckoterminal.com": {
-   "ok_rate": 0.95,
-   "ms": 71,
+   "ok_rate": 0.96,
+   "ms": 58,
    "err": 4
   },
   "api.rugcheck.xyz": {
    "ok_rate": 0.99,
-   "ms": 547,
-   "err": 1
+   "ms": 560,
+   "err": 2
   },
   "api.mainnet-beta.solana.com": {
-   "ok_rate": 0.08,
+   "ok_rate": 0.06,
    "ms": 63,
-   "err": 12
+   "err": 15
   },
   "solana-rpc.publicnode.com": {
-   "ok_rate": 0.9,
-   "ms": 68326,
-   "err": 10
+   "ok_rate": 0.88,
+   "ms": 44854,
+   "err": 13
   },
   "lite-api.jup.ag": {
    "ok_rate": 0.67,
@@ -940,16 +940,16 @@
  },
  "speed": {
   "decision_s": {
-   "avg": 5.4,
-   "p90": 0.67,
+   "avg": 9.74,
+   "p90": 0.62,
    "n": 200
   },
   "deep_check_s": {
-   "avg": 9.9,
-   "max": 987.15,
+   "avg": 8.6,
+   "max": 857.62,
    "n": 100
   },
-  "inflight": 1,
+  "inflight": 0,
   "workers": 6,
   "ws_wake": true
  },
@@ -1103,24 +1103,17 @@
   "at": "08:50"
  },
  "paper": true,
- "updated_at": "2026-11-25T21:09:22+00:00",
+ "updated_at": "2026-11-25T21:13:40+00:00",
  "heartbeat": {
-  "at": "2026-11-25T21:09:22+00:00",
+  "at": "2026-11-25T21:13:40+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 2,
+  "runner_last_beat_s": 5,
   "pending_entries": 0,
   "live_feed": false,
   "live_feed_events": 150,
   "publish_every_s": 180
  },
  "ryder_events": [
-  {
-   "id": 344141,
-   "t": 1795639842,
-   "kind": "rug_dodged",
-   "sym": "Pnut",
-   "reason": "copycat"
-  },
   {
    "id": 344231,
    "t": 1795639904,
@@ -1232,6 +1225,27 @@
    "kind": "rug_dodged",
    "sym": "Investor",
    "reason": "sniper_wallets"
+  },
+  {
+   "id": 344517,
+   "t": 1795640963,
+   "kind": "rug_dodged",
+   "sym": "JUSTICE",
+   "reason": "lp_locked"
+  },
+  {
+   "id": 344624,
+   "t": 1795641220,
+   "kind": "rug_dodged",
+   "sym": "Squirrel",
+   "reason": "copycat"
+  },
+  {
+   "id": 344625,
+   "t": 1795641220,
+   "kind": "rug_dodged",
+   "sym": "KOOP",
+   "reason": "lp_locked"
   }
  ],
  "trade_quality": {
@@ -1283,27 +1297,27 @@
  },
  "skip_tally": {
   "hours": 24,
-  "total": 11151,
+  "total": 11254,
   "buckets": [
    [
     "Volume too low",
-    9105
+    9190
    ],
    [
     "Liquidity too low",
-    1557
+    1571
    ],
    [
     "No socials",
-    176
+    177
    ],
    [
     "Copycat / scam name",
-    130
+    131
    ],
    [
     "LP not locked",
-    91
+    93
    ],
    [
     "Bundled / top holders",
