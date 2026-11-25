@@ -48,12 +48,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Nov 25 05:12 PT",
+ "asof": "Nov 25 05:17 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 36007,
- "seen": 168261,
+ "scans": 36009,
+ "seen": 168293,
  "passed": 48,
  "trades": 1,
  "wins": 1,
@@ -91,15 +91,15 @@
  "by_dex": [
   [
    "pumpfun",
-   139573
+   139601
   ],
   [
    "meteora",
-   14096
+   14098
   ],
   [
    "pumpswap",
-   10396
+   10398
   ],
   [
    "other/unknown",
@@ -125,11 +125,11 @@
  "kills": [
   [
    "volume_1h",
-   249209
+   249267
   ],
   [
    "liquidity",
-   30811
+   30813
   ],
   [
    "socials",
@@ -137,11 +137,11 @@
   ],
   [
    "copycat",
-   4980
+   4981
   ],
   [
    "lp_locked",
-   2073
+   2074
   ],
   [
    "thin_pool",
@@ -286,7 +286,7 @@
    "v": 302.4
   },
   {
-   "t": "05:12",
+   "t": "05:17",
    "v": 302.4
   }
  ],
@@ -308,14 +308,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "168261 pairs",
-   "text": "scan \u00b7 67 pairs, 0 new",
+   "stat": "168293 pairs",
+   "text": "scan \u00b7 82 pairs, 0 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed Pompom \u00b7 top10 > 25%",
+   "text": "killed GAYCOIN \u00b7 LP not locked",
    "tone": "red"
   },
   {
@@ -338,60 +338,12 @@
   },
   {
    "name": "Logger",
-   "stat": "297190 why",
-   "text": "wrote 297190 reasons",
+   "stat": "297252 why",
+   "text": "wrote 297252 reasons",
    "tone": ""
   }
  ],
  "tail": [
-  {
-   "t": "05:11",
-   "ag": "FILTER",
-   "text": "killed ZZZZ \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "05:11",
-   "ag": "FILTER",
-   "text": "killed PFP \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "05:11",
-   "ag": "FILTER",
-   "text": "killed ALLOC \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "05:11",
-   "ag": "FILTER",
-   "text": "killed ALLOC \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "05:11",
-   "ag": "FILTER",
-   "text": "killed PFP \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "05:11",
-   "ag": "FILTER",
-   "text": "killed PFP \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "05:11",
-   "ag": "FILTER",
-   "text": "killed PFP \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "05:11",
-   "ag": "FILTER",
-   "text": "killed USAGI \u00b7 LP not locked",
-   "tone": "red"
-  },
   {
    "t": "05:11",
    "ag": "FILTER",
@@ -433,70 +385,118 @@
    "ag": "SCOUT",
    "text": "scan \u00b7 67 pairs, 0 new",
    "tone": ""
+  },
+  {
+   "t": "05:12",
+   "ag": "LOGGER",
+   "text": "rugcheck_health",
+   "tone": ""
+  },
+  {
+   "t": "05:12",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 82 pairs, 32 new",
+   "tone": ""
+  },
+  {
+   "t": "05:12",
+   "ag": "FILTER",
+   "text": "killed Pompom \u00b7 copycat",
+   "tone": "red"
+  },
+  {
+   "t": "05:12",
+   "ag": "FILTER",
+   "text": "killed GAYCOIN \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "05:12",
+   "ag": "FILTER",
+   "text": "killed TRUMPPP \u00b7 liq < $25k",
+   "tone": "red"
+  },
+  {
+   "t": "05:12",
+   "ag": "FILTER",
+   "text": "killed GAYCOIN \u00b7 LP not locked",
+   "tone": "red"
+  },
+  {
+   "t": "05:13",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 82 pairs, 0 new",
+   "tone": ""
+  },
+  {
+   "t": "05:17",
+   "ag": "LOGGER",
+   "text": "process_pause",
+   "tone": ""
   }
  ],
- "nkills": 297190,
+ "nkills": 297252,
  "mood": "sleepy",
  "kills_live": [
   {
-   "t": "05:11:30",
-   "sym": "HANS",
+   "t": "05:12:37",
+   "sym": "dontpaste",
    "reason": "volume_1h"
   },
   {
-   "t": "05:11:30",
-   "sym": "endogberk",
+   "t": "05:12:37",
+   "sym": "BMW",
    "reason": "volume_1h"
   },
   {
-   "t": "05:11:30",
-   "sym": "$SLJK",
+   "t": "05:12:37",
+   "sym": "wApe",
    "reason": "volume_1h"
   },
   {
-   "t": "05:11:30",
-   "sym": "NOFN",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "05:11:30",
-   "sym": "TUF",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "05:11:30",
-   "sym": "PFP",
-   "reason": "liquidity"
-  },
-  {
-   "t": "05:11:31",
-   "sym": "34%",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "05:11:31",
-   "sym": "PFP",
-   "reason": "liquidity"
-  },
-  {
-   "t": "05:11:31",
-   "sym": "USAGI",
-   "reason": "lp_locked"
-  },
-  {
-   "t": "05:11:31",
-   "sym": "\u72ac",
-   "reason": "liquidity"
-  },
-  {
-   "t": "05:11:31",
-   "sym": "OUROBOROS",
-   "reason": "copycat"
-  },
-  {
-   "t": "05:11:32",
+   "t": "05:12:37",
    "sym": "Pompom",
-   "reason": "top10"
+   "reason": "volume_1h"
+  },
+  {
+   "t": "05:12:37",
+   "sym": "BMW",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "05:12:37",
+   "sym": "sol",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "05:12:37",
+   "sym": "$AURA",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "05:12:37",
+   "sym": "NVIDIA",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "05:12:37",
+   "sym": "Cat",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "05:12:37",
+   "sym": "GAS",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "05:12:37",
+   "sym": "AIDS",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "05:12:37",
+   "sym": "GAYCOIN",
+   "reason": "lp_locked"
   }
  ],
  "watchlist": [
@@ -613,7 +613,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 168261,
+  "scanned": 168293,
   "passed_filters": 48,
   "scored_ok": 29,
   "entry_wait": 35,
@@ -657,8 +657,8 @@
   },
   {
    "h": "05",
-   "scans": 975,
-   "kills": 9338,
+   "scans": 977,
+   "kills": 9400,
    "trades": 0,
    "pnl": 0.0
   },
@@ -790,9 +790,9 @@
   }
  ],
  "agent_activity": {
-  "LOGGER": 13,
-  "SCOUT": 8,
-  "FILTER": 248
+  "LOGGER": 15,
+  "SCOUT": 10,
+  "FILTER": 310
  },
  "rug_list": {
   "count": 399,
@@ -833,7 +833,7 @@
   "gauge": 35
  },
  "latency": {
-  "scan_s_avg": 1.0,
+  "scan_s_avg": 0.9,
   "scan_s_last": 0.0,
   "pos_check_s": 1,
   "ws_last_event_s": null
@@ -841,7 +841,7 @@
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 103,
+   "ms": 90,
    "err": 0
   },
   "api.geckoterminal.com": {
@@ -851,7 +851,7 @@
   },
   "api.rugcheck.xyz": {
    "ok_rate": 1.0,
-   "ms": 349,
+   "ms": 335,
    "err": 0
   },
   "api.mainnet-beta.solana.com": {
@@ -860,8 +860,8 @@
    "err": 2
   },
   "solana-rpc.publicnode.com": {
-   "ok_rate": 0.67,
-   "ms": 91,
+   "ok_rate": 0.71,
+   "ms": 86,
    "err": 2
   },
   "lite-api.jup.ag": {
@@ -936,14 +936,14 @@
  },
  "speed": {
   "decision_s": {
-   "avg": 242.36,
-   "p90": 1.12,
-   "n": 37
+   "avg": 130.26,
+   "p90": 1.0,
+   "n": 69
   },
   "deep_check_s": {
-   "avg": 0.1,
+   "avg": 0.0,
    "max": 1.38,
-   "n": 70
+   "n": 100
   },
   "inflight": 0,
   "workers": 6,
@@ -1099,24 +1099,17 @@
   "at": "04:39"
  },
  "paper": true,
- "updated_at": "2026-11-25T13:12:24+00:00",
+ "updated_at": "2026-11-25T13:17:31+00:00",
  "heartbeat": {
-  "at": "2026-11-25T13:12:24+00:00",
-  "runner_alive": true,
-  "runner_last_beat_s": 5,
+  "at": "2026-11-25T13:17:31+00:00",
+  "runner_alive": false,
+  "runner_last_beat_s": 267,
   "pending_entries": 0,
   "live_feed": false,
   "live_feed_events": 0,
   "publish_every_s": 180
  },
  "ryder_events": [
-  {
-   "id": 339570,
-   "t": 1795608622,
-   "kind": "rug_dodged",
-   "sym": "Pompom",
-   "reason": "copycat"
-  },
   {
    "id": 339600,
    "t": 1795608622,
@@ -1179,6 +1172,20 @@
    "kind": "rug_dodged",
    "sym": "OUROBOROS",
    "reason": "copycat"
+  },
+  {
+   "id": 339953,
+   "t": 1795612357,
+   "kind": "rug_dodged",
+   "sym": "Pompom",
+   "reason": "copycat"
+  },
+  {
+   "id": 340014,
+   "t": 1795612357,
+   "kind": "rug_dodged",
+   "sym": "GAYCOIN",
+   "reason": "lp_locked"
   }
  ],
  "trade_quality": {
@@ -1230,15 +1237,15 @@
  },
  "skip_tally": {
   "hours": 24,
-  "total": 10832,
+  "total": 10894,
   "buckets": [
    [
     "Volume too low",
-    8648
+    8706
    ],
    [
     "Liquidity too low",
-    1582
+    1584
    ],
    [
     "No socials",
@@ -1246,11 +1253,11 @@
    ],
    [
     "Copycat / scam name",
-    170
+    171
    ],
    [
     "LP not locked",
-    108
+    109
    ],
    [
     "Bundled / top holders",
