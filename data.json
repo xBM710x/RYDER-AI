@@ -48,12 +48,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Nov 25 19:09 PT",
+ "asof": "Nov 25 19:42 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 36460,
- "seen": 171941,
+ "scans": 36466,
+ "seen": 172005,
  "passed": 48,
  "trades": 1,
  "wins": 1,
@@ -91,19 +91,19 @@
  "by_dex": [
   [
    "pumpfun",
-   142604
+   142653
   ],
   [
    "meteora",
-   14448
+   14458
   ],
   [
    "pumpswap",
-   10606
+   10610
   ],
   [
    "other/unknown",
-   1810
+   1811
   ],
   [
    "letsbonk",
@@ -125,11 +125,11 @@
  "kills": [
   [
    "volume_1h",
-   255109
+   255207
   ],
   [
    "liquidity",
-   31842
+   31858
   ],
   [
    "socials",
@@ -137,11 +137,11 @@
   ],
   [
    "copycat",
-   5081
+   5084
   ],
   [
    "lp_locked",
-   2119
+   2121
   ],
   [
    "thin_pool",
@@ -157,7 +157,7 @@
   ],
   [
    "bundle_sizes",
-   269
+   270
   ],
   [
    "pressure",
@@ -165,7 +165,7 @@
   ],
   [
    "bundled",
-   180
+   181
   ],
   [
    "pregrad",
@@ -173,7 +173,7 @@
   ],
   [
    "wash_shape",
-   85
+   86
   ],
   [
    "dev_rugs",
@@ -290,7 +290,7 @@
    "v": 302.4
   },
   {
-   "t": "19:09",
+   "t": "19:42",
    "v": 302.4
   }
  ],
@@ -312,14 +312,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "171941 pairs",
-   "text": "scan \u00b7 74 pairs, 0 new",
+   "stat": "172005 pairs",
+   "text": "scan \u00b7 75 pairs, 0 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed GTAVI \u00b7 no/dupe socials",
+   "text": "killed Harlod \u00b7 LP not locked",
    "tone": "red"
   },
   {
@@ -342,168 +342,248 @@
   },
   {
    "name": "Logger",
-   "stat": "304481 why",
-   "text": "wrote 304481 reasons",
+   "stat": "304603 why",
+   "text": "wrote 304603 reasons",
    "tone": ""
   }
  ],
  "tail": [
   {
-   "t": "19:08",
+   "t": "19:41",
    "ag": "FILTER",
-   "text": "killed BP \u00b7 thin_pool",
+   "text": "killed LIQ \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "19:08",
+   "t": "19:41",
    "ag": "FILTER",
-   "text": "killed HONEY \u00b7 thin_pool",
+   "text": "killed LIQ \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "19:08",
+   "t": "19:41",
    "ag": "FILTER",
-   "text": "killed STF \u00b7 no/dupe socials",
+   "text": "killed Harlod \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "19:08",
+   "t": "19:41",
    "ag": "FILTER",
-   "text": "killed FOMO \u00b7 liq < $25k",
+   "text": "killed Harlod \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "19:08",
+   "t": "19:41",
    "ag": "FILTER",
-   "text": "killed FOMO \u00b7 liq < $25k",
+   "text": "killed Bull \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "19:08",
+   "t": "19:41",
    "ag": "FILTER",
-   "text": "killed Anon \u00b7 liq < $25k",
+   "text": "killed Delinquent \u00b7 wash_shape",
    "tone": "red"
   },
   {
-   "t": "19:08",
+   "t": "19:41",
    "ag": "FILTER",
-   "text": "killed Anon \u00b7 liq < $25k",
+   "text": "killed SOTONG \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "19:08",
+   "t": "19:41",
    "ag": "FILTER",
-   "text": "killed Delinquent \u00b7 liq < $25k",
+   "text": "killed PNP \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "19:08",
+   "t": "19:41",
    "ag": "FILTER",
-   "text": "killed \ud83c\udf19 BUCK \u00b7 liq < $25k",
+   "text": "killed Talkie \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "19:08",
+   "t": "19:41",
    "ag": "FILTER",
-   "text": "killed COIN \u00b7 liq < $25k",
+   "text": "killed MONEY \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "19:08",
+   "t": "19:41",
    "ag": "FILTER",
-   "text": "killed MCAP \u00b7 bundle_sizes",
+   "text": "killed coin \u00b7 bundled launch",
    "tone": "red"
   },
   {
-   "t": "19:08",
-   "ag": "LOGGER",
-   "text": "watch_requeue",
-   "tone": ""
+   "t": "19:41",
+   "ag": "FILTER",
+   "text": "killed NICKEH30 \u00b7 bundle_sizes",
+   "tone": "red"
   },
   {
-   "t": "19:08",
+   "t": "19:41",
+   "ag": "FILTER",
+   "text": "killed coin \u00b7 LP not locked",
+   "tone": "red"
+  },
+  {
+   "t": "19:41",
+   "ag": "FILTER",
+   "text": "killed Harlod \u00b7 LP not locked",
+   "tone": "red"
+  },
+  {
+   "t": "19:42",
    "ag": "SCOUT",
-   "text": "scan \u00b7 1 pairs, 1 new",
-   "tone": ""
-  },
-  {
-   "t": "19:08",
-   "ag": "FILTER",
-   "text": "killed GTAVI \u00b7 no/dupe socials",
-   "tone": "red"
-  },
-  {
-   "t": "19:08",
-   "ag": "SCOUT",
-   "text": "scan \u00b7 74 pairs, 0 new",
+   "text": "scan \u00b7 75 pairs, 0 new",
    "tone": ""
   }
  ],
- "nkills": 304481,
+ "nkills": 304603,
  "mood": "sleepy",
  "kills_live": [
   {
-   "t": "19:08:24",
-   "sym": "MoonApe",
+   "t": "19:41:39",
+   "sym": "song",
    "reason": "volume_1h"
   },
   {
-   "t": "19:08:24",
-   "sym": "ERDA",
+   "t": "19:41:39",
+   "sym": "Lucia",
    "reason": "volume_1h"
   },
   {
-   "t": "19:08:24",
-   "sym": "TODD",
+   "t": "19:41:39",
+   "sym": "\ud83e\udd4a",
    "reason": "volume_1h"
   },
   {
-   "t": "19:08:24",
-   "sym": "KOLs",
+   "t": "19:41:39",
+   "sym": "MAMA",
    "reason": "volume_1h"
   },
   {
-   "t": "19:08:24",
-   "sym": "INUX",
+   "t": "19:41:39",
+   "sym": "kitty",
    "reason": "volume_1h"
   },
   {
-   "t": "19:08:24",
-   "sym": "SCAMSEM",
+   "t": "19:41:39",
+   "sym": "$LAST",
    "reason": "volume_1h"
   },
   {
-   "t": "19:08:24",
-   "sym": "Dom",
+   "t": "19:41:39",
+   "sym": "TFROGGO",
    "reason": "volume_1h"
   },
   {
-   "t": "19:08:24",
-   "sym": "MURDER",
+   "t": "19:41:39",
+   "sym": "EVIL",
    "reason": "volume_1h"
   },
   {
-   "t": "19:08:24",
-   "sym": "duh",
-   "reason": "volume_1h"
+   "t": "19:41:43",
+   "sym": "coin",
+   "reason": "bundled"
   },
   {
-   "t": "19:08:24",
-   "sym": "COIN",
-   "reason": "liquidity"
-  },
-  {
-   "t": "19:08:28",
-   "sym": "MCAP",
+   "t": "19:41:45",
+   "sym": "NICKEH30",
    "reason": "bundle_sizes"
   },
   {
-   "t": "19:08:34",
-   "sym": "GTAVI",
-   "reason": "socials"
+   "t": "19:41:45",
+   "sym": "coin",
+   "reason": "lp_locked"
+  },
+  {
+   "t": "19:41:46",
+   "sym": "Harlod",
+   "reason": "lp_locked"
   }
  ],
  "watchlist": [
+  {
+   "why": "bundled wallets",
+   "sym": "NICKEH30",
+   "price": 2.704e-05,
+   "mcap": null,
+   "dex": "pumpswap",
+   "t": "19:41",
+   "ts": 1795664505,
+   "near_miss": true
+  },
+  {
+   "why": "liquidity too low / unknown",
+   "sym": "FOMO",
+   "price": 2.211e-06,
+   "mcap": null,
+   "dex": "pumpfun",
+   "t": "19:41",
+   "ts": 1795664499,
+   "near_miss": true
+  },
+  {
+   "why": "liquidity too low / unknown",
+   "sym": "Bull",
+   "price": 1.453e-05,
+   "mcap": null,
+   "dex": "pumpfun",
+   "t": "19:41",
+   "ts": 1795664499,
+   "near_miss": true
+  },
+  {
+   "why": "liquidity too low / unknown",
+   "sym": "GIVEMAS",
+   "price": 3.74e-05,
+   "mcap": null,
+   "dex": "pumpswap",
+   "t": "19:41",
+   "ts": 1795664499,
+   "near_miss": true
+  },
+  {
+   "why": "liquidity too low / unknown",
+   "sym": "LIQ",
+   "price": 9.352e-06,
+   "mcap": null,
+   "dex": "pumpswap",
+   "t": "19:41",
+   "ts": 1795664499,
+   "near_miss": true
+  },
+  {
+   "why": "liquidity too low / unknown",
+   "sym": "Harlod",
+   "price": 1.765e-05,
+   "mcap": null,
+   "dex": "pumpfun",
+   "t": "19:41",
+   "ts": 1795664499,
+   "near_miss": true
+  },
+  {
+   "why": "1h volume too low",
+   "sym": "KRYOX",
+   "price": 6.01e-05,
+   "mcap": null,
+   "dex": "pumpswap",
+   "t": "19:41",
+   "ts": 1795664499,
+   "near_miss": true
+  },
+  {
+   "why": "liquidity too low / unknown",
+   "sym": "PNP",
+   "price": 1.96e-05,
+   "mcap": null,
+   "dex": "meteora",
+   "t": "19:41",
+   "ts": 1795664499,
+   "near_miss": true
+  },
   {
    "why": "no or reused socials",
    "sym": "GTAVI",
@@ -523,86 +603,6 @@
    "t": "19:08",
    "ts": 1795662508,
    "near_miss": true
-  },
-  {
-   "why": "liquidity too low / unknown",
-   "sym": "Delinquent",
-   "price": 7.488e-06,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "19:08",
-   "ts": 1795662505,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "STF",
-   "price": 1.063e-05,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "19:08",
-   "ts": 1795662504,
-   "near_miss": true
-  },
-  {
-   "why": "liquidity too low / unknown",
-   "sym": "FOMO",
-   "price": 5.192e-06,
-   "mcap": null,
-   "dex": "pumpfun",
-   "t": "19:08",
-   "ts": 1795662504,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "MCAP",
-   "price": 2.043e-05,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "18:56",
-   "ts": 1795661793,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "GOON",
-   "price": 8.052e-06,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "18:53",
-   "ts": 1795661608,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "Jensen",
-   "price": 1.679e-05,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "18:53",
-   "ts": 1795661608,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "GOON",
-   "price": 2.207e-05,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "18:53",
-   "ts": 1795661608,
-   "near_miss": true
-  },
-  {
-   "why": "1h volume too low",
-   "sym": "TBW",
-   "price": 4.268e-05,
-   "mcap": null,
-   "dex": "pumpswap",
-   "t": "18:52",
-   "ts": 1795661546,
-   "near_miss": true
   }
  ],
  "reentry_watch": [],
@@ -617,7 +617,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 171941,
+  "scanned": 172005,
   "passed_filters": 48,
   "scored_ok": 29,
   "entry_wait": 35,
@@ -759,8 +759,8 @@
   },
   {
    "h": "19",
-   "scans": 927,
-   "kills": 8528,
+   "scans": 933,
+   "kills": 8650,
    "trades": 0,
    "pnl": 0.0
   },
@@ -794,8 +794,8 @@
   }
  ],
  "agent_activity": {
-  "SCOUT": 34,
-  "FILTER": 723,
+  "SCOUT": 33,
+  "FILTER": 651,
   "LOGGER": 9
  },
  "rug_list": {
@@ -831,36 +831,36 @@
  },
  "market_mood": {
   "mood": "neutral",
-  "sol_h1": 0.06,
-  "sol_h24": 3.33,
+  "sol_h1": -0.45,
+  "sol_h24": 2.31,
   "size_mult": 1.0,
-  "gauge": 67
+  "gauge": 62
  },
  "latency": {
-  "scan_s_avg": 2.2,
+  "scan_s_avg": 2.4,
   "scan_s_last": 0.0,
   "pos_check_s": 1,
-  "ws_last_event_s": 1113
+  "ws_last_event_s": 3122
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 85,
+   "ms": 112,
    "err": 0
   },
   "api.geckoterminal.com": {
    "ok_rate": 0.97,
-   "ms": 53,
+   "ms": 54,
    "err": 2
   },
   "api.rugcheck.xyz": {
    "ok_rate": 1.0,
-   "ms": 505,
+   "ms": 422,
    "err": 0
   },
   "api.mainnet-beta.solana.com": {
-   "ok_rate": 0.54,
-   "ms": 3086,
+   "ok_rate": 0.69,
+   "ms": 4937,
    "err": 13
   },
   "solana-rpc.publicnode.com": {
@@ -940,13 +940,13 @@
  },
  "speed": {
   "decision_s": {
-   "avg": 0.41,
-   "p90": 0.58,
+   "avg": 0.44,
+   "p90": 0.57,
    "n": 200
   },
   "deep_check_s": {
-   "avg": 0.0,
-   "max": 3.68,
+   "avg": 0.2,
+   "max": 6.67,
    "n": 100
   },
   "inflight": 0,
@@ -1085,56 +1085,35 @@
   "39 Telegram/X alerts"
  ],
  "fomo_wallet": {
-  "total_usd": 6.58,
+  "total_usd": 6.63,
   "top": [
    {
     "sym": "WASTED",
-    "usd": 2.12
+    "usd": 2.15
    },
    {
     "sym": "DCTY",
-    "usd": 1.85
+    "usd": 1.91
    },
    {
-    "sym": "AMD",
-    "usd": 1.03
+    "sym": "SOL",
+    "usd": 0.1
    }
   ],
-  "at": "19:08"
+  "at": "19:41"
  },
  "paper": true,
- "updated_at": "2026-11-26T03:09:03+00:00",
+ "updated_at": "2026-11-26T03:42:30+00:00",
  "heartbeat": {
-  "at": "2026-11-26T03:09:03+00:00",
+  "at": "2026-11-26T03:42:30+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 0,
+  "runner_last_beat_s": 3,
   "pending_entries": 0,
   "live_feed": false,
   "live_feed_events": 3,
   "publish_every_s": 180
  },
  "ryder_events": [
-  {
-   "id": 347589,
-   "t": 1795661376,
-   "kind": "rug_dodged",
-   "sym": "STUDS",
-   "reason": "copycat"
-  },
-  {
-   "id": 347599,
-   "t": 1795661379,
-   "kind": "rug_dodged",
-   "sym": "FOLIO",
-   "reason": "lp_locked"
-  },
-  {
-   "id": 347602,
-   "t": 1795661465,
-   "kind": "rug_dodged",
-   "sym": "STUDS",
-   "reason": "copycat"
-  },
   {
    "id": 347652,
    "t": 1795661465,
@@ -1232,6 +1211,62 @@
    "kind": "rug_dodged",
    "sym": "MCAP",
    "reason": "bundle_sizes"
+  },
+  {
+   "id": 347937,
+   "t": 1795662564,
+   "kind": "rug_dodged",
+   "sym": "STUDS",
+   "reason": "copycat"
+  },
+  {
+   "id": 347938,
+   "t": 1795662564,
+   "kind": "rug_dodged",
+   "sym": "Zero",
+   "reason": "copycat"
+  },
+  {
+   "id": 347965,
+   "t": 1795662626,
+   "kind": "rug_dodged",
+   "sym": "STUDS",
+   "reason": "copycat"
+  },
+  {
+   "id": 348016,
+   "t": 1795664499,
+   "kind": "rug_dodged",
+   "sym": "Delinquent",
+   "reason": "wash_shape"
+  },
+  {
+   "id": 348061,
+   "t": 1795664504,
+   "kind": "rug_dodged",
+   "sym": "coin",
+   "reason": "bundled"
+  },
+  {
+   "id": 348062,
+   "t": 1795664505,
+   "kind": "rug_dodged",
+   "sym": "NICKEH30",
+   "reason": "bundle_sizes"
+  },
+  {
+   "id": 348063,
+   "t": 1795664506,
+   "kind": "rug_dodged",
+   "sym": "coin",
+   "reason": "lp_locked"
+  },
+  {
+   "id": 348064,
+   "t": 1795664506,
+   "kind": "rug_dodged",
+   "sym": "Harlod",
+   "reason": "lp_locked"
   }
  ],
  "trade_quality": {
@@ -1283,31 +1318,31 @@
  },
  "skip_tally": {
   "hours": 24,
-  "total": 11332,
+  "total": 11172,
   "buckets": [
    [
     "Volume too low",
-    9219
+    9086
    ],
    [
     "Liquidity too low",
-    1602
+    1585
    ],
    [
     "No socials",
-    170
+    164
    ],
    [
     "Copycat / scam name",
-    156
+    155
    ],
    [
     "LP not locked",
-    84
+    83
    ],
    [
     "Bundled / top holders",
-    77
+    76
    ],
    [
     "Dev / contract risk",
@@ -1319,7 +1354,7 @@
    ],
    [
     "Other checks",
-    21
+    20
    ]
   ],
   "best": null,
