@@ -48,12 +48,12 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Nov 26 20:06 PT",
+ "asof": "Nov 26 20:09 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 37117,
- "seen": 178535,
+ "scans": 37123,
+ "seen": 178580,
  "passed": 48,
  "trades": 1,
  "wins": 1,
@@ -91,15 +91,15 @@
  "by_dex": [
   [
    "pumpfun",
-   148012
+   148046
   ],
   [
    "meteora",
-   15087
+   15095
   ],
   [
    "pumpswap",
-   11021
+   11024
   ],
   [
    "other/unknown",
@@ -125,23 +125,23 @@
  "kills": [
   [
    "volume_1h",
-   265025
+   265096
   ],
   [
    "liquidity",
-   33732
+   33738
   ],
   [
    "socials",
-   7086
+   7090
   ],
   [
    "copycat",
-   5268
+   5270
   ],
   [
    "lp_locked",
-   2237
+   2238
   ],
   [
    "thin_pool",
@@ -294,7 +294,7 @@
    "v": 302.4
   },
   {
-   "t": "20:06",
+   "t": "20:09",
    "v": 302.4
   }
  ],
@@ -316,14 +316,14 @@
  "agents": [
   {
    "name": "Scout",
-   "stat": "178535 pairs",
-   "text": "scan \u00b7 76 pairs, 2 new",
+   "stat": "178580 pairs",
+   "text": "scan \u00b7 85 pairs, 0 new",
    "tone": ""
   },
   {
    "name": "Filter",
    "stat": "100% killed",
-   "text": "killed AGI \u00b7 LP not locked",
+   "text": "killed FRST \u00b7 1h vol < $40k",
    "tone": "red"
   },
   {
@@ -346,168 +346,208 @@
   },
   {
    "name": "Logger",
-   "stat": "317055 why",
-   "text": "wrote 317055 reasons",
+   "stat": "317139 why",
+   "text": "wrote 317139 reasons",
    "tone": ""
   }
  ],
  "tail": [
   {
-   "t": "20:05",
+   "t": "20:06",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 82 pairs, 0 new",
+   "tone": ""
+  },
+  {
+   "t": "20:07",
+   "ag": "LOGGER",
+   "text": "nearmiss_outcome",
+   "tone": ""
+  },
+  {
+   "t": "20:07",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 120 pairs, 16 new",
+   "tone": ""
+  },
+  {
+   "t": "20:07",
    "ag": "FILTER",
-   "text": "killed PENGUIN \u00b7 liq < $25k",
+   "text": "killed ROLANA \u00b7 copycat",
    "tone": "red"
   },
   {
-   "t": "20:05",
+   "t": "20:07",
    "ag": "FILTER",
-   "text": "killed SOLCAP \u00b7 liq < $25k",
+   "text": "killed LOOM \u00b7 copycat",
    "tone": "red"
   },
   {
-   "t": "20:05",
+   "t": "20:07",
    "ag": "FILTER",
-   "text": "killed TAILCAT \u00b7 liq < $25k",
+   "text": "killed trench \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "20:05",
+   "t": "20:07",
    "ag": "FILTER",
-   "text": "killed PENGUIN \u00b7 liq < $25k",
+   "text": "killed BON \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "20:05",
+   "t": "20:07",
    "ag": "FILTER",
-   "text": "killed SANTA \u00b7 liq < $25k",
+   "text": "killed VALOR \u00b7 no/dupe socials",
    "tone": "red"
   },
   {
-   "t": "20:05",
+   "t": "20:07",
    "ag": "FILTER",
-   "text": "killed SANTA \u00b7 no/dupe socials",
+   "text": "killed robux \u00b7 liq < $25k",
    "tone": "red"
   },
   {
-   "t": "20:05",
-   "ag": "FILTER",
-   "text": "killed SANTA \u00b7 LP not locked",
-   "tone": "red"
-  },
-  {
-   "t": "20:05",
-   "ag": "FILTER",
-   "text": "killed TOGI \u00b7 LP not locked",
-   "tone": "red"
-  },
-  {
-   "t": "20:05",
+   "t": "20:07",
    "ag": "FILTER",
    "text": "killed Rolana \u00b7 LP not locked",
    "tone": "red"
   },
   {
-   "t": "20:05",
-   "ag": "LOGGER",
-   "text": "error",
-   "tone": ""
-  },
-  {
-   "t": "20:05",
-   "ag": "LOGGER",
-   "text": "watch_requeue",
-   "tone": ""
-  },
-  {
-   "t": "20:05",
-   "ag": "LOGGER",
-   "text": "watch_requeue",
-   "tone": ""
-  },
-  {
-   "t": "20:05",
+   "t": "20:07",
    "ag": "SCOUT",
-   "text": "scan \u00b7 76 pairs, 2 new",
+   "text": "scan \u00b7 85 pairs, 0 new",
    "tone": ""
   },
   {
-   "t": "20:05",
+   "t": "20:08",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 85 pairs, 3 new",
+   "tone": ""
+  },
+  {
+   "t": "20:08",
    "ag": "FILTER",
-   "text": "killed LUMINARE \u00b7 no/dupe socials",
+   "text": "killed BON \u00b7 no/dupe socials",
    "tone": "red"
   },
   {
-   "t": "20:05",
+   "t": "20:09",
    "ag": "FILTER",
-   "text": "killed AGI \u00b7 LP not locked",
+   "text": "rug wallet listed ENqxQ6",
    "tone": "red"
+  },
+  {
+   "t": "20:09",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 85 pairs, 0 new",
+   "tone": ""
   }
  ],
- "nkills": 317055,
+ "nkills": 317139,
  "mood": "sleepy",
  "kills_live": [
   {
-   "t": "20:05:17",
-   "sym": "BROCAT",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "20:05:17",
-   "sym": "shiii",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "20:05:17",
-   "sym": "Greatest",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "20:05:17",
-   "sym": "bb",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "20:05:17",
-   "sym": "PENGUIN",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "20:05:17",
-   "sym": "INUX",
-   "reason": "volume_1h"
-  },
-  {
-   "t": "20:05:17",
+   "t": "20:07:23",
    "sym": "Pepe",
    "reason": "volume_1h"
   },
   {
-   "t": "20:05:18",
-   "sym": "SANTA",
-   "reason": "lp_locked"
+   "t": "20:07:23",
+   "sym": "DOGE",
+   "reason": "volume_1h"
   },
   {
-   "t": "20:05:19",
-   "sym": "TOGI",
-   "reason": "lp_locked"
+   "t": "20:07:23",
+   "sym": "$BLKFRY",
+   "reason": "volume_1h"
   },
   {
-   "t": "20:05:19",
+   "t": "20:07:23",
+   "sym": "Fox",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "20:07:23",
+   "sym": "coin ",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "20:07:23",
+   "sym": "VALOR",
+   "reason": "socials"
+  },
+  {
+   "t": "20:07:23",
+   "sym": "robux",
+   "reason": "liquidity"
+  },
+  {
+   "t": "20:07:23",
+   "sym": "Greencat",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "20:07:23",
    "sym": "Rolana",
    "reason": "lp_locked"
   },
   {
-   "t": "20:05:41",
-   "sym": "LUMINARE",
+   "t": "20:08:31",
+   "sym": "BON",
    "reason": "socials"
   },
   {
-   "t": "20:05:42",
-   "sym": "AGI",
-   "reason": "lp_locked"
+   "t": "20:08:31",
+   "sym": "LENTO",
+   "reason": "volume_1h"
+  },
+  {
+   "t": "20:08:31",
+   "sym": "FRST",
+   "reason": "volume_1h"
   }
  ],
  "watchlist": [
+  {
+   "why": "no or reused socials",
+   "sym": "BON",
+   "price": 1.076e-05,
+   "mcap": null,
+   "dex": "meteora",
+   "t": "20:08",
+   "ts": 1795752511,
+   "near_miss": true
+  },
+  {
+   "why": "no or reused socials",
+   "sym": "VALOR",
+   "price": 1.526e-05,
+   "mcap": null,
+   "dex": "pumpswap",
+   "t": "20:07",
+   "ts": 1795752444,
+   "near_miss": true
+  },
+  {
+   "why": "no or reused socials",
+   "sym": "Tomato",
+   "price": 1.444e-05,
+   "mcap": null,
+   "dex": "meteora",
+   "t": "20:06",
+   "ts": 1795752382,
+   "near_miss": true
+  },
+  {
+   "why": "no or reused socials",
+   "sym": "DragonRiders",
+   "price": 4.221e-07,
+   "mcap": null,
+   "dex": "pumpswap",
+   "t": "20:06",
+   "ts": 1795752382,
+   "near_miss": true
+  },
   {
    "why": "no or reused socials",
    "sym": "LUMINARE",
@@ -567,46 +607,6 @@
    "t": "20:05",
    "ts": 1795752318,
    "near_miss": true
-  },
-  {
-   "why": "1h volume too low",
-   "sym": "Rolana",
-   "price": null,
-   "mcap": null,
-   "dex": "pumpfun",
-   "t": "20:05",
-   "ts": 1795752318,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "PENGUIN",
-   "price": 1.603e-05,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "19:43",
-   "ts": 1795751017,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "SpaceXCoin",
-   "price": 1.704e-05,
-   "mcap": null,
-   "dex": "meteora",
-   "t": "19:43",
-   "ts": 1795751017,
-   "near_miss": true
-  },
-  {
-   "why": "no or reused socials",
-   "sym": "RSA",
-   "price": 0.0001158,
-   "mcap": null,
-   "dex": "pumpfun",
-   "t": "19:43",
-   "ts": 1795750984,
-   "near_miss": true
   }
  ],
  "reentry_watch": [],
@@ -621,7 +621,7 @@
   "max_per_hour": 4
  },
  "funnel": {
-  "scanned": 178535,
+  "scanned": 178580,
   "passed_filters": 48,
   "scored_ok": 29,
   "entry_wait": 35,
@@ -770,8 +770,8 @@
   },
   {
    "h": "20",
-   "scans": 1245,
-   "kills": 12704,
+   "scans": 1251,
+   "kills": 12788,
    "trades": 0,
    "pnl": 0.0
   },
@@ -798,13 +798,17 @@
   }
  ],
  "agent_activity": {
-  "SCOUT": 9,
-  "FILTER": 328,
-  "LOGGER": 7
+  "LOGGER": 8,
+  "SCOUT": 14,
+  "FILTER": 341
  },
  "rug_list": {
-  "count": 426,
+  "count": 427,
   "recent": [
+   {
+    "w": "ENqxQ6\u2026Q5Aw",
+    "why": "token 3s6AXcbN died (px 1.99e-05 vs 1.81e-05, liq $12)"
+   },
    {
     "w": "3NwzFn\u2026WppQ",
     "why": "token 693RMPcF died (px 2.76e-05 vs 3.04e-05, liq $11)"
@@ -820,10 +824,6 @@
    {
     "w": "31AJgM\u2026waGz",
     "why": "token Hgf4V666 died (px 2.24e-05 vs 1.74e-05, liq $7)"
-   },
-   {
-    "w": "Fdr1nR\u2026UYWQ",
-    "why": "token 9rdLFadR died (px 0.000103 vs 1.79e-05, liq $0)"
    }
   ]
  },
@@ -844,22 +844,22 @@
   "scan_s_avg": 1.0,
   "scan_s_last": 0.0,
   "pos_check_s": 1,
-  "ws_last_event_s": 3694
+  "ws_last_event_s": 3893
  },
  "sources": {
   "api.dexscreener.com": {
    "ok_rate": 1.0,
-   "ms": 116,
+   "ms": 91,
    "err": 0
   },
   "api.geckoterminal.com": {
-   "ok_rate": 0.98,
-   "ms": 47,
-   "err": 1
+   "ok_rate": 0.95,
+   "ms": 42,
+   "err": 3
   },
   "api.rugcheck.xyz": {
    "ok_rate": 0.96,
-   "ms": 1554,
+   "ms": 3786,
    "err": 5
   },
   "api.mainnet-beta.solana.com": {
@@ -873,7 +873,7 @@
    "err": 1
   },
   "solana-rpc.publicnode.com": {
-   "ok_rate": 0.72,
+   "ok_rate": 0.73,
    "ms": 80,
    "err": 10
   }
@@ -944,7 +944,7 @@
  },
  "speed": {
   "decision_s": {
-   "avg": 26.92,
+   "avg": 26.88,
    "p90": 0.72,
    "n": 200
   },
@@ -1111,31 +1111,17 @@
   "at": "19:41"
  },
  "paper": true,
- "updated_at": "2026-11-27T04:06:14+00:00",
+ "updated_at": "2026-11-27T04:09:31+00:00",
  "heartbeat": {
-  "at": "2026-11-27T04:06:14+00:00",
+  "at": "2026-11-27T04:09:31+00:00",
   "runner_alive": true,
-  "runner_last_beat_s": 0,
+  "runner_last_beat_s": 3,
   "pending_entries": 0,
   "live_feed": false,
   "live_feed_events": 4,
   "publish_every_s": 180
  },
  "ryder_events": [
-  {
-   "id": 361074,
-   "t": 1795748683,
-   "kind": "rug_dodged",
-   "sym": "FUT",
-   "reason": "lp_locked"
-  },
-  {
-   "id": 361076,
-   "t": 1795748740,
-   "kind": "rug_dodged",
-   "sym": "DragonRiders",
-   "reason": "copycat"
-  },
   {
    "id": 361263,
    "t": 1795750897,
@@ -1268,6 +1254,27 @@
    "kind": "rug_dodged",
    "sym": "AGI",
    "reason": "lp_locked"
+  },
+  {
+   "id": 361508,
+   "t": 1795752444,
+   "kind": "rug_dodged",
+   "sym": "LOOM",
+   "reason": "copycat"
+  },
+  {
+   "id": 361529,
+   "t": 1795752444,
+   "kind": "rug_dodged",
+   "sym": "ROLANA",
+   "reason": "copycat"
+  },
+  {
+   "id": 361536,
+   "t": 1795752444,
+   "kind": "rug_dodged",
+   "sym": "Rolana",
+   "reason": "lp_locked"
   }
  ],
  "trade_quality": {
@@ -1319,7 +1326,7 @@
  },
  "skip_tally": {
   "hours": 24,
-  "total": 12276,
+  "total": 12274,
   "buckets": [
    [
     "Volume too low",
@@ -1327,23 +1334,23 @@
    ],
    [
     "Liquidity too low",
-    1915
+    1909
    ],
    [
     "No socials",
-    281
+    285
    ],
    [
     "Copycat / scam name",
-    183
+    184
    ],
    [
     "LP not locked",
-    116
+    117
    ],
    [
     "Bundled / top holders",
-    81
+    79
    ],
    [
     "Dev / contract risk",
