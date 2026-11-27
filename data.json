@@ -48,11 +48,11 @@
   }
  ],
  "pos_sec": 1,
- "asof": "Nov 27 09:10 PT",
+ "asof": "Nov 27 09:27 PT",
  "start": 300.0,
  "equity": 302.4,
  "cash": 302.4,
- "scans": 37451,
+ "scans": 37452,
  "seen": 181636,
  "passed": 48,
  "trades": 1,
@@ -294,7 +294,7 @@
    "v": 302.4
   },
   {
-   "t": "09:10",
+   "t": "09:27",
    "v": 302.4
   }
  ],
@@ -317,7 +317,7 @@
   {
    "name": "Scout",
    "stat": "181636 pairs",
-   "text": "scan \u00b7 116 pairs, 33 new",
+   "text": "scan \u00b7 81 pairs, 0 new",
    "tone": ""
   },
   {
@@ -352,18 +352,6 @@
   }
  ],
  "tail": [
-  {
-   "t": "09:09",
-   "ag": "FILTER",
-   "text": "killed pedolon \u00b7 liq < $25k",
-   "tone": "red"
-  },
-  {
-   "t": "09:09",
-   "ag": "FILTER",
-   "text": "killed CHARLIE \u00b7 liq < $25k",
-   "tone": "red"
-  },
   {
    "t": "09:09",
    "ag": "FILTER",
@@ -441,6 +429,18 @@
    "ag": "FILTER",
    "text": "killed Pumpball \u00b7 LP not locked",
    "tone": "red"
+  },
+  {
+   "t": "09:10",
+   "ag": "SCOUT",
+   "text": "scan \u00b7 81 pairs, 0 new",
+   "tone": ""
+  },
+  {
+   "t": "09:27",
+   "ag": "LOGGER",
+   "text": "process_pause",
+   "tone": ""
   }
  ],
  "nkills": 323079,
@@ -693,7 +693,7 @@
   },
   {
    "h": "09",
-   "scans": 1418,
+   "scans": 1419,
    "kills": 12421,
    "trades": 0,
    "pnl": 0.0
@@ -798,8 +798,8 @@
   }
  ],
  "agent_activity": {
-  "LOGGER": 36,
-  "SCOUT": 65,
+  "LOGGER": 37,
+  "SCOUT": 66,
   "FILTER": 720
  },
  "rug_list": {
@@ -1111,11 +1111,11 @@
   "at": "07:44"
  },
  "paper": true,
- "updated_at": "2026-11-27T17:10:41+00:00",
+ "updated_at": "2026-11-27T17:27:11+00:00",
  "heartbeat": {
-  "at": "2026-11-27T17:10:41+00:00",
-  "runner_alive": true,
-  "runner_last_beat_s": 2,
+  "at": "2026-11-27T17:27:11+00:00",
+  "runner_alive": false,
+  "runner_last_beat_s": 987,
   "pending_entries": 0,
   "live_feed": false,
   "live_feed_events": 0,
